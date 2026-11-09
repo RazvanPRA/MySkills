@@ -1,0 +1,44 @@
+import type { ContentCatalog } from '@/features/content';
+import type { Attempt } from '@/features/session-player';
+import type { UserSettings } from '@/features/settings';
+import type { ReviewCard } from '@/features/spaced-repetition';
+import type { TopicProgress } from '@/features/study-map';
+import type { LocalizedText } from '@/shared/domain';
+
+export type TestSchedule = 'daily' | 'weekly' | 'on_demand';
+
+/** Narrows an on-demand session ("Practice this topic only"). Ignored by daily tests. */
+export type TestScope = { topicIds?: readonly string[]; categoryIds?: readonly string[] };
+
+/** Everything a test needs to build a session. No clock, no randomness, no I/O. */
+export type TestBuildContext = {
+  /** YYYY-MM-DD, local time zone. */
+  date: string;
+  /** hash(date + kind): the same day always gives the same test. */
+  seed: number;
+  catalog: ContentCatalog;
+  progress: readonly TopicProgress[];
+  reviewCards: readonly ReviewCard[];
+  /** Attempts from the last 14 days. */
+  recentAttempts: readonly Attempt[];
+  settings: UserSettings;
+  scope?: TestScope;
+};
+
+export type SessionPlan = {
+  exerciseIds: string[];
+  /** Present when the pool was too small for a full test (brief §7.1.6). */
+  shortfall?: { target: number; available: number };
+};
+
+/**
+ * Contract of a test type (brief §6.2). Each lives in src/features/test-definitions/<kind>/
+ * and is registered only in src/app/registries.ts. Every daily test gets a card on Today.
+ */
+export type TestDefinition = {
+  kind: string;
+  title: LocalizedText;
+  schedule: TestSchedule;
+  /** Pure and deterministic for a given context. */
+  buildSession: (context: TestBuildContext) => SessionPlan;
+};

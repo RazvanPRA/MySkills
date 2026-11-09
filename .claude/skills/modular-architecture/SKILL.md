@@ -55,7 +55,7 @@ shared (usable by every layer above it): ui primitives, theme, i18n, utils, doma
 ```
 
 Rules:
-- **UI primitives** (`src/components/ui`) know nothing about features, the store, i18n keys or navigation. They receive everything via props.
+- **UI primitives** (`src/shared/ui`) know nothing about features, the store, i18n keys or navigation. They receive everything via props.
 - **Feature components** may use the store, i18n and feature hooks, but never call repositories, the database or the API directly.
 - **Features never import from another feature's internals.** Cross-feature use goes through that feature's `index.ts` public API only. If two features need the same thing, move it down to `shared` or `services`.
 - **No circular imports.** If one appears, extract the shared piece to a lower layer.
@@ -109,7 +109,7 @@ ComponentName/
 
 Before creating any component, hook, service or util:
 
-1. Search `src/components`, `src/shared`, `src/services` and the relevant feature for something that already does it or almost does it.
+1. Search `src/shared` (ui, theme, i18n, utils, domain) and the relevant feature for something that already does it or almost does it.
 2. If something close exists, **extend it** (new variant or prop) as long as it stays within the limits in section 2.
 3. If you are about to write the same logic or markup a **second time**, extract it into a shared unit now and replace both usages.
 4. Name new units so the next agent can find them: `<Noun><Role>` for components (`OptionRow`, `MasteryCell`), `use<Verb><Noun>` for hooks (`useDailySession`), `<verb><Noun>` for service functions (`buildKnowledgeSession`).
@@ -138,7 +138,7 @@ features/exercise-types/single-choice/
   evaluateSingleChoice.service.ts                      pure: (payload, answer) → EvaluationResult
 ```
 
-Shared primitives used here (`OptionRow`, `FeedbackBox`, `CodeBlock`, `Button`, `Tag`, `ProgressBar`, `SegmentedControl`) come from `src/components/ui`, not from the feature.
+Shared primitives used here (`OptionRow`, `FeedbackBox`, `CodeBlock`, `Button`, `Tag`, `ProgressBar`, `SegmentedControl`) come from `src/shared/ui`, not from the feature.
 
 ## 8. Types and state
 
