@@ -14,4 +14,11 @@ module.exports = {
     // Drizzle migrations import .sql files; inline them as strings in the bundle.
     ['inline-import', { extensions: ['.sql'] }],
   ],
+  overrides: [
+    {
+      // marked composes regexes with named groups; see babel/preserveNamedCaptureGroups.js.
+      test: /[\\/]node_modules[\\/]marked[\\/]/,
+      plugins: ['./babel/preserveNamedCaptureGroups'],
+    },
+  ],
 };
