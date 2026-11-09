@@ -99,3 +99,22 @@ function toBlocks(tokens: Token[]): MarkdownBlock[] {
 
 /** Pure: Markdown → a small block model that MarkdownText maps to AppText and CodeBlock. */
 export const parseMarkdown = (content: string): MarkdownBlock[] => toBlocks(Lexer.lex(content));
+
+const spanText = (span: InlineSpan): string => (span.kind === 'break' ? ' ' : span.text);
+
+function blockText(block: MarkdownBlock): string {
+  if (block.kind === 'code') {
+    return block.code;
+  }
+  if (block.kind === 'list') {
+    return block.items.map(item => item.map(blockText).join(' ')).join(', ');
+  }
+  if (block.kind === 'quote') {
+    return block.blocks.map(blockText).join(' ');
+  }
+  return block.spans.map(spanText).join('');
+}
+
+/** Markdown → readable plain text, e.g. for accessibility labels ("`useEffect`" → "useEffect"). */
+export const toPlainText = (content: string): string =>
+  parseMarkdown(content).map(blockText).join(' ').trim();

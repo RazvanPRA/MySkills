@@ -9,6 +9,7 @@ import type { MarkdownBlock } from './parseMarkdown';
 type BlockContext = {
   styles: MarkdownStyles;
   variant: MarkdownVariant;
+  bold: boolean;
   onLinkPress?: (url: string) => void;
 };
 
@@ -49,7 +50,7 @@ function ListBlock({
 
 /** One Markdown block mapped to the design system (§4.2): AppText variants and CodeBlock. */
 export function MarkdownBlockView({ block, context }: MarkdownBlockViewProps) {
-  const { styles, variant, onLinkPress } = context;
+  const { styles, variant, bold, onLinkPress } = context;
   switch (block.kind) {
     case 'code':
       return <CodeBlock code={block.code} language={block.language} />;
@@ -71,7 +72,7 @@ export function MarkdownBlockView({ block, context }: MarkdownBlockViewProps) {
       );
     default:
       return (
-        <AppText variant={variant}>
+        <AppText variant={variant} bold={bold}>
           <MarkdownInline spans={block.spans} styles={styles} onLinkPress={onLinkPress} />
         </AppText>
       );

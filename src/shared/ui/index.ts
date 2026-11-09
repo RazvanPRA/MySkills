@@ -8,6 +8,7 @@ export * from './CodeBlock';
 export * from './FeedbackBox';
 export * from './ListRow';
 export * from './MarkdownText';
+export * from './OptionList';
 export * from './OptionRow';
 export * from './ProgressBar';
 export * from './ScreenContainer';

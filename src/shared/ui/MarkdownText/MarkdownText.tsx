@@ -10,10 +10,18 @@ import { parseMarkdown } from './parseMarkdown';
  * Explanations, questions and topic summaries (design system §4.2): headings, paragraphs and
  * lists map to AppText variants, fenced code to CodeBlock, inline code to the code font.
  */
-function MarkdownTextBase({ content, variant = 'body', onLinkPress }: MarkdownTextProps) {
+function MarkdownTextBase({
+  content,
+  variant = 'body',
+  bold = false,
+  onLinkPress,
+}: MarkdownTextProps) {
   const styles = useThemedStyles(createStyles);
   const blocks = useMemo(() => parseMarkdown(content), [content]);
-  const context = useMemo(() => ({ styles, variant, onLinkPress }), [styles, variant, onLinkPress]);
+  const context = useMemo(
+    () => ({ styles, variant, bold, onLinkPress }),
+    [styles, variant, bold, onLinkPress],
+  );
   return (
     <View style={styles.blocks}>
       {blocks.map((block, index) => (
