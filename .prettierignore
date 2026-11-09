@@ -4,3 +4,4 @@ node_modules/
 pnpm-lock.yaml
 .claude/
 *.generated.ts
+src/db/migrations/

@@ -6,7 +6,8 @@
     "noImplicitOverride": true,
     "noFallthroughCasesInSwitch": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@content/*": ["./content/*"]
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],

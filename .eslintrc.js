@@ -12,7 +12,13 @@ module.exports = {
   root: true,
   extends: ['@react-native'],
   plugins: ['boundaries', 'import-x'],
-  ignorePatterns: ['android/', 'coverage/', 'node_modules/', '**/*.generated.ts'],
+  ignorePatterns: [
+    'android/',
+    'coverage/',
+    'node_modules/',
+    '**/*.generated.ts',
+    'src/db/migrations/',
+  ],
   settings: {
     'import/resolver': { typescript: { project: './tsconfig.json' } },
     'import-x/resolver': { typescript: { project: './tsconfig.json' } },
