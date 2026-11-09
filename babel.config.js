@@ -1,6 +1,8 @@
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
+    // zod 4's ESM build uses `export * as ns from`, which the RN preset does not transform.
+    '@babel/plugin-transform-export-namespace-from',
     [
       'module-resolver',
       {
