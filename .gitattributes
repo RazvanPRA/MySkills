@@ -1,0 +1,12 @@
+# LF everywhere (matches Prettier), regardless of core.autocrlf on Windows.
+* text=auto eol=lf
+
+# Windows scripts need CRLF.
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binaries.
+*.png binary
+*.jpg binary
+*.jar binary
+*.keystore binary
