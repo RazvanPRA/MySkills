@@ -39,7 +39,7 @@ If splitting would genuinely hurt readability, keep the unit, add a one-line com
 Dependencies only point **downward**. A lower layer never imports from a higher one.
 
 ```
-app / navigation          routes (Expo Router), providers, registries, dependencies
+app / navigation          navigators (React Navigation), providers, registries, dependencies
   ↓
 screens                   compose feature sections; no logic of their own
   ↓
@@ -49,7 +49,7 @@ services                  business capabilities (pure where possible)
   ↓
 repositories              storage + API access behind interfaces
   ↓
-api / storage             RTK Query endpoints, DTOs, expo-sqlite (Drizzle), AsyncStorage, secure store
+api / storage             RTK Query endpoints, DTOs, op-sqlite (Drizzle), AsyncStorage, Keychain
 ─────────────────────────
 shared (usable by every layer above it): ui primitives, theme, i18n, utils, domain types
 ```

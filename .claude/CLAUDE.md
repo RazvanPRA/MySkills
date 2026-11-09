@@ -48,15 +48,16 @@ Rules:
 
 ## 4. Tech stack
 
-- **Expo** (latest stable SDK), TypeScript `strict`, development builds (not Expo Go for release).
-- **Expo Router** for navigation and deep linking.
+- **React Native CLI** (latest stable React Native, New Architecture), TypeScript `strict`. No Expo. The `android/` folder is committed and maintained by hand.
+- Build output: a signed release **APK** for personal use now (`./gradlew assembleRelease`, `pnpm build:apk`). An **AAB** (`./gradlew bundleRelease`) later, for Google Play. Keep `applicationId` stable from day one.
+- **React Navigation** (native stack + bottom tabs) for navigation, with a `linking` config for deep links.
 - **Redux Toolkit** for state (one slice per feature, memoized selectors). **RTK Query** once the backend arrives.
 - **zod** for schemas and validation.
-- **expo-sqlite + Drizzle ORM** for local relational data (progress, attempts, spaced repetition state, sessions), with migrations. **AsyncStorage** only for small preferences. **expo-secure-store** for tokens, later.
+- **op-sqlite + Drizzle ORM** for local relational data (progress, attempts, spaced repetition state, sessions), with migrations. **AsyncStorage** (`@react-native-async-storage/async-storage`) only for small preferences. **react-native-keychain** for tokens, later.
 - **ts-fsrs** for spaced repetition (the FSRS algorithm).
 - **i18next + react-i18next**: Romanian by default, English as second language. Question content may start in one language, but the schema supports localized text.
 - **Reanimated** + **Gesture Handler** for animations and gestures, **FlashList** for lists.
-- **expo-notifications** for the daily reminder.
+- **Notifee** (`@notifee/react-native`) for the daily local reminder. Check that it is still actively maintained before Phase 4, and propose an alternative if it is not.
 - Markdown rendering for explanations and a **syntax-highlighted code** component (check which library is actively maintained before choosing, and justify the choice).
 - Testing: **Jest + React Native Testing Library**, later **Maestro** for e2e.
 - Quality: ESLint, Prettier, `typecheck`, husky + lint-staged, GitHub Actions (lint, typecheck, test, content validation).
@@ -273,7 +274,7 @@ Follow the `modular-architecture` skill **in full** (layers, feature modules wit
 ```
 src/
   app/                      providers, dependencies.ts (repository injection), registries.ts
-  app-routes/               Expo Router (thin files that mount screens from features)
+  navigation/               React Navigation navigators, route types, linking config (thin: mounts screens from features)
   features/
     content/                pack loading, validation, ContentCatalog, ContentRepository
     study-map/              categories, topics, TopicProgress, notes
@@ -306,7 +307,7 @@ scripts/                    content:validate, content:stats
 
 Work **one phase at a time**. At the end of each phase: run `typecheck`, `lint`, `test`, check the skill's Definition of Done, and summarize what you created, what you reused, any `arch-exception`, and what comes next. Then wait for my confirmation.
 
-- **Phase 0 – Foundation:** Expo project, strict TS, ESLint/Prettier, Jest, folder structure, theme and tokens, i18n, base UI components, CI.
+- **Phase 0 – Foundation:** React Native CLI project (Android, release signing, `build:apk` script), strict TS, ESLint/Prettier, Jest, folder structure, theme and tokens, i18n, base UI components, CI.
 - **Phase 1 – Content and domain:** zod schemas, content packs, `content:validate`, `ContentCatalog`, registries (empty, with tests), SQLite DB + migrations, local repositories.
 - **Phase 2 – Knowledge test:** FSRS, `TestDefinition 'knowledge'`, session player, `single_choice`, `multiple_choice` and `flashcard_self_graded` types, Today and Results screens.
 - **Phase 3 – Logic test:** `TestDefinition 'logic'`, adaptive difficulty, `code_output`, `find_bug` and `ordering` types, the `logic-core` pack.
