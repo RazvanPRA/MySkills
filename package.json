@@ -15,6 +15,7 @@
     "prepare": "husky",
     "db:generate": "drizzle-kit generate",
     "content:index": "tsx scripts/content-index.ts",
+    "content:matrix": "tsx scripts/content-matrix.ts",
     "content:validate": "tsx scripts/content-validate.ts",
     "content:stats": "tsx scripts/content-stats.ts"
   },
@@ -51,6 +52,7 @@
     "@types/better-sqlite3": "^9.6.0",
     "@types/jest": "^29.5.13",
     "@types/node": "^24.19.2",
+    "@types/prettier": "2.7.3",
     "@types/react": "^19.2.0",
     "babel-plugin-inline-import": "^3.0.0",
     "babel-plugin-module-resolver": "^5.0.3",
