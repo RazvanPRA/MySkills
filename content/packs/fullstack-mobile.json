@@ -1,0 +1,280 @@
+{
+  "id": "fullstack-mobile",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Mobile: React Native" },
+  "categories": [
+    {
+      "id": "react-native",
+      "title": { "ro": "React Native" },
+      "testKinds": ["knowledge"],
+      "order": 30
+    }
+  ],
+  "topics": [
+    {
+      "id": "react-native.components.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "junior",
+      "summary": { "ro": "Construiești ecrane cu componentele de bază și layout cu Flexbox." },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.components.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "mid",
+      "summary": {
+        "ro": "Creezi componente reutilizabile cu theming, safe areas și suport pentru dimensiuni diferite de ecran."
+      },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react-native.components.junior"]
+    },
+    {
+      "id": "react-native.components.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "senior",
+      "summary": {
+        "ro": "Construiești un design system cross-platform și accesibil (TalkBack, VoiceOver), cu design tokens și diferențe de platformă controlate."
+      },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react-native.components.mid"]
+    },
+    {
+      "id": "react-native.navigation.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "junior",
+      "summary": { "ro": "Folosești stack și tab navigators din React Navigation." },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.navigation.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Tipizezi rutele și configurezi deep linking și fluxul de autentificare."
+      },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": ["react-native.navigation.junior"]
+    },
+    {
+      "id": "react-native.navigation.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi navigarea unei aplicații mari, inclusiv restaurarea stării și link-urile din notificări."
+      },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": ["react-native.navigation.mid"]
+    },
+    {
+      "id": "react-native.native.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "junior",
+      "summary": {
+        "ro": "Explici diferența dintre JS thread și UI thread și instalezi biblioteci native."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.native.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "mid",
+      "summary": {
+        "ro": "Configurezi build-ul Android și iOS (Gradle, CocoaPods, variante de build) și scrii un modul nativ simplu."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": ["react-native.native.junior"]
+    },
+    {
+      "id": "react-native.native.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici New Architecture (JSI, TurboModules, Fabric), scrii module native performante și conduci upgrade-urile de React Native."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": ["react-native.native.mid"]
+    },
+    {
+      "id": "react-native.performance.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "junior",
+      "summary": { "ro": "Folosești `FlatList` în locul unui `ScrollView` pentru liste lungi." },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.performance.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Profilezi cu React Native DevTools, folosești FlashList și elimini re-randările inutile."
+      },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["react-native.performance.junior"]
+    },
+    {
+      "id": "react-native.performance.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi timpul de pornire, Hermes, memoria și animațiile pe UI thread (Reanimated) pentru telefoane mid-range."
+      },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["react-native.performance.mid"]
+    },
+    {
+      "id": "react-native.offline.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "junior",
+      "summary": { "ro": "Salvezi preferințe în AsyncStorage." },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.offline.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești o bază de date locală (SQLite) cu migrații și sincronizezi datele cu un API."
+      },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": ["react-native.offline.junior"]
+    },
+    {
+      "id": "react-native.offline.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi o arhitectură offline-first, cu rezolvarea conflictelor și stocare securizată (Keychain, Keystore)."
+      },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": ["react-native.offline.mid"]
+    },
+    {
+      "id": "react-native.release.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "junior",
+      "summary": { "ro": "Rulezi aplicația pe emulator și generezi un build de debug." },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.release.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Semnezi build-uri de release, configurezi CI și raportarea crash-urilor."
+      },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": ["react-native.release.junior"]
+    },
+    {
+      "id": "react-native.release.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Gestionezi publicarea în magazine, OTA updates, feature flags și monitorizarea în producție."
+      },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": ["react-native.release.mid"]
+    }
+  ],
+  "exercises": []
+}

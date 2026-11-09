@@ -1,0 +1,696 @@
+{
+  "id": "fullstack-devops-soft",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Fundamente, DevOps și soft skills" },
+  "categories": [
+    {
+      "id": "fundamentals",
+      "title": { "ro": "Fundamente full stack" },
+      "testKinds": ["knowledge"],
+      "order": 90
+    },
+    {
+      "id": "devops",
+      "title": { "ro": "DevOps, securitate și observabilitate" },
+      "testKinds": ["knowledge"],
+      "order": 100
+    },
+    {
+      "id": "soft-skills",
+      "title": { "ro": "Soft skills" },
+      "testKinds": ["knowledge"],
+      "order": 110
+    }
+  ],
+  "topics": [
+    {
+      "id": "fundamentals.javascript.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "junior",
+      "summary": {
+        "ro": "Folosești tipurile, funcțiile, metodele de array, `let`/`const` și modulele ES."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.javascript.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici closures, `this`, prototipurile, promisiunile și event loop-ul (microtasks vs macrotasks)."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": ["fundamentals.javascript.junior"]
+    },
+    {
+      "id": "fundamentals.javascript.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici gestionarea memoriei și garbage collection, diagnostichezi memory leaks și diferențele dintre runtimes (browser, Node.js)."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": ["fundamentals.javascript.mid"]
+    },
+    {
+      "id": "fundamentals.typescript.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "junior",
+      "summary": { "ro": "Tipizezi funcții, obiecte și uniuni și lucrezi în modul `strict`." },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.typescript.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "mid",
+      "summary": { "ro": "Folosești generics, narrowing, discriminated unions și utility types." },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": ["fundamentals.typescript.junior"]
+    },
+    {
+      "id": "fundamentals.typescript.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "senior",
+      "summary": {
+        "ro": "Scrii tipuri avansate (conditional, mapped, template literal types) și contracte type-safe între frontend și backend."
+      },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": ["fundamentals.typescript.mid"]
+    },
+    {
+      "id": "fundamentals.http.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "junior",
+      "summary": { "ro": "Explici metodele HTTP, codurile de status și headerele uzuale." },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.http.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici caching-ul HTTP (`Cache-Control`, ETag), CORS și cookies și diferențele dintre HTTP/1.1, HTTP/2 și HTTP/3."
+      },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": ["fundamentals.http.junior"]
+    },
+    {
+      "id": "fundamentals.http.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi strategii de caching (CDN, invalidare) și depanezi probleme de rețea, TLS și latență."
+      },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": ["fundamentals.http.mid"]
+    },
+    {
+      "id": "fundamentals.api-design.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "junior",
+      "summary": { "ro": "Proiectezi endpoint-uri REST cu resurse și metode HTTP corecte." },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.api-design.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "mid",
+      "summary": {
+        "ro": "Rezolvi paginarea, versionarea, idempotența și formatul erorilor și cunoști GraphQL."
+      },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": ["fundamentals.api-design.junior"]
+    },
+    {
+      "id": "fundamentals.api-design.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între REST, GraphQL și gRPC, proiectezi contracte care evoluează fără breaking changes și limitezi traficul (rate limiting)."
+      },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": ["fundamentals.api-design.mid"]
+    },
+    {
+      "id": "fundamentals.testing.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii unit tests cu aserțiuni clare." },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.testing.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Aplici piramida testării, folosești mocks cu măsură și scrii teste de integrare."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["fundamentals.testing.junior"]
+    },
+    {
+      "id": "fundamentals.testing.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de calitate a echipei: TDD unde merită, contract testing, teste e2e stabile și metrici utile."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["fundamentals.testing.mid"]
+    },
+    {
+      "id": "fundamentals.architecture.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "junior",
+      "summary": { "ro": "Scrii cod curat: nume clare, funcții mici, fără duplicare." },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.architecture.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "mid",
+      "summary": { "ro": "Aplici SOLID, design patterns uzuale și separarea pe straturi." },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": ["fundamentals.architecture.junior"]
+    },
+    {
+      "id": "fundamentals.architecture.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între monolit modular și microservicii, aplici DDD, documentezi deciziile (ADR) și explici compromisurile de system design."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": ["fundamentals.architecture.mid"]
+    },
+    {
+      "id": "devops.ci-cd.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "junior",
+      "summary": { "ro": "Lucrezi cu branch-uri și pull requests și rezolvi conflicte." },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.ci-cd.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "mid",
+      "summary": { "ro": "Configurezi pipeline-uri CI (lint, teste, build) cu GitHub Actions." },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": ["devops.ci-cd.junior"]
+    },
+    {
+      "id": "devops.ci-cd.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi livrarea continuă: trunk-based development, deployment blue-green sau canary, feature flags și rollback."
+      },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": ["devops.ci-cd.mid"]
+    },
+    {
+      "id": "devops.containers.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "junior",
+      "summary": { "ro": "Scrii un Dockerfile și rulezi servicii cu Docker Compose." },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.containers.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "mid",
+      "summary": {
+        "ro": "Optimizezi imaginile (multi-stage, layere, utilizator non-root) și faci deploy pe Kubernetes (Deployment, Service, ConfigMap)."
+      },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": ["devops.containers.junior"]
+    },
+    {
+      "id": "devops.containers.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "senior",
+      "summary": {
+        "ro": "Configurezi resurse, autoscaling, probe și strategii de rollout și depanezi probleme din cluster."
+      },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": ["devops.containers.mid"]
+    },
+    {
+      "id": "devops.cloud.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "junior",
+      "summary": {
+        "ro": "Cunoști serviciile de bază din cloud: compute, storage și baze de date gestionate."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.cloud.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "mid",
+      "summary": {
+        "ro": "Descrii infrastructura ca cod (Terraform) și gestionezi medii separate și secrete."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": ["devops.cloud.junior"]
+    },
+    {
+      "id": "devops.cloud.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi infrastructură scalabilă, rezistentă și eficientă ca cost, cu rețea și IAM configurate corect."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": ["devops.cloud.mid"]
+    },
+    {
+      "id": "devops.security.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "junior",
+      "summary": { "ro": "Cunoști OWASP Top 10 și nu pui niciodată secrete în cod." },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.security.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Previi XSS, CSRF, SQL injection și SSRF, stochezi parolele corect și gestionezi sesiunile în siguranță."
+      },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": ["devops.security.junior"]
+    },
+    {
+      "id": "devops.security.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Faci threat modeling, revizuiești autentificarea (OAuth2, OIDC), securizezi supply chain-ul și coordonezi răspunsul la incidente."
+      },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": ["devops.security.mid"]
+    },
+    {
+      "id": "devops.observability.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "junior",
+      "summary": { "ro": "Scrii loguri utile, cu niveluri potrivite." },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.observability.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești logging structurat, metrici și tracing distribuit (OpenTelemetry) și construiești dashboard-uri."
+      },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": ["devops.observability.junior"]
+    },
+    {
+      "id": "devops.observability.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești SLI, SLO și alerte, conduci investigarea incidentelor și postmortem-uri fără vinovați."
+      },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": ["devops.observability.mid"]
+    },
+    {
+      "id": "soft-skills.communication.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "junior",
+      "summary": { "ro": "Comunici clar progresul și ceri ajutor la timp." },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.communication.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici decizii tehnice colegilor non-tehnici și scrii documentație utilă."
+      },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": ["soft-skills.communication.junior"]
+    },
+    {
+      "id": "soft-skills.communication.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Influențezi decizii fără autoritate formală, moderezi discuții dificile și scrii documente de design convingătoare."
+      },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": ["soft-skills.communication.mid"]
+    },
+    {
+      "id": "soft-skills.code-review.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "junior",
+      "summary": { "ro": "Primești feedback la code review și îl aplici." },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.code-review.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "mid",
+      "summary": {
+        "ro": "Faci code review constructiv, concentrat pe corectitudine și lizibilitate."
+      },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": ["soft-skills.code-review.junior"]
+    },
+    {
+      "id": "soft-skills.code-review.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "senior",
+      "summary": {
+        "ro": "Stabilești standardele de review ale echipei și folosești review-ul ca instrument de mentorat."
+      },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": ["soft-skills.code-review.mid"]
+    },
+    {
+      "id": "soft-skills.ownership.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "junior",
+      "summary": { "ro": "Îți termini task-urile și semnalezi blocajele din timp." },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.ownership.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Estimezi realist, împarți munca în pași livrabili și duci feature-urile cap-coadă."
+      },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": ["soft-skills.ownership.junior"]
+    },
+    {
+      "id": "soft-skills.ownership.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Răspunzi de rezultate la nivel de produs, negociezi scope-ul și gestionezi riscurile și datoria tehnică."
+      },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": ["soft-skills.ownership.mid"]
+    },
+    {
+      "id": "soft-skills.leadership.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "junior",
+      "summary": { "ro": "Împărtășești cu echipa ce ai învățat." },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.leadership.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "mid",
+      "summary": { "ro": "Ghidezi colegii juniori prin pair programming și onboarding." },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": ["soft-skills.leadership.junior"]
+    },
+    {
+      "id": "soft-skills.leadership.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "senior",
+      "summary": {
+        "ro": "Mentorezi constant, ridici nivelul echipei și conduci inițiative tehnice între echipe."
+      },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": ["soft-skills.leadership.mid"]
+    },
+    {
+      "id": "soft-skills.behavioral.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "junior",
+      "summary": { "ro": "Îți prezinți clar experiența și proiectele." },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.behavioral.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "mid",
+      "summary": { "ro": "Răspunzi cu metoda STAR, cu exemple concrete și rezultate măsurabile." },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": ["soft-skills.behavioral.junior"]
+    },
+    {
+      "id": "soft-skills.behavioral.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "senior",
+      "summary": {
+        "ro": "Spui povești de impact la nivel senior: conflicte rezolvate, decizii greșite și ce ai învățat din ele, influență asupra arhitecturii."
+      },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": ["soft-skills.behavioral.mid"]
+    }
+  ],
+  "exercises": []
+}

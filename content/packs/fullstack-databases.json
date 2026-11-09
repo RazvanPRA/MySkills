@@ -1,0 +1,474 @@
+{
+  "id": "fullstack-databases",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Baze de date: SQL și MongoDB" },
+  "categories": [
+    {
+      "id": "sql",
+      "title": { "ro": "SQL și PostgreSQL" },
+      "testKinds": ["knowledge"],
+      "order": 70
+    },
+    { "id": "mongodb", "title": { "ro": "MongoDB" }, "testKinds": ["knowledge"], "order": 80 }
+  ],
+  "topics": [
+    {
+      "id": "sql.queries.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "junior",
+      "summary": { "ro": "Scrii `SELECT` cu `WHERE`, `JOIN`, `GROUP BY` și `ORDER BY`." },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.queries.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești subinterogări, CTE-uri și window functions și explici diferențele dintre tipurile de `JOIN`."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": ["sql.queries.junior"]
+    },
+    {
+      "id": "sql.queries.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "senior",
+      "summary": {
+        "ro": "Scrii interogări corecte cu `NULL`, CTE-uri recursive și agregări avansate și le rescrii pentru performanță."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": ["sql.queries.mid"]
+    },
+    {
+      "id": "sql.modeling.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "junior",
+      "summary": { "ro": "Creezi tabele cu chei primare și chei străine." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.modeling.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Normalizezi până la 3NF și alegi constrângerile (`UNIQUE`, `CHECK`) și tipurile potrivite."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["sql.modeling.junior"]
+    },
+    {
+      "id": "sql.modeling.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Decizi când să denormalizezi, modelezi date multi-tenant sau temporale și planifici migrații fără downtime."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["sql.modeling.mid"]
+    },
+    {
+      "id": "sql.performance.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Explici ce este un index și când ajută." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.performance.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Citești `EXPLAIN ANALYZE` și alegi indecși compuși, parțiali sau acoperitori."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["sql.performance.junior"]
+    },
+    {
+      "id": "sql.performance.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Diagnostichezi interogări lente în producție (`pg_stat_statements`, statistici, bloat, VACUUM)."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["sql.performance.mid"]
+    },
+    {
+      "id": "sql.transactions.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "junior",
+      "summary": { "ro": "Folosești tranzacții pentru operații atomice." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.transactions.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "mid",
+      "summary": { "ro": "Explici ACID, nivelurile de izolare și anomaliile pe care le previn." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": ["sql.transactions.junior"]
+    },
+    {
+      "id": "sql.transactions.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici MVCC, alegi între locking optimist și pesimist și previi deadlock-urile."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": ["sql.transactions.mid"]
+    },
+    {
+      "id": "sql.operations.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "junior",
+      "summary": { "ro": "Faci backup și restore pentru o bază de date." },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.operations.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "mid",
+      "summary": { "ro": "Folosești connection pooling (PgBouncer) și replici de citire." },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": ["sql.operations.junior"]
+    },
+    {
+      "id": "sql.operations.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi replicare, partiționare și high availability, cu obiective clare de recuperare (RPO, RTO)."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": ["sql.operations.mid"]
+    },
+    {
+      "id": "mongodb.crud.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "junior",
+      "summary": { "ro": "Faci operații CRUD și interogări cu filtre și proiecții." },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.crud.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești operatori de update (`$set`, `$push`), upsert și operații bulk."
+      },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": ["mongodb.crud.junior"]
+    },
+    {
+      "id": "mongodb.crud.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici garanțiile de scriere și citire (write concern, read concern, read preference)."
+      },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": ["mongodb.crud.mid"]
+    },
+    {
+      "id": "mongodb.modeling.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "junior",
+      "summary": { "ro": "Explici documentele și diferența față de tabelele relaționale." },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.modeling.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "mid",
+      "summary": { "ro": "Alegi între embedding și referencing după tiparele de acces." },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["mongodb.modeling.junior"]
+    },
+    {
+      "id": "mongodb.modeling.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "senior",
+      "summary": {
+        "ro": "Aplici pattern-uri de schemă (bucket, computed, subset) și validarea schemei și eviți array-urile care cresc nelimitat."
+      },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["mongodb.modeling.mid"]
+    },
+    {
+      "id": "mongodb.performance.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Creezi indecși simpli." },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.performance.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești indecși compuși după regula ESR, citești `explain()` și eviți scanările de colecție."
+      },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["mongodb.performance.junior"]
+    },
+    {
+      "id": "mongodb.performance.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi volume mari de date cu indecși parțiali, TTL, covered queries și profiler-ul."
+      },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["mongodb.performance.mid"]
+    },
+    {
+      "id": "mongodb.aggregation.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "junior",
+      "summary": { "ro": "Folosești `$match`, `$group` și `$sort`." },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.aggregation.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "mid",
+      "summary": { "ro": "Construiești pipeline-uri cu `$lookup`, `$unwind` și `$project`." },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": ["mongodb.aggregation.junior"]
+    },
+    {
+      "id": "mongodb.aggregation.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi pipeline-urile (ordinea etapelor, folosirea indecșilor) și alegi între agregare la cerere și precalculare."
+      },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": ["mongodb.aggregation.mid"]
+    },
+    {
+      "id": "mongodb.scaling.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "junior",
+      "summary": { "ro": "Explici ce este un replica set." },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.scaling.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "mid",
+      "summary": { "ro": "Folosești tranzacții multi-document și explici când sunt necesare." },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": ["mongodb.scaling.junior"]
+    },
+    {
+      "id": "mongodb.scaling.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi shard key-ul, explici compromisurile de consistență și argumentezi când PostgreSQL e o alegere mai bună."
+      },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": ["mongodb.scaling.mid"]
+    }
+  ],
+  "exercises": []
+}

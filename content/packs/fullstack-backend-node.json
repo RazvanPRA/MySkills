@@ -1,0 +1,265 @@
+{
+  "id": "fullstack-backend-node",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Backend: Node.js și NestJS" },
+  "categories": [
+    { "id": "nestjs", "title": { "ro": "NestJS" }, "testKinds": ["knowledge"], "order": 40 }
+  ],
+  "topics": [
+    {
+      "id": "nestjs.modules.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Module și provideri" },
+      "level": "junior",
+      "summary": {
+        "ro": "Creezi module, controllere și servicii și explici dependency injection în Nest."
+      },
+      "resources": [{ "title": "NestJS: Modules", "url": "https://docs.nestjs.com/modules" }],
+      "tags": ["modules"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.modules.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Module și provideri" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești provideri custom (`useFactory`, `useClass`), module dinamice și scope-uri de injecție."
+      },
+      "resources": [{ "title": "NestJS: Modules", "url": "https://docs.nestjs.com/modules" }],
+      "tags": ["modules"],
+      "prerequisites": ["nestjs.modules.junior"]
+    },
+    {
+      "id": "nestjs.modules.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Module și provideri" },
+      "level": "senior",
+      "summary": {
+        "ro": "Structurezi o aplicație mare ca modular monolith, cu granițe clare între module de domeniu și fără dependențe circulare."
+      },
+      "resources": [{ "title": "NestJS: Modules", "url": "https://docs.nestjs.com/modules" }],
+      "tags": ["modules"],
+      "prerequisites": ["nestjs.modules.mid"]
+    },
+    {
+      "id": "nestjs.request-pipeline.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Pipeline-ul cererii" },
+      "level": "junior",
+      "summary": { "ro": "Validezi input-ul cu DTO-uri, `ValidationPipe` și class-validator." },
+      "resources": [
+        {
+          "title": "NestJS: Request lifecycle",
+          "url": "https://docs.nestjs.com/faq/request-lifecycle"
+        }
+      ],
+      "tags": ["request-pipeline"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.request-pipeline.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Pipeline-ul cererii" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici ordinea middleware → guards → interceptors → pipes → handler → exception filters și scrii fiecare tip."
+      },
+      "resources": [
+        {
+          "title": "NestJS: Request lifecycle",
+          "url": "https://docs.nestjs.com/faq/request-lifecycle"
+        }
+      ],
+      "tags": ["request-pipeline"],
+      "prerequisites": ["nestjs.request-pipeline.junior"]
+    },
+    {
+      "id": "nestjs.request-pipeline.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Pipeline-ul cererii" },
+      "level": "senior",
+      "summary": {
+        "ro": "Plasezi cross-cutting concerns (autorizare, logging, tracing, rate limiting) la nivelul potrivit al pipeline-ului."
+      },
+      "resources": [
+        {
+          "title": "NestJS: Request lifecycle",
+          "url": "https://docs.nestjs.com/faq/request-lifecycle"
+        }
+      ],
+      "tags": ["request-pipeline"],
+      "prerequisites": ["nestjs.request-pipeline.mid"]
+    },
+    {
+      "id": "nestjs.data.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Acces la date" },
+      "level": "junior",
+      "summary": { "ro": "Faci operații CRUD cu un ORM (Prisma sau TypeORM)." },
+      "resources": [
+        { "title": "NestJS: Database", "url": "https://docs.nestjs.com/techniques/database" }
+      ],
+      "tags": ["data"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.data.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Acces la date" },
+      "level": "mid",
+      "summary": { "ro": "Gestionezi tranzacții, relații și migrații și eviți problema N+1." },
+      "resources": [
+        { "title": "NestJS: Database", "url": "https://docs.nestjs.com/techniques/database" }
+      ],
+      "tags": ["data"],
+      "prerequisites": ["nestjs.data.junior"]
+    },
+    {
+      "id": "nestjs.data.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Acces la date" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi pattern-uri de persistență (repository, unit of work), asiguri consistența între servicii (outbox) și optimizezi interogările."
+      },
+      "resources": [
+        { "title": "NestJS: Database", "url": "https://docs.nestjs.com/techniques/database" }
+      ],
+      "tags": ["data"],
+      "prerequisites": ["nestjs.data.mid"]
+    },
+    {
+      "id": "nestjs.auth.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Autentificare și securitate" },
+      "level": "junior",
+      "summary": { "ro": "Implementezi login cu JWT folosind Passport." },
+      "resources": [
+        {
+          "title": "NestJS: Authentication",
+          "url": "https://docs.nestjs.com/security/authentication"
+        },
+        { "title": "OWASP API Security Top 10", "url": "https://owasp.org/API-Security/" }
+      ],
+      "tags": ["auth"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.auth.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Autentificare și securitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Implementezi refresh tokens, roluri și guards de autorizare și configurezi CORS și Helmet."
+      },
+      "resources": [
+        {
+          "title": "NestJS: Authentication",
+          "url": "https://docs.nestjs.com/security/authentication"
+        },
+        { "title": "OWASP API Security Top 10", "url": "https://owasp.org/API-Security/" }
+      ],
+      "tags": ["auth"],
+      "prerequisites": ["nestjs.auth.junior"]
+    },
+    {
+      "id": "nestjs.auth.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Autentificare și securitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi autentificarea și autorizarea (OAuth2, OIDC, RBAC vs ABAC) și revizuiești API-ul după OWASP API Security Top 10."
+      },
+      "resources": [
+        {
+          "title": "NestJS: Authentication",
+          "url": "https://docs.nestjs.com/security/authentication"
+        },
+        { "title": "OWASP API Security Top 10", "url": "https://owasp.org/API-Security/" }
+      ],
+      "tags": ["auth"],
+      "prerequisites": ["nestjs.auth.mid"]
+    },
+    {
+      "id": "nestjs.messaging.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Mesagerie și microservicii" },
+      "level": "junior",
+      "summary": { "ro": "Folosești o coadă (BullMQ) pentru task-uri în background." },
+      "resources": [
+        { "title": "NestJS: Microservices", "url": "https://docs.nestjs.com/microservices/basics" }
+      ],
+      "tags": ["messaging"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.messaging.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Mesagerie și microservicii" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești transporturile de microservicii din Nest și consumatori idempotenți, cu retry."
+      },
+      "resources": [
+        { "title": "NestJS: Microservices", "url": "https://docs.nestjs.com/microservices/basics" }
+      ],
+      "tags": ["messaging"],
+      "prerequisites": ["nestjs.messaging.junior"]
+    },
+    {
+      "id": "nestjs.messaging.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Mesagerie și microservicii" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi arhitecturi event-driven (Kafka, RabbitMQ) cu sagas, ordinea mesajelor și garanții de livrare."
+      },
+      "resources": [
+        { "title": "NestJS: Microservices", "url": "https://docs.nestjs.com/microservices/basics" }
+      ],
+      "tags": ["messaging"],
+      "prerequisites": ["nestjs.messaging.mid"]
+    },
+    {
+      "id": "nestjs.testing.junior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii unit tests pentru servicii cu `Test.createTestingModule`." },
+      "resources": [
+        { "title": "NestJS: Testing", "url": "https://docs.nestjs.com/fundamentals/testing" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "nestjs.testing.mid",
+      "categoryId": "nestjs",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": { "ro": "Scrii teste e2e cu Supertest și o bază de date reală (Testcontainers)." },
+      "resources": [
+        { "title": "NestJS: Testing", "url": "https://docs.nestjs.com/fundamentals/testing" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["nestjs.testing.junior"]
+    },
+    {
+      "id": "nestjs.testing.senior",
+      "categoryId": "nestjs",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de testare a backend-ului, inclusiv contract testing între servicii."
+      },
+      "resources": [
+        { "title": "NestJS: Testing", "url": "https://docs.nestjs.com/fundamentals/testing" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["nestjs.testing.mid"]
+    }
+  ],
+  "exercises": []
+}

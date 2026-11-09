@@ -1,0 +1,504 @@
+{
+  "id": "fullstack-frontend",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Frontend: React, Next.js și Angular" },
+  "categories": [
+    {
+      "id": "react",
+      "title": { "ro": "React + Next.js" },
+      "testKinds": ["knowledge"],
+      "order": 10
+    },
+    { "id": "angular", "title": { "ro": "Angular" }, "testKinds": ["knowledge"], "order": 20 }
+  ],
+  "topics": [
+    {
+      "id": "react.components.junior",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii componente funcționale cu props, randare condiționată și liste cu `key` stabil."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.components.mid",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "mid",
+      "summary": {
+        "ro": "Compui componente reutilizabile (children, compound components, controlled vs uncontrolled) și știi unde să ridici state-ul."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react.components.junior"]
+    },
+    {
+      "id": "react.components.senior",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi API-ul componentelor unui design system: compoziție în loc de configurare, accesibilitate, versionare și breaking changes."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react.components.mid"]
+    },
+    {
+      "id": "react.hooks.junior",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "junior",
+      "summary": {
+        "ro": "Folosești `useState` și `useEffect` respectând regulile hooks și array-ul de dependențe."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.hooks.mid",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "mid",
+      "summary": {
+        "ro": "Scrii custom hooks, elimini efectele inutile (date derivate, handler-e de evenimente) și faci cleanup corect, inclusiv la race conditions."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": ["react.hooks.junior"]
+    },
+    {
+      "id": "react.hooks.senior",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici modelul de randare și closure-urile stale, alegi între `useEffect`, `useLayoutEffect` și `useSyncExternalStore` și revizuiești hooks-urile echipei."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": ["react.hooks.mid"]
+    },
+    {
+      "id": "react.state.junior",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "junior",
+      "summary": { "ro": "Gestionezi state local și îl transmiți prin props sau Context." },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.state.mid",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "mid",
+      "summary": {
+        "ro": "Separi server state (TanStack Query, RTK Query) de client state și normalizezi datele în Redux Toolkit sau Zustand."
+      },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": ["react.state.junior"]
+    },
+    {
+      "id": "react.state.senior",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi arhitectura de state pentru o aplicație mare: granițe între feature-uri, selectori memoizați, sincronizare cu URL-ul și costul re-randărilor."
+      },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": ["react.state.mid"]
+    },
+    {
+      "id": "react.performance.junior",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "junior",
+      "summary": { "ro": "Știi ce declanșează o re-randare și o observi în React DevTools." },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.performance.mid",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Măsori cu Profiler-ul și aplici `memo`, `useMemo`, `useCallback` și virtualizarea listelor doar unde contează."
+      },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": ["react.performance.junior"]
+    },
+    {
+      "id": "react.performance.senior",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi Core Web Vitals (LCP, INP, CLS), code splitting și dimensiunea bundle-ului și folosești concurrent features (`useTransition`, Suspense)."
+      },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": ["react.performance.mid"]
+    },
+    {
+      "id": "react.nextjs.junior",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "junior",
+      "summary": {
+        "ro": "Creezi pagini și layout-uri cu App Router și explici diferența dintre server și client components."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.nextjs.mid",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "mid",
+      "summary": {
+        "ro": "Alegi între SSR, SSG, ISR și streaming, folosești Server Actions și controlezi cache-ul pentru `fetch`."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": ["react.nextjs.junior"]
+    },
+    {
+      "id": "react.nextjs.senior",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi strategia de randare și caching (revalidare, edge vs Node runtime) și explici compromisurile React Server Components."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": ["react.nextjs.mid"]
+    },
+    {
+      "id": "react.testing.junior",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii teste cu React Testing Library care caută elementele după rol și text."
+      },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.testing.mid",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": { "ro": "Testezi hooks și stări asincrone și simulezi rețeaua cu MSW." },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["react.testing.junior"]
+    },
+    {
+      "id": "react.testing.senior",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de testare a frontend-ului (unit, integrare, e2e cu Playwright) și elimini testele fragile, legate de implementare."
+      },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["react.testing.mid"]
+    },
+    {
+      "id": "angular.components.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii componente standalone cu inputs, outputs, binding și control flow (`@if`, `@for`)."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.components.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești content projection, lifecycle hooks și organizezi feature-urile cu rute lazy-loaded."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["angular.components.junior"]
+    },
+    {
+      "id": "angular.components.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi biblioteci de componente reutilizabile și migrezi aplicații vechi de la NgModules la standalone."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["angular.components.mid"]
+    },
+    {
+      "id": "angular.di.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "junior",
+      "summary": { "ro": "Creezi servicii injectabile și le folosești în componente." },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.di.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești provideri la nivel de rută și de componentă, injection tokens și funcția `inject()`."
+      },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": ["angular.di.junior"]
+    },
+    {
+      "id": "angular.di.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici ierarhia de injectori și o folosești pentru arhitectură modulară și testabilitate."
+      },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": ["angular.di.mid"]
+    },
+    {
+      "id": "angular.reactivity.junior",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "junior",
+      "summary": {
+        "ro": "Te abonezi la Observables și folosești pipe-ul `async` ca să eviți memory leaks."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.reactivity.mid",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "mid",
+      "summary": {
+        "ro": "Combini fluxuri cu `switchMap`, `mergeMap` și `combineLatest` și folosești signals cu `computed` și `effect`."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": ["angular.reactivity.junior"]
+    },
+    {
+      "id": "angular.reactivity.senior",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între signals și RxJS pentru fiecare caz, gestionezi interoperabilitatea lor și state-ul global (NgRx sau signal store)."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": ["angular.reactivity.mid"]
+    },
+    {
+      "id": "angular.forms.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "junior",
+      "summary": { "ro": "Construiești formulare reactive cu validatori built-in." },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.forms.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "mid",
+      "summary": { "ro": "Scrii validatori custom, inclusiv asincroni, și formulare dinamice." },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": ["angular.forms.junior"]
+    },
+    {
+      "id": "angular.forms.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi formulare complexe, typed și reutilizabile, cu mesaje de validare accesibile."
+      },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": ["angular.forms.mid"]
+    },
+    {
+      "id": "angular.performance.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Explici când rulează change detection." },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.performance.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "mid",
+      "summary": { "ro": "Folosești `OnPush`, `track` în `@for` și deferrable views (`@defer`)." },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": ["angular.performance.junior"]
+    },
+    {
+      "id": "angular.performance.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Treci la zoneless change detection, optimizezi SSR și hydration și analizezi bundle-ul."
+      },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": ["angular.performance.mid"]
+    },
+    {
+      "id": "angular.testing.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii teste de componentă cu TestBed." },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.testing.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Simulezi servicii și HTTP cu `HttpTestingController` și testezi cod asincron."
+      },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": ["angular.testing.junior"]
+    },
+    {
+      "id": "angular.testing.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de testare și alegi între component harnesses, teste de integrare și e2e."
+      },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": ["angular.testing.mid"]
+    }
+  ],
+  "exercises": []
+}

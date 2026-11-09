@@ -1,0 +1,201 @@
+{
+  "id": "fullstack-go",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Backend: Go" },
+  "categories": [{ "id": "go", "title": { "ro": "Go" }, "testKinds": ["knowledge"], "order": 60 }],
+  "topics": [
+    {
+      "id": "go.language.junior",
+      "categoryId": "go",
+      "title": { "ro": "Limbajul Go" },
+      "level": "junior",
+      "summary": { "ro": "Folosești tipuri, slices, maps, structs și metode." },
+      "resources": [
+        { "title": "A Tour of Go", "url": "https://go.dev/tour/" },
+        { "title": "Effective Go", "url": "https://go.dev/doc/effective_go" }
+      ],
+      "tags": ["language"],
+      "prerequisites": []
+    },
+    {
+      "id": "go.language.mid",
+      "categoryId": "go",
+      "title": { "ro": "Limbajul Go" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești interfețe implicite, embedding și generics și explici diferența dintre receiver prin valoare și prin pointer."
+      },
+      "resources": [
+        { "title": "A Tour of Go", "url": "https://go.dev/tour/" },
+        { "title": "Effective Go", "url": "https://go.dev/doc/effective_go" }
+      ],
+      "tags": ["language"],
+      "prerequisites": ["go.language.junior"]
+    },
+    {
+      "id": "go.language.senior",
+      "categoryId": "go",
+      "title": { "ro": "Limbajul Go" },
+      "level": "senior",
+      "summary": {
+        "ro": "Scrii Go idiomatic, explici escape analysis și alocările și organizezi pachetele cu API-uri mici."
+      },
+      "resources": [
+        { "title": "A Tour of Go", "url": "https://go.dev/tour/" },
+        { "title": "Effective Go", "url": "https://go.dev/doc/effective_go" }
+      ],
+      "tags": ["language"],
+      "prerequisites": ["go.language.mid"]
+    },
+    {
+      "id": "go.errors.junior",
+      "categoryId": "go",
+      "title": { "ro": "Gestionarea erorilor" },
+      "level": "junior",
+      "summary": { "ro": "Verifici erorile returnate și le propagi." },
+      "resources": [
+        { "title": "Go blog: Working with Errors", "url": "https://go.dev/blog/go1.13-errors" }
+      ],
+      "tags": ["errors"],
+      "prerequisites": []
+    },
+    {
+      "id": "go.errors.mid",
+      "categoryId": "go",
+      "title": { "ro": "Gestionarea erorilor" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești wrapping (`%w`), `errors.Is`, `errors.As` și tipuri de erori proprii."
+      },
+      "resources": [
+        { "title": "Go blog: Working with Errors", "url": "https://go.dev/blog/go1.13-errors" }
+      ],
+      "tags": ["errors"],
+      "prerequisites": ["go.errors.junior"]
+    },
+    {
+      "id": "go.errors.senior",
+      "categoryId": "go",
+      "title": { "ro": "Gestionarea erorilor" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești convențiile de erori ale unui serviciu: sentinel vs tipizate, context util și logare o singură dată."
+      },
+      "resources": [
+        { "title": "Go blog: Working with Errors", "url": "https://go.dev/blog/go1.13-errors" }
+      ],
+      "tags": ["errors"],
+      "prerequisites": ["go.errors.mid"]
+    },
+    {
+      "id": "go.concurrency.junior",
+      "categoryId": "go",
+      "title": { "ro": "Concurență" },
+      "level": "junior",
+      "summary": { "ro": "Pornești goroutines și comunici prin channels." },
+      "resources": [
+        { "title": "Go blog: Pipelines and cancellation", "url": "https://go.dev/blog/pipelines" }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": []
+    },
+    {
+      "id": "go.concurrency.mid",
+      "categoryId": "go",
+      "title": { "ro": "Concurență" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești `select`, `sync.WaitGroup`, `sync.Mutex` și `context` pentru anulare și timeouts."
+      },
+      "resources": [
+        { "title": "Go blog: Pipelines and cancellation", "url": "https://go.dev/blog/pipelines" }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": ["go.concurrency.junior"]
+    },
+    {
+      "id": "go.concurrency.senior",
+      "categoryId": "go",
+      "title": { "ro": "Concurență" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi pipeline-uri concurente (worker pools, fan-out/fan-in), previi goroutine leaks și folosești race detector-ul."
+      },
+      "resources": [
+        { "title": "Go blog: Pipelines and cancellation", "url": "https://go.dev/blog/pipelines" }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": ["go.concurrency.mid"]
+    },
+    {
+      "id": "go.http.junior",
+      "categoryId": "go",
+      "title": { "ro": "Servicii HTTP" },
+      "level": "junior",
+      "summary": { "ro": "Scrii un server HTTP cu `net/http`." },
+      "resources": [{ "title": "Package net/http", "url": "https://pkg.go.dev/net/http" }],
+      "tags": ["http"],
+      "prerequisites": []
+    },
+    {
+      "id": "go.http.mid",
+      "categoryId": "go",
+      "title": { "ro": "Servicii HTTP" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești middleware, routing-ul din biblioteca standard, JSON și graceful shutdown."
+      },
+      "resources": [{ "title": "Package net/http", "url": "https://pkg.go.dev/net/http" }],
+      "tags": ["http"],
+      "prerequisites": ["go.http.junior"]
+    },
+    {
+      "id": "go.http.senior",
+      "categoryId": "go",
+      "title": { "ro": "Servicii HTTP" },
+      "level": "senior",
+      "summary": {
+        "ro": "Construiești servicii de producție cu timeouts, observabilitate și gRPC și le profilezi cu pprof."
+      },
+      "resources": [{ "title": "Package net/http", "url": "https://pkg.go.dev/net/http" }],
+      "tags": ["http"],
+      "prerequisites": ["go.http.mid"]
+    },
+    {
+      "id": "go.data-testing.junior",
+      "categoryId": "go",
+      "title": { "ro": "Date și testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii teste cu pachetul `testing`." },
+      "resources": [{ "title": "Go: Add a test", "url": "https://go.dev/doc/tutorial/add-a-test" }],
+      "tags": ["data-testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "go.data-testing.mid",
+      "categoryId": "go",
+      "title": { "ro": "Date și testare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Scrii table-driven tests și benchmark-uri și accesezi PostgreSQL cu `database/sql` sau pgx."
+      },
+      "resources": [{ "title": "Go: Add a test", "url": "https://go.dev/doc/tutorial/add-a-test" }],
+      "tags": ["data-testing"],
+      "prerequisites": ["go.data-testing.junior"]
+    },
+    {
+      "id": "go.data-testing.senior",
+      "categoryId": "go",
+      "title": { "ro": "Date și testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi cod testabil prin interfețe mici, cu teste de integrare și fuzzing."
+      },
+      "resources": [{ "title": "Go: Add a test", "url": "https://go.dev/doc/tutorial/add-a-test" }],
+      "tags": ["data-testing"],
+      "prerequisites": ["go.data-testing.mid"]
+    }
+  ],
+  "exercises": []
+}
