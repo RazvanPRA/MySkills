@@ -1,6 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { settingsReducer } from '@/features/settings';
-import type { AppDependencies } from './dependencies';
+import type { AppDependencies } from './dependencyTypes';
 
 // One slice per feature, registered here.
 const rootReducer = combineReducers({

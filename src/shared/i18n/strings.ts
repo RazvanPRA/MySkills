@@ -21,6 +21,13 @@ const ro = {
   placeholder: {
     availableInPhase: (phase: number) => `Disponibil în faza ${phase}.`,
   },
+  bootstrap: {
+    loadingTitle: 'Senior Prep',
+    loadingBody: 'Se pregătesc datele și conținutul…',
+    errorTitle: 'Pornire eșuată',
+    errorBody: (detail: string) => `Datele locale nu au putut fi pregătite. Detalii: ${detail}`,
+    retry: 'Încearcă din nou',
+  },
   counts: {
     questions: (n: number) =>
       pluralRo(n, { one: '{n} întrebare', few: '{n} întrebări', other: '{n} de întrebări' }),
@@ -47,6 +54,13 @@ const en: Strings = {
   },
   placeholder: {
     availableInPhase: (phase: number) => `Available in phase ${phase}.`,
+  },
+  bootstrap: {
+    loadingTitle: 'Senior Prep',
+    loadingBody: 'Preparing your data and content…',
+    errorTitle: 'Startup failed',
+    errorBody: (detail: string) => `Local data could not be prepared. Details: ${detail}`,
+    retry: 'Try again',
   },
   counts: {
     questions: (n: number) => pluralEn(n, '{n} question', '{n} questions'),
