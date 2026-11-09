@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-  Starts the Android emulator and runs the CoffyRitual app on it.
+  Starts the Android emulator and runs the Senior Prep app on it.
 
 .DESCRIPTION
   Compact output: one line per step, summary at the end. Full logs live in
@@ -14,14 +14,14 @@
     4. Wait for a full boot with an adaptive timeout; if the emulator dies, print the FATAL lines.
     5. Metro on 8081 (warns about a duplicate Metro, does not stop it).
     6. adb reverse.
-    7. Build + install ONLY if something native changed (android/, package.json, lock) or
+    7. Build + install ONLY if something native changed (android/, package.json, pnpm-lock.yaml) or
        the app is missing; otherwise just restart the app (JS comes from Metro).
     8. Check the foreground activity + summary.
 
   Exit codes: 0 OK | 1 SDK/AVD | 2 emulator died | 3 boot timeout |
               4 Metro | 5 build | 6 app not in the foreground
 
-.PARAMETER Mode         dev (default) | staging | prod
+.PARAMETER Mode         dev (default: debug build, .dev package) | prod (release build, needs release signing)
 .PARAMETER EmulatorOnly Emulator + Metro only, no build/install.
 .PARAMETER SkipBuild    Skip the build; just restart the installed app.
 .PARAMETER ForceBuild   Build even if nothing native changed.
@@ -32,11 +32,11 @@
 .EXAMPLE
   powershell -ExecutionPolicy Bypass -File .claude\scripts\run-android.ps1
 .EXAMPLE
-  powershell -ExecutionPolicy Bypass -File .claude\scripts\run-android.ps1 -Mode staging -ForceBuild
+  powershell -ExecutionPolicy Bypass -File .claude\scripts\run-android.ps1 -Mode prod -ForceBuild
 #>
 param(
   [string]$Avd = 'Pixel_10_Pro_XL',
-  [ValidateSet('dev', 'staging', 'prod')]
+  [ValidateSet('dev', 'prod')]
   [string]$Mode = 'dev',
   [switch]$EmulatorOnly,
   [switch]$SkipBuild,
@@ -68,7 +68,11 @@ $adb      = Join-Path $sdk 'platform-tools\adb.exe'
 foreach ($p in $emulator, $adb) { if (-not (Test-Path $p)) { Fail 1 "Missing: $p" } }
 # The react-native CLI looks for ANDROID_HOME
 if (-not $env:ANDROID_HOME) { $env:ANDROID_HOME = $sdk }
-Step 1 "SDK: $sdk"
+# The Android Gradle build is tested with JDK 17: prefer an installed JDK 17 over a newer default JAVA_HOME.
+$jdk17 = @(Get-ChildItem 'C:\Program Files\Eclipse Adoptium', 'C:\Program Files\Java', 'C:\Program Files\Microsoft' `
+           -Directory -Filter 'jdk-17*' -ErrorAction SilentlyContinue | Sort-Object Name -Descending | Select-Object -First 1)
+if ($jdk17.Count -and "$env:JAVA_HOME" -notmatch 'jdk-17') { $env:JAVA_HOME = $jdk17[0].FullName }
+Step 1 "SDK: $sdk | JDK: $env:JAVA_HOME"
 
 function Get-EmulatorSerial {
   & $adb devices 2>$null | Select-String -Pattern '^(emulator-\d+)\s+(device|offline)' |
@@ -258,7 +262,7 @@ if ($ResetCache -and ($listener = Get-NetTCPConnection -LocalPort $MetroPort -St
   Start-Sleep -Seconds 2
   $metroRestarted = $true
 }
-$metroCmd = "npx react-native start --port $MetroPort"
+$metroCmd = "pnpm exec react-native start --port $MetroPort"
 if ($ResetCache) { $metroCmd += ' --reset-cache' }
 if (Test-Metro $MetroPort) {
   Step 5 "Metro already running on $MetroPort"
@@ -290,9 +294,9 @@ if ($EmulatorOnly) {
 }
 
 # ---------------------------------------------------------------- 7. Build / install
-$npmScript = @{ dev = 'android'; staging = 'android:staging'; prod = 'android:prod' }[$Mode]
-$package   = @{ dev = 'com.coffyritual.app.dev'; staging = 'com.coffyritual.app.staging'; prod = 'com.coffyritual.app' }[$Mode]
-$activity  = 'com.ritual.MainActivity'
+$modeArgs  = @{ dev = ''; prod = '--mode release' }[$Mode]
+$package   = @{ dev = 'com.razvanprajanu.seniorprep.dev'; prod = 'com.razvanprajanu.seniorprep' }[$Mode]
+$activity  = 'com.razvanprajanu.seniorprep.MainActivity'
 $stampFile = Join-Path $LogDir "native-$Mode.stamp"
 $buildLog  = Join-Path $LogDir "build-$Mode.log"
 
@@ -301,7 +305,7 @@ function Get-NativeStamp {
   $skipDirs = '\\(build|\.gradle|\.kotlin|\.cxx)\\'
   $files = @(Get-ChildItem (Join-Path $ProjectRoot 'android') -Recurse -File -Force -ErrorAction SilentlyContinue |
              Where-Object { $_.FullName -notmatch $skipDirs })
-  $files += @('package.json', 'package-lock.json', 'yarn.lock') |
+  $files += @('package.json', 'pnpm-lock.yaml') |
             ForEach-Object { Join-Path $ProjectRoot $_ } | Where-Object { Test-Path $_ } | ForEach-Object { Get-Item $_ }
   $text = ($files | Sort-Object FullName |
            ForEach-Object { "$($_.FullName)|$($_.Length)|$($_.LastWriteTimeUtc.Ticks)" }) -join "`n"
@@ -321,13 +325,13 @@ $reason = if ($ForceBuild) { '-ForceBuild' }
 if ($SkipBuild -and -not $installed) { Fail 5 "-SkipBuild, but $package is not installed on $serial" }
 
 if ($reason) {
-  Step 7 "Build $npmScript ($reason) -> log: $buildLog"
+  Step 7 "Build $Mode ($reason) -> log: $buildLog"
   # The RN CLI runs "gradlew.bat" without a path; with this variable set, cmd.exe does not search the current directory.
   Remove-Item Env:NoDefaultCurrentDirectoryInExePath -ErrorAction SilentlyContinue
   $bw = [Diagnostics.Stopwatch]::StartNew()
   Push-Location $ProjectRoot
   # Through cmd so the log stays UTF-8 (PS 5.1 redirection writes UTF-16)
-  cmd.exe /c "npm run $npmScript -- --port $MetroPort --device $serial --no-packager > `"$buildLog`" 2>&1"
+  cmd.exe /c "pnpm android $modeArgs --port $MetroPort --device $serial --no-packager > `"$buildLog`" 2>&1"
   $code = $LASTEXITCODE
   Pop-Location
   if ($code -ne 0) {

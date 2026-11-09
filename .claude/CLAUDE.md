@@ -1,9 +1,5 @@
 # Project brief: mobile app for Senior Full Stack interview prep
 
-> Use this as the project's `CLAUDE.md`, with the `modular-architecture` and `senior-prep-design-system` skill active. Work one phase at a time and stop after each phase for review.
-
----
-
 ## 1. Role and context
 
 You are a senior React Native + TypeScript engineer building, together with me, a personal mobile app that prepares me for a **Senior Full Stack Engineer** role.
@@ -55,8 +51,8 @@ Rules:
 - **zod** for schemas and validation.
 - **op-sqlite + Drizzle ORM** for local relational data (progress, attempts, spaced repetition state, sessions), with migrations. **AsyncStorage** (`@react-native-async-storage/async-storage`) only for small preferences. **react-native-keychain** for tokens, later.
 - **ts-fsrs** for spaced repetition (the FSRS algorithm).
-- **i18next + react-i18next**: Romanian by default, English as second language. Question content may start in one language, but the schema supports localized text.
-- **Reanimated** + **Gesture Handler** for animations and gestures, **FlashList** for lists.
+- **i18n without a library**: UI strings in `src/shared/i18n/strings.ts` with `ro` and `en` (Romanian by default), as defined in the `senior-prep-design-system` skill. Question content may start in one language, but the schema supports localized text.
+- **FlashList** for lists. **Reanimated** only where motion is justified by the design system (default is no animation).
 - **Notifee** (`@notifee/react-native`) for the daily local reminder. Check that it is still actively maintained before Phase 4, and propose an alternative if it is not.
 - Markdown rendering for explanations and a **syntax-highlighted code** component (check which library is actively maintained before choosing, and justify the choice).
 - Testing: **Jest + React Native Testing Library**, later **Maestro** for e2e.
@@ -75,8 +71,7 @@ type LocalizedText = { ro: string; en?: string };
 interface Category {
   id: string;                 // 'react', 'nestjs', 'go', 'logic' ...
   title: LocalizedText;
-  icon: string;               // icon key, not a component
-  color: string;              // theme token key, not hex
+  icon?: string;              // optional icon key, not rendered for now (design system: no decorative icons)
   testKinds: string[];        // which tests it feeds: ['knowledge'] or ['logic']
   order: number;
 }
@@ -294,7 +289,7 @@ src/
     progress/               mastery, estimated level, heatmap, streak
     notifications/
     settings/
-  shared/                   ui primitives, theme, i18n, utils, shared domain types
+  shared/                   ui (primitives, see senior-prep-design-system), theme (tokens), i18n (strings.ts), utils, shared domain types
   db/                       Drizzle schema, migrations, client
 content/packs/              content JSON
 scripts/                    content:validate, content:stats

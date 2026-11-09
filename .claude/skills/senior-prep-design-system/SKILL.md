@@ -1,325 +1,287 @@
-# Project brief: mobile app for Senior Full Stack interview prep
+---
+name: senior-prep-design-system
+description: Mandatory UI/UX rules for the Senior Prep React Native app (daily logic and knowledge tests): tokens, light/dark palette, typography, primitives, exercise patterns, accessibility, RO/EN copy. Use for any visible UI change.
+---
 
-## 1. Role and context
+# UI & UX design system — Senior Prep
 
-You are a senior React Native + TypeScript engineer building, together with me, a personal mobile app that prepares me for a **Senior Full Stack Engineer** role.
+These rules are **mandatory**. They define the design system of the Senior Prep app: a study app with two daily tests (logic and knowledge), a study map and a progress view. Every screen must look and behave as if the same person built it. If a rule blocks a task, stop and explain why instead of breaking it silently.
 
-About me:
-- I have worked in IT since March 2022 (almost 5 years of experience).
-- Target stack: **FE** React / Next.js, React Native, Angular; **BE** NestJS, Java (Spring Boot), Go; **DB** SQL (PostgreSQL) and MongoDB; plus DevOps, security, observability, architecture and soft skills.
-- I have a competency matrix by level (Junior / Mid / Senior) for every area. It becomes the app's initial content (section 10).
-- The app is also a portfolio project. The code must look like a senior's work: modular, tested, easy to extend.
+This skill covers **what the user sees and feels**. Folder layout, file limits and layering come from the `modular-architecture` skill; follow both. The product itself is described in the project brief (`CLAUDE.md`).
 
-## 2. What the app does
+The repository starts empty. The tokens live in `src/shared/theme` and the primitives in `src/shared/ui`; build them in Phase 0 exactly as specified here, and build each primitive marked *planned* the first time a screen needs it.
 
-Every day it generates **two tests** for me:
+## 1. Design principles
 
-1. **Logic test.** Independent of what I have studied. It trains reasoning: code tracing, event loop ordering, algorithmic reasoning and complexity, predicting SQL query results, concurrency (Go/Java), logic puzzles. Difficulty adapts to my performance.
-2. **Knowledge test.** Contains questions **only** from topics I have marked as covered. It mixes spaced repetition (what is due for review today) with new questions from covered topics, weighted toward my weak areas.
+1. **Calm and readable first.** Users study here every day, sometimes for long sessions. Neutral backgrounds, one accent color, generous line height, nothing that competes with the question or the code.
+2. **Content over chrome.** No icons in the tab bar, no illustrations, no gradients, no shadows, no gamification art (flames, trophies, confetti). Hierarchy comes from type size, weight, tone and spacing.
+3. **Color carries meaning, never decoration.** Accent = action / current selection. Success = correct. Danger = wrong. Selected (blue) = "picked, not yet checked". Categories, topics and levels have **no colors of their own**. Syntax colors exist only inside `CodeBlock`; mastery colors exist only inside `MasteryCell`.
+4. **Never rely on color alone.** Every state shown by color also has text, a weight change, a filled shape or an accessibility state.
+5. **Same light and dark.** Every screen is designed for both schemes; the theme follows the phone setting automatically.
+6. **Predictable, low-friction flow.** One primary action per area, always on the right; the user never loses their place, and an unfinished daily test resumes exactly where it stopped.
+7. **Code is first-class content.** Code is shown in a monospace `CodeBlock`, never wrapped, never shrunk, always readable in both themes.
 
-Beyond the tests:
-- **Study map:** categories → topics, each with its level (Junior/Mid/Senior), a summary, resources and my own notes. I mark a topic as "in progress" or "covered".
-- **Progress:** mastery per category and topic, estimated level per matrix area, history, streak, weak spots.
-- **Daily notification** at a time I choose.
+## 2. Design tokens (single source of truth)
 
-**Main design requirement:** in the future I must be able to add **new categories** (e.g. System Design, English for interviews, AWS), **new exercise types** and **new test types** (e.g. a weekly System Design test) without changing the existing code of other modules.
+All values live in `src/shared/theme/tokens.ts`. Use them through `useThemedStyles(createStyles)` or `useTheme()`; never hard-code hex values, font sizes or spacing.
 
-## 3. Extensibility principles (the most important decisions)
+### 2.1 Core colors
 
-The app strictly separates **content** from **behavior**.
+| Token | Light | Dark | Use for |
+|---|---|---|---|
+| `background` | `#F2F5F6` | `#0E1418` | Screen background, inset areas (Tag, FeedbackBox) |
+| `surface` | `#FFFFFF` | `#162027` | Cards, buttons, chips, options, tab bar |
+| `text` | `#14202B` | `#E4EBEE` | Body and headings |
+| `muted` | `#56636E` | `#97A5AE` | Secondary text, labels, help text, inactive tab |
+| `border` | `#D6DDE1` | `#2A3740` | 1 px borders, progress track, table lines |
+| `accent` | `#0B6E63` | `#43C2AF` | Primary button, active tab, selected chip border, emphasis text |
+| `onAccent` | `#FFFFFF` | `#04201B` | Text on an `accent` fill |
+| `accentSoft` | `#E0F0ED` | `#12332E` | Selected chip fill, table header |
+| `success` / `successSoft` | `#1E6E36` / `#E3F2E8` | `#6CCB8A` / `#123020` | Correct answer: border+letter / fill |
+| `danger` / `dangerSoft` | `#A8231B` / `#FBE8E6` | `#F2918A` / `#3A1815` | Wrong answer: border+letter / fill |
+| `selected` / `selectedBorder` | `#DCE9F2` / `#3A6F96` | `#1C3242` / `#7FB2D6` | Picked option or code line before it is checked |
 
-| What I want to add | How it is added | New code needed |
-| --- | --- | --- |
-| A category or new topics | A new JSON **content pack**, or a new version of an existing one | None |
-| New exercises of an existing type | New entries in a content pack | None |
-| A **new exercise type** (e.g. "order the steps", "find the bug") | A module implementing `ExerciseTypeDefinition`, registered in the registry | Only the new module |
-| A **new test type** (e.g. weekly test, single-category test) | A module implementing `TestDefinition`, registered in the registry | Only the new module |
-| A new content source (backend, AI generation) | A new `ContentRepository` implementation injected in `src/app/dependencies.ts` | Only the new repository |
+### 2.2 Code colors (only inside `CodeBlock`)
 
-Rules:
-- No `switch` on exercise type or category in UI or services. Everything goes through typed **registries**.
-- Categories and topics are **data**, not code. No hardcoded category enums.
-- Any data crossing a boundary (content JSON, storage, API) is validated with **zod**. TS types are inferred from the zod schemas.
-- Content packs have a `schemaVersion`. Schema changes ship with explicit migrations.
+| Token | Light | Dark | Contrast on `codeSurface` (L / D) |
+|---|---|---|---|
+| `codeSurface` | `#EBF0F2` | `#0A1014` | — |
+| `codeText` | `#14202B` | `#E4EBEE` | 14.4 / 15.9 |
+| `syntaxKeyword` | `#6F3C96` | `#C9A2F0` | 6.6 / 9.0 |
+| `syntaxString` | `#8A4B08` | `#E7B37A` | 5.9 / 10.1 |
+| `syntaxNumber` | `#0F5F8C` | `#8CC4F0` | 6.0 / 10.3 |
+| `syntaxComment` | `#56636E` | `#97A5AE` | 5.4 / 7.6 |
+| `syntaxFunction` | `#9C2A5E` | `#F0A3C4` | 6.3 / 9.8 |
 
-## 4. Tech stack
+Any token the highlighter emits that is not listed falls back to `codeText`. Never map syntax to `success`, `danger` or `accent`.
 
-- **React Native CLI** (latest stable React Native, New Architecture), TypeScript `strict`. No Expo. The `android/` folder is committed and maintained by hand.
-- Build output: a signed release **APK** for personal use now (`./gradlew assembleRelease`, `pnpm build:apk`). An **AAB** (`./gradlew bundleRelease`) later, for Google Play. Keep `applicationId` stable from day one.
-- **React Navigation** (native stack + bottom tabs) for navigation, with a `linking` config for deep links.
-- **Redux Toolkit** for state (one slice per feature, memoized selectors). **RTK Query** once the backend arrives.
-- **zod** for schemas and validation.
-- **op-sqlite + Drizzle ORM** for local relational data (progress, attempts, spaced repetition state, sessions), with migrations. **AsyncStorage** (`@react-native-async-storage/async-storage`) only for small preferences. **react-native-keychain** for tokens, later.
-- **ts-fsrs** for spaced repetition (the FSRS algorithm).
-- **i18n without a library**: UI strings in `src/shared/i18n/strings.ts` with `ro` and `en` (Romanian by default), as defined in the `senior-prep-design-system` skill. Question content may start in one language, but the schema supports localized text.
-- **FlashList** for lists. **Reanimated** only where motion is justified by the design system (default is no animation).
-- **Notifee** (`@notifee/react-native`) for the daily local reminder. Check that it is still actively maintained before Phase 4, and propose an alternative if it is not.
-- Markdown rendering for explanations and a **syntax-highlighted code** component (check which library is actively maintained before choosing, and justify the choice).
-- Testing: **Jest + React Native Testing Library**, later **Maestro** for e2e.
-- Quality: ESLint, Prettier, `typecheck`, husky + lint-staged, GitHub Actions (lint, typecheck, test, content validation).
+### 2.3 Mastery scale (only inside `MasteryCell`)
 
-If you propose something other than the above, explain the trade-off and wait for my confirmation.
+Five steps, each a fill + a text color. The cell **always** shows the percentage as text, so the color is only a reinforcement.
 
-## 5. Domain model
+| Token | Range | Light fill / text | Dark fill / text | Text contrast (L / D) |
+|---|---|---|---|---|
+| `mastery0` | not started | `#FFFFFF` / `#14202B` | `#162027` / `#E4EBEE` | 16.5 / 13.7 |
+| `mastery1` | 1–39% | `#E0F0ED` / `#14202B` | `#12332E` / `#E4EBEE` | 14.1 / 11.3 |
+| `mastery2` | 40–69% | `#B5DDD5` / `#14202B` | `#1D5249` / `#E4EBEE` | 11.2 / 7.4 |
+| `mastery3` | 70–89% | `#5FAE9F` / `#04201B` | `#2B786A` / `#FFFFFF` | 6.6 / 5.3 |
+| `mastery4` | 90–100% | `#0B6E63` / `#FFFFFF` | `#43C2AF` / `#04201B` | 6.1 / 7.8 |
 
-Start from the model below. You may refine it, but explain every change. Types are defined as zod schemas in `model/` and exported as inferred types.
+Store them as `mastery: { fill: [...], text: [...] }` per scheme; the mapping from percentage to step is a pure, tested function (`masteryStep(percent)`).
 
-```ts
-type Level = 'junior' | 'mid' | 'senior';
-type LocalizedText = { ro: string; en?: string };
+Contrast rule: every text/background pair is **≥ 4.5 : 1** in both schemes (measured values above). Any new color keeps **≥ 4.5 : 1** for text and **≥ 3 : 1** for borders and non-text indicators, in both schemes.
 
-interface Category {
-  id: string;                 // 'react', 'nestjs', 'go', 'logic' ...
-  title: LocalizedText;
-  icon: string;               // icon key, not a component
-  testKinds: string[];        // which tests it feeds: ['knowledge'] or ['logic']
-  order: number;
-}
+**Adding a color:** add it to `ColorTokens`, give it a value in **both** `lightColors` and `darkColors`, check contrast in both, and name it by role (`warning`, `warningSoft`), never by hue (`orange`). Use the `X` + `XSoft` pair pattern for any new semantic state.
 
-interface Topic {
-  id: string;                 // 'react.hooks.use-effect'
-  categoryId: string;
-  title: LocalizedText;
-  level: Level;
-  summary: LocalizedText;     // markdown
-  resources: { title: string; url: string }[];
-  tags: string[];
-  prerequisites: string[];    // topic ids
-}
+### 2.4 Spacing — 4 pt scale
 
-interface Exercise<TPayload = unknown> {
-  id: string;
-  type: string;               // key in ExerciseTypeRegistry
-  topicId: string;            // for logic: topics in the 'logic' category
-  level: Level;
-  difficulty: 1 | 2 | 3 | 4 | 5;
-  estimatedSeconds: number;
-  prompt: LocalizedText;      // markdown, may contain code blocks
-  payload: TPayload;          // validated by the exercise type's schema
-  explanation: LocalizedText; // why it is correct, pitfalls, where to read more
-  tags: string[];
-  source: 'pack' | 'user' | 'ai';
-  version: number;
-}
+| `xxs` | `xs` | `sm` | `md` | `lg` | `xl` | `xxl` |
+|---|---|---|---|---|---|---|
+| 2 | 4 | 8 | 12 | 16 | 24 | 32 |
 
-interface ContentPack {
-  id: string;
-  version: string;            // semver
-  schemaVersion: number;
-  title: LocalizedText;
-  categories: Category[];
-  topics: Topic[];
-  exercises: Exercise[];
-}
+- Screen padding and the gap between top-level sections: `lg`. Bottom padding of a scroll view: `xxl`.
+- Inside a Card: padding `lg`, gap between children `md`.
+- Label → control → help text: `sm`. Title → subtitle: `xs`. Tag vertical padding: `xxs`.
+- Rows of buttons or chips: `sm` gap with `flexWrap: 'wrap'`.
+- Use `gap` for spacing between siblings; do not add margins to children.
 
-interface TopicProgress {
-  topicId: string;
-  status: 'not_started' | 'in_progress' | 'studied';
-  studiedAt?: string;
-  notes?: string;
-}
+### 2.5 Radius
 
-interface ReviewCard {        // FSRS state per exercise
-  exerciseId: string;
-  due: string;
-  stability: number;
-  difficulty: number;
-  reps: number;
-  lapses: number;
-  state: 'new' | 'learning' | 'review' | 'relearning';
-  lastReview?: string;
-}
+`sm` 6 (chips, tags, badges, progress, mastery cells) · `md` 10 (cards, buttons, options, code blocks, tables, feedback box) · `pill` 999 (segmented control only).
 
-interface DailySession {
-  id: string;
-  date: string;               // 'YYYY-MM-DD' in the local time zone
-  testKind: string;           // key in TestRegistry: 'logic' | 'knowledge' | ...
-  exerciseIds: string[];
-  status: 'pending' | 'in_progress' | 'completed';
-  startedAt?: string;
-  completedAt?: string;
-  score?: number;
-}
+### 2.6 Typography — always through `AppText`
 
-interface Attempt {
-  id: string;
-  sessionId: string;
-  exerciseId: string;
-  answer: unknown;            // validated by the type's answerSchema
-  result: EvaluationResult;
-  durationMs: number;
-  confidence?: 1 | 2 | 3 | 4; // self-rating: Didn't know / Hard / Good / Easy
-}
+| Variant | Size | Weight | Line height | Use for |
+|---|---|---|---|---|
+| `display` | 40 | 700 | 1.1 | Screen title, big score number. Max one per screen area |
+| `title` | 19 | 600 | 1.4 | Question text, section headings |
+| `body` | 16 | 400 | 1.45 | Default text, option text |
+| `small` | 14 | 400 | 1.45 | Chips, segments, explanations, table cells, meta info |
+| `caption` | 12 | 400 | 1.4 | Help text, notes, tags |
+| `label` | 12 | 600, UPPERCASE, +0.8 tracking | — | Field / group labels ("TESTUL DE AZI", "NIVEL") |
+| `code` | 14 | 400, monospace | 1.5 | Code in `CodeBlock` and inline code in explanations |
 
-interface EvaluationResult {
-  correct: boolean;
-  score: number;              // 0..1, allows partial credit
-  feedback?: LocalizedText;
-}
-```
+Tones: `default`, `muted`, `accent`, `success`, `danger`. Emphasis is `bold` (600), never a different font or italic. The monospace family is platform-specific (`Menlo` on iOS, `monospace` on Android) and defined once in tokens. Never use `<Text>` from React Native directly in feature code.
 
-## 6. Registries (the extensibility mechanism)
+### 2.7 Sizes
 
-### 6.1 Exercise types
+- Every pressable is at least `touchTarget` (44 × 44 pt), including selectable code lines.
+- Borders are 1 px; the only exception is the 3 px left bar of `FeedbackBox`.
+- Dimensions outside the scale (progress height 4/8, option letter 26, line-number gutter, mastery cell width) are **named constants or style keys inside that component**, never raw numbers in JSX.
+
+## 3. Theme usage pattern
 
 ```ts
-interface ExerciseTypeDefinition<TPayload, TAnswer> {
-  type: string;
-  payloadSchema: z.ZodType<TPayload>;
-  answerSchema: z.ZodType<TAnswer>;
-  Renderer: React.ComponentType<ExerciseRendererProps<TPayload, TAnswer>>;
-  evaluate: (payload: TPayload, answer: TAnswer) => EvaluationResult; // pure function
-  toFsrsRating?: (result: EvaluationResult, confidence?: number) => Rating;
-}
+// Component.styles.ts
+export const createStyles = ({ color, space, radius, touchTarget }: Theme) =>
+  StyleSheet.create({
+    base: { minHeight: touchTarget, padding: space.md, borderRadius: radius.md,
+            borderWidth: 1, borderColor: color.border, backgroundColor: color.surface },
+  });
+
+// Component.tsx
+const styles = useThemedStyles(createStyles);   // memoized per theme
 ```
 
-- Each type lives in `src/features/exercise-types/<type>/`, with an `index.ts` that exports the definition.
-- When content loads, `exerciseTypeRegistry` checks that every `exercise.type` exists and that its `payload` passes the schema. Invalid exercises are excluded and reported. The app does not crash.
-- The session player is **generic**: it receives an exercise, gets the `Renderer` from the registry and calls `evaluate`.
+- `createStyles` is a **module-level** function (stable reference), so memoization works.
+- `useTheme()` only for values that cannot be in a StyleSheet (dynamic color by prop, navigation theme, mastery step colors).
+- Dynamic per-render values (progress width, mastery step) are the only inline styles allowed.
+- The React Navigation theme (bottom tabs and native stacks, in `src/navigation`) is derived from tokens; when you add a token that navigation needs, wire it there too.
 
-MVP types:
-1. `single_choice`
-2. `multiple_choice` (partial credit)
-3. `code_output`: predict a snippet's output (choices, or normalized free input)
-4. `find_bug`: tap the buggy line in a code block
-5. `ordering`: put steps in order (e.g. event loop log order, NestJS request pipeline order)
-6. `flashcard_self_graded`: an open senior-level question ("When do you choose RSC over client components?"). I form my answer, see a model answer with key points and grade myself. The rating feeds FSRS.
+## 4. Primitive inventory (`src/shared/ui`)
 
-Later (only prepare the contract, do not implement): `free_text_ai_graded`, `code_challenge`, `sql_query` (run against a local SQLite with test data).
+Use these before writing any new view. Primitives receive translated strings and know nothing about features, the store or content packs.
 
-### 6.2 Test types
+### 4.1 Base primitives (Phase 0)
 
-```ts
-interface TestDefinition {
-  kind: string;                         // 'logic' | 'knowledge' | ...
-  title: LocalizedText;
-  schedule: 'daily' | 'weekly' | 'on_demand';
-  buildSession: (ctx: TestBuildContext) => SessionPlan; // pure, deterministic
-}
+| Primitive | Purpose | Key props | A11y contract |
+|---|---|---|---|
+| `ScreenContainer` | Scrollable screen body, safe area (top/left/right), `background` color, `lg` padding and gap | `ref` for scroll-to-top | — |
+| `ScreenHeader` | Display title + muted subtitle + right-side slot | `title`, `subtitle?`, `accessory?` | title has `header` role, auto-shrinks to one line |
+| `Card` | Surface block grouping one task | `children` | — |
+| `AppText` | All text | `variant`, `tone`, `bold` | inherits Text props |
+| `Button` | Actions | `label`, `onPress`, `variant: 'primary' \| 'secondary'`, `disabled` | `button` role, `disabled` state, opacity 0.45 disabled / 0.8 pressed |
+| `Chip` | Toggle in a multi-select group, or one tab of a single-select picker | `label`, `selected`, `onPress(id)`, `role: 'checkbox' \| 'tab'` | `checkbox` + `checked`, or `tab` + `selected`; bold label when selected |
+| `SegmentedControl` | Pick exactly one of 2–4 short options | `options`, `value`, `onChange(id)` | `radiogroup` / `radio`, `selected` state; active = inverted (`text` fill, `background` label) |
+| `ProgressBar` | Progress 0..1 | `progress`, `tone`, `thick` | `progressbar` role with 0–100 value |
+| `Tag` | Read-only metadata (test kind, level, topic status) | `label` | not pressable |
+| `TextField` | Single-line text input (code output answers, search, notes) | `label`, `value`, `onChangeText`, `help?`, `monospace?` | label linked to input, `disabled` state |
+| `ListRow` | Pressable row with title, meta line and right slot (topics, results) | `title`, `meta?`, `accessory?`, `onPress` | `button` role, label = title + meta |
 
-interface TestBuildContext {
-  date: string;
-  seed: number;                         // hash(date + kind): same day gives the same test
-  catalog: ContentCatalog;              // valid categories, topics, exercises
-  progress: TopicProgress[];
-  reviewCards: ReviewCard[];
-  recentAttempts: Attempt[];            // last 14 days
-  settings: UserSettings;
-}
-```
+### 4.2 Study primitives (*planned*, build when first needed)
 
-- The Today screen shows one card per `TestDefinition` with `schedule: 'daily'`. A new test type appears automatically.
-- `buildSession` receives all dependencies as parameters (no direct `Date.now()` or `Math.random()`), so it is fully testable.
+| Primitive | Purpose | Key props | A11y contract |
+|---|---|---|---|
+| `OptionRow` | Lettered answer option (A, B, C…) | `letter`, `label`, `state`, `onPress(id)` | `radio` (single) or `checkbox` (multiple) with `checked`; disabled after reveal |
+| `FeedbackBox` | Verdict + explanation after an answer | `verdict?: 'correct' \| 'wrong'`, `title`, `children` | `accessibilityLiveRegion="polite"`; verdict always written as text |
+| `CodeBlock` | Highlighted code, horizontal scroll, optional line numbers and selectable lines | `code`, `language`, `selectableLines?`, `lineStates?`, `onSelectLine?(n)` | each selectable line is a `button` labelled "Linia 4: <code>" with `selected` state |
+| `ReorderList` | Order items with move up / move down buttons (no drag) | `items`, `onMove(id, direction)`, `itemStates?` | buttons labelled "Mută în sus: <item>"; position announced after a move |
+| `MasteryCell` | One heatmap cell: percentage + step fill | `percent`, `label?` | label = "<category>, <level>: 72%" |
+| `StatTile` | Label + big value + caption (streak, accuracy) | `label`, `value`, `caption?` | read as one element |
+| `MarkdownText` | Explanations, topic summaries | `content` | maps headings/paragraphs/lists to `AppText` variants; fenced code → `CodeBlock`; inline code → `code` variant |
 
-## 7. Daily algorithms
+### Which control to use
 
-### 7.1 Knowledge test (default 10 exercises, ~10–12 minutes)
+- One choice, 2–4 short labels (RO/EN, 5/10/15 questions, self-rating) → `SegmentedControl`.
+- Many on/off choices (levels, categories filter) → wrapping row of `Chip`s with `role="checkbox"`.
+- Single-select picker with more than 4 options (category tabs in the study map) → `Chip`s with `role="tab"`, inside a `tablist`.
+- Doing something → `Button`. Exactly one `primary` per action row, placed **last (right)**; secondary/back actions go left.
+- Read-only label → `Tag`. Never make a Tag pressable; use a Chip.
+- New pattern needed twice → create a primitive (per `modular-architecture` §6), with styles, types, test and export from `shared/ui/index.ts`.
 
-1. Pool = exercises from topics with status `in_progress` or `studied`, in categories whose `testKinds` include `'knowledge'`.
-2. Priority 1: FSRS cards with `due <= today`, sorted by how overdue they are. At most 6.
-3. Priority 2: new exercises (no ReviewCard) from covered topics, weighted inversely to the category's mastery (weak areas appear more often). At most 3.
-4. One "stretch" exercise: level `senior`, difficulty ≥ 4, from a covered topic.
-5. Variety: at most 3 exercises from the same category, and no two exercises from the same topic in one test when alternatives exist.
-6. If the pool is too small, the test is shorter and the app tells me what to mark as covered to get a full test.
+## 5. Interaction states
 
-### 7.2 Logic test (default 5 problems, ~15 minutes)
+Every interactive element defines all of these, using tokens only:
 
-1. Pool = exercises from categories whose `testKinds` include `'logic'`. Subcategories (as topics): JS/TS code tracing, event loop and async, complexity and algorithms, SQL result prediction, Go/Java concurrency, classic logic puzzles, debugging.
-2. **Adaptive difficulty:** target 70–80% accuracy over the last 7 days. Above target, raise the average difficulty by 0.5. Below target, lower it by 0.5. Bounds: 1–5.
-3. At least 3 different subcategories per day. Do not repeat a logic exercise within 30 days.
+| State | Visual | Accessibility |
+|---|---|---|
+| Default | `surface` fill, `border` 1 px | role + label |
+| Pressed | opacity 0.8 | — |
+| Selected / checked | `accentSoft` + `accent` border (Chip), inverted (Segment), `selected` + `selectedBorder` (option, code line) and bold label | `checked` / `selected` |
+| Disabled | opacity 0.45, not pressable | `disabled: true` |
+| Correct | `successSoft` fill, `success` border, filled `success` letter | text "Corect" in feedback |
+| Wrong | `dangerSoft` fill, `danger` border, filled `danger` letter | text "Greșit" in feedback |
+| Partially correct (multiple choice) | per-option correct/wrong states + verdict text "Parțial corect (2/3)" | verdict text |
 
-### 7.3 Common rules
+Derive the visual state in a **pure function** (`optionState(option, answer, revealed)`, `lineState(...)`, `orderItemState(...)`), map it to style keys (`styles[state]`, `styles[`${state}Letter`]`) and test the function. Do not chain ternaries in JSX.
 
-- The day is computed in the device's local time zone.
-- The session is generated on the first open of the day and saved. Reopening the app gives the same test, with progress kept.
-- Missed days do not stack up. The streak grows when both daily tests are complete. I get one "freeze" per week.
-- After each exercise I immediately see right/wrong and the explanation. At the end I see a summary: score, time, topics to re-read, with a direct link to each topic.
+## 6. Session UX patterns (keep consistent)
 
-## 8. Mastery and estimated level
+Daily tests behave like a **learn mode**: feedback after every answer. (An exam mode without feedback until the end may come later for on-demand tests; it then follows the same results pattern.)
 
-- **Topic mastery** (0–100): a weighted average of recent attempt scores, with time decay, combined with FSRS stability.
-- **Estimated level per category:** Junior / Mid / Senior, based on mastery of the topics at each level. Example rule: you are "Mid" in a category if you have ≥ 70% mastery on ≥ 80% of its Junior and Mid topics. Make the rule configurable and tested.
-- The progress screen shows a **categories × levels matrix** (heatmap), the same structure as my competency matrix, so I can see at a glance how "senior" I am in each area.
+### 6.1 Common frame
 
-## 9. Screens
+- **Exercise card order:** header (test kind `Tag` · level `Tag` · "3 / 10" position · thin `ProgressBar`) → question `title` (via `MarkdownText`, may contain `CodeBlock`) → instruction hint in `accent` bold when needed ("Alege 2 răspunsuri", "Atinge linia cu bug-ul", "Ordonează pașii") → answer area (by exercise type) → `FeedbackBox` → navigation row.
+- **Navigation row:** Back (secondary, left) · primary action (right) whose label follows the step: Verifică → Următoarea → Termină. Disable, never hide, an action that is not available yet, so the layout does not jump.
+- **After reveal:** the answer area becomes disabled; correct parts green, the user's wrong picks red, untouched wrong parts neutral; then `FeedbackBox` with verdict and explanation, and a link "Recitește topicul" (secondary) to the topic.
+- **Resume:** leaving a session keeps the current exercise and answers; reopening goes straight back to it.
+- **Scroll position:** when the exercise or status changes, scroll to top without animation (`useScrollToTop`).
 
-1. **Onboarding:** choose the track (Senior Full Stack), self-assess my level per category, quickly mark topics I already know, choose the notification time.
-2. **Today:** one card per daily test (status, estimated duration, score when done), streak, a suggested topic to study.
-3. **Session player:** generic, progress bar, optional timer, renderer from the registry, confidence self-rating, explanation after each answer.
-4. **Session results:** score, mistakes with explanations, topics to review.
-5. **Study map:** categories → topics grouped by level, filters and search, status per topic.
-6. **Topic detail:** summary, resources, my notes, a "Practice this topic only" button (`on_demand` session).
-7. **Progress:** categories × levels heatmap, history, weak spots, logic-test accuracy over time.
-8. **Settings:** notifications, language, test length, installed content packs (with version), JSON export/import of my data, reset.
+### 6.2 Per exercise type
 
-All UI follows the `senior-prep-design-system` skill: tokens, light and dark themes, primitives, exercise patterns, accessibility, RO/EN copy.
+| Type | Answer area | Reveal |
+|---|---|---|
+| `single_choice` | `OptionRow`s, `radio` role | correct option green; wrong pick red |
+| `multiple_choice` | `OptionRow`s, `checkbox` role, hint "Alege N" | per-option states; verdict may be "Parțial corect (k/n)" |
+| `code_output` | `CodeBlock` in the question, then `OptionRow`s or a monospace `TextField` | expected output shown in a `CodeBlock` inside the feedback |
+| `find_bug` | `CodeBlock` with `selectableLines`; one line can be selected | buggy line green, wrong pick red, explanation names the line |
+| `ordering` | `ReorderList` with up/down buttons and position numbers | each item green if in place, red if not, with "Poziția corectă: 3" as text |
+| `flashcard_self_graded` | question only; primary "Arată răspunsul" | model answer in a `FeedbackBox` **without verdict**, then a `SegmentedControl` "Nu știam / Greu / Bine / Ușor"; "Următoarea" stays disabled until a rating is chosen. Ratings are neutral, never green/red. |
 
-## 10. Initial content
+### 6.3 Screens
 
-- Content lives in `content/packs/*.json`, one pack per domain: `fullstack-frontend`, `fullstack-mobile`, `fullstack-backend-node`, `fullstack-java`, `fullstack-go`, `fullstack-databases`, `fullstack-devops-soft`, `logic-core`.
-- Categories and topics come from my competency matrix: React + Next.js, React Native, Angular, NestJS, Java/Spring, Go, SQL, MongoDB, cross-cutting fundamentals (JS/TS, HTTP, API design, testing, architecture), DevOps/security/observability, soft skills. Each matrix row × level becomes a topic.
-- For the MVP: at least **15 exercises per category** (mixed levels, weighted toward Mid and Senior) and **60 logic exercises**. All with high-quality explanations, written the way a senior interviewer would explain them, not textbook definitions.
-- Script `pnpm content:validate`: validates every pack with zod and checks references (topicId, categoryId, prerequisites), duplicate ids and known exercise types. Runs in CI.
-- Script `pnpm content:stats`: counts exercises per category × level × type, so I can see where content is missing.
+- **Today:** `ScreenHeader` ("Azi" + date) → one `Card` per daily test: `label` ("TEST DE LOGICĂ"), meta line ("5 probleme · ~15 min"), status `Tag` ("Neînceput" / "În lucru 3/5" / "Gata"), and one primary button ("Începe" / "Continuă"); when done, the score replaces the button. Below: `StatTile`s for streak ("12 zile") and weekly accuracy, written as text, no flame icons.
+- **Results:** label (`label` variant, muted) → big `display` percentage + muted "correct / total" → bold verdict sentence → "De recitit" list of `ListRow`s (topic + why) → primary "Gata".
+- **Study map:** category picker (`Chip role="tab"`) → level filter (`Chip role="checkbox"`) → topics as `ListRow`s with level `Tag` and status `Tag` ("Neînceput" / "În lucru" / "Parcurs").
+- **Topic detail:** summary (`MarkdownText`) → resources (`ListRow`s) → notes (`TextField`, multi-line) → action row: status change (secondary) · "Exersează topicul" (primary).
+- **Progress:** categories × levels table of `MasteryCell`s, inside a horizontally scrolling bordered frame with an `accentSoft` header; each row ends with the estimated level as text ("Nivel estimat: Mid"). Below: logic accuracy over time and weak topics as `ListRow`s.
+- **Onboarding / setup rows:** each group is a `SetupRow` (label → control → caption help).
+- **Persisted choices:** language, test length, notification time and filters survive restarts; never reset user choices silently.
+- **Empty states:** when the knowledge pool is too small, the Today card says why in `small` muted text and offers a secondary button "Marchează topicuri" that opens the study map.
 
-## 11. Code architecture
+## 7. Layout rules
 
-Follow the `modular-architecture` and `senior-prep-design-system` skills **in full** (layers, feature modules with a public `index.ts`, repositories behind interfaces, pure services, size limits, Definition of Done). In addition:
+- Single column, top-to-bottom, inside `ScreenContainer`. Screen = `ScreenHeader` + Cards / sections.
+- Text always wraps (`flex: 1` / `flexShrink: 1` in rows); never truncate question, option, explanation or topic text. Only the screen title may auto-shrink.
+- **Exception — code:** code never wraps (wrapping changes its meaning). `CodeBlock` scrolls horizontally inside its frame and keeps the `code` size; font scaling still applies.
+- Support Dynamic Type / font scaling: no fixed heights on text containers, use `minHeight`.
+- Rows of controls wrap (`flexWrap: 'wrap'`) so they fit small phones and Romanian strings that are longer than English.
+- Bottom tabs: "Azi", "Studiu", "Progres", "Setări" — text labels only (icons hidden), `body` 600, active `accent`, inactive `muted`. Adding a tab requires a strings entry for both languages.
 
-```
-src/
-  app/                      providers, dependencies.ts (repository injection), registries.ts
-  navigation/               React Navigation navigators, route types, linking config (thin: mounts screens from features)
-  features/
-    content/                pack loading, validation, ContentCatalog, ContentRepository
-    study-map/              categories, topics, TopicProgress, notes
-    daily-tests/            TestRegistry, Today screen, session generation
-    test-definitions/
-      knowledge/            TestDefinition 'knowledge'
-      logic/                TestDefinition 'logic'
-    session-player/         generic player, results
-    exercise-types/
-      single-choice/
-      multiple-choice/
-      code-output/
-      find-bug/
-      ordering/
-      flashcard-self-graded/
-    spaced-repetition/      wrapper over ts-fsrs, ReviewCard repository
-    progress/               mastery, estimated level, heatmap, streak
-    notifications/
-    settings/
-  components/ui/            UI primitives (see senior-prep-design-system)
-  shared/                   theme (tokens), i18n (strings.ts), utils, shared domain types
-  db/                       Drizzle schema, migrations, client
-content/packs/              content JSON
-scripts/                    content:validate, content:stats
-```
+## 8. Copy and i18n
 
-- `registries.ts` is the **only** place where exercise types and test types are registered. A new module = one import and one registration line.
-- Repositories have local implementations for now (`Local*Repository`). The interfaces are designed for `Remote*` implementations later.
+- Every UI string comes from `src/shared/i18n/strings.ts`, with **both `ro` and `en`** filled in. Counts and plurals are functions (`questionsCount: n => ...`, `streakDays: n => ...`). No i18n library is needed.
+- Content (questions, explanations, topic summaries) comes from content packs as `LocalizedText`. Show the user's language; if only `ro` exists, show it with a muted caption note ("Conținut disponibil doar în română") instead of a half-translated screen.
+- Romanian uses correct diacritics with comma-below: **ș ț** (not ş ţ), plus ă â î. Content validation rejects cedilla forms.
+- Tone: short, direct, second person, no exclamation marks except for success verdicts. Technical terms stay in English when that is how developers say them (hooks, event loop, middleware). Button labels are verbs or short noun actions ("Verifică", "Începe", "Arată răspunsul").
+- Primitives never import i18n; containers pass translated text in.
 
-## 12. Delivery phases
+## 9. Accessibility checklist (part of every component)
 
-Work **one phase at a time**. At the end of each phase: run `typecheck`, `lint`, `test`, check the skill's Definition of Done, and summarize what you created, what you reused, any `arch-exception`, and what comes next. Then wait for my confirmation.
+- Correct `accessibilityRole` (`button`, `checkbox`, `radio`, `radiogroup`, `tab`, `tablist`, `progressbar`, `header`).
+- `accessibilityState` mirrors the visual state (`selected`, `checked`, `disabled`).
+- `accessibilityLabel` when the visible label is not enough (code lines → "Linia 4: ...", mastery cells → "React, Senior: 72%", reorder buttons → "Mută în sus: ...").
+- ≥ 44 pt targets, ≥ 4.5 : 1 text contrast in both themes, state never shown by color alone.
+- Results and feedback that appear after an action use a live region; after a reorder, the new position is announced.
+- Tests query by role and name (`getByRole('button', { name })`), which also proves the a11y contract.
 
-- **Phase 0 – Foundation:** React Native CLI project (Android, release signing, `build:apk` script), strict TS, ESLint/Prettier, Jest, folder structure, tokens and theme, `strings.ts`, the base primitives from the design system, CI.
-- **Phase 1 – Content and domain:** zod schemas, content packs, `content:validate`, `ContentCatalog`, registries (empty, with tests), SQLite DB + migrations, local repositories.
-- **Phase 2 – Knowledge test:** FSRS, `TestDefinition 'knowledge'`, session player, `single_choice`, `multiple_choice` and `flashcard_self_graded` types, Today and Results screens.
-- **Phase 3 – Logic test:** `TestDefinition 'logic'`, adaptive difficulty, `code_output`, `find_bug` and `ordering` types, the `logic-core` pack.
-- **Phase 4 – Study and progress:** study map, topic detail, notes, mastery, estimated level, heatmap, streak, notifications, onboarding, export/import.
-- **Phase 5 – Full stack (optional, also for interview prep):** a **NestJS + PostgreSQL + Prisma** backend: authentication, progress sync, versioned content pack distribution, generating new exercises and grading free-text answers with an LLM, **server-side only**, never with API keys in the app. In the app: `Remote*Repository` + RTK Query, keeping offline-first.
+## 10. Motion
 
-## 13. Quality
+- Default is **no animation**: instant state changes, `animated: false` scroll. The app should feel immediate.
+- If motion is added, it must be ≤ 200 ms, run on the UI thread (Reanimated), communicate a state change (not decorate), and respect the system "reduce motion" setting (`AccessibilityInfo.isReduceMotionEnabled`).
+- No celebration animations for streaks or scores.
 
-- Pure services (session generation, evaluators, mastery, estimated level, adaptive difficulty, streak) have unit tests for normal, edge and invalid cases. Session generation is tested with a fixed seed and fixed dates.
-- Each exercise type has tests for its schema, evaluator and renderer (including accessibility).
-- No data is lost on update: DB migrations and content schema migrations are tested.
-- Performance: the player stays smooth on a mid-range Android. Large code blocks do not block the JS thread.
+## 11. Lessons from the previous app (build these right from the start)
 
-## 14. How to work with me
+- Single-select pickers use `Chip role="tab"` inside a `tablist`, never `checkbox` chips.
+- Pickers and segmented controls pass one stable callback that receives the id (`onPress(id)`), never inline arrows per item, so `memo` on `Chip` / `OptionRow` works.
+- No padding outside the spacing scale; `xxs` exists for the Tag's vertical padding.
 
-1. Before writing code, send me a **short plan for Phase 0 and Phase 1**: technical decisions, any deviations from this brief, and open questions. Wait for my confirmation.
-2. Do not generate the whole project at once. Work incrementally, in small commits with conventional commit messages.
-3. When a decision has real trade-offs (e.g. Drizzle vs another ORM, how to store FSRS state), briefly present 2 options and your recommendation.
-4. Treat me as a colleague working toward senior: briefly explain *why* you chose an approach, especially for architecture, so the project also prepares me.
+## 12. Definition of done (UI/UX)
+
+- [ ] Only tokens: no hex colors, raw font sizes or spacing numbers outside `tokens.ts` (named local constants for component-specific dimensions are fine)
+- [ ] Checked in **light and dark** mode, with large font scaling, on a small screen
+- [ ] Existing primitives reused; any new primitive is in `shared/ui`, exported and tested
+- [ ] All states defined (default, pressed, selected, disabled, correct/wrong/partial where relevant)
+- [ ] Roles, states, labels, 44 pt targets and contrast verified
+- [ ] All strings in `strings.ts` for **RO and EN**, correct diacritics
+- [ ] Exactly one primary action per action row, on the right; unavailable actions disabled, not hidden
+- [ ] Layout does not jump between states; text wraps instead of truncating; code scrolls instead of wrapping
+- [ ] Syntax and mastery colors used only inside `CodeBlock` and `MasteryCell`
+
+In your summary, list the primitives you reused, any new token or primitive you added (with light and dark values and measured contrast), and any rule you could not follow and why.
+
+## 13. Anti-patterns to reject
+
+- Hard-coded colors (`'#fff'`, `'red'`), `fontSize: 15`, `margin: 10`
+- A color defined only for light mode, or a dark mode "inverted" by hand in a component
+- Using `success`/`danger` for anything other than correct/wrong (not for streaks, ratings, mastery or syntax)
+- A color per category, topic or level
+- Raw `<Text>`, `<TouchableOpacity>` or one-off buttons instead of `AppText` / `Button` / `Chip` / `ListRow`
+- Two primary buttons side by side, or the primary action on the left
+- Hiding a button instead of disabling it, causing layout shift
+- Icons, shadows, gradients, badges, flames, confetti or decorative imagery added "to make it nicer"
+- Strings in JSX, English-only strings, or Romanian without diacritics
+- Truncated question, option or explanation text; wrapped or shrunk code; fixed-height text containers
+- Drag-only interactions with no button alternative
+- Animations for decoration, or animations that ignore reduce-motion
