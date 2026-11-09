@@ -1,23 +1,36 @@
-import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
-import { defaultLanguage, type Language } from '@/shared/i18n';
+import { createSlice } from '@reduxjs/toolkit';
+import { defaultUserSettings, type UserSettings } from '../model/userSettings';
+import { loadSettings, updateSettings } from './thunks';
 
 export type SettingsState = {
-  language: Language;
+  values: UserSettings;
+  /** False until the stored settings were read at startup. */
+  loaded: boolean;
 };
 
 export const initialSettingsState: SettingsState = {
-  language: defaultLanguage,
+  values: defaultUserSettings,
+  loaded: false,
 };
 
 const settingsSlice = createSlice({
   name: 'settings',
   initialState: initialSettingsState,
-  reducers: {
-    languageChanged(state, action: PayloadAction<Language>) {
-      state.language = action.payload;
-    },
+  reducers: {},
+  extraReducers: builder => {
+    builder
+      .addCase(loadSettings.fulfilled, (state, action) => {
+        state.values = action.payload;
+        state.loaded = true;
+      })
+      // Optimistic: the UI reflects the choice immediately; it is saved in the background.
+      .addCase(updateSettings.pending, (state, action) => {
+        state.values = { ...state.values, ...action.meta.arg };
+      })
+      .addCase(updateSettings.fulfilled, (state, action) => {
+        state.values = action.payload;
+      });
   },
 });
 
-export const { languageChanged } = settingsSlice.actions;
 export const settingsReducer = settingsSlice.reducer;
