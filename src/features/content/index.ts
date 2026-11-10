@@ -18,7 +18,9 @@ export type { ContentIssue, ContentIssueCode } from './model/issues';
 export type {
   ExerciseTypeDefinition,
   ExerciseRendererProps,
+  ExerciseFlow,
   ExerciseTypeLookup,
+  ExerciseTypeResolver,
 } from './model/exerciseType';
 export {
   buildContentCatalog,
@@ -37,3 +39,4 @@ export {
 export type { ContentRepository } from './repository/ContentRepository';
 export { createLocalContentRepository } from './repository/LocalContentRepository';
 export { ContentProvider, useContentCatalog, useContentIssues } from './components/ContentProvider';
+export { ExerciseTypesProvider, useExerciseType } from './components/ExerciseTypesProvider';

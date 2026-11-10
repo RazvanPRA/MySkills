@@ -6,8 +6,9 @@ import { AppRoot } from '../AppRoot';
 async function renderApp(options?: Parameters<typeof createTestDependencies>[0]) {
   const { dependencies } = await createTestDependencies(options);
   await render(<AppRoot dependencies={dependencies} />);
-  // The bootstrap gate (migrations, settings, content) resolves asynchronously.
-  return screen.findByRole('header', { name: /Azi|Today/ });
+  // The bootstrap gate (migrations, settings, content) resolves asynchronously, with real SQL;
+  // the default 1 s findBy timeout is too tight on a busy machine (cold CI, Metro rebuilding).
+  return screen.findByRole('header', { name: /Azi|Today/ }, { timeout: 5000 });
 }
 
 describe('App', () => {

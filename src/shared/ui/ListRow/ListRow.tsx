@@ -6,16 +6,17 @@ import { useInteractiveStyle } from '../internal/interactiveStyle';
 import { createStyles } from './ListRow.styles';
 import type { ListRowProps } from './ListRow.types';
 
-export const rowAccessibilityLabel = (title: string, meta?: string): string =>
-  meta ? `${title}, ${meta}` : title;
+export const rowAccessibilityLabel = (title: string, ...details: (string | undefined)[]): string =>
+  [title, ...details.filter(Boolean)].join(', ');
 
-function ListRowBase({ title, meta, accessory, onPress, disabled = false }: ListRowProps) {
+function ListRowBase(props: ListRowProps) {
+  const { title, meta, accessory, accessoryLabel, onPress, disabled = false } = props;
   const styles = useThemedStyles(createStyles);
   const style = useInteractiveStyle(styles.row, disabled);
   return (
     <Pressable
       accessibilityRole="button"
-      accessibilityLabel={rowAccessibilityLabel(title, meta)}
+      accessibilityLabel={rowAccessibilityLabel(title, meta, accessoryLabel)}
       accessibilityState={{ disabled }}
       disabled={disabled}
       onPress={onPress}

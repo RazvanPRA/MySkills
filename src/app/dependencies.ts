@@ -8,6 +8,7 @@ import { systemClock } from '@/shared/utils/clock';
 import { createIdGenerator } from '@/shared/utils/idGenerator';
 import { createRepositories } from './dependencies.shared';
 import type { AppDependencies } from './dependencyTypes';
+import { exerciseTypeRegistry, testRegistry } from './registries';
 
 /**
  * The only place where concrete implementations are chosen (Local* today, Remote* later).
@@ -19,6 +20,7 @@ export function createDependencies(): AppDependencies {
     clock: systemClock,
     generateId: createIdGenerator({ now: () => systemClock.now().getTime(), random: Math.random }),
     storage: { prepare: () => migrateDatabase(db, migrations) },
+    registries: { exerciseTypes: exerciseTypeRegistry, tests: testRegistry },
     repositories: {
       ...createRepositories(db),
       content: createLocalContentRepository(),

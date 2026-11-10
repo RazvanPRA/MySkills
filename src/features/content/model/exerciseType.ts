@@ -9,10 +9,18 @@ export type ExerciseRendererProps<TPayload, TAnswer> = {
   /** The draft answer, or null before the user interacts. */
   answer: TAnswer | null;
   onAnswerChange: (answer: TAnswer) => void;
-  /** After "Verifică": the answer area is read-only and shows correct/wrong states. */
+  /** After "Verifică" (or "Arată răspunsul"): the answer area shows the solution. */
   revealed: boolean;
   result: EvaluationResult | null;
 };
+
+/**
+ * How the player runs an exercise:
+ * - `check`: the user answers, "Verifică" evaluates and reveals the solution.
+ * - `self_graded`: "Arată răspunsul" reveals a model answer first; the answer is then the
+ *   user's own rating (flashcards).
+ */
+export type ExerciseFlow = 'check' | 'self_graded';
 
 /**
  * Contract of an exercise type (brief §6.1). Each type lives in
@@ -30,6 +38,8 @@ export type ExerciseTypeDefinition<TPayload = unknown, TAnswer = unknown> = {
   Renderer: ComponentType<ExerciseRendererProps<TPayload, TAnswer>>;
   /** Pure and synchronous: (payload, answer) → result. */
   evaluate: (payload: TPayload, answer: TAnswer) => EvaluationResult;
+  /** Defaults to `check`. */
+  flow?: ExerciseFlow;
   /** Maps a result (and optional self-rating) to an FSRS rating. A default mapping applies when absent. */
   toFsrsRating?: (result: EvaluationResult, confidence?: ReviewRating) => ReviewRating;
   /**
@@ -45,4 +55,9 @@ export type ExerciseTypeDefinition<TPayload = unknown, TAnswer = unknown> = {
  */
 export type ExerciseTypeLookup = {
   get: (type: string) => Pick<ExerciseTypeDefinition, 'payloadSchema'> | undefined;
+};
+
+/** What the session player needs: full (type-erased) definitions. The registry satisfies it. */
+export type ExerciseTypeResolver = {
+  get: (type: string) => ExerciseTypeDefinition | undefined;
 };

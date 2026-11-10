@@ -21,6 +21,14 @@ const textPairs: Pair[] = [
   ['text', 'dangerSoft'],
   ['success', 'surface'],
   ['danger', 'surface'],
+  // FeedbackBox: verdict title on the inset background.
+  ['success', 'background'],
+  ['danger', 'background'],
+  // OptionRow: letter on a filled correct / wrong badge.
+  ['surface', 'success'],
+  ['surface', 'danger'],
+  // CodeBlock: line numbers.
+  ['muted', 'codeSurface'],
   ['codeText', 'codeSurface'],
   ['syntaxKeyword', 'codeSurface'],
   ['syntaxString', 'codeSurface'],

@@ -16,6 +16,8 @@ export const linking: LinkingOptions<RootStackParamList> = {
           Settings: 'settings',
         },
       },
+      Topic: 'topic/:topicId',
+      Session: 'session/:sessionId',
     },
   },
 };

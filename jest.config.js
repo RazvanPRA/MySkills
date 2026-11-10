@@ -13,7 +13,7 @@ module.exports = {
   },
   // Packages shipped as untranspiled ESM / Flow that Jest must run through Babel.
   transformIgnorePatterns: [
-    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation|react-native-screens|react-native-safe-area-context|@reduxjs/toolkit|react-redux|redux|reselect|immer|zod)/)',
+    'node_modules/(?!((jest-)?react-native|@react-native(-community)?|@react-navigation|react-native-screens|react-native-safe-area-context|@reduxjs/toolkit|react-redux|redux|reselect|immer|zod|marked)/)',
   ],
   // Only *.test.ts(x) files are suites, so __tests__/ can also hold fixtures and helpers.
   testMatch: ['<rootDir>/src/**/*.test.{ts,tsx}', '<rootDir>/scripts/**/*.test.ts'],

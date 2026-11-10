@@ -1,0 +1,1837 @@
+{
+  "id": "fullstack-devops-soft",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Fundamente, DevOps și soft skills" },
+  "categories": [
+    {
+      "id": "fundamentals",
+      "title": { "ro": "Fundamente full stack" },
+      "testKinds": ["knowledge"],
+      "order": 90
+    },
+    {
+      "id": "devops",
+      "title": { "ro": "DevOps, securitate și observabilitate" },
+      "testKinds": ["knowledge"],
+      "order": 100
+    },
+    {
+      "id": "soft-skills",
+      "title": { "ro": "Soft skills" },
+      "testKinds": ["knowledge"],
+      "order": 110
+    }
+  ],
+  "topics": [
+    {
+      "id": "fundamentals.javascript.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "junior",
+      "summary": {
+        "ro": "Folosești tipurile, funcțiile, metodele de array, `let`/`const` și modulele ES."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.javascript.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici closures, `this`, prototipurile, promisiunile și event loop-ul (microtasks vs macrotasks)."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": ["fundamentals.javascript.junior"]
+    },
+    {
+      "id": "fundamentals.javascript.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "JavaScript" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici gestionarea memoriei și garbage collection, diagnostichezi memory leaks și diferențele dintre runtimes (browser, Node.js)."
+      },
+      "resources": [
+        {
+          "title": "MDN: JavaScript Guide",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide"
+        }
+      ],
+      "tags": ["javascript"],
+      "prerequisites": ["fundamentals.javascript.mid"]
+    },
+    {
+      "id": "fundamentals.typescript.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "junior",
+      "summary": { "ro": "Tipizezi funcții, obiecte și uniuni și lucrezi în modul `strict`." },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.typescript.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "mid",
+      "summary": { "ro": "Folosești generics, narrowing, discriminated unions și utility types." },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": ["fundamentals.typescript.junior"]
+    },
+    {
+      "id": "fundamentals.typescript.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "TypeScript" },
+      "level": "senior",
+      "summary": {
+        "ro": "Scrii tipuri avansate (conditional, mapped, template literal types) și contracte type-safe între frontend și backend."
+      },
+      "resources": [
+        {
+          "title": "TypeScript Handbook",
+          "url": "https://www.typescriptlang.org/docs/handbook/intro.html"
+        }
+      ],
+      "tags": ["typescript"],
+      "prerequisites": ["fundamentals.typescript.mid"]
+    },
+    {
+      "id": "fundamentals.http.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "junior",
+      "summary": { "ro": "Explici metodele HTTP, codurile de status și headerele uzuale." },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.http.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici caching-ul HTTP (`Cache-Control`, ETag), CORS și cookies și diferențele dintre HTTP/1.1, HTTP/2 și HTTP/3."
+      },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": ["fundamentals.http.junior"]
+    },
+    {
+      "id": "fundamentals.http.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "HTTP și web" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi strategii de caching (CDN, invalidare) și depanezi probleme de rețea, TLS și latență."
+      },
+      "resources": [
+        { "title": "MDN: HTTP", "url": "https://developer.mozilla.org/en-US/docs/Web/HTTP" }
+      ],
+      "tags": ["http"],
+      "prerequisites": ["fundamentals.http.mid"]
+    },
+    {
+      "id": "fundamentals.api-design.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "junior",
+      "summary": { "ro": "Proiectezi endpoint-uri REST cu resurse și metode HTTP corecte." },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.api-design.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "mid",
+      "summary": {
+        "ro": "Rezolvi paginarea, versionarea, idempotența și formatul erorilor și cunoști GraphQL."
+      },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": ["fundamentals.api-design.junior"]
+    },
+    {
+      "id": "fundamentals.api-design.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Design de API-uri" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între REST, GraphQL și gRPC, proiectezi contracte care evoluează fără breaking changes și limitezi traficul (rate limiting)."
+      },
+      "resources": [
+        { "title": "Google Cloud: API Design Guide", "url": "https://cloud.google.com/apis/design" }
+      ],
+      "tags": ["api-design"],
+      "prerequisites": ["fundamentals.api-design.mid"]
+    },
+    {
+      "id": "fundamentals.testing.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii unit tests cu aserțiuni clare." },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.testing.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Aplici piramida testării, folosești mocks cu măsură și scrii teste de integrare."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["fundamentals.testing.junior"]
+    },
+    {
+      "id": "fundamentals.testing.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de calitate a echipei: TDD unde merită, contract testing, teste e2e stabile și metrici utile."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: The Practical Test Pyramid",
+          "url": "https://martinfowler.com/articles/practical-test-pyramid.html"
+        }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["fundamentals.testing.mid"]
+    },
+    {
+      "id": "fundamentals.architecture.junior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "junior",
+      "summary": { "ro": "Scrii cod curat: nume clare, funcții mici, fără duplicare." },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": []
+    },
+    {
+      "id": "fundamentals.architecture.mid",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "mid",
+      "summary": { "ro": "Aplici SOLID, design patterns uzuale și separarea pe straturi." },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": ["fundamentals.architecture.junior"]
+    },
+    {
+      "id": "fundamentals.architecture.senior",
+      "categoryId": "fundamentals",
+      "title": { "ro": "Arhitectură" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între monolit modular și microservicii, aplici DDD, documentezi deciziile (ADR) și explici compromisurile de system design."
+      },
+      "resources": [
+        {
+          "title": "Martin Fowler: Software Architecture Guide",
+          "url": "https://martinfowler.com/architecture/"
+        }
+      ],
+      "tags": ["architecture"],
+      "prerequisites": ["fundamentals.architecture.mid"]
+    },
+    {
+      "id": "devops.ci-cd.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "junior",
+      "summary": { "ro": "Lucrezi cu branch-uri și pull requests și rezolvi conflicte." },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.ci-cd.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "mid",
+      "summary": { "ro": "Configurezi pipeline-uri CI (lint, teste, build) cu GitHub Actions." },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": ["devops.ci-cd.junior"]
+    },
+    {
+      "id": "devops.ci-cd.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Git și CI/CD" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi livrarea continuă: trunk-based development, deployment blue-green sau canary, feature flags și rollback."
+      },
+      "resources": [{ "title": "GitHub Actions", "url": "https://docs.github.com/en/actions" }],
+      "tags": ["ci-cd"],
+      "prerequisites": ["devops.ci-cd.mid"]
+    },
+    {
+      "id": "devops.containers.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "junior",
+      "summary": { "ro": "Scrii un Dockerfile și rulezi servicii cu Docker Compose." },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.containers.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "mid",
+      "summary": {
+        "ro": "Optimizezi imaginile (multi-stage, layere, utilizator non-root) și faci deploy pe Kubernetes (Deployment, Service, ConfigMap)."
+      },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": ["devops.containers.junior"]
+    },
+    {
+      "id": "devops.containers.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Containere și Kubernetes" },
+      "level": "senior",
+      "summary": {
+        "ro": "Configurezi resurse, autoscaling, probe și strategii de rollout și depanezi probleme din cluster."
+      },
+      "resources": [
+        { "title": "Docker: Get started", "url": "https://docs.docker.com/get-started/" },
+        { "title": "Kubernetes: Concepts", "url": "https://kubernetes.io/docs/concepts/" }
+      ],
+      "tags": ["containers"],
+      "prerequisites": ["devops.containers.mid"]
+    },
+    {
+      "id": "devops.cloud.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "junior",
+      "summary": {
+        "ro": "Cunoști serviciile de bază din cloud: compute, storage și baze de date gestionate."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.cloud.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "mid",
+      "summary": {
+        "ro": "Descrii infrastructura ca cod (Terraform) și gestionezi medii separate și secrete."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": ["devops.cloud.junior"]
+    },
+    {
+      "id": "devops.cloud.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Cloud și infrastructură" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi infrastructură scalabilă, rezistentă și eficientă ca cost, cu rețea și IAM configurate corect."
+      },
+      "resources": [
+        {
+          "title": "Terraform Tutorials",
+          "url": "https://developer.hashicorp.com/terraform/tutorials"
+        }
+      ],
+      "tags": ["cloud"],
+      "prerequisites": ["devops.cloud.mid"]
+    },
+    {
+      "id": "devops.security.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "junior",
+      "summary": { "ro": "Cunoști OWASP Top 10 și nu pui niciodată secrete în cod." },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.security.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Previi XSS, CSRF, SQL injection și SSRF, stochezi parolele corect și gestionezi sesiunile în siguranță."
+      },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": ["devops.security.junior"]
+    },
+    {
+      "id": "devops.security.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Securitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Faci threat modeling, revizuiești autentificarea (OAuth2, OIDC), securizezi supply chain-ul și coordonezi răspunsul la incidente."
+      },
+      "resources": [{ "title": "OWASP Top 10", "url": "https://owasp.org/www-project-top-ten/" }],
+      "tags": ["security"],
+      "prerequisites": ["devops.security.mid"]
+    },
+    {
+      "id": "devops.observability.junior",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "junior",
+      "summary": { "ro": "Scrii loguri utile, cu niveluri potrivite." },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": []
+    },
+    {
+      "id": "devops.observability.mid",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești logging structurat, metrici și tracing distribuit (OpenTelemetry) și construiești dashboard-uri."
+      },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": ["devops.observability.junior"]
+    },
+    {
+      "id": "devops.observability.senior",
+      "categoryId": "devops",
+      "title": { "ro": "Observabilitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești SLI, SLO și alerte, conduci investigarea incidentelor și postmortem-uri fără vinovați."
+      },
+      "resources": [
+        { "title": "OpenTelemetry Docs", "url": "https://opentelemetry.io/docs/" },
+        {
+          "title": "Google SRE Book: Service Level Objectives",
+          "url": "https://sre.google/sre-book/service-level-objectives/"
+        }
+      ],
+      "tags": ["observability"],
+      "prerequisites": ["devops.observability.mid"]
+    },
+    {
+      "id": "soft-skills.communication.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "junior",
+      "summary": { "ro": "Comunici clar progresul și ceri ajutor la timp." },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.communication.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Explici decizii tehnice colegilor non-tehnici și scrii documentație utilă."
+      },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": ["soft-skills.communication.junior"]
+    },
+    {
+      "id": "soft-skills.communication.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Comunicare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Influențezi decizii fără autoritate formală, moderezi discuții dificile și scrii documente de design convingătoare."
+      },
+      "resources": [],
+      "tags": ["communication"],
+      "prerequisites": ["soft-skills.communication.mid"]
+    },
+    {
+      "id": "soft-skills.code-review.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "junior",
+      "summary": { "ro": "Primești feedback la code review și îl aplici." },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.code-review.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "mid",
+      "summary": {
+        "ro": "Faci code review constructiv, concentrat pe corectitudine și lizibilitate."
+      },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": ["soft-skills.code-review.junior"]
+    },
+    {
+      "id": "soft-skills.code-review.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Code review" },
+      "level": "senior",
+      "summary": {
+        "ro": "Stabilești standardele de review ale echipei și folosești review-ul ca instrument de mentorat."
+      },
+      "resources": [
+        {
+          "title": "Google Engineering Practices: Code Review",
+          "url": "https://google.github.io/eng-practices/review/"
+        }
+      ],
+      "tags": ["code-review"],
+      "prerequisites": ["soft-skills.code-review.mid"]
+    },
+    {
+      "id": "soft-skills.ownership.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "junior",
+      "summary": { "ro": "Îți termini task-urile și semnalezi blocajele din timp." },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.ownership.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Estimezi realist, împarți munca în pași livrabili și duci feature-urile cap-coadă."
+      },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": ["soft-skills.ownership.junior"]
+    },
+    {
+      "id": "soft-skills.ownership.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Ownership și livrare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Răspunzi de rezultate la nivel de produs, negociezi scope-ul și gestionezi riscurile și datoria tehnică."
+      },
+      "resources": [],
+      "tags": ["ownership"],
+      "prerequisites": ["soft-skills.ownership.mid"]
+    },
+    {
+      "id": "soft-skills.leadership.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "junior",
+      "summary": { "ro": "Împărtășești cu echipa ce ai învățat." },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.leadership.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "mid",
+      "summary": { "ro": "Ghidezi colegii juniori prin pair programming și onboarding." },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": ["soft-skills.leadership.junior"]
+    },
+    {
+      "id": "soft-skills.leadership.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Mentorat și leadership" },
+      "level": "senior",
+      "summary": {
+        "ro": "Mentorezi constant, ridici nivelul echipei și conduci inițiative tehnice între echipe."
+      },
+      "resources": [{ "title": "StaffEng: Guides", "url": "https://staffeng.com/guides/" }],
+      "tags": ["leadership"],
+      "prerequisites": ["soft-skills.leadership.mid"]
+    },
+    {
+      "id": "soft-skills.behavioral.junior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "junior",
+      "summary": { "ro": "Îți prezinți clar experiența și proiectele." },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": []
+    },
+    {
+      "id": "soft-skills.behavioral.mid",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "mid",
+      "summary": { "ro": "Răspunzi cu metoda STAR, cu exemple concrete și rezultate măsurabile." },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": ["soft-skills.behavioral.junior"]
+    },
+    {
+      "id": "soft-skills.behavioral.senior",
+      "categoryId": "soft-skills",
+      "title": { "ro": "Interviuri comportamentale" },
+      "level": "senior",
+      "summary": {
+        "ro": "Spui povești de impact la nivel senior: conflicte rezolvate, decizii greșite și ce ai învățat din ele, influență asupra arhitecturii."
+      },
+      "resources": [],
+      "tags": ["behavioral"],
+      "prerequisites": ["soft-skills.behavioral.mid"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "fundamentals.javascript.mid.q1",
+      "topicId": "fundamentals.javascript.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "În ce ordine apar literele în consolă?\n\n~~~js\nconsole.log('A');\nsetTimeout(() => console.log('B'), 0);\nPromise.resolve().then(() => console.log('C'));\nqueueMicrotask(() => console.log('D'));\nconsole.log('E');\n~~~"
+      },
+      "explanation": {
+        "ro": "Codul sincron rulează întâi: A, E. La golirea call stack-ului, event loop-ul execută **toate** microtask-urile, în ordinea programării: promisiunea (C), apoi `queueMicrotask` (D). Abia apoi trece la următorul macrotask, timer-ul (B), chiar dacă are întârziere 0.\n\nConsecință practică: un lanț lung de microtask-uri (ex. promisiuni recursive) poate bloca randarea și timer-ele, pentru că browserul nu ajunge la următorul macrotask până nu se golește coada de microtask-uri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`A C D E B`" },
+          { "ro": "`A E B C D`" },
+          { "ro": "`A E C D B`" },
+          { "ro": "`A B C D E`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "fundamentals.typescript.mid.q1",
+      "topicId": "fundamentals.typescript.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Compilează funcția în modul `strict`?\n\n~~~ts\ntype Result =\n  | { ok: true; value: number }\n  | { ok: false; error: string };\n\nfunction show(r: Result): string {\n  if (r.ok) {\n    return r.value.toFixed(2);\n  }\n  return r.error.toUpperCase();\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`Result` e o **discriminated union**: câmpul literal `ok` identifică varianta. După `if (r.ok)`, TypeScript știe că `r` e prima variantă; după `return`, în restul funcției rămâne doar a doua.\n\nPattern-ul înlocuiește excepțiile pentru erorile așteptate și se combină bine cu verificarea exhaustivă: o ramură `default` care atribuie valoarea unei variabile `never` semnalează la compilare orice variantă nouă netratată."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Doar cu un cast `r as { ok: true; value: number }`" },
+          { "ro": "Nu: `value` nu există pe tipul `Result`" },
+          { "ro": "Doar dacă `strict` e dezactivat" },
+          {
+            "ro": "Da: verificarea lui `ok` restrânge tipul, deci fiecare ramură vede doar câmpurile ei"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "fundamentals.http.mid.q1",
+      "topicId": "fundamentals.http.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care metode HTTP sunt **idempotente** conform specificației?" },
+      "explanation": {
+        "ro": "Idempotent înseamnă că efectul a N cereri identice e același ca al uneia. `PUT` înlocuiește resursa cu aceeași reprezentare, iar `DELETE` repetat lasă resursa tot ștearsă (chiar dacă al doilea răspuns e 404). `GET` e și **safe**: nu modifică nimic.\n\n`POST` creează de obicei o resursă nouă la fiecare apel. `PATCH` nu e garantat idempotent (ex. „incrementează cu 1”). Contează pentru retry-uri: clienții și proxy-urile pot repeta automat doar cererile idempotente. Pentru `POST` sigur la retry (plăți), folosești un header `Idempotency-Key`."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "`DELETE`" },
+          { "ro": "`POST`" },
+          { "ro": "`GET`" },
+          { "ro": "`PATCH`" },
+          { "ro": "`PUT`" }
+        ],
+        "correctIndices": [0, 2, 4]
+      }
+    },
+    {
+      "id": "fundamentals.api-design.senior.f1",
+      "topicId": "fundamentals.api-design.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum faci schimbări într-un API public **fără să strici clienții** existenți? Când introduci o versiune nouă?"
+      },
+      "explanation": {
+        "ro": "Răspunsul slab e „pun /v2 în URL”. Un senior tratează versionarea ca pe un cost și arată cum îl eviți cât mai mult, cu date despre cine folosește ce."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Preferi schimbările **aditive**: câmpuri noi opționale, endpoint-uri noi, valori noi documentate ca posibile. Clienții sunt scriși ca „tolerant readers”: ignoră câmpurile necunoscute.\n\nO schimbare care strică (redenumire, tip schimbat, câmp devenit obligatoriu, semantică schimbată) se face prin **expand–contract**: adaugi varianta nouă lângă cea veche, migrezi clienții, anunți deprecierea (headerele `Deprecation` și `Sunset`, documentație, metrici de utilizare), iar abia apoi elimini varianta veche.\n\nO versiune nouă (`/v2` sau un header de versiune) apare doar când schimbarea e incompatibilă și amplă. Fiecare versiune activă e cod de întreținut și de testat. Contract tests (ex. consumer-driven) prind schimbările incompatibile înainte de release."
+        },
+        "keyPoints": [
+          { "ro": "Schimbări aditive, tolerant reader" },
+          { "ro": "Expand–contract cu deprecation și sunset" },
+          { "ro": "Versiune nouă doar pentru rupturi mari" },
+          { "ro": "Contract tests și metrici de utilizare" }
+        ]
+      }
+    },
+    {
+      "id": "fundamentals.architecture.senior.f1",
+      "topicId": "fundamentals.architecture.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Monolit modular sau microservicii pentru un produs nou, construit de o echipă de 6 oameni? Argumentează."
+      },
+      "explanation": {
+        "ro": "Intervievatorul nu caută un răspuns „corect” universal, ci compromisurile numite explicit și o decizie legată de context (mărimea echipei, maturitatea domeniului, cerințele de scalare)."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Pentru o echipă mică și un domeniu încă neclar, un **monolit modular** e de obicei alegerea corectă: un singur deploy, tranzacții locale, refactorizări ușoare peste granițe, debugging simplu și cost operațional mic.\n\n„Modular” e partea importantă: module pe domenii, cu API-uri interne explicite, fără acces direct la tabelele altui modul, cu reguli de dependență verificate automat. Așa păstrezi opțiunea de a extrage un serviciu mai târziu.\n\nMicroserviciile rezolvă probleme organizaționale și de scalare: echipe multe care livrează independent, componente cu cerințe de scalare sau de disponibilitate foarte diferite. Plătești cu rețea (latență, eșecuri parțiale), consistență eventuală, observabilitate distribuită și o platformă de întreținut. Extragi un serviciu când apare un motiv concret (scalare, izolarea unui risc, o echipă separată), nu preventiv."
+        },
+        "keyPoints": [
+          { "ro": "Granițe de modul clare din prima zi" },
+          { "ro": "Microserviciile rezolvă probleme organizaționale" },
+          { "ro": "Costuri: rețea, consistență eventuală, operare" },
+          { "ro": "Extragi un serviciu pentru un motiv concret" }
+        ]
+      }
+    },
+    {
+      "id": "devops.cloud.junior.q1",
+      "topicId": "devops.cloud.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Unde păstrezi parola bazei de date pentru o aplicație rulată în cloud?" },
+      "explanation": {
+        "ro": "Secretele nu intră niciodată în cod, în repository sau în imagini: istoricul Git și layerele imaginilor păstrează valoarea chiar după ce o ștergi. Un secret manager oferă control al accesului, audit și rotație, iar aplicația primește valoarea la pornire (variabilă de mediu sau fișier montat).\n\nDacă un secret a ajuns totuși în Git, nu e suficient să-l ștergi din cod: îl rotești imediat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Hardcodată în configurația aplicației" },
+          { "ro": "În imaginea Docker, la build" },
+          { "ro": "Într-un fișier `.env` comis în repository" },
+          { "ro": "Într-un secret manager (ex. AWS Secrets Manager, Vault), injectată la runtime" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "devops.containers.mid.q1",
+      "topicId": "devops.containers.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Ce practici reduc dimensiunea și riscul unei imagini Docker de producție?"
+      },
+      "explanation": {
+        "ro": "Multi-stage separă build-ul (compilatoare, dependențe de dezvoltare) de imaginea finală, care devine mai mică și are o suprafață de atac mai redusă. Utilizatorul non-root limitează ce poate face un atacator care exploatează aplicația. `.dockerignore` micșorează contextul de build și împiedică scurgerea de secrete în layere.\n\n`latest` face build-urile nereproductibile; fixează versiunea (ideal și digest-ul). Copierea întregului repository aduce secrete, istoric și fișiere inutile."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Imaginea de bază cu tag-ul `latest`" },
+          { "ro": "Build multi-stage: imaginea finală conține doar artefactele și runtime-ul" },
+          { "ro": "Copiezi tot repository-ul în imagine, pentru orice eventualitate" },
+          { "ro": "Procesul rulează cu un utilizator non-root" },
+          { "ro": "Un `.dockerignore` care exclude `node_modules`, `.git` și fișierele `.env`" }
+        ],
+        "correctIndices": [1, 3, 4]
+      }
+    },
+    {
+      "id": "devops.security.mid.q1",
+      "topicId": "devops.security.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un comentariu salvat de un utilizator conține `<img src=x onerror=alert(1)>`, iar scriptul rulează în browserul celorlalți utilizatori care văd pagina. Ce vulnerabilitate e și care e apărarea principală?"
+      },
+      "explanation": {
+        "ro": "Payload-ul e salvat pe server și servit altor utilizatori, deci e **stored** XSS. Apărarea principală e escaping-ul corect pentru contextul în care afișezi (HTML, atribut, URL, JavaScript). React face escaping implicit în JSX; riscul apare la `dangerouslySetInnerHTML` sau `innerHTML`, unde ai nevoie de sanitizare (ex. DOMPurify).\n\nContent Security Policy fără `unsafe-inline` blochează execuția scripturilor injectate dacă escaping-ul scapă ceva. Cookie-urile de sesiune `HttpOnly` limitează paguba, pentru că scriptul nu le poate citi."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "CSRF; un token anti-CSRF" },
+          { "ro": "SQL injection; interogări parametrizate" },
+          { "ro": "Reflected XSS; limitarea lungimii comentariului" },
+          { "ro": "Stored XSS; escaping contextual la afișare, cu CSP ca a doua linie de apărare" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "devops.ci-cd.senior.q1",
+      "topicId": "devops.ci-cd.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să redenumești o coloană folosită de aplicație, fără downtime, cu deploy-uri rolling. Care e abordarea corectă?"
+      },
+      "explanation": {
+        "ro": "În timpul unui deploy rolling sau canary, versiunea veche și cea nouă rulează **simultan** pe aceeași bază de date. O redenumire într-un singur pas strică instanțele vechi în momentul în care rulează migrarea, iar un rollback al codului devine imposibil.\n\nExpand–contract ține schema compatibilă cu ambele versiuni la fiecare pas. Costul e mai multe release-uri; câștigul e zero downtime și rollback sigur la fiecare etapă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Oprești aplicația noaptea și faci redenumirea" },
+          { "ro": "Un feature flag în interfață, cu aceeași migrare într-un singur pas" },
+          {
+            "ro": "Expand–contract: adaugi coloana nouă, scrii în ambele, migrezi datele, muți citirile, apoi ștergi coloana veche, în release-uri separate"
+          },
+          { "ro": "Un singur `ALTER TABLE ... RENAME COLUMN` în același deploy cu codul nou" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "devops.observability.senior.f1",
+      "topicId": "devops.observability.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ce sunt **SLI, SLO și error budget** și cum le folosești ca să decizi între funcționalități noi și stabilitate?"
+      },
+      "explanation": {
+        "ro": "Valoarea conceptului e că transformă o dispută subiectivă („e prea instabil”, „livrăm prea încet”) într-o decizie bazată pe date, acceptată de inginerie și de produs."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**SLI** (indicator) e o măsură a experienței utilizatorului, de exemplu procentul de cereri reușite sub 300 ms. **SLO** (obiectiv) e ținta pentru SLI pe o perioadă: „99,9% din cereri reușite și sub 300 ms, pe 30 de zile”. **Error budget**-ul e restul: 0,1% din cereri pot eșua în perioada respectivă.\n\nCât timp bugetul nu e consumat, echipa livrează funcționalități și își asumă riscuri (deploy-uri dese, experimente). Când bugetul se apropie de zero, prioritatea trece pe stabilitate: îngheți release-urile riscante și lucrezi la cauzele incidentelor.\n\nAlertele se pun pe **rata de consum a bugetului** (burn rate), nu pe fiecare vârf de CPU, deci anunță ce simt utilizatorii. SLO-urile se aleg împreună cu produsul: 100% nu e o țintă realistă."
+        },
+        "keyPoints": [
+          { "ro": "SLI măsoară experiența utilizatorului" },
+          { "ro": "SLO = țintă pe o fereastră de timp" },
+          { "ro": "Error budget decide între viteză și stabilitate" },
+          { "ro": "Alerte pe burn rate" }
+        ]
+      }
+    },
+    {
+      "id": "soft-skills.communication.junior.q1",
+      "topicId": "soft-skills.communication.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 30,
+      "prompt": { "ro": "Ești blocat de o zi pe un bug și nu mai ai idei. Ce faci?" },
+      "explanation": {
+        "ro": "A cere ajutor la timp e o abilitate profesională, nu o slăbiciune. O zi blocat pe ceva ce un coleg ar debloca în 15 minute e un cost pentru echipă. Când ceri ajutor, spune contextul, ce ai încercat și ce ai exclus: colegul nu repetă pașii, iar uneori găsești singur soluția doar formulând problema.\n\nÎn interviuri, întrebarea testează dacă semnalezi blocajele devreme și dacă îți respecți timpul colegilor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Treci la alt task fără să spui nimănui" },
+          { "ro": "Mai aștepți câteva zile, ca să nu-i deranjezi pe ceilalți" },
+          { "ro": "Rescrii modulul de la zero" },
+          { "ro": "Ceri ajutor, explicând ce ai încercat deja și ce ipoteze ai eliminat" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "soft-skills.behavioral.mid.q1",
+      "topicId": "soft-skills.behavioral.mid",
+      "level": "mid",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Care e structura metodei **STAR**, folosită în interviurile comportamentale?"
+      },
+      "explanation": {
+        "ro": "**S**ituația (contextul, pe scurt), **T**ask-ul (ce aveai tu de rezolvat), **A**cțiunile (ce ai făcut **tu**, nu „noi”) și **R**ezultatul (măsurabil, dacă se poate: „latența a scăzut de la 800 la 200 ms”).\n\nGreșeli frecvente: prea mult context și prea puțină acțiune, „noi” în loc de „eu”, niciun rezultat concret. La nivel senior adaugi ce ai învățat și ce ai face altfel."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Situation, Target, Analysis, Response" },
+          { "ro": "Situation, Task, Action, Result" },
+          { "ro": "Start, Talk, Act, Reflect" },
+          { "ro": "Strategy, Tactics, Action, Review" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "soft-skills.code-review.mid.q1",
+      "topicId": "soft-skills.code-review.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un coleg deschide un pull request de 2.000 de linii care amestecă un refactor cu o funcționalitate nouă. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Un PR uriaș nu poate fi revizuit cu adevărat: review-ul devine superficial, iar bug-urile trec. Separat, refactorul fără schimbare de comportament se verifică repede, iar funcționalitatea nouă rămâne vizibilă și testabilă.\n\nTonul contează: explici motivul (risc, timp de review, rollback mai simplu), propui cum să fie împărțit și lași formatarea pe seama tool-urilor automate, nu a comentariilor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lași 80 de comentarii despre stilul codului" },
+          {
+            "ro": "Ceri să-l împartă în PR-uri mai mici (refactorul separat de funcționalitate) și explici de ce reduce riscul"
+          },
+          { "ro": "Îl aprobi fără review, pentru că e urgent" },
+          { "ro": "Rescrii tu codul și deschizi alt PR" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "soft-skills.ownership.senior.f1",
+      "topicId": "soft-skills.ownership.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Product managerul vrea o funcționalitate până vineri, dar estimarea ta realistă e de două săptămâni. Cum gestionezi situația?"
+      },
+      "explanation": {
+        "ro": "Întrebarea testează dacă poți negocia ca partener al produsului: nu accepți orbește termenul, dar nici nu blochezi. Un exemplu real din experiența ta face răspunsul mult mai puternic."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Întâi clarifici ce problemă rezolvă funcționalitatea și de ce contează data (o demonstrație, un client, o campanie). Uneori termenul e ferm, alteori e doar o preferință.\n\nApoi propui opțiuni, nu un „nu”:\n\n- un **scope redus** care rezolvă nevoia principală până vineri;\n- etape: o primă versiune vineri, restul ulterior;\n- compromisuri explicite (ex. fără un caz rar, cu un proces manual temporar), cu datoria tehnică notată și planificată.\n\nComunici riscurile devreme și în scris și rămâi onest cu estimarea: nu promiți vineri ca să eviți o discuție incomodă. Dacă termenul e ferm și scope-ul nu se poate reduce, escaladezi cu date (ce s-ar putea amâna din altă parte)."
+        },
+        "keyPoints": [
+          { "ro": "Înțelegi de ce contează data" },
+          { "ro": "Opțiuni: scope redus, etape, compromisuri" },
+          { "ro": "Riscuri comunicate devreme și în scris" },
+          { "ro": "Estimare onestă, escaladare cu date" }
+        ]
+      }
+    },
+    {
+      "id": "soft-skills.behavioral.senior.f1",
+      "topicId": "soft-skills.behavioral.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "„Povestește despre o decizie tehnică greșită pe care ai luat-o.” Ce urmărește intervievatorul și cum structurezi răspunsul?"
+      },
+      "explanation": {
+        "ro": "Răspunsurile care pică: „sunt prea perfecționist”, vina pusă pe alții, sau o greșeală fără nicio lecție. La nivel senior contează mai ales schimbarea de proces care a urmat."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Intervievatorul urmărește **asumarea, judecata și învățarea**: dacă recunoști o greșeală reală (nu una deghizată în calitate), cum ai observat-o, ce ai făcut ca să limitezi impactul și ce ai schimbat apoi în felul de lucru.\n\nStructura (STAR, plus lecția):\n\n- contextul și decizia, cu motivele ei de atunci (ca să se vadă că a fost rezonabilă cu informațiile pe care le aveai);\n- semnalele care au arătat că e greșită și impactul, cu cifre;\n- ce ai făcut: comunicare, remediere, eventual revenire la soluția veche;\n- ce ai învățat și ce faci acum diferit (un ADR, un spike înainte de alegerea unei tehnologii, metrici urmărite de la început).\n\nAlegi o greșeală cu impact real, dar recuperabil, și vorbești la persoana întâi."
+        },
+        "keyPoints": [
+          { "ro": "Greșeală reală, asumată la persoana întâi" },
+          { "ro": "Decizia era rezonabilă cu informațiile de atunci" },
+          { "ro": "Impact, reacție, remediere" },
+          { "ro": "Lecție transformată în proces" }
+        ]
+      }
+    },
+    {
+      "id": "fundamentals.javascript.junior.q1",
+      "topicId": "fundamentals.javascript.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce se întâmplă la rularea codului?\n\n~~~js\nconst user = { name: 'Ana' };\nuser.name = 'Ion';   // linia 2\nuser = { name: 'Maria' };   // linia 3\n~~~"
+      },
+      "explanation": {
+        "ro": "`const` interzice **reatribuirea variabilei**, nu modificarea valorii. `user` indică mereu același obiect, dar proprietățile obiectului se pot schimba.\n\nDacă vrei un obiect care nu se poate modifica, `Object.freeze(user)` (superficial: obiectele imbricate rămân modificabile) sau, în TypeScript, `Readonly<T>` și `as const`, verificate la compilare. Folosește `const` implicit și `let` doar când variabila chiar se reatribuie: codul spune astfel ce se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Ambele linii funcționează" },
+          {
+            "ro": "Linia 2 funcționează; linia 3 aruncă `TypeError: Assignment to constant variable`"
+          },
+          { "ro": "Ambele linii aruncă eroare, pentru că obiectul e constant" },
+          { "ro": "Linia 2 aruncă eroare, linia 3 funcționează" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "fundamentals.typescript.junior.q1",
+      "topicId": "fundamentals.typescript.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Cu `strict` activat, de ce nu se compilează funcția și cum o repari?\n\n~~~ts\nfunction initials(name: string | undefined): string {\n  return name.slice(0, 2).toUpperCase();\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`strictNullChecks` (parte din `strict`) face ca `undefined` și `null` să fie tipuri separate. Accesul la o proprietate pe o valoare care poate fi `undefined` e o eroare de compilare, nu un crash la runtime.\n\nDupă o verificare (`if`, `typeof`, `??`, `?.`), TypeScript **restrânge** (narrowing) tipul în restul blocului. Evită `name!.slice(...)`: operatorul `!` doar reduce compilatorul la tăcere, iar crash-ul revine la runtime."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Tipul returnat trebuie să fie `string | undefined`" },
+          { "ro": "`slice` nu există pe tipul `string`" },
+          { "ro": "Uniunile nu sunt permise ca tip de parametru" },
+          {
+            "ro": "`name` poate fi `undefined`; verifici întâi valoarea, de exemplu `if (!name) return '';`, iar TypeScript restrânge tipul la `string`"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "fundamentals.http.junior.q1",
+      "topicId": "fundamentals.http.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un utilizator autentificat încearcă să șteargă articolul altui utilizator, iar regulile nu îi permit. Ce status HTTP returnează API-ul?"
+      },
+      "explanation": {
+        "ro": "`401` înseamnă „nu știu cine ești”: lipsește autentificarea sau token-ul e invalid ori expirat. Clientul ar trebui să se autentifice (din nou). `403` înseamnă „știu cine ești, dar nu ai voie”: re-autentificarea nu schimbă nimic.\n\nUneori se returnează `404` în loc de `403`, ca să nu confirmi că resursa există, de exemplu pentru documentele private ale altor utilizatori. `400` e pentru o cerere malformată, iar `500` pentru erori ale serverului, niciodată pentru reguli de business."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`500 Internal Server Error`" },
+          { "ro": "`400 Bad Request`" },
+          { "ro": "`403 Forbidden`" },
+          { "ro": "`401 Unauthorized`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "fundamentals.api-design.mid.q1",
+      "topicId": "fundamentals.api-design.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un feed are milioane de postări, iar postările noi apar continuu. Clientul încarcă pagini de câte 20. Ce paginare alegi?"
+      },
+      "explanation": {
+        "ro": "Offset are două probleme pe un feed mare și viu:\n\n- **Performanță:** `OFFSET 9980` citește și aruncă 9 980 de rânduri; costul crește cu fiecare pagină.\n- **Corectitudine:** dacă apar postări noi între cereri, elementele se mută între pagini, iar clientul vede duplicate sau sare peste unele.\n\nCursorul (de obicei opac, codificat în Base64) indică poziția exactă, iar cu un index pe `(created_at, id)` fiecare pagină costă la fel. Id-ul din cursor departajează postările cu același timestamp. Compromisul: nu poți sări direct la pagina 500, ceea ce un feed rareori cere."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cursor (keyset): clientul trimite cursorul ultimului element, iar serverul cere `WHERE (created_at, id) < (...) ORDER BY created_at DESC, id DESC LIMIT 20`"
+          },
+          { "ro": "Paginare după numărul paginii, cu un cache pe server al fiecărei pagini" },
+          { "ro": "Returnezi tot feed-ul și paginezi pe client" },
+          { "ro": "Offset: `?page=500&size=20`, tradus în `OFFSET 9980 LIMIT 20`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.testing.mid.q1",
+      "topicId": "fundamentals.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre practicile de testare de mai jos sunt sănătoase?" },
+      "explanation": {
+        "ro": "Mock-urile pe fiecare clasă internă cuplează testele de implementare: orice refactorizare le strică, deși comportamentul e același. Simulează doar ce e lent, nedeterminist sau extern.\n\nUn test cu un singur comportament și un nume clar (`returnează 404 când comanda nu există`) spune exact ce s-a stricat când pică.\n\nCoverage-ul arată ce cod a rulat, nu ce a fost verificat: un test fără aserțiuni crește coverage-ul. Testele dependente de ordine pică aleator când rulează în paralel sau separat; fiecare test își creează propriile date."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Fiecare test verifică un singur comportament și are un nume care îl descrie" },
+          {
+            "ro": "Testele rulează într-o anumită ordine, ca să refolosească datele create de testele anterioare"
+          },
+          { "ro": "Un coverage de 100% garantează că nu există bug-uri" },
+          {
+            "ro": "Testele de integrare verifică împreună codul tău și infrastructura reală (baza de date, serializarea)"
+          },
+          {
+            "ro": "Simulezi granițele pe care nu le controlezi (API-uri externe, timpul, generarea de id-uri), nu fiecare clasă internă"
+          }
+        ],
+        "correctIndices": [0, 3, 4]
+      }
+    },
+    {
+      "id": "fundamentals.architecture.mid.q1",
+      "topicId": "fundamentals.architecture.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce principiu SOLID încalcă `OrderService` și ce schimbi?\n\n~~~ts\nclass OrderService {\n  private payments = new StripeClient(process.env.STRIPE_KEY!);\n\n  async checkout(order: Order) {\n    await this.payments.charge(order.total);\n  }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Logica de business (checkout) depinde direct de un detaliu de infrastructură (Stripe), pe care îl și construiește. Consecințe: nu poți testa `checkout` fără Stripe, nu poți schimba furnizorul fără să modifici serviciul, iar configurarea (`process.env`) e ascunsă în interiorul clasei.\n\nCu inversarea dependenței, serviciul declară ce are nevoie (`PaymentGateway.charge`), iar compunerea aplicației decide implementarea: Stripe în producție, un fake în teste. Un `switch` pe furnizori ar fi exact problema pe care Open/Closed o descrie, nu soluția."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Dependency Inversion: serviciul creează o implementare concretă; definești o interfață `PaymentGateway` și o primești prin constructor"
+          },
+          { "ro": "Open/Closed: trebuie adăugat un `switch` pentru fiecare furnizor de plăți" },
+          { "ro": "Liskov Substitution: `StripeClient` nu poate înlocui `OrderService`" },
+          { "ro": "Interface Segregation: `Order` are prea multe câmpuri" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.javascript.senior.q1",
+      "topicId": "fundamentals.javascript.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Memoria unui serviciu Node.js crește constant până când procesul e oprit cu OOM. Două heap snapshot-uri, la o oră distanță, arată că diferența e un `Map` declarat la nivel de modul, cu milioane de intrări. Ce faci?\n\n~~~js\nconst cache = new Map();\n\nexport async function getUser(id) {\n  if (!cache.has(id)) cache.set(id, await db.users.find(id));\n  return cache.get(id);\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Garbage collector-ul eliberează doar obiectele **la care nu mai există referințe**. Cache-ul e accesibil din modul pe toată durata procesului, deci fiecare utilizator citit rămâne în memorie. Nu e un bug al GC-ului, ci o scurgere logică: o structură care doar crește.\n\nSoluții: un cache cu limită și expirare (de exemplu `lru-cache`), un cache extern (Redis) partajat între instanțe sau `WeakMap`, când cheile sunt obiecte cu propria durată de viață. Mai multă memorie doar amână crash-ul. Metoda de diagnostic e cea din enunț: snapshot-uri comparate în timp și „retainers” pentru obiectele care cresc."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Limitezi cache-ul: LRU cu dimensiune maximă și TTL; un `Map` la nivel de modul trăiește cât procesul, iar intrările lui nu sunt colectate niciodată"
+          },
+          { "ro": "Apelezi `global.gc()` periodic" },
+          { "ro": "Înlocuiești `Map` cu un obiect simplu `{}`" },
+          { "ro": "Mărești `--max-old-space-size`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.typescript.senior.q1",
+      "topicId": "fundamentals.typescript.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce tip are `G`?\n\n~~~ts\ntype Getters<T> = {\n  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];\n};\n\ntype G = Getters<{ name: string; age: number }>;\n~~~"
+      },
+      "explanation": {
+        "ro": "E un **mapped type** cu **key remapping** (`as`): parcurge cheile lui `T` și redenumește fiecare cheie folosind un **template literal type**. `Capitalize` face prima literă mare, iar `string & K` păstrează doar cheile de tip string (cheile pot fi și `number` sau `symbol`).\n\nAceleași mecanisme stau în spatele tipurilor generate din scheme: rute tipizate, event emitters cu nume și payload verificate, clienți de API derivați din contract. Folosește-le pentru a elimina duplicarea dintre tipuri, nu ca exercițiu de stil: un tip pe care colegii nu-l pot citi e o datorie."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ name: () => string; age: () => number }`" },
+          { "ro": "`{ getname: () => string; getage: () => number }`" },
+          { "ro": "`never`" },
+          { "ro": "`{ getName: () => string; getAge: () => number }`" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "fundamentals.http.senior.q1",
+      "topicId": "fundamentals.http.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Proiectezi caching-ul unei aplicații web servite printr-un CDN. Care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Strategia standard: assets imutabile, cu hash în nume, cache-uite „pentru totdeauna”; orice schimbare produce alt nume, deci nu e nevoie de invalidare. HTML-ul, punctul de intrare, se revalidează (ETag, `304 Not Modified`), ca un deploy nou să fie vizibil imediat.\n\n`no-cache` permite stocarea, dar cere revalidare înainte de folosire; `no-store` interzice stocarea. `private` limitează cache-ul la browser: e obligatoriu pentru răspunsurile personalizate, altfel CDN-ul poate servi datele unui utilizator altuia. Pentru API-uri, `stale-while-revalidate` și cheile de cache (header-ul `Vary`) completează strategia."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Fișierele cu hash în nume (`app.3f9a1c.js`) pot primi `Cache-Control: public, max-age=31536000, immutable`"
+          },
+          { "ro": "`no-cache` înseamnă că răspunsul nu poate fi stocat deloc" },
+          { "ro": "Răspunsurile marcate `private` pot fi păstrate în cache-ul CDN-ului" },
+          {
+            "ro": "Documentul HTML primește `no-cache`, ca să fie revalidat la fiecare cerere și să indice mereu ultimele assets"
+          },
+          {
+            "ro": "`s-maxage` setează cât păstrează CDN-ul un răspuns, separat de `max-age` pentru browser"
+          }
+        ],
+        "correctIndices": [0, 3, 4]
+      }
+    },
+    {
+      "id": "fundamentals.testing.senior.f1",
+      "topicId": "fundamentals.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Echipa ta are 90% coverage și o suită e2e cu 15% teste instabile, dar bug-urile ajung în continuare în producție. Ce schimbi în strategia de calitate?"
+      },
+      "explanation": {
+        "ro": "Coverage-ul mare cu bug-uri în producție arată că testele verifică ce e ușor de testat, nu ce se strică. Întrebarea testează dacă tratezi calitatea ca pe un sistem, cu feedback și metrici, nu ca pe un procent."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Întâi **măsor** ce se întâmplă, apoi schimb:\n\n- **Bug-urile scăpate:** le analizez pe cele din ultimele luni. Ce tip de test le-ar fi prins? Adesea sunt la granițe (integrare, contracte, date reale), nu în logica deja acoperită de unit tests.\n- **Testele instabile:** le pun în carantină imediat (rulează, dar nu blochează), cu un owner și un termen. O suită care pică aleator învață echipa să ignore roșul, iar atunci nici testele bune nu mai protejează. Cauzele uzuale: așteptări pe timp fix, date partajate între teste, dependențe externe reale.\n- **Coverage:** îl tratez ca indicator al codului netestat, nu ca țintă. Verific calitatea aserțiunilor (mutation testing pe modulele critice).\n- **Mix-ul de teste:** mai multe teste de integrare cu infrastructura reală, contract tests între servicii, e2e doar pe fluxurile critice, stabile și rapide.\n- **TDD** acolo unde merită: logică de business complexă și reproducerea unui bug cu un test înainte de fix.\n\nMetricile urmărite: bug-uri scăpate, rata de teste instabile, durata pipeline-ului și timpul de recuperare."
+        },
+        "keyPoints": [
+          { "ro": "Analiza bug-urilor scăpate ghidează ce teste lipsesc" },
+          { "ro": "Carantină și owner pentru testele instabile" },
+          { "ro": "Coverage ca indicator, nu ca țintă; mutation testing" },
+          { "ro": "Integrare și contract tests la granițe, e2e puține și stabile" },
+          { "ro": "Metrici: bug-uri scăpate, instabilitate, durata pipeline-ului" }
+        ]
+      }
+    },
+    {
+      "id": "devops.ci-cd.junior.q1",
+      "topicId": "devops.ci-cd.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un commit care strică build-ul a ajuns pe `main`, iar colegii au tras deja branch-ul. Cum îl anulezi?"
+      },
+      "explanation": {
+        "ro": "`git revert` păstrează istoria: adaugă un commit care face exact inversul celui problematic. Colegii fac `pull` normal, fără conflicte cu istoria lor.\n\n`reset` urmat de `push --force` rescrie istoria unui branch partajat: colegii care au tras commit-ul ajung cu istorii divergente și îl pot reintroduce fără să-și dea seama. De aceea `main` e de obicei protejat împotriva force push. Rescrierea istoriei e în regulă doar pe branch-ul tău, înainte să-l folosească altcineva."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Ștergi branch-ul `main` și îl recreezi din copia ta locală" },
+          { "ro": "`git reset --hard HEAD~1`, apoi `git push --force`" },
+          { "ro": "Ștergi fișierele modificate și faci un commit nou cu mesajul „fix”" },
+          {
+            "ro": "`git revert <sha>`, apoi push: se creează un commit nou care anulează schimbările"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "devops.containers.junior.q1",
+      "topicId": "devops.containers.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Rulezi aplicația cu Docker Compose. Serviciul `api` nu se poate conecta la baza de date: `connection refused`. De ce?\n\n~~~yaml\nservices:\n  api:\n    build: .\n    environment:\n      DATABASE_URL: postgres://app:app@localhost:5432/app\n  db:\n    image: postgres:17\n~~~"
+      },
+      "explanation": {
+        "ro": "Fiecare container are propria interfață de rețea, iar `localhost` indică containerul însuși. Compose creează o rețea comună în care fiecare serviciu e accesibil după numele lui: `postgres://app:app@db:5432/app`.\n\n`ports` publică un port **către mașina gazdă**; containerele din aceeași rețea comunică direct, fără el. O a doua problemă frecventă: `api` pornește înaintea bazei de date. `depends_on` cu `condition: service_healthy` și un healthcheck pe `db` o rezolvă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lipsește `network_mode: host` pe baza de date" },
+          {
+            "ro": "În containerul `api`, `localhost` e chiar containerul `api`; host-ul bazei de date e numele serviciului, `db`"
+          },
+          { "ro": "Portul 5432 trebuie expus cu `ports` pentru comunicarea dintre containere" },
+          { "ro": "PostgreSQL nu poate rula în Docker" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "devops.ci-cd.mid.q1",
+      "topicId": "devops.ci-cd.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pipeline-ul GitHub Actions durează 12 minute, din care 6 sunt instalarea dependențelor la fiecare rulare. Ce schimbare ajută cel mai mult?"
+      },
+      "explanation": {
+        "ro": "Cu cheia bazată pe hash-ul lockfile-ului, cache-ul e refolosit cât timp dependențele nu se schimbă și e invalidat automat când se schimbă. `actions/setup-node` face asta cu opțiunea `cache`. Instalarea cu lockfile înghețat (`pnpm install --frozen-lockfile`, `npm ci`) garantează că CI-ul instalează exact versiunile verificate.\n\nAlte câștiguri: job-uri paralele (lint, typecheck și teste separat), rularea doar a ce s-a schimbat într-un monorepo și `concurrency` care anulează rulările vechi ale aceluiași branch. Fără lockfile, build-urile devin nereproductibile; `node_modules` comis umflă repository-ul și conține binare dependente de platformă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Comiți folderul `node_modules` în repository" },
+          { "ro": "Ștergi lockfile-ul, ca instalarea să aleagă cele mai noi versiuni" },
+          {
+            "ro": "Cache pentru store-ul managerului de pachete, cu cheia derivată din hash-ul lockfile-ului, plus instalare cu lockfile înghețat"
+          },
+          { "ro": "Rulezi pipeline-ul doar o dată pe zi" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "devops.cloud.mid.q1",
+      "topicId": "devops.cloud.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Echipa ta gestionează infrastructura cu Terraform. Care practici sunt corecte?"
+      },
+      "explanation": {
+        "ro": "State-ul e harta dintre cod și resursele reale. Remote cu locking previne două `apply` simultane care îl corup; criptarea contează pentru că state-ul conține adesea valori sensibile.\n\n`plan` revizuit în PR face din schimbările de infrastructură un proces ca orice code review: vezi exact ce se creează, se modifică sau se **distruge**.\n\nModificările manuale creează **drift**: următorul `apply` le anulează sau eșuează. Dacă o intervenție manuală e inevitabilă, o aduci imediat în cod. Secretele vin dintr-un secret manager, nu din repository."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Rezultatul lui `terraform plan` e revizuit, de exemplu în pull request, înainte de `apply`"
+          },
+          {
+            "ro": "State-ul e stocat remote (de exemplu într-un bucket), criptat și cu locking, nu în repository"
+          },
+          { "ro": "Secretele se pun în fișiere `.tfvars` comise în repository" },
+          {
+            "ro": "Mediile (dev, staging, prod) au state-uri separate și refolosesc aceleași module cu variabile diferite"
+          },
+          {
+            "ro": "În situații urgente modifici resursele direct din consolă, iar Terraform le va ignora"
+          }
+        ],
+        "correctIndices": [0, 1, 3]
+      }
+    },
+    {
+      "id": "devops.observability.mid.q1",
+      "topicId": "devops.observability.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O cerere trece prin trei servicii și uneori eșuează. Logurile sunt text liber, în trei sisteme diferite, și nu poți spune care linii aparțin aceleiași cereri. Ce introduci?"
+      },
+      "explanation": {
+        "ro": "Logurile structurate se pot filtra și agrega după câmpuri (`traceId`, `userId`, `status`), nu prin căutări în text. Trace id-ul, generat la intrare și propagat prin headere, leagă toate liniile unei cereri, indiferent de serviciu.\n\nCu OpenTelemetry primești și **tracing distribuit**: fiecare serviciu raportează span-uri, iar un instrument precum Jaeger sau Tempo afișează cererea ca o cascadă cu durata fiecărui pas. Așa vezi imediat unde a apărut eroarea sau latența. Mai multe loguri fără corelare înseamnă doar mai mult zgomot."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un timestamp mai precis în fiecare linie" },
+          {
+            "ro": "Loguri structurate (JSON) și un trace id propagat între servicii (W3C `traceparent`, OpenTelemetry), inclus în fiecare linie de log"
+          },
+          { "ro": "Mai multe loguri la nivel `DEBUG` în toate serviciile" },
+          { "ro": "Logurile tuturor serviciilor scrise în același fișier" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "devops.security.mid.q2",
+      "topicId": "devops.security.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre practicile de securitate de mai jos sunt corecte?" },
+      "explanation": {
+        "ro": "SHA-256 e sigur ca funcție hash, dar e **rapid**: un GPU încearcă miliarde de parole pe secundă. Algoritmii pentru parole sunt lenți intenționat și configurabili (Argon2id e și costisitor ca memorie), iar salt-ul unic face inutile tabelele precalculate.\n\n`HttpOnly` ascunde cookie-ul de JavaScript (limitează efectul unui XSS), `Secure` îl trimite doar prin HTTPS, iar `SameSite` reduce CSRF-ul. Parametrii separă codul SQL de date, deci input-ul nu mai poate schimba interogarea.\n\nSSRF se ocolește ușor: `127.0.0.1`, IPv6, DNS care rezolvă spre IP-uri interne, redirect-uri. Apărarea corectă: allowlist de destinații și verificarea IP-ului rezolvat."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Împotriva SSRF e suficient să respingi URL-urile care conțin textul `localhost`"
+          },
+          {
+            "ro": "Interogările SQL folosesc parametri (prepared statements), nu concatenarea input-ului"
+          },
+          { "ro": "Cookie-ul de sesiune are atributele `HttpOnly`, `Secure` și `SameSite`" },
+          { "ro": "Parolele se stochează cu SHA-256, pentru că e un algoritm criptografic sigur" },
+          { "ro": "Parolele se stochează cu un algoritm lent, cu salt, precum Argon2id sau bcrypt" }
+        ],
+        "correctIndices": [1, 2, 4]
+      }
+    },
+    {
+      "id": "devops.containers.senior.q1",
+      "topicId": "devops.containers.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Liveness probe-ul serviciului verifică și conexiunea la baza de date. Baza de date are o întrerupere de 30 de secunde. Ce se întâmplă și ce schimbi?"
+      },
+      "explanation": {
+        "ro": "Un liveness probe care pică înseamnă „procesul e blocat, repornește-l”. Când toate pod-urile depind de aceeași bază de date, toate pică simultan și sunt repornite în același timp. Pornirile încarcă baza de date abia revenită, iar căderea se prelungește: un eșec în cascadă.\n\nCorect: **liveness** verifică doar că procesul răspunde (nu e în deadlock). **Readiness** scoate pod-ul din trafic când nu poate servi cereri, fără să-l repornească; chiar și acolo, dependențele comune trebuie verificate cu grijă, ca să nu scoți toate pod-urile deodată. **startupProbe** protejează aplicațiile care pornesc greu de restart-uri premature."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Pod-urile sunt scoase din load balancer, apoi revin singure; configurarea e corectă"
+          },
+          { "ro": "Nimic: Kubernetes ignoră probe-urile cât timp baza de date e indisponibilă" },
+          { "ro": "Kubernetes mută baza de date pe alt nod" },
+          {
+            "ro": "Kubernetes repornește toate pod-urile simultan, iar întreruperea scurtă devine o cădere mai lungă; liveness verifică doar procesul, iar dependențele țin, cel mult, de readiness"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "devops.security.senior.q1",
+      "topicId": "devops.security.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pipeline-ul tău folosește `uses: some-org/deploy-action@v2` și instalează pachete npm, apoi face deploy cu credențiale de producție. Ce reduce cel mai mult riscul unui atac de supply chain?"
+      },
+      "explanation": {
+        "ro": "Un tag precum `v2` poate fi mutat de oricine controlează repository-ul action-ului (sau de un atacator care l-a compromis), iar codul nou rulează imediat în pipeline-ul tău, cu acces la secrete. SHA-ul e imutabil.\n\nLockfile-ul fixează exact versiunile verificate. O întârziere înainte de a accepta versiuni foarte noi (de exemplu `minimumReleaseAge` în pnpm) evită pachetele compromise retrase după câteva ore. Permisiunile minime și OIDC (token-uri scurte, emise per rulare) limitează ce poate face un pas compromis.\n\n`@latest` face exact opusul: aduce automat orice versiune compromisă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Folosești `@latest` peste tot, ca să primești automat patch-urile de securitate"
+          },
+          {
+            "ro": "Fixezi action-urile terțe la SHA-ul commit-ului, instalezi strict din lockfile, dai token-ului `GITHUB_TOKEN` permisiuni minime și folosești OIDC în locul cheilor de cloud de lungă durată"
+          },
+          { "ro": "Rulezi `npm audit` o dată pe trimestru" },
+          { "ro": "Muți workflow-ul într-un repository privat" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "devops.cloud.senior.f1",
+      "topicId": "devops.cloud.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Proiectezi infrastructura cloud pentru un API cu trafic variabil și o bază de date PostgreSQL. Cum o faci scalabilă, rezistentă, sigură și eficientă ca cost?"
+      },
+      "explanation": {
+        "ro": "Întrebarea are patru dimensiuni care se influențează reciproc: mai multă rezistență costă mai mult, iar o rețea mai strictă complică operarea. Un răspuns senior le atinge pe toate și spune ce compromisuri face pentru cerințele concrete (SLO, buget), nu enumeră servicii."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Rezistență:** totul în cel puțin două zone de disponibilitate; baza de date gestionată, cu replică în altă zonă și failover automat; backup-uri cu PITR, testate.\n\n**Scalare:** serviciile stateless, scalate orizontal după o metrică relevantă (CPU, latență sau lungimea cozii), cu limite minime și maxime; load balancer în față; cache (CDN, Redis) pentru citirile repetate.\n\n**Rețea:** baza de date și serviciile interne în subrețele private, fără IP-uri publice; doar load balancer-ul e expus; security groups cu reguli minime; ieșirea spre internet controlată.\n\n**IAM:** un rol per workload, cu privilegii minime; fără chei de acces de lungă durată (OIDC pentru CI, roluri pentru servicii); conturi separate pentru producție și non-producție.\n\n**Cost:** dimensionare după măsurători reale, capacitate rezervată (savings plans) pentru încărcarea de bază, instanțe spot pentru job-uri tolerante la întreruperi, oprirea mediilor de test noaptea, tag-uri pe resurse și bugete cu alerte. Atenție la costurile de transfer de date între zone și spre internet.\n\nToate acestea descrise ca infrastructură-ca-cod, revizuită ca orice cod."
+        },
+        "keyPoints": [
+          { "ro": "Multi-AZ, failover automat, backup-uri testate" },
+          { "ro": "Servicii stateless scalate după metrica potrivită" },
+          { "ro": "Subrețele private, expunere minimă" },
+          { "ro": "Roluri IAM cu privilegii minime, fără chei de lungă durată" },
+          { "ro": "Cost: rezervări, spot, bugete, atenție la transferul de date" }
+        ]
+      }
+    },
+    {
+      "id": "devops.security.senior.f1",
+      "topicId": "devops.security.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Echipa adaugă upload de fișiere (avatare și documente PDF) în aplicație. Cum faci threat modeling pentru această funcționalitate?"
+      },
+      "explanation": {
+        "ro": "Threat modeling nu e un audit la final, ci o discuție structurată la design, când măsurile sunt ieftine. Upload-ul de fișiere e un exemplu bun pentru că atinge aproape toate categoriile de risc.\n\nUn răspuns senior arată metoda (flux, granițe, amenințări, prioritizare), nu doar o listă de măsuri memorate."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**1. Modelez fluxul:** client → API → storage → procesare (redimensionare, extragere de text) → servire către alți utilizatori. Marchez **granițele de încredere**: input-ul utilizatorului, storage-ul, serviciile interne.\n\n**2. Identific amenințările**, de exemplu cu STRIDE pe fiecare element:\n\n- **Spoofing / elevation:** cineva urcă un fișier în contul altuia sau îl citește fără drept.\n- **Tampering:** fișiere malițioase (HTML sau SVG cu script, PDF-uri cu exploit-uri, „zip bomb”), parsere vulnerabile în procesare.\n- **Information disclosure:** URL-uri ghicibile, metadate EXIF cu locația.\n- **Denial of service:** fișiere uriașe, mii de upload-uri.\n\n**3. Prioritizez după risc** (probabilitate × impact) și aleg măsuri:\n\n- Limite de dimensiune și de rată.\n- Validarea tipului după conținut, nu după extensie.\n- Stocare în afara aplicației, în bucket privat, cu URL-uri semnate și cu expirare.\n- Servirea conținutului de pe un domeniu separat, cu `Content-Disposition` și `Content-Type` corecte.\n- Procesare izolată, scanare antivirus, eliminarea metadatelor.\n\n**4.** Măsurile devin task-uri și teste, iar modelul se revizuiește când funcționalitatea se schimbă."
+        },
+        "keyPoints": [
+          { "ro": "Diagrama fluxului de date și granițele de încredere" },
+          { "ro": "Amenințări identificate sistematic (STRIDE)" },
+          { "ro": "Prioritizare după probabilitate și impact" },
+          {
+            "ro": "Măsuri concrete: limite, validare după conținut, bucket privat, domeniu separat"
+          },
+          { "ro": "Rezultatul devine task-uri, iar modelul se revizuiește" }
+        ]
+      }
+    },
+    {
+      "id": "soft-skills.code-review.junior.q1",
+      "topicId": "soft-skills.code-review.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un reviewer îți cere să schimbi abordarea dintr-un pull request, dar tu crezi că varianta ta e mai bună. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Review-ul e o conversație despre cod, nu un verdict despre tine. Întrebarea „ce problemă vezi?” scoate adesea la iveală un context pe care nu-l aveai (un caz limită, o convenție a echipei) sau arată că reviewer-ul a înțeles greșit codul.\n\nCând schimbul de comentarii se lungește, o discuție scurtă rezolvă mai repede, iar concluzia se notează în PR pentru cei care îl citesc mai târziu. Acceptarea oarbă te lipsește de învățare și lasă bug-uri dacă reviewer-ul greșește. Ocolirea review-ului strică încrederea în echipă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Răspunzi că abordarea ta e corectă și închizi discuția" },
+          { "ro": "Ignori comentariul și faci merge după ce primești altă aprobare" },
+          { "ro": "Accepți fără discuție, ca să nu creezi conflicte" },
+          {
+            "ro": "Întrebi ce problemă vede, îți explici argumentele în comentariu, iar dacă nu ajungeți la un acord, discutați câteva minute live"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "soft-skills.ownership.junior.q1",
+      "topicId": "soft-skills.ownership.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ai estimat un task la 2 zile. La finalul primei zile îți dai seama că va dura cel puțin 4. Ce faci?"
+      },
+      "explanation": {
+        "ro": "O întârziere anunțată devreme e o informație de planificare: echipa poate muta priorități, reduce scope-ul sau anunța clienții. Aceeași întârziere descoperită în ziua termenului e o surpriză, iar opțiunile au dispărut.\n\nVestea e mai utilă cu motivul („integrarea cu API-ul de plăți cere și un flux de retry”) și cu variante. Orele suplimentare ascunse fac estimările tale viitoare nesigure, iar livrarea incompletă fără avertisment mută problema la colegii care testează sau la utilizatori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Aștepți până în ziua termenului, poate rezolvi mai repede decât crezi" },
+          { "ro": "Lucrezi seara, ca să te încadrezi fără să spui nimic" },
+          {
+            "ro": "Anunți acum lead-ul sau PM-ul: noua estimare, motivul și, dacă se poate, variante (de exemplu, o parte livrată mai devreme)"
+          },
+          { "ro": "Livrezi ce ai la termen, fără să menționezi ce lipsește" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "soft-skills.communication.mid.q1",
+      "topicId": "soft-skills.communication.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Product managerul te întreabă de ce vrei două săptămâni pentru refactorizarea modulului de plăți, „care funcționează deja”. Cum explici?"
+      },
+      "explanation": {
+        "ro": "PM-ul decide între investiții, deci are nevoie de costul și beneficiul în termenii lui: timp de livrare, incidente, risc pentru clienți. Datele concrete (din istoricul task-urilor și al incidentelor) transformă o preferință tehnică într-o decizie de business.\n\nUn plan incremental reduce riscul perceput: rezultatele apar repede și poți opri oricând. Jargonul tehnic nu convinge pe cineva care nu poate evalua argumentul. Refactorizarea ascunsă subminează încrederea și face estimările echipei inutilizabile pentru planificare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Faci refactorizarea fără să întrebi, ascunsă în estimările altor task-uri" },
+          { "ro": "Explici principiile SOLID încălcate și cât de greu se citește codul" },
+          { "ro": "Spui că e o decizie tehnică și că trebuie să ai încredere în echipă" },
+          {
+            "ro": "Prin impact: fiecare schimbare în plăți durează de trei ori mai mult decât în restul aplicației, iar modulul a produs patru incidente trimestrul trecut; propui un plan incremental, cu un prim rezultat după câteva zile"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "soft-skills.ownership.mid.q1",
+      "topicId": "soft-skills.ownership.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Primești o funcționalitate estimată vag la „o lună”. Care practici te ajută să o livrezi predictibil?"
+      },
+      "explanation": {
+        "ro": "Incrementele verticale (o funcționalitate mică, de la UI la baza de date) arată progres real, permit feedback devreme și pot fi livrate chiar dacă proiectul se oprește. Împărțirea pe straturi ascunde riscul de integrare până la final.\n\nRiscul atacat primul transformă necunoscutele în informație cât timp mai e timp de reacție. Un interval cu ipoteze („3–5 săptămâni, dacă API-ul partenerului e gata”) e mai onest decât o cifră și arată exact ce trebuie urmărit.\n\nFeedback-ul târziu e cel mai scump. O estimare optimistă doar mută conversația dificilă mai târziu, când opțiunile sunt mai puține."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O împarți în incremente mici, fiecare livrabil și verificabil cap-coadă, nu pe straturi (tot backend-ul, apoi tot frontend-ul)"
+          },
+          {
+            "ro": "Dai estimarea ca interval, cu ipotezele ei, și o actualizezi pe măsură ce afli lucruri noi"
+          },
+          { "ro": "Dai o estimare fixă și optimistă, ca să nu pară că echipa se mișcă încet" },
+          { "ro": "Nu arăți nimic până nu e totul gata, ca să nu primești feedback prematur" },
+          {
+            "ro": "Începi cu partea cea mai riscantă sau necunoscută, ca să afli devreme ce nu știi"
+          }
+        ],
+        "correctIndices": [0, 1, 4]
+      }
+    },
+    {
+      "id": "soft-skills.leadership.mid.q1",
+      "topicId": "soft-skills.leadership.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Faci pair programming cu un coleg junior pe un bug. Cum procedezi ca el să învețe cât mai mult?"
+      },
+      "explanation": {
+        "ro": "Învățarea vine din a face, nu din a privi. Când juniorul ține tastatura, ritmul e al lui, iar întrebările tale îl învață **procesul** de depanare (formulezi ipoteze, verifici, restrângi), care se transferă la bug-urile viitoare.\n\nLasă-l să facă greșeli mici și sigure: o descoperire proprie se ține minte mai bine decât o explicație. Rezumatul de la final fixează lecția. Când termenul presează, poți face tu partea critică, dar spune explicit că e o excepție și revedeți-o împreună mai târziu."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Îl corectezi la fiecare linie pe care o scrie" },
+          { "ro": "Îi spui direct unde e bug-ul, ca să nu piardă timp" },
+          { "ro": "Tu scrii rapid soluția, iar el urmărește" },
+          {
+            "ro": "El scrie codul, tu ghidezi cu întrebări („ce crezi că se întâmplă aici?”) și îl lași să descopere; la final rezumați împreună ce ați învățat"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "soft-skills.code-review.mid.q2",
+      "topicId": "soft-skills.code-review.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre comentariile de code review de mai jos sunt constructive?" },
+      "explanation": {
+        "ro": "Un comentariu constructiv e **specific** (unde și ce), **explică de ce** contează și arată **cât de important** e: blocant sau doar o sugestie. Prefixe precum „Nit:” sau „Sugestie:” spun autorului ce poate lăsa pentru altă dată.\n\nÎntrebările („ce se întâmplă dacă…?”) invită la discuție și funcționează și când reviewer-ul greșește. Preferințele personale fără argument și tonul care vizează persoana, nu codul, transformă review-ul într-un loc de evitat. Rezultatul: PR-uri mai mari, trimise mai rar, exact opusul a ce vrei."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "„Ce se întâmplă dacă lista e goală? Cred că `items[0]` poate fi `undefined` aici.”"
+          },
+          { "ro": "„E evident că nu merge așa. N-ai testat?”" },
+          {
+            "ro": "„Funcția face și validarea, și salvarea. Ce zici să le separăm? Ar fi mai ușor de testat.”"
+          },
+          { "ro": "„Nit: aș extrage condiția într-o funcție cu nume, dar nu blochează merge-ul.”" },
+          { "ro": "„Nu e cum aș fi făcut eu. Rescrie.”" }
+        ],
+        "correctIndices": [0, 2, 3]
+      }
+    },
+    {
+      "id": "soft-skills.communication.senior.q1",
+      "topicId": "soft-skills.communication.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Arhitectul principal propune ca toate serviciile să treacă la event sourcing. Crezi că pentru domeniul echipei tale e o greșeală, dar nu ai autoritate formală asupra deciziei. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Influența fără autoritate se bazează pe încredere și pe argumente pe care ceilalți le pot verifica. Discuția privată întâi evită o confruntare publică și scoate la iveală motive pe care poate nu le cunoșteai. Documentul mută dezbaterea de la opinii la criterii: complexitate, competențele echipei, cerințele reale de audit.\n\n„Disagree and commit”: după o decizie luată corect, o implementezi cu toată seriozitatea. Altfel, sistemul ajunge să conțină două arhitecturi și nimeni nu mai are încredere în procesul de decizie. Blocarea sau sabotajul îți consumă credibilitatea pentru discuțiile viitoare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Blochezi în code review orice PR care introduce event sourcing" },
+          {
+            "ro": "Discuți întâi unu-la-unu, apoi scrii un document scurt: problema, criteriile, opțiunile cu compromisuri și dovezi (date, un prototip); dacă decizia rămâne alta, o accepți și o implementezi bine"
+          },
+          { "ro": "Accepți public, dar în serviciile tale implementezi abordarea ta" },
+          { "ro": "Îți exprimi nemulțumirea pe canalul echipei, ca să strângi susținere" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "soft-skills.code-review.senior.q1",
+      "topicId": "soft-skills.code-review.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Stabilești standardele de code review ale echipei. Care măsuri sunt potrivite?"
+      },
+      "explanation": {
+        "ro": "Review-ul bun e rapid și concentrat. Automatizarea elimină discuțiile despre virgule. Un timp-țintă și PR-urile mici previn blocajele: un PR care așteaptă trei zile ajunge în conflict cu restul codului.\n\nEtichetele de importanță fac clar ce trebuie schimbat acum și ce e opțional, iar autorii mai noi nu mai tratează fiecare sugestie ca pe un ordin.\n\nAprobarea rezervată seniorilor creează un blocaj și le ia celorlalți ocazia să învețe făcând review. Măsurarea după comentarii primite îi învață pe oameni să trimită PR-uri mai puține și mai mari, ca să fie văzute mai rar."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Fiecare developer e evaluat după numărul de comentarii primite" },
+          {
+            "ro": "Stilul și formatarea sunt verificate automat (linter, formatter), ca oamenii să se concentreze pe design și corectitudine"
+          },
+          { "ro": "Comentarii etichetate după importanță (blocant, sugestie, nit)" },
+          {
+            "ro": "Un timp-țintă pentru primul răspuns (de exemplu, o zi lucrătoare) și PR-uri mici"
+          },
+          { "ro": "Doar seniorii pot aproba PR-uri, indiferent de mărimea lor" }
+        ],
+        "correctIndices": [1, 2, 3]
+      }
+    },
+    {
+      "id": "soft-skills.ownership.senior.q1",
+      "topicId": "soft-skills.ownership.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Echipa pierde aproximativ 40% din timp cu incidente și workaround-uri într-un modul vechi, dar roadmap-ul cere doar funcționalități noi. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Datoria tehnică devine o decizie de business doar când are un cost vizibil: „40% din capacitate” e un argument pe care orice PM îl înțelege. Refactorizarea legată de roadmap (de exemplu, cu pattern-ul strangler fig: noile funcționalități construiesc partea nouă, iar cea veche se retrage treptat) aduce valoare continuă și nu cere oprirea livrărilor.\n\nȚinta măsurabilă (incidente pe lună, timpul unei schimbări în modul) arată dacă investiția funcționează. Rescrierile complete au un istoric slab: durează mai mult decât estimat și reproduc bug-urile vechi. Estimările umflate în secret distrug încrederea și ascund problema de cei care ar putea s-o prioritizeze."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Propui oprirea funcționalităților pentru o rescriere completă de trei luni" },
+          {
+            "ro": "Cuantifici costul (incidente, timp pierdut, întârzieri), propui o refactorizare incrementală legată de funcționalitățile din roadmap care ating modulul și agreezi o țintă măsurabilă"
+          },
+          {
+            "ro": "Umfli estimările funcționalităților noi și folosești timpul în plus pentru refactorizare"
+          },
+          { "ro": "Accepți situația, pentru că business-ul a decis prioritățile" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "soft-skills.leadership.senior.f1",
+      "topicId": "soft-skills.leadership.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Devii tech lead într-o echipă de șase developeri, majoritatea juniori și mid. Cum ridici nivelul echipei în următoarele șase luni?"
+      },
+      "explanation": {
+        "ro": "Întrebarea verifică trecerea de la „cel mai bun programator din echipă” la „cel care face echipa mai bună”. Un răspuns slab se concentrează pe propriile contribuții tehnice sau pe cursuri generice.\n\nRezultatul urmărit e o echipă care ia decizii bune și fără tine."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Înțeleg întâi oamenii:** discuții unu-la-unu despre obiectivele fiecăruia, punctele forte și ce i-ar ajuta să crească. Un plan de dezvoltare individual, cu pași concreți, nu doar „mai multă experiență”.\n\n**Învățare în munca de zi cu zi:**\n\n- Pair programming și code review ca instrumente de mentorat, cu explicații, nu doar corecturi.\n- Ownership delegat: fiecare devine responsabil de o zonă (cu sprijin), inclusiv de decizii și de prezentarea lor.\n- Juniorii fac și ei review, ca să învețe să citească cod.\n\n**Standarde și context comun:** convenții scrise, ADR-uri pentru deciziile importante, prezentări scurte interne despre ce a învățat fiecare.\n\n**Siguranță psihologică:** întrebările și greșelile sunt normale; postmortem-uri fără vinovați.\n\n**Mă multiplic:** pregătesc colegii care pot mentora la rândul lor, ca echipa să nu depindă de mine.\n\n**Măsor progresul:** autonomia (cât de des am nevoie să intervin), calitatea livrărilor (incidente, timpul de livrare) și feedback-ul periodic de la echipă."
+        },
+        "keyPoints": [
+          { "ro": "Planuri individuale, pornite din discuții unu-la-unu" },
+          { "ro": "Pair programming, review și ownership delegat ca mentorat" },
+          { "ro": "Standarde scrise și ADR-uri" },
+          { "ro": "Siguranță psihologică" },
+          { "ro": "Te multiplici prin alți mentori și măsori autonomia" }
+        ]
+      }
+    }
+  ]
+}

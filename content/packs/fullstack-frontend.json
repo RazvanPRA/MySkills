@@ -1,0 +1,1237 @@
+{
+  "id": "fullstack-frontend",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Frontend: React, Next.js și Angular" },
+  "categories": [
+    {
+      "id": "react",
+      "title": { "ro": "React + Next.js" },
+      "testKinds": ["knowledge"],
+      "order": 10
+    },
+    { "id": "angular", "title": { "ro": "Angular" }, "testKinds": ["knowledge"], "order": 20 }
+  ],
+  "topics": [
+    {
+      "id": "react.components.junior",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii componente funcționale cu props, randare condiționată și liste cu `key` stabil."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.components.mid",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "mid",
+      "summary": {
+        "ro": "Compui componente reutilizabile (children, compound components, controlled vs uncontrolled) și știi unde să ridici state-ul."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react.components.junior"]
+    },
+    {
+      "id": "react.components.senior",
+      "categoryId": "react",
+      "title": { "ro": "Componente și JSX" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi API-ul componentelor unui design system: compoziție în loc de configurare, accesibilitate, versionare și breaking changes."
+      },
+      "resources": [
+        { "title": "React: Describing the UI", "url": "https://react.dev/learn/describing-the-ui" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react.components.mid"]
+    },
+    {
+      "id": "react.hooks.junior",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "junior",
+      "summary": {
+        "ro": "Folosești `useState` și `useEffect` respectând regulile hooks și array-ul de dependențe."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.hooks.mid",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "mid",
+      "summary": {
+        "ro": "Scrii custom hooks, elimini efectele inutile (date derivate, handler-e de evenimente) și faci cleanup corect, inclusiv la race conditions."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": ["react.hooks.junior"]
+    },
+    {
+      "id": "react.hooks.senior",
+      "categoryId": "react",
+      "title": { "ro": "Hooks și efecte" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici modelul de randare și closure-urile stale, alegi între `useEffect`, `useLayoutEffect` și `useSyncExternalStore` și revizuiești hooks-urile echipei."
+      },
+      "resources": [
+        { "title": "React: Built-in Hooks", "url": "https://react.dev/reference/react/hooks" },
+        {
+          "title": "You Might Not Need an Effect",
+          "url": "https://react.dev/learn/you-might-not-need-an-effect"
+        }
+      ],
+      "tags": ["hooks"],
+      "prerequisites": ["react.hooks.mid"]
+    },
+    {
+      "id": "react.state.junior",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "junior",
+      "summary": { "ro": "Gestionezi state local și îl transmiți prin props sau Context." },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.state.mid",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "mid",
+      "summary": {
+        "ro": "Separi server state (TanStack Query, RTK Query) de client state și normalizezi datele în Redux Toolkit sau Zustand."
+      },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": ["react.state.junior"]
+    },
+    {
+      "id": "react.state.senior",
+      "categoryId": "react",
+      "title": { "ro": "State management" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi arhitectura de state pentru o aplicație mare: granițe între feature-uri, selectori memoizați, sincronizare cu URL-ul și costul re-randărilor."
+      },
+      "resources": [
+        { "title": "React: Managing State", "url": "https://react.dev/learn/managing-state" },
+        { "title": "Redux Toolkit", "url": "https://redux-toolkit.js.org/" }
+      ],
+      "tags": ["state"],
+      "prerequisites": ["react.state.mid"]
+    },
+    {
+      "id": "react.performance.junior",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "junior",
+      "summary": { "ro": "Știi ce declanșează o re-randare și o observi în React DevTools." },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.performance.mid",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Măsori cu Profiler-ul și aplici `memo`, `useMemo`, `useCallback` și virtualizarea listelor doar unde contează."
+      },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": ["react.performance.junior"]
+    },
+    {
+      "id": "react.performance.senior",
+      "categoryId": "react",
+      "title": { "ro": "Performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi Core Web Vitals (LCP, INP, CLS), code splitting și dimensiunea bundle-ului și folosești concurrent features (`useTransition`, Suspense)."
+      },
+      "resources": [{ "title": "web.dev: Web Vitals", "url": "https://web.dev/articles/vitals" }],
+      "tags": ["performance"],
+      "prerequisites": ["react.performance.mid"]
+    },
+    {
+      "id": "react.nextjs.junior",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "junior",
+      "summary": {
+        "ro": "Creezi pagini și layout-uri cu App Router și explici diferența dintre server și client components."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.nextjs.mid",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "mid",
+      "summary": {
+        "ro": "Alegi între SSR, SSG, ISR și streaming, folosești Server Actions și controlezi cache-ul pentru `fetch`."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": ["react.nextjs.junior"]
+    },
+    {
+      "id": "react.nextjs.senior",
+      "categoryId": "react",
+      "title": { "ro": "Next.js: randare și routing" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi strategia de randare și caching (revalidare, edge vs Node runtime) și explici compromisurile React Server Components."
+      },
+      "resources": [{ "title": "Next.js Docs", "url": "https://nextjs.org/docs" }],
+      "tags": ["nextjs"],
+      "prerequisites": ["react.nextjs.mid"]
+    },
+    {
+      "id": "react.testing.junior",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii teste cu React Testing Library care caută elementele după rol și text."
+      },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "react.testing.mid",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": { "ro": "Testezi hooks și stări asincrone și simulezi rețeaua cu MSW." },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["react.testing.junior"]
+    },
+    {
+      "id": "react.testing.senior",
+      "categoryId": "react",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de testare a frontend-ului (unit, integrare, e2e cu Playwright) și elimini testele fragile, legate de implementare."
+      },
+      "resources": [
+        {
+          "title": "Testing Library: Guiding Principles",
+          "url": "https://testing-library.com/docs/guiding-principles"
+        },
+        { "title": "Mock Service Worker", "url": "https://mswjs.io/docs/" }
+      ],
+      "tags": ["testing"],
+      "prerequisites": ["react.testing.mid"]
+    },
+    {
+      "id": "angular.components.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "junior",
+      "summary": {
+        "ro": "Scrii componente standalone cu inputs, outputs, binding și control flow (`@if`, `@for`)."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.components.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești content projection, lifecycle hooks și organizezi feature-urile cu rute lazy-loaded."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["angular.components.junior"]
+    },
+    {
+      "id": "angular.components.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Componente și template-uri" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi biblioteci de componente reutilizabile și migrezi aplicații vechi de la NgModules la standalone."
+      },
+      "resources": [
+        { "title": "Angular: Components", "url": "https://angular.dev/guide/components" }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["angular.components.mid"]
+    },
+    {
+      "id": "angular.di.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "junior",
+      "summary": { "ro": "Creezi servicii injectabile și le folosești în componente." },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.di.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești provideri la nivel de rută și de componentă, injection tokens și funcția `inject()`."
+      },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": ["angular.di.junior"]
+    },
+    {
+      "id": "angular.di.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Dependency injection" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici ierarhia de injectori și o folosești pentru arhitectură modulară și testabilitate."
+      },
+      "resources": [
+        { "title": "Angular: Dependency injection", "url": "https://angular.dev/guide/di" }
+      ],
+      "tags": ["di"],
+      "prerequisites": ["angular.di.mid"]
+    },
+    {
+      "id": "angular.reactivity.junior",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "junior",
+      "summary": {
+        "ro": "Te abonezi la Observables și folosești pipe-ul `async` ca să eviți memory leaks."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.reactivity.mid",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "mid",
+      "summary": {
+        "ro": "Combini fluxuri cu `switchMap`, `mergeMap` și `combineLatest` și folosești signals cu `computed` și `effect`."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": ["angular.reactivity.junior"]
+    },
+    {
+      "id": "angular.reactivity.senior",
+      "categoryId": "angular",
+      "title": { "ro": "RxJS și signals" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi între signals și RxJS pentru fiecare caz, gestionezi interoperabilitatea lor și state-ul global (NgRx sau signal store)."
+      },
+      "resources": [
+        { "title": "Angular: Signals", "url": "https://angular.dev/guide/signals" },
+        { "title": "RxJS: Overview", "url": "https://rxjs.dev/guide/overview" }
+      ],
+      "tags": ["reactivity"],
+      "prerequisites": ["angular.reactivity.mid"]
+    },
+    {
+      "id": "angular.forms.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "junior",
+      "summary": { "ro": "Construiești formulare reactive cu validatori built-in." },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.forms.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "mid",
+      "summary": { "ro": "Scrii validatori custom, inclusiv asincroni, și formulare dinamice." },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": ["angular.forms.junior"]
+    },
+    {
+      "id": "angular.forms.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Formulare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi formulare complexe, typed și reutilizabile, cu mesaje de validare accesibile."
+      },
+      "resources": [{ "title": "Angular: Forms", "url": "https://angular.dev/guide/forms" }],
+      "tags": ["forms"],
+      "prerequisites": ["angular.forms.mid"]
+    },
+    {
+      "id": "angular.performance.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Explici când rulează change detection." },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.performance.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "mid",
+      "summary": { "ro": "Folosești `OnPush`, `track` în `@for` și deferrable views (`@defer`)." },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": ["angular.performance.junior"]
+    },
+    {
+      "id": "angular.performance.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Change detection și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Treci la zoneless change detection, optimizezi SSR și hydration și analizezi bundle-ul."
+      },
+      "resources": [],
+      "tags": ["performance"],
+      "prerequisites": ["angular.performance.mid"]
+    },
+    {
+      "id": "angular.testing.junior",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "junior",
+      "summary": { "ro": "Scrii teste de componentă cu TestBed." },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": []
+    },
+    {
+      "id": "angular.testing.mid",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Simulezi servicii și HTTP cu `HttpTestingController` și testezi cod asincron."
+      },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": ["angular.testing.junior"]
+    },
+    {
+      "id": "angular.testing.senior",
+      "categoryId": "angular",
+      "title": { "ro": "Testare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Definești strategia de testare și alegi între component harnesses, teste de integrare și e2e."
+      },
+      "resources": [{ "title": "Angular: Testing", "url": "https://angular.dev/guide/testing" }],
+      "tags": ["testing"],
+      "prerequisites": ["angular.testing.mid"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "react.state.junior.q1",
+      "topicId": "react.state.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Tema aplicației (light/dark) trebuie citită de zeci de componente aflate la adâncimi diferite în arbore. Ce soluție e cea mai potrivită?"
+      },
+      "explanation": {
+        "ro": "Context-ul e făcut exact pentru date „ambientale” citite de multe componente: temă, limbă, utilizatorul autentificat. Prop drilling funcționează, dar cuplează zeci de componente intermediare de o valoare pe care nu o folosesc. O variabilă globală sau `localStorage` nu declanșează re-randare când tema se schimbă, deci UI-ul rămâne desincronizat.\n\nCapcana la nivel senior: orice schimbare a valorii din context re-randează toți consumatorii. Pentru date care se schimbă des, împarte contextul sau folosește un store cu selectori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "O variabilă globală `let theme` importată în fiecare componentă" },
+          { "ro": "Un `ThemeContext` cu un provider sus în arbore și `useContext` unde e nevoie" },
+          { "ro": "Transmiți tema prin props prin fiecare nivel (prop drilling)" },
+          { "ro": "Fiecare componentă citește tema din `localStorage` la randare" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "react.hooks.mid.q1",
+      "topicId": "react.hooks.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează butonul după primul click?\n\n~~~tsx\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => {\n    setCount(count + 1);\n    setCount(count + 1);\n    setCount(count + 1);\n  };\n  return <button onClick={handleClick}>{count}</button>;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Toate cele trei apeluri citesc aceeași valoare `count` din randarea curentă (0), deci fiecare programează `setCount(1)`. React grupează actualizările (batching) și randează o singură dată, cu 1.\n\nDacă vrei trei incrementări, folosește forma funcțională `setCount(c => c + 1)`: primește valoarea din coada de actualizări, nu din closure. Întrebarea verifică modelul „fiecare randare are propriul snapshot de state”, sursa multor bug-uri cu closure-uri vechi în efecte și handler-e."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [{ "ro": "`3`" }, { "ro": "`0`" }, { "ro": "`2`" }, { "ro": "`1`" }],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "react.hooks.senior.q1",
+      "topicId": "react.hooks.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre situațiile de mai jos **nu** au nevoie de `useEffect`?" },
+      "explanation": {
+        "ro": "Efectele sunt pentru sincronizarea cu un **sistem extern** (API-uri ale browserului, widget-uri non-React, conexiuni).\n\n- Datele derivate se calculează direct la randare (cu `useMemo` doar dacă e scump).\n- Reacția la o acțiune a utilizatorului aparține handler-ului de eveniment, nu unui efect care „observă” state-ul.\n- Resetarea state-ului la schimbarea unei entități se face cu `key={userId}` pe componentă: React o montează din nou.\n\nAbonarea la `resize` și harta non-React sunt exact cazurile pentru efecte (pentru abonări, `useSyncExternalStore` e și mai potrivit). Efectele inutile adaugă randări în plus și bug-uri de sincronizare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Sincronizezi un widget de hartă (non-React) cu prop-ul `zoom`" },
+          { "ro": "Calculezi `fullName` din `firstName` și `lastName` aflate în state" },
+          { "ro": "Trimiți un eveniment de analytics când utilizatorul apasă „Cumpără”" },
+          { "ro": "Resetezi state-ul unui formular când se schimbă prop-ul `userId`" },
+          { "ro": "Te abonezi la `window.addEventListener(\"resize\", …)`" }
+        ],
+        "correctIndices": [1, 2, 3]
+      }
+    },
+    {
+      "id": "react.performance.mid.q1",
+      "topicId": "react.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "`List` e învelit în `React.memo`, dar se re-randează la fiecare tastă apăsată în input. Care e cauza?\n\n~~~tsx\nfunction Parent() {\n  const [query, setQuery] = useState('');\n  const options = { sortBy: 'name' };\n  return (\n    <>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      <List options={options} />\n    </>\n  );\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`React.memo` compară props cu `Object.is`. Un obiect literal creat în corpul componentei are o referință nouă la fiecare randare, deci comparația spune mereu „s-a schimbat”.\n\nSoluții: mută constanta în afara componentei, sau `useMemo` când depinde de props/state; pentru funcții, `useCallback`. Dar măsoară întâi cu Profiler-ul: `memo` are și el un cost, iar o re-randare ieftină nu merită optimizată. React Compiler face multe dintre aceste memoizări automat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`React.memo` nu funcționează cu function components" },
+          { "ro": "Orice `setState` din părinte re-randează copiii, indiferent de `memo`" },
+          { "ro": "Lipsește un `key` pe `List`" },
+          {
+            "ro": "`options` e un obiect nou la fiecare randare, deci comparația superficială a props eșuează"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "react.nextjs.senior.f1",
+      "topicId": "react.nextjs.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Când alegi **React Server Components** în locul client components și ce compromisuri accepți?"
+      },
+      "explanation": {
+        "ro": "Intervievatorul caută să vezi RSC ca pe o decizie de arhitectură (unde rulează codul, cât JavaScript livrezi, de unde vin datele), nu ca pe o sintaxă nouă. Un răspuns bun dă un exemplu concret de graniță: pagina de produs e server, butonul „Adaugă în coș” e client."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Server Components sunt implicite în App Router și potrivite pentru tot ce **citește date și nu are interactivitate**: listări, pagini de detaliu, layout-uri. Rulează doar pe server, pot accesa direct baza de date sau secrete, iar codul lor (și bibliotecile grele, ex. un parser Markdown) nu ajunge în bundle-ul clientului.\n\nTreci la `\"use client\"` doar pentru frunzele interactive: state, efecte, handler-e de evenimente, API-uri ale browserului. Granița se trasează cât mai jos în arbore; un Server Component poate primi un client component ca `children`.\n\nCompromisuri: nu ai state și efecte pe server; props care trec granița trebuie să fie serializabile; trebuie să gândești caching-ul și revalidarea datelor; modelul mental (ce rulează unde) e mai complex, iar unele biblioteci încă presupun client."
+        },
+        "keyPoints": [
+          { "ro": "Implicit server; `\"use client\"` doar la frunzele interactive" },
+          { "ro": "Mai puțin JavaScript livrat, acces direct la date și secrete" },
+          { "ro": "Props serializabile peste graniță" },
+          { "ro": "Caching și revalidare de gândit explicit" }
+        ]
+      }
+    },
+    {
+      "id": "angular.components.junior.q1",
+      "topicId": "angular.components.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce rol are `track` în blocul `@for`?\n\n~~~html\n@for (user of users(); track user.id) {\n  <app-user-card [user]=\"user\" />\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`track` spune lui Angular cum recunoaște un element între două randări, la fel ca `key` în React. Cu un id stabil, la reordonare sau inserare Angular mută nodurile existente în loc să le distrugă și să le creeze din nou, păstrând starea componentelor copil și focusul.\n\n`track $index` e acceptabil doar pentru liste statice; la o listă care se reordonează, componentele „își schimbă” datele între ele."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Sortează lista după `id`" },
+          {
+            "ro": "Identifică fiecare element, ca Angular să refolosească nodurile DOM când lista se schimbă"
+          },
+          { "ro": "Activează încărcarea leneșă a componentelor" },
+          { "ro": "Filtrează elementele `null` din listă" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "angular.reactivity.mid.q1",
+      "topicId": "angular.reactivity.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Fiecare tastă dintr-un câmp de căutare pornește un request HTTP. Vrei ca doar ultimul request să conteze, iar cele vechi să fie anulate. Ce operator RxJS folosești?\n\n~~~ts\nthis.results$ = this.query$.pipe(\n  debounceTime(300),\n  distinctUntilChanged(),\n  ???(q => this.api.search(q)),\n);\n~~~"
+      },
+      "explanation": {
+        "ro": "`switchMap` se dezabonează de observable-ul anterior când vine o valoare nouă; pentru `HttpClient`, asta anulează request-ul în curs. Rezultatul afișat corespunde mereu ultimului text introdus.\n\n- `mergeMap` rulează toate request-urile în paralel: răspunsurile pot sosi în altă ordine, iar unul vechi poate suprascrie unul nou (race condition).\n- `concatMap` le pune la coadă: corect pentru operații care trebuie executate în ordine (ex. salvări), prea lent pentru căutare.\n- `exhaustMap` ignoră valorile noi cât timp unul e activ: potrivit pentru un buton „Trimite” apăsat de mai multe ori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`switchMap`" },
+          { "ro": "`exhaustMap`" },
+          { "ro": "`mergeMap`" },
+          { "ro": "`concatMap`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.performance.mid.q1",
+      "topicId": "angular.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Ce declanșează verificarea (change detection) unei componente cu `ChangeDetectionStrategy.OnPush`?"
+      },
+      "explanation": {
+        "ro": "Cu `OnPush`, Angular verifică componenta doar când e marcată „dirty”: input nou (comparat prin referință), eveniment din template, `async` pipe (care apelează `markForCheck`), un signal citit în template care se schimbă, sau un `markForCheck` explicit.\n\nMutarea unui obiect păstrează aceeași referință, deci UI-ul nu se actualizează. Aceasta e capcana clasică: cu `OnPush` lucrezi cu date imutabile. Un `setTimeout` din alt loc rulează change detection global, dar sare peste subarborii `OnPush` care nu sunt marcați."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un `setTimeout` oarecare se termină în altă parte a aplicației" },
+          { "ro": "Pipe-ul `async` din template primește o valoare nouă" },
+          { "ro": "Un eveniment DOM tratat în template-ul componentei" },
+          { "ro": "Modifici un câmp în interiorul unui obiect primit ca input" },
+          { "ro": "Un input primește o referință nouă" }
+        ],
+        "correctIndices": [1, 2, 4]
+      }
+    },
+    {
+      "id": "angular.di.senior.f1",
+      "topicId": "angular.di.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Explică ierarhia de injectori din Angular. Când primește o componentă o instanță **nouă** a unui serviciu?"
+      },
+      "explanation": {
+        "ro": "Ierarhia explică bug-uri reale: un serviciu „singleton” cu state duplicat pentru că a fost pus din greșeală în `providers` al unui modul lazy sau al unei componente. Folosită intenționat, dă state izolat per ecran sau per widget (ex. un store pentru fiecare tab)."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Angular are două ierarhii:\n\n- **Environment injectors**: root (pentru `providedIn: 'root'`), plus câte unul pentru fiecare rută lazy cu `providers`. Serviciile de aici sunt singleton-uri la nivelul aplicației, respectiv al rutei.\n- **Element injectors**: creați de componentele și directivele care declară `providers`. Fiecare instanță de componentă primește propria instanță a serviciului, vizibilă și copiilor ei.\n\nLa injectare, Angular caută întâi în ierarhia de elemente, de la componentă în sus, apoi în ierarhia de environment. Modificatorii `self`, `skipSelf`, `host` și `optional` schimbă căutarea.\n\nDeci o componentă primește o instanță nouă când ea (sau un strămoș pe același drum) are serviciul în `providers`, sau când se află sub o rută lazy care îl furnizează din nou."
+        },
+        "keyPoints": [
+          { "ro": "Environment vs element injectors" },
+          { "ro": "Căutarea pornește de la element și urcă" },
+          { "ro": "`providers` în componentă = instanță per componentă" },
+          { "ro": "Rutele lazy creează propriul environment injector" }
+        ]
+      }
+    },
+    {
+      "id": "angular.reactivity.senior.f1",
+      "topicId": "angular.reactivity.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": { "ro": "Signals sau RxJS? Cum decizi într-o aplicație Angular modernă?" },
+      "explanation": {
+        "ro": "Răspunsurile slabe sunt „signals înlocuiesc RxJS” sau „folosesc doar RxJS”. Un senior arată că fiecare are un rol și știe unde le leagă, fără să transforme totul într-un observable."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Signals** pentru state sincron afișat în UI: valori curente, derivate (`computed`), state local al componentelor și al store-urilor. Sunt simple, fără abonări de gestionat, și permit change detection granular (inclusiv zoneless).\n\n**RxJS** pentru fluxuri de evenimente în timp: request-uri HTTP cu anulare, debounce, retry, combinarea mai multor surse, WebSocket-uri. Operatorii de timp și de concurență (`switchMap`, `exhaustMap`) nu au echivalent în signals.\n\nLe legi la graniță: `toSignal` transformă un rezultat RxJS în state pentru template, `toObservable` transformă un signal în flux când ai nevoie de operatori. Regula practică: evenimentele și asincronul în RxJS, ce vede utilizatorul în signals."
+        },
+        "keyPoints": [
+          { "ro": "Signals: state sincron și derivat pentru UI" },
+          { "ro": "RxJS: evenimente în timp, anulare, concurență" },
+          { "ro": "`toSignal` / `toObservable` la graniță" },
+          { "ro": "Fără abonări manuale în componente" }
+        ]
+      }
+    },
+    {
+      "id": "react.components.junior.q1",
+      "topicId": "react.components.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O listă de sarcini are câte un `<input>` necontrolat în fiecare rând. După ce adaugi o sarcină **la începutul** listei, textul tastat apare în rândul greșit. Care e cauza cea mai probabilă?\n\n~~~tsx\n{todos.map((todo, index) => (\n  <TodoRow key={index} todo={todo} />\n))}\n~~~"
+      },
+      "explanation": {
+        "ro": "`key` îi spune lui React ce element din randarea nouă corespunde cărui element din cea veche. Cu indexul drept cheie, după inserarea la început rândul nou primește cheia `0`, iar React îi dă starea (DOM-ul input-ului, state-ul intern) care aparținea fostului prim rând.\n\nFolosește un id stabil din date (`todo.id`). Indexul e acceptabil doar pentru liste statice, care nu se reordonează și nu au elemente inserate sau șterse. Bug-ul apare doar când rândurile au stare proprie, de aceea scapă ușor la testare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lipsește `React.memo` pe `TodoRow`" },
+          {
+            "ro": "`key={index}`: după inserare, React asociază starea fiecărui rând cu poziția, nu cu sarcina"
+          },
+          { "ro": "`map` nu păstrează ordinea elementelor" },
+          { "ro": "Input-urile necontrolate nu pot fi folosite în liste" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "react.testing.junior.q1",
+      "topicId": "react.testing.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei să apeși butonul „Trimite” într-un test cu React Testing Library. Ce interogare e recomandată?"
+      },
+      "explanation": {
+        "ro": "RTL recomandă interogările care seamănă cu felul în care utilizatorul (și un cititor de ecran) găsește elementul: rolul și numele accesibil. Testul verifică astfel și accesibilitatea: dacă butonul nu are nume, testul pică.\n\nClasele CSS sunt detalii de implementare care se schimbă la refactorizare. `getByTestId` e o soluție de rezervă, când nu există rol sau text potrivit. Apelarea directă a `onClick` ocolește randarea, deci testul poate trece chiar dacă butonul e dezactivat sau ascuns."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`screen.getByRole('button', { name: /trimite/i })`" },
+          { "ro": "`screen.getByTestId('submit')`" },
+          { "ro": "`container.querySelector('.submit-btn')`" },
+          { "ro": "`wrapper.find(SubmitButton).props().onClick()`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.components.mid.q1",
+      "topicId": "react.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "În consolă apare avertismentul „A component is changing an uncontrolled input to be controlled”. Care e cauza?\n\n~~~tsx\nfunction EmailField({ user }: { user?: User }) {\n  const [email, setEmail] = useState(user?.email);\n  return <input value={email} onChange={e => setEmail(e.target.value)} />;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Pentru React, `value={undefined}` înseamnă „input necontrolat”. Când utilizatorul tastează, `email` devine string și input-ul trece în modul controlat, ceea ce React semnalează: o componentă trebuie să rămână în același mod toată viața ei.\n\nSoluția: inițializează cu un string, `useState(user?.email ?? '')`. Alege conștient: controlat când ai nevoie de valoare la fiecare tastă (validare live, formatare), necontrolat cu `defaultValue` și un ref sau `FormData` când citești valoarea doar la submit."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`useState` nu acceptă valori opționale" },
+          {
+            "ro": "La prima randare `email` e `undefined`, deci input-ul pornește necontrolat și devine controlat când primește un string"
+          },
+          { "ro": "`onChange` trebuie înlocuit cu `onInput`" },
+          { "ro": "Un input controlat nu poate avea state local" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "react.state.mid.q1",
+      "topicId": "react.state.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Care dintre datele de mai jos sunt **server state**, adică ar trebui ținute într-un cache de tip TanStack Query sau RTK Query, nu copiate manual într-un store de client?"
+      },
+      "explanation": {
+        "ro": "Server state are proprietarul în altă parte: poate fi schimbat de alții, se învechește și are nevoie de cache, revalidare, deduplicarea cererilor și stări de încărcare și eroare. Bibliotecile de server state rezolvă exact aceste probleme; copiat manual în Redux, devine o a doua sursă de adevăr care trebuie sincronizată de mână.\n\nStarea modalului și textul din căutare aparțin doar UI-ului: state local sau, dacă trebuie partajate, un store de client. Textul căutării poate sta și în URL, dacă vrei ca filtrul să supraviețuiască refresh-ului."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lista de produse primită de la API" },
+          { "ro": "Numărul de notificări necitite, calculat pe server" },
+          { "ro": "Textul tastat în câmpul de căutare" },
+          { "ro": "Dacă modalul de confirmare e deschis" },
+          { "ro": "Profilul utilizatorului autentificat, citit din API" }
+        ],
+        "correctIndices": [0, 1, 4]
+      }
+    },
+    {
+      "id": "react.nextjs.mid.q1",
+      "topicId": "react.nextjs.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un blog Next.js (App Router) are mii de vizite pe oră, iar articolele se modifică de câteva ori pe zi, din CMS. Ce strategie de randare e cea mai potrivită pentru pagina unui articol?"
+      },
+      "explanation": {
+        "ro": "Conținutul e același pentru toți cititorii și se schimbă rar, deci pagina poate fi servită din cache, rapid și ieftin. ISR regenerează pagina în fundal după interval, iar `revalidatePath` sau `revalidateTag`, apelate dintr-un webhook al CMS-ului, o actualizează imediat după publicare.\n\nSSR la fiecare cerere încarcă inutil CMS-ul și crește TTFB-ul. Randarea doar pe client strică SEO-ul și LCP-ul. Redeploy-ul la fiecare corectură funcționează, dar e lent și cuplează publicarea de pipeline-ul de build."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Build static fără revalidare, cu redeploy la fiecare modificare" },
+          { "ro": "Randare doar pe client, cu `useEffect` care citește articolul" },
+          {
+            "ro": "Pagină statică cu revalidare (ISR): `revalidate` pe interval, plus revalidare la cerere când CMS-ul publică"
+          },
+          { "ro": "SSR complet dinamic, cu datele citite din CMS la fiecare cerere" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "react.testing.mid.q1",
+      "topicId": "react.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre testarea codului asincron cu React Testing Library, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "`findBy*` combină `getBy*` cu `waitFor` și e alegerea firească pentru elementele care apar după o cerere. `queryBy*` e singura familie care nu aruncă, deci se folosește pentru `expect(...).not.toBeInTheDocument()`.\n\nMSW e preferat față de mock-uirea lui `fetch` pentru că testul exercită clientul HTTP real (headere, parsare, erori), iar handler-ele se pot refolosi în Storybook și în dezvoltare.\n\n`waitFor` poate rula callback-ul de mai multe ori, deci acolo intră doar aserțiuni, niciodată efecte. Pauzele fixe fac testele lente și instabile."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "MSW interceptează cererile la nivel de rețea, deci componenta folosește codul real de `fetch`"
+          },
+          { "ro": "`findByText` așteaptă (implicit până la 1 s) ca elementul să apară" },
+          {
+            "ro": "`queryByText` returnează `null` în loc să arunce, deci e potrivit pentru a verifica absența unui element"
+          },
+          {
+            "ro": "În `waitFor` e bine să pui și acțiunea, de exemplu `fireEvent.click`, ca să fie reîncercată"
+          },
+          { "ro": "Un `setTimeout` de 500 ms în test e o soluție robustă pentru datele asincrone" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "react.components.senior.f1",
+      "topicId": "react.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Proiectezi componenta `Select` pentru design system-ul folosit de cinci echipe. Cum arăți API-ul ei și cum o faci să evolueze fără să le strici codul?"
+      },
+      "explanation": {
+        "ro": "Un design system e un produs intern cu clienți: echipele care îl folosesc. Interviul verifică dacă te gândești la ei, nu doar la cum arată componenta.\n\nSemnalul de alarmă la un API: props precum `isLarge`, `hasIcon`, `isCompact` care se combină în moduri netestate. Fiecare prop adăugat e o promisiune de compatibilitate pe termen lung."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Pornesc de la **compoziție**, nu de la o listă lungă de props boolean. Un API de tip compound component (`Select`, `Select.Trigger`, `Select.Option`, `Select.Group`) acoperă cazurile neprevăzute fără props noi, iar o variantă simplă (`options` + `value` + `onChange`) rămâne pentru cazul obișnuit.\n\nComponenta suportă ambele moduri: controlat (`value` / `onChange`) și necontrolat (`defaultValue`). Accesibilitatea e parte din contract: pattern-ul ARIA de listbox sau combobox, navigare din tastatură, focus vizibil, nume accesibil obligatoriu. Ideal pornesc de la o bibliotecă headless testată, nu reimplementez comportamentul.\n\nPentru evoluție: versionare semantică, deprecieri cu avertismente în dezvoltare și o perioadă de tranziție, codemods pentru schimbările mecanice, changelog și exemple în Storybook. Măsor adopția și citesc utilizările reale înainte să schimb API-ul."
+        },
+        "keyPoints": [
+          { "ro": "Compoziție (compound components) în loc de props boolean" },
+          { "ro": "Controlat și necontrolat, cu aceleași nume de props ca restul sistemului" },
+          { "ro": "Accesibilitate în contract: pattern ARIA, tastatură, focus" },
+          { "ro": "Semver, deprecieri cu avertismente, codemods" },
+          { "ro": "Decizii luate pe baza utilizărilor reale" }
+        ]
+      }
+    },
+    {
+      "id": "react.performance.senior.q1",
+      "topicId": "react.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O pagină filtrează o listă de 5 000 de rânduri la fiecare tastă din câmpul de căutare. Lighthouse raportează un INP slab: tastarea se simte blocată. Ce schimbare atacă direct problema?"
+      },
+      "explanation": {
+        "ro": "INP (Interaction to Next Paint) măsoară cât durează până când ecranul reflectă interacțiunea. Aici fiecare tastă așteaptă randarea a mii de rânduri. Cu `useDeferredValue(query)`, React randează întâi input-ul cu valoarea nouă, apoi lista cu valoarea amânată, într-o randare întreruptibilă care cedează când vine o tastă nouă.\n\nUn efect adaugă o randare în plus fără să reducă munca. `memo` pe input nu ajută, problema e lista. Pe termen lung, combină cu virtualizarea listei, ca să randezi doar rândurile vizibile, și cu memoizarea rândurilor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Marchezi actualizarea listei ca non-urgentă cu `useDeferredValue` (sau `startTransition`), ca input-ul să răspundă imediat"
+          },
+          { "ro": "Muți filtrarea într-un `useEffect` care scrie rezultatul în state" },
+          { "ro": "Adaugi un `Suspense` în jurul listei" },
+          { "ro": "Învelești câmpul de căutare în `React.memo`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.state.senior.f1",
+      "topicId": "react.state.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum alegi arhitectura de state pentru o aplicație React mare, cu zece echipe care lucrează pe feature-uri diferite?"
+      },
+      "explanation": {
+        "ro": "Greșeala tipică la scară: un store global unic, în care orice echipă citește și scrie orice. Rezultatul e cuplaj ascuns, re-randări greu de urmărit și refactorizări imposibile.\n\nUn răspuns senior pornește de la întrebări („cine deține datele? cât trăiesc? cine trebuie să le vadă?”) și abia apoi alege biblioteca."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Împart state-ul după **proprietar și durata de viață**, nu după bibliotecă:\n\n- **Server state** într-un cache dedicat (TanStack Query sau RTK Query): revalidare, deduplicare, invalidare după mutații.\n- **State din URL** pentru tot ce trebuie partajat prin link sau păstrat la refresh: filtre, pagină, tab-ul activ.\n- **State local** în componentă, cât mai jos în arbore.\n- **Client state global** doar pentru ce e cu adevărat transversal (sesiune, preferințe), într-un store cu slice-uri deținute de un singur feature.\n\nGranițele între feature-uri: fiecare își expune selectorii și acțiunile publice; nimeni nu citește direct forma state-ului altuia. Selectorii sunt memoizați și aleg cea mai mică bucată necesară, ca să limiteze re-randările. Datele derivate se calculează în selectori, nu se stochează."
+        },
+        "keyPoints": [
+          { "ro": "Împărțire după proprietar: server, URL, local, global" },
+          { "ro": "Server state într-un cache, nu copiat în store" },
+          { "ro": "Slice-uri deținute de un feature, acces prin selectori publici" },
+          { "ro": "Selectori memoizați și granulari pentru costul re-randărilor" },
+          { "ro": "Date derivate calculate, nu stocate" }
+        ]
+      }
+    },
+    {
+      "id": "react.testing.senior.q1",
+      "topicId": "react.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Echipa ta are o suită de teste care pică la aproape orice refactorizare, deși comportamentul nu se schimbă. Care tip de test e cel mai probabil vinovat?"
+      },
+      "explanation": {
+        "ro": "Un test fragil e cuplat de **cum** e scris codul, nu de **ce** face. Verificarea state-ului intern sau a apelurilor între funcții private pică la orice redenumire. Snapshot-urile mari se schimbă la orice modificare de markup și ajung să fie actualizate orbește, deci nu mai prind nimic.\n\nStrategia senior: teste care interacționează ca utilizatorul (rol, text, acțiuni), mai multe teste de integrare decât unit tests pe componente, câteva teste e2e pe fluxurile critice și eliminarea activă a testelor care au cost, dar nu prind bug-uri. Un test bun pică doar când comportamentul observabil se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Teste care verifică state-ul intern, apelurile către hooks private sau snapshot-uri mari ale întregului arbore"
+          },
+          { "ro": "Teste e2e Playwright pe fluxurile critice" },
+          { "ro": "Teste de integrare care simulează rețeaua cu MSW" },
+          { "ro": "Teste care caută elementele după rol și verifică textul afișat" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.di.junior.q1",
+      "topicId": "angular.di.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Ce înseamnă `@Injectable({ providedIn: 'root' })` pe un serviciu?" },
+      "explanation": {
+        "ro": "`providedIn: 'root'` înregistrează serviciul în injectorul rădăcină, deci toată aplicația împarte aceeași instanță. Fiind declarat pe serviciu, nu într-o listă de provideri, compilatorul îl poate elimina din bundle (tree-shaking) dacă nimeni nu-l folosește.\n\nDacă ai nevoie de o instanță per ecran sau per componentă (de exemplu state-ul unui formular), îl declari în `providers` al rutei sau al componentei: fiecare injector nou creează propria instanță."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Fiecare componentă care îl injectează primește o instanță nouă" },
+          { "ro": "Serviciul trebuie adăugat manual și în lista `providers` a fiecărui modul" },
+          { "ro": "Serviciul poate fi injectat doar în `AppComponent`" },
+          {
+            "ro": "Serviciul are o singură instanță pentru toată aplicația și e eliminat din bundle dacă nu e injectat nicăieri"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "angular.reactivity.junior.q1",
+      "topicId": "angular.reactivity.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "După ce părăsești ecranul, în consolă apar în continuare mesajele de mai jos, iar memoria crește la fiecare vizită. Cum repari cel mai simplu?\n\n~~~ts\nexport class ClockComponent implements OnInit {\n  time = '';\n  ngOnInit() {\n    interval(1000).subscribe(() => {\n      this.time = new Date().toLocaleTimeString();\n      console.log(this.time);\n    });\n  }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`interval` nu se termină niciodată, iar abonarea ține în viață callback-ul și componenta după ce aceasta a fost distrusă. Fiecare vizită pe ecran adaugă încă o abonare: un memory leak clasic.\n\nPipe-ul `async` se abonează și se dezabonează singur, odată cu view-ul. Când chiar ai nevoie de `subscribe` în cod, `takeUntilDestroyed()` (din `@angular/core/rxjs-interop`) închide abonarea la distrugerea componentei. `setInterval` are aceeași problemă, fără să o rezolve. Observable-urile care se termină singure, precum o cerere `HttpClient`, nu au nevoie de dezabonare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Marchezi componenta cu `ChangeDetectionStrategy.OnPush`" },
+          { "ro": "Înlocuiești `interval` cu `setInterval`" },
+          {
+            "ro": "Expui un Observable și îl afișezi cu pipe-ul `async`, sau închizi abonarea cu `takeUntilDestroyed()`"
+          },
+          { "ro": "Muți codul din `ngOnInit` în constructor" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "angular.components.mid.q1",
+      "topicId": "angular.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Elementul `#chart` e într-un bloc `@if`. În ce lifecycle hook e garantat că `chartRef` e setat (când condiția e adevărată)?\n\n~~~ts\n@Component({\n  template: `@if (hasData) { <canvas #chart></canvas> }`,\n})\nexport class ReportComponent {\n  @ViewChild('chart') chartRef?: ElementRef<HTMLCanvasElement>;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "View queries sunt rezolvate după ce view-ul componentei a fost creat, deci rezultatul e disponibil în `ngAfterViewInit`. Un element dintr-un `@if` nu poate fi rezolvat static, înainte de prima detectare a schimbărilor, așa că în `ngOnInit` referința e încă `undefined`.\n\nDacă condiția devine adevărată mai târziu, query-ul se actualizează la detectarea următoare. Varianta modernă e `chart = viewChild<ElementRef>('chart')`: un signal pe care îl citești într-un `effect` sau `afterNextRender`, fără să ghicești momentul."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`ngOnInit`" },
+          { "ro": "`ngAfterViewInit`" },
+          { "ro": "`constructor`" },
+          { "ro": "`ngOnChanges`" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "angular.di.mid.q1",
+      "topicId": "angular.di.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să injectezi URL-ul API-ului (un simplu `string`) în mai multe servicii, cu valori diferite în teste și în producție. Interfețele TypeScript nu există la runtime. Ce folosești?"
+      },
+      "explanation": {
+        "ro": "Injectorul are nevoie de o cheie care există la runtime. Pentru clase, cheia e chiar clasa; pentru valori primitive sau interfețe, creezi un `InjectionToken`, care poartă și tipul valorii.\n\nAvantajul față de un import direct: valoarea vine prin DI, deci poate fi înlocuită per mediu, per rută sau în teste (`providers: [{ provide: API_URL, useValue: 'http://localhost' }]`), fără mock-uri de module. Un token poate avea și o valoare implicită, prin opțiunea `factory`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "O interfață `ApiConfig` folosită ca token de injecție" },
+          {
+            "ro": "Un `InjectionToken<string>`, furnizat cu `{ provide: API_URL, useValue: ... }` și citit cu `inject(API_URL)`"
+          },
+          { "ro": "Un serviciu cu un câmp static `url`" },
+          { "ro": "O variabilă exportată dintr-un fișier `config.ts`, importată direct" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "angular.forms.mid.q1",
+      "topicId": "angular.forms.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre validatorii **asincroni** din Reactive Forms (de exemplu „email-ul e deja folosit”), care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Angular evită cererile inutile: dacă un email e invalid ca format, nu mai întreabă serverul. Statusul `PENDING` îți permite să afișezi un indicator și să dezactivezi butonul de trimitere.\n\nValidatorul primește controlul și returnează un Observable sau o Promise cu `ValidationErrors | null`. Un Observable care nu se termină (de exemplu `valueChanges`) lasă controlul blocat în `PENDING`; de aceea se folosește `first()` sau o cerere HTTP, care se termină singură.\n\nValidatorii asincroni au argumentul lor separat (`asyncValidators`). Frecvența se controlează cu `updateOn: 'blur'` sau cu un `timer` în validator."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Observable-ul returnat trebuie să se termine (complete), altfel controlul rămâne `PENDING`"
+          },
+          { "ro": "Cât timp rulează, controlul are statusul `PENDING`" },
+          { "ro": "Se pun în același array cu validatorii sincroni" },
+          { "ro": "Rulează doar după ce validatorii sincroni ai controlului trec" },
+          { "ro": "Rulează obligatoriu la fiecare tastă, frecvența nu poate fi controlată" }
+        ],
+        "correctIndices": [0, 1, 3]
+      }
+    },
+    {
+      "id": "angular.testing.mid.q1",
+      "topicId": "angular.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Într-un test cu `provideHttpClientTesting()`, ce face apelul `httpMock.verify()` din `afterEach`?\n\n~~~ts\nit('loads users', () => {\n  service.getUsers().subscribe(users => expect(users.length).toBe(2));\n  const req = httpMock.expectOne('/api/users');\n  req.flush([{ id: 1 }, { id: 2 }]);\n});\n\nafterEach(() => httpMock.verify());\n~~~"
+      },
+      "explanation": {
+        "ro": "`HttpTestingController` oprește cererile: nimic nu pleacă în rețea, iar testul decide când și cu ce răspunde (`flush`, `error`). `expectOne` verifică faptul că a plecat exact o cerere potrivită.\n\n`verify()` prinde cererile neașteptate: un apel duplicat, o cerere făcută de alt cod sau un retry la care nu te gândeai. Fără el, testul ar trece deși serviciul face mai multe cereri decât crezi. Cum `flush` răspunde sincron, aserțiunea din `subscribe` rulează înainte de sfârșitul testului."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Resetează `HttpClient` la versiunea reală" },
+          { "ro": "Verifică dacă serverul real răspunde" },
+          { "ro": "Trimite răspunsurile pentru toate cererile rămase" },
+          {
+            "ro": "Pică testul dacă au rămas cereri făcute, dar netratate de `expectOne` și `flush`"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "angular.forms.senior.q1",
+      "topicId": "angular.forms.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Cu typed forms, ce tip are `form.value.email`?\n\n~~~ts\nconst form = new FormGroup({\n  email: new FormControl(''),\n});\n~~~"
+      },
+      "explanation": {
+        "ro": "Două motive se adună:\n\n- `FormControl('')` are tipul `FormControl<string | null>`, pentru că `reset()` setează valoarea la `null`. Cu `nonNullable: true` (sau `NonNullableFormBuilder`), `reset()` revine la valoarea inițială și tipul devine `string`.\n- `form.value` e un `Partial`: controalele dezactivate lipsesc din el, deci orice câmp poate fi `undefined`. `form.getRawValue()` include și controalele dezactivate și nu are `undefined`.\n\nPentru formulare mari, folosește `NonNullableFormBuilder` și `getRawValue()` la submit, iar tipurile vor reflecta exact ce trimiți la API."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`any`" },
+          { "ro": "`string | null | undefined`" },
+          { "ro": "`string | null`" },
+          { "ro": "`string`" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "angular.performance.senior.q1",
+      "topicId": "angular.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Treci aplicația pe **zoneless change detection** (`provideZonelessChangeDetection()`). Care dintre schimbările de mai jos actualizează **automat** ecranul?"
+      },
+      "explanation": {
+        "ro": "Fără zone.js, Angular nu mai află „magic” că s-a terminat un task asincron. Detectarea e programată doar de notificări explicite: un signal citit în template care se schimbă, evenimentele legate în template, `markForCheck()` (pe care pipe-ul `async` îl apelează), `setInput()`.\n\nUn `setTimeout` sau un `subscribe` care scrie într-un câmp simplu nu notifică nimic, deci ecranul rămâne vechi. Migrarea înseamnă: state-ul afișat devine signals (sau trece prin `async`), iar componentele sunt deja compatibile cu `OnPush`, un bun pas intermediar. Câștigul: bundle mai mic, mai puține verificări și stack trace-uri curate."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Setarea unui signal citit în template" },
+          { "ro": "Un `subscribe()` manual care atribuie o valoare unui câmp simplu" },
+          { "ro": "Un `setTimeout` care atribuie o valoare unui câmp simplu (nu signal)" },
+          { "ro": "Un handler legat în template, de exemplu `(click)`, care modifică un câmp" },
+          { "ro": "Pipe-ul `async` care primește o valoare nouă" }
+        ],
+        "correctIndices": [0, 3, 4]
+      }
+    },
+    {
+      "id": "angular.components.senior.f1",
+      "topicId": "angular.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum migrezi o aplicație Angular mare, cu zeci de NgModules, la componente standalone, fără să oprești livrarea de feature-uri?"
+      },
+      "explanation": {
+        "ro": "Întrebarea testează mai mult strategia de migrare decât sintaxa. Un răspuns slab propune o rescriere completă sau un branch de migrare care trăiește luni de zile.\n\nCâștigurile merită menționate: dependențe explicite per componentă, lazy loading mai fin și mai puțin cod de legătură."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Migrez **incremental**, pentru că cele două modele coexistă: o componentă standalone poate fi importată într-un NgModule, iar un NgModule poate fi importat de o componentă standalone.\n\n1. Rulez schematic-ul oficial (`ng generate @angular/core:standalone`) pe rând, pe directoare: întâi convertește declarațiile în standalone, apoi elimină modulele devenite inutile, apoi trece bootstrap-ul la `bootstrapApplication`.\n2. Rutele lazy trec de la `loadChildren` cu module la `loadComponent` sau la fișiere de rute.\n3. `forRoot()` devine funcții `provideX()` în `app.config.ts`; pentru bibliotecile vechi, `importProvidersFrom` ca punte.\n4. Testele: componentele standalone se pun în `imports` din TestBed, nu în `declarations`.\n\nFac fiecare pas într-un PR mic, cu CI verde, pornind de la frunze (componente shared) spre feature-uri, și opresc adăugarea de NgModules noi printr-o regulă de lint."
+        },
+        "keyPoints": [
+          { "ro": "Interoperabilitate: migrare incrementală, nu big bang" },
+          { "ro": "Schematic-ul oficial, rulat pe pași și pe directoare" },
+          { "ro": "Rute cu `loadComponent`, `provideX()` în loc de `forRoot()`" },
+          { "ro": "Teste: componentele în `imports` din TestBed" },
+          { "ro": "PR-uri mici și o regulă care oprește NgModules noi" }
+        ]
+      }
+    },
+    {
+      "id": "angular.testing.senior.q1",
+      "topicId": "angular.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce problemă rezolvă **component harnesses** (Angular CDK testing) în testele care folosesc componente Angular Material?"
+      },
+      "explanation": {
+        "ro": "Fără harness, un test pentru un `mat-select` caută clase CSS și elemente interne, deschide overlay-ul și așteaptă animații. Când biblioteca își schimbă DOM-ul la un upgrade major, sute de teste pică, deși aplicația funcționează.\n\nUn harness ascunde aceste detalii în spatele unor metode precum `select.open()` sau `select.getValueText()` și așteaptă automat ca aplicația să fie stabilă. Poți scrie harness-uri și pentru propriile componente reutilizabile: echipele care le folosesc primesc astfel un API de testare stabil, exact ca API-ul componentei."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Elimină nevoia de date de test" },
+          { "ro": "Generează automat teste e2e din testele de componentă" },
+          { "ro": "Înlocuiesc TestBed, deci testele rulează fără Angular" },
+          {
+            "ro": "Testele interacționează printr-un API stabil (`getValue()`, `open()`), nu prin structura internă a DOM-ului, care se poate schimba între versiuni"
+          }
+        ],
+        "correctIndex": 3
+      }
+    }
+  ]
+}

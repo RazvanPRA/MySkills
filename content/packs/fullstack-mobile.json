@@ -1,0 +1,671 @@
+{
+  "id": "fullstack-mobile",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Mobile: React Native" },
+  "categories": [
+    {
+      "id": "react-native",
+      "title": { "ro": "React Native" },
+      "testKinds": ["knowledge"],
+      "order": 30
+    }
+  ],
+  "topics": [
+    {
+      "id": "react-native.components.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "junior",
+      "summary": { "ro": "Construiești ecrane cu componentele de bază și layout cu Flexbox." },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.components.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "mid",
+      "summary": {
+        "ro": "Creezi componente reutilizabile cu theming, safe areas și suport pentru dimensiuni diferite de ecran."
+      },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react-native.components.junior"]
+    },
+    {
+      "id": "react-native.components.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Componente și layout" },
+      "level": "senior",
+      "summary": {
+        "ro": "Construiești un design system cross-platform și accesibil (TalkBack, VoiceOver), cu design tokens și diferențe de platformă controlate."
+      },
+      "resources": [
+        {
+          "title": "React Native: Core Components",
+          "url": "https://reactnative.dev/docs/components-and-apis"
+        }
+      ],
+      "tags": ["components"],
+      "prerequisites": ["react-native.components.mid"]
+    },
+    {
+      "id": "react-native.navigation.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "junior",
+      "summary": { "ro": "Folosești stack și tab navigators din React Navigation." },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.navigation.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Tipizezi rutele și configurezi deep linking și fluxul de autentificare."
+      },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": ["react-native.navigation.junior"]
+    },
+    {
+      "id": "react-native.navigation.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Navigare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi navigarea unei aplicații mari, inclusiv restaurarea stării și link-urile din notificări."
+      },
+      "resources": [
+        { "title": "React Navigation", "url": "https://reactnavigation.org/docs/getting-started" }
+      ],
+      "tags": ["navigation"],
+      "prerequisites": ["react-native.navigation.mid"]
+    },
+    {
+      "id": "react-native.native.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "junior",
+      "summary": {
+        "ro": "Explici diferența dintre JS thread și UI thread și instalezi biblioteci native."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.native.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "mid",
+      "summary": {
+        "ro": "Configurezi build-ul Android și iOS (Gradle, CocoaPods, variante de build) și scrii un modul nativ simplu."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": ["react-native.native.junior"]
+    },
+    {
+      "id": "react-native.native.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Arhitectură și cod nativ" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici New Architecture (JSI, TurboModules, Fabric), scrii module native performante și conduci upgrade-urile de React Native."
+      },
+      "resources": [
+        {
+          "title": "React Native: Architecture",
+          "url": "https://reactnative.dev/architecture/landing-page"
+        }
+      ],
+      "tags": ["native"],
+      "prerequisites": ["react-native.native.mid"]
+    },
+    {
+      "id": "react-native.performance.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "junior",
+      "summary": { "ro": "Folosești `FlatList` în locul unui `ScrollView` pentru liste lungi." },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.performance.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Profilezi cu React Native DevTools, folosești FlashList și elimini re-randările inutile."
+      },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["react-native.performance.junior"]
+    },
+    {
+      "id": "react-native.performance.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi timpul de pornire, Hermes, memoria și animațiile pe UI thread (Reanimated) pentru telefoane mid-range."
+      },
+      "resources": [
+        { "title": "React Native: Performance", "url": "https://reactnative.dev/docs/performance" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["react-native.performance.mid"]
+    },
+    {
+      "id": "react-native.offline.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "junior",
+      "summary": { "ro": "Salvezi preferințe în AsyncStorage." },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.offline.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești o bază de date locală (SQLite) cu migrații și sincronizezi datele cu un API."
+      },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": ["react-native.offline.junior"]
+    },
+    {
+      "id": "react-native.offline.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Date offline și stocare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi o arhitectură offline-first, cu rezolvarea conflictelor și stocare securizată (Keychain, Keystore)."
+      },
+      "resources": [],
+      "tags": ["offline"],
+      "prerequisites": ["react-native.offline.mid"]
+    },
+    {
+      "id": "react-native.release.junior",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "junior",
+      "summary": { "ro": "Rulezi aplicația pe emulator și generezi un build de debug." },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": []
+    },
+    {
+      "id": "react-native.release.mid",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "mid",
+      "summary": {
+        "ro": "Semnezi build-uri de release, configurezi CI și raportarea crash-urilor."
+      },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": ["react-native.release.junior"]
+    },
+    {
+      "id": "react-native.release.senior",
+      "categoryId": "react-native",
+      "title": { "ro": "Release și calitate" },
+      "level": "senior",
+      "summary": {
+        "ro": "Gestionezi publicarea în magazine, OTA updates, feature flags și monitorizarea în producție."
+      },
+      "resources": [
+        {
+          "title": "React Native: Publishing to Google Play",
+          "url": "https://reactnative.dev/docs/signed-apk-android"
+        }
+      ],
+      "tags": ["release"],
+      "prerequisites": ["react-native.release.mid"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "react-native.navigation.junior.q1",
+      "topicId": "react-native.navigation.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei ca linkul `myapp://product/42` să deschidă ecranul de produs, atât cu aplicația pornită, cât și închisă. Ce configurezi în React Navigation?"
+      },
+      "explanation": {
+        "ro": "Config-ul `linking` mapează căi pe ecrane și parametri și tratează ambele cazuri: pornire la rece (URL-ul inițial) și link primit cu aplicația deschisă. Pe lângă el, schema trebuie declarată nativ (intent-filter în `AndroidManifest.xml`, URL types pe iOS).\n\nVarianta cu `getInitialURL` în fiecare ecran ratează linkurile primite cu aplicația deschisă și duplică logica de rutare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un `useEffect` în fiecare ecran care citește `Linking.getInitialURL()`" },
+          { "ro": "`initialRouteName` pe stack navigator" },
+          {
+            "ro": "Opțiunea `linking` a containerului: prefixul `myapp://` și calea `product/:id` mapată pe ecran"
+          },
+          { "ro": "`presentation: \"modal\"` pe ecranul de produs" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "react-native.components.mid.q1",
+      "topicId": "react-native.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pe unele telefoane Android, butonul din partea de jos a ecranului e acoperit de bara de navigare a sistemului. Care e soluția corectă?"
+      },
+      "explanation": {
+        "ro": "Insets-urile vin de la sistem și reflectă exact ce acoperă bara de stare, notch-ul și bara de navigare (gesturi sau butoane), inclusiv în modul edge-to-edge, devenit implicit pe Android recent.\n\nValorile fixe arată bine pe un telefon și greșit pe altul. `StatusBar.currentHeight` acoperă doar partea de sus. Calculul cu `Dimensions` e fragil și nu ține cont de orientare sau de ferestre redimensionabile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`StatusBar.currentHeight` adăugat la padding" },
+          { "ro": "Un `marginBottom: 48` fix pe container" },
+          {
+            "ro": "Insets din `react-native-safe-area-context` (`SafeAreaView` sau `useSafeAreaInsets`)"
+          },
+          { "ro": "Diferența dintre `Dimensions.get(\"screen\")` și `Dimensions.get(\"window\")`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "react-native.performance.mid.q1",
+      "topicId": "react-native.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un ecran afișează 2.000 de produse cu `ScrollView` și `items.map(…)`. Pornirea durează câteva secunde, iar memoria crește mult. Care e prima schimbare corectă?"
+      },
+      "explanation": {
+        "ro": "`ScrollView` montează toți copiii de la început: 2.000 de componente, cu noduri native și imagini. O listă virtualizată randează doar fereastra vizibilă plus un buffer și reciclează elementele (FlashList refolosește vizualizările, deci e mai rapidă pe liste lungi).\n\n`React.memo` reduce re-randările, dar nu și costul montării inițiale. `removeClippedSubviews` detașează vizualizările din afara ecranului, dar componentele React rămân toate montate. Hermes ajută la pornire și memorie, deci dezactivarea lui ar înrăutăți lucrurile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O listă virtualizată (`FlatList` sau `FlashList`) care randează doar ce e aproape de ecran"
+          },
+          { "ro": "`React.memo` pe componenta fiecărui produs" },
+          { "ro": "`removeClippedSubviews` pe `ScrollView`, fără alte schimbări" },
+          { "ro": "Dezactivezi Hermes" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.native.senior.q1",
+      "topicId": "react-native.native.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Ce aduce New Architecture față de vechiul bridge din React Native?" },
+      "explanation": {
+        "ro": "Bridge-ul vechi era asincron și serializa fiecare mesaj în JSON, ceea ce costa la apeluri frecvente și făcea imposibile apelurile sincrone. JSI expune obiecte C++ direct în runtime-ul JS. Peste el, TurboModules încarcă modulele la prima folosire, iar Codegen generează tipurile din specificații TypeScript. Fabric permite funcții precum `useLayoutEffect` cu măsurători sincrone și funcțiile concurente din React 18+.\n\nCodul nativ rămâne necesar pentru module și vizualizări native, iar JavaScript-ul rulează în continuare pe thread-ul lui; doar anumite lucrări (ex. worklet-urile Reanimated) rulează pe UI thread."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Fabric: un renderer nou, cu randare concurentă și măsurare sincronă a layout-ului"
+          },
+          { "ro": "Rulează tot JavaScript-ul pe UI thread" },
+          {
+            "ro": "TurboModules: module native încărcate leneș, cu interfețe tipizate generate de Codegen"
+          },
+          { "ro": "Elimină complet nevoia de cod nativ" },
+          {
+            "ro": "JSI: JavaScript apelează direct cod nativ (C++), fără serializare JSON prin bridge"
+          }
+        ],
+        "correctIndices": [0, 2, 4]
+      }
+    },
+    {
+      "id": "react-native.offline.senior.f1",
+      "topicId": "react-native.offline.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum proiectezi o aplicație **offline-first** care se sincronizează cu un backend? Ce faci cu conflictele?"
+      },
+      "explanation": {
+        "ro": "„Pun un cache peste API” nu înseamnă offline-first. Intervievatorul vrea să vadă unde stă sursa de adevăr, cum nu pierzi scrieri, cum eviți duplicatele la retry și că nu există o singură regulă de conflict bună pentru toate datele."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Baza de date locală (ex. SQLite) e sursa de adevăr pentru UI: ecranele citesc mereu local, iar rețeaua doar actualizează datele locale.\n\nScrierile se fac local și intră într-o **coadă de operații** (outbox) cu id-uri generate pe client, trimisă la server cu retry și backoff când există conexiune. Operațiile sunt idempotente, ca un retry să nu dubleze date.\n\nPentru citire, sincronizarea e incrementală: ceri doar modificările de la ultimul cursor sau timestamp.\n\nConflictele se rezolvă după tipul datelor: last-write-wins cu `updatedAt` pentru date simple, merge pe câmpuri pentru documente, reguli de domeniu sau intervenția utilizatorului când contează (ex. două editări ale aceleiași note). Ștergerile se marchează (tombstones) ca să se propage."
+        },
+        "keyPoints": [
+          { "ro": "Local ca sursă de adevăr pentru UI" },
+          { "ro": "Outbox cu retry și operații idempotente" },
+          { "ro": "Sync incremental cu cursor" },
+          { "ro": "Strategie de conflict pe tip de date; tombstones" }
+        ]
+      }
+    },
+    {
+      "id": "react-native.performance.junior.q1",
+      "topicId": "react-native.performance.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un ecran afișează 2 000 de mesaje cu `<ScrollView>{messages.map(...)}</ScrollView>`. Ecranul se deschide greu și consumă multă memorie. Ce schimbi?"
+      },
+      "explanation": {
+        "ro": "`ScrollView` randează **toți** copiii de la început, chiar dacă pe ecran încap zece. `FlatList` e virtualizată: montează doar o fereastră de elemente în jurul poziției curente și le demontează pe cele îndepărtate, deci timpul de deschidere și memoria nu mai cresc cu lungimea listei.\n\nPentru performanță bună: un `keyExtractor` stabil, rânduri memoizate și, când înălțimea e fixă, `getItemLayout`. Pentru liste mari și complexe, FlashList reciclează celulele și e și mai eficientă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Învelești fiecare mesaj în `React.memo`" },
+          { "ro": "Adaugi `removeClippedSubviews` pe `ScrollView` și păstrezi `map`" },
+          { "ro": "Împarți lista în zece `ScrollView`-uri mai mici" },
+          { "ro": "Folosești `FlatList`, care randează doar elementele din jurul zonei vizibile" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "react-native.offline.junior.q1",
+      "topicId": "react-native.offline.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să păstrezi între sesiuni tema aleasă (light/dark) și token-ul de autentificare. Ce variantă e corectă?"
+      },
+      "explanation": {
+        "ro": "AsyncStorage e un key-value store asincron, **necriptat**, care salvează doar string-uri (obiectele trec prin `JSON.stringify`). E potrivit pentru preferințe mici, nu pentru secrete: pe un telefon rootat sau dintr-un backup, datele se pot citi.\n\nKeychain (iOS) și Keystore (Android) păstrează secretele criptate, cu chei protejate de hardware. Nu există un eveniment sigur de „închidere a aplicației”, deci nu te baza pe el pentru salvare: scrie când valoarea se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Tema în AsyncStorage, token-ul în Keychain/Keystore (de exemplu cu `react-native-keychain`)"
+          },
+          { "ro": "Amândouă în Keychain, pentru că AsyncStorage e sincron și blochează UI-ul" },
+          { "ro": "Amândouă în AsyncStorage, pentru că e privat aplicației" },
+          { "ro": "Amândouă într-o variabilă globală, salvată la închiderea aplicației" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.navigation.mid.q1",
+      "topicId": "react-native.navigation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Cu React Navigation, care e abordarea recomandată pentru fluxul de autentificare?"
+      },
+      "explanation": {
+        "ro": "Când ecranele sunt definite condiționat, utilizatorul logat nici nu are ecranul Login în navigator. Butonul Back nu-l poate duce înapoi acolo, iar un deep link către un ecran protejat nu funcționează fără sesiune.\n\nCu `navigate('Home')`, Login rămâne în stivă și Back te întoarce la el. Verificările din fiecare ecran duplică logica și afișează scurt conținut protejat înainte de redirect. La logout, schimbarea stării elimină automat ecranele protejate și state-ul lor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Randezi seturi diferite de ecrane în funcție de `isSignedIn`; la login, navigatorul trece singur la ecranele aplicației"
+          },
+          {
+            "ro": "Ții toate ecranele montate și ascunzi conținutul cu `display: none` când utilizatorul nu e logat"
+          },
+          {
+            "ro": "Verifici autentificarea în `useEffect` pe fiecare ecran și redirecționezi la Login"
+          },
+          { "ro": "După login apelezi `navigation.navigate('Home')`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.native.mid.q1",
+      "topicId": "react-native.native.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei ca build-ul de dezvoltare și cel de producție al aplicației Android să fie instalate **simultan** pe același telefon. Ce configurezi în `android/app/build.gradle`?"
+      },
+      "explanation": {
+        "ro": "Android identifică o aplicație după `applicationId`. Două build-uri cu același id se înlocuiesc reciproc, oricât de diferite ar fi numele sau versiunea. Sufixul creează un id distinct (`com.firma.app.dev`), deci ambele pot fi instalate.\n\n`namespace` e pachetul claselor generate (de exemplu `R`), nu identitatea aplicației. Un nume diferit (prin `resValue` per build type) e totuși util, ca să le deosebești pe ecran. Atenție: serviciile legate de id (Firebase, deep links, Google Sign-In) au nevoie de configurare separată pentru varianta `.dev`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un nume de afișare diferit în `strings.xml`" },
+          { "ro": "Un `versionCode` diferit pentru build-ul de dezvoltare" },
+          { "ro": "`applicationIdSuffix '.dev'` în build type-ul (sau flavor-ul) de dezvoltare" },
+          { "ro": "Un `namespace` diferit în build-ul de dezvoltare" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "react-native.offline.mid.q1",
+      "topicId": "react-native.offline.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Aplicația salvează datele într-o bază SQLite locală și le sincronizează cu un API. Care practici sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Într-o aplicație offline-first, baza locală e sursa de adevăr pentru UI, iar sincronizarea e un proces separat.\n\n- Migrațiile testate garantează că un update nu pierde datele utilizatorului.\n- Id-urile generate pe client elimină dependența de server la creare și simplifică maparea la sincronizare.\n- Coada de modificări (outbox) supraviețuiește restartului. Idempotența (o cheie per operație) face retry-ul sigur când răspunsul s-a pierdut pe drum.\n\nȘtergerea bazei la update înseamnă pierderea datelor nesincronizate. Așteptarea serverului transformă aplicația înapoi într-una online-only."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "O scriere locală apare în UI abia după confirmarea serverului" },
+          {
+            "ro": "Înregistrările primesc un id generat pe client (de exemplu UUID), ca să poată fi create offline"
+          },
+          {
+            "ro": "Migrațiile rulează la pornire, înainte ca UI-ul să citească date, și sunt testate pe o bază cu date vechi"
+          },
+          {
+            "ro": "Modificările locale intră într-o coadă trimisă când revine conexiunea, cu cereri idempotente la retry"
+          },
+          { "ro": "La o versiune nouă cu schemă schimbată, ștergi baza și o recreezi" }
+        ],
+        "correctIndices": [1, 2, 3]
+      }
+    },
+    {
+      "id": "react-native.release.mid.q1",
+      "topicId": "react-native.release.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre semnarea și versionarea build-urilor Android de release, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Semnătura e identitatea aplicației: Android refuză un update semnat cu altă cheie, iar o cheie scursă permite cuiva să publice „actualizări” false. De aceea secretele stau în afara repository-ului.\n\nPlay App Signing separă cele două roluri: cheia aplicației rămâne la Google, iar cheia de upload, dacă se pierde, poate fi resetată prin suport. Fără Play App Signing, pierderea cheii înseamnă că nu mai poți publica actualizări pentru acel `applicationId`.\n\nPlay respinge build-urile semnate cu cheia de debug. `versionCode` trebuie să crească la fiecare build publicat."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "`versionCode` poate rămâne același de la un release la altul" },
+          {
+            "ro": "Keystore-ul și parolele nu intră în repository; vin din proprietăți locale sau din secretele CI"
+          },
+          { "ro": "Google Play acceptă build-uri semnate cu cheia de debug" },
+          {
+            "ro": "Un APK instalat manual se poate actualiza doar cu un APK semnat cu aceeași cheie"
+          },
+          {
+            "ro": "Cu Play App Signing, Google păstrează cheia de semnare a aplicației, iar tu încarci build-uri semnate cu o cheie de upload"
+          }
+        ],
+        "correctIndices": [1, 3, 4]
+      }
+    },
+    {
+      "id": "react-native.components.senior.q1",
+      "topicId": "react-native.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "TalkBack citește un card de produs ca cinci elemente separate: imaginea, titlul, prețul, rating-ul și săgeata. Utilizatorul trebuie să gliseze de cinci ori pentru fiecare produs. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Pe un View, `accessible` grupează copiii într-un singur element focusabil. Eticheta compusă (`Căști X, 299 lei, 4,5 stele`) transmite informația într-un singur pas, iar rolul spune că elementul se poate activa. Imaginea decorativă și săgeata nu mai apar ca elemente separate.\n\nAscunderea copiilor fără o etichetă pe card îl face complet invizibil pentru cititorul de ecran. Dacă un card are acțiuni secundare (de exemplu „Adaugă la favorite”), le expui prin `accessibilityActions` în loc să le lași ca elemente separate. Verifică pe dispozitiv, cu TalkBack și VoiceOver."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Adaugi `accessibilityHint` pe fiecare dintre cele cinci elemente" },
+          {
+            "ro": "Faci cardul un singur element accesibil (`accessible`, `accessibilityRole=\"button\"`) cu o etichetă care conține informațiile importante"
+          },
+          { "ro": "Setezi `importantForAccessibility=\"no-hide-descendants\"` pe card" },
+          { "ro": "Mărești fontul, ca TalkBack să citească mai repede" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "react-native.performance.senior.q1",
+      "topicId": "react-native.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pe un Android mid-range, aplicația devine interactivă după 4 s. Profilarea arată că cel mai mult durează încărcarea și execuția bundle-ului JavaScript înainte de primul ecran. Ce ajută cel mai direct?"
+      },
+      "explanation": {
+        "ro": "Hermes compilează JavaScript-ul în bytecode la build, deci la pornire nu mai există parsare și compilare. Codul se încarcă din fișier mapat în memorie, iar efectul cel mai mare se vede pe telefoanele slabe.\n\nAl doilea câștig: execuți doar ce trebuie pentru primul ecran. Inline requires și ecranele încărcate lazy amână inițializarea modulelor grele (SDK-uri de analytics, biblioteci de grafice) până la prima utilizare. Măsoară apoi pe un build de release, pe un telefon real: TTI, nu impresia. Un splash mai lung doar ascunde problema."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un splash screen afișat mai mult timp" },
+          {
+            "ro": "Hermes cu bytecode precompilat și amânarea modulelor care nu sunt necesare primului ecran (inline requires, ecrane lazy)"
+          },
+          { "ro": "Mutarea tuturor importurilor în `App.tsx`, ca să fie încărcate o singură dată" },
+          { "ro": "Activarea modului debug în release, pentru loguri mai detaliate" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "react-native.navigation.senior.f1",
+      "topicId": "react-native.navigation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Utilizatorul apasă o notificare „Comanda #123 a fost livrată”. Cum proiectezi deep link-ul, astfel încât să funcționeze corect în toate situațiile?"
+      },
+      "explanation": {
+        "ro": "Deep link-urile din notificări sunt o sursă clasică de bug-uri raportate doar din producție: aplicația deschide ecranul greșit la cold start, link-ul se pierde după login sau Back închide aplicația.\n\nUn răspuns senior enumeră stările aplicației și tratează fiecare explicit, nu doar „cazul fericit”."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Notificarea poartă un URL (`myapp://orders/123`), iar navigarea trece prin configurarea `linking` a React Navigation, nu prin apeluri `navigate` împrăștiate.\n\nSituațiile de acoperit:\n\n- **Cold start:** aplicația pornește din notificare. Citesc link-ul inițial (`getInitialURL`, plus notificarea inițială a bibliotecii de notificări) și îl aplic după bootstrap.\n- **Aplicația în fundal sau deschisă:** mă abonez la evenimentele de deschidere a notificării.\n- **Autentificare:** dacă sesiunea a expirat, păstrez link-ul în așteptare, trec prin login și abia apoi îl aplic.\n- **Stiva de navigare:** configurez ecranul inițial al navigatorului imbricat, ca Back să ducă la lista de comenzi, nu să închidă aplicația.\n- **Date invalide:** validez parametrii (id-ul poate fi greșit sau comanda ștearsă) și afișez un ecran de eroare clar.\n\nTestez fiecare caz cu `adb shell am start -d` și cu notificări reale, pe aplicația oprită, în fundal și deschisă."
+        },
+        "keyPoints": [
+          { "ro": "URL în notificare, rezolvat prin configurarea `linking`" },
+          { "ro": "Cold start vs aplicație în fundal sau deschisă" },
+          { "ro": "Link păstrat în așteptare până după autentificare" },
+          { "ro": "Stivă corectă: Back duce la ecranul părinte" },
+          { "ro": "Validarea parametrilor și starea de eroare" }
+        ]
+      }
+    },
+    {
+      "id": "react-native.release.senior.f1",
+      "topicId": "react-native.release.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum livrezi în siguranță o funcționalitate riscantă într-o aplicație React Native cu sute de mii de utilizatori? Discută OTA updates, feature flags și rollout-ul în magazine."
+      },
+      "explanation": {
+        "ro": "Pe mobil nu poți face rollback ca pe un server: un binar publicat rămâne pe telefoane săptămâni sau luni. De aceea întrebarea testează mecanismele care reduc impactul unei greșeli.\n\nApp Center CodePush a fost retras în 2025, deci un răspuns actual menționează alternativele și, mai important, limitele oricărei soluții OTA."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Separ **deploy-ul** (codul ajunge pe telefon) de **release** (utilizatorul vede funcționalitatea):\n\n- **Feature flags** controlate de la distanță: activez funcționalitatea treptat (intern, 1%, 10%, toți) și o pot opri instant (kill switch), fără build nou.\n- **Staged rollout** în Play Console (și phased release pe iOS): binarul nou ajunge întâi la un procent mic. Opresc rollout-ul dacă crash-free rate scade sau apar erori noi în Sentry sau Crashlytics.\n- **OTA updates** (de exemplu Expo Updates sau o soluție self-hosted) doar pentru JavaScript și assets. Orice schimbare de cod nativ cere un binar nou, iar fiecare update OTA trebuie legat de versiunea de runtime nativ compatibilă. Respect regulile magazinelor: OTA pentru corecturi, nu pentru a schimba scopul aplicației.\n\nÎn plus: API-ul rămâne compatibil cu versiunile vechi ale aplicației aflate încă pe telefoane și am un mecanism de update forțat pentru cazurile extreme. Decizia de a continua rollout-ul se bazează pe metrici definite dinainte, nu pe impresii."
+        },
+        "keyPoints": [
+          { "ro": "Deploy separat de release prin feature flags și kill switch" },
+          { "ro": "Staged rollout cu praguri pe crash-free rate" },
+          { "ro": "OTA doar pentru JS și assets, legat de runtime-ul nativ" },
+          { "ro": "API compatibil cu versiunile vechi ale aplicației" },
+          { "ro": "Monitorizare și criterii de oprire stabilite dinainte" }
+        ]
+      }
+    }
+  ]
+}

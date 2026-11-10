@@ -1,0 +1,1219 @@
+{
+  "id": "fullstack-databases",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Baze de date: SQL și MongoDB" },
+  "categories": [
+    {
+      "id": "sql",
+      "title": { "ro": "SQL și PostgreSQL" },
+      "testKinds": ["knowledge"],
+      "order": 70
+    },
+    { "id": "mongodb", "title": { "ro": "MongoDB" }, "testKinds": ["knowledge"], "order": 80 }
+  ],
+  "topics": [
+    {
+      "id": "sql.queries.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "junior",
+      "summary": { "ro": "Scrii `SELECT` cu `WHERE`, `JOIN`, `GROUP BY` și `ORDER BY`." },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.queries.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești subinterogări, CTE-uri și window functions și explici diferențele dintre tipurile de `JOIN`."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": ["sql.queries.junior"]
+    },
+    {
+      "id": "sql.queries.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Interogări" },
+      "level": "senior",
+      "summary": {
+        "ro": "Scrii interogări corecte cu `NULL`, CTE-uri recursive și agregări avansate și le rescrii pentru performanță."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL Tutorial",
+          "url": "https://www.postgresql.org/docs/current/tutorial.html"
+        }
+      ],
+      "tags": ["queries"],
+      "prerequisites": ["sql.queries.mid"]
+    },
+    {
+      "id": "sql.modeling.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "junior",
+      "summary": { "ro": "Creezi tabele cu chei primare și chei străine." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.modeling.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Normalizezi până la 3NF și alegi constrângerile (`UNIQUE`, `CHECK`) și tipurile potrivite."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["sql.modeling.junior"]
+    },
+    {
+      "id": "sql.modeling.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Modelare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Decizi când să denormalizezi, modelezi date multi-tenant sau temporale și planifici migrații fără downtime."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Data Definition",
+          "url": "https://www.postgresql.org/docs/current/ddl.html"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["sql.modeling.mid"]
+    },
+    {
+      "id": "sql.performance.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Explici ce este un index și când ajută." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.performance.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Citești `EXPLAIN ANALYZE` și alegi indecși compuși, parțiali sau acoperitori."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["sql.performance.junior"]
+    },
+    {
+      "id": "sql.performance.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Diagnostichezi interogări lente în producție (`pg_stat_statements`, statistici, bloat, VACUUM)."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Using EXPLAIN",
+          "url": "https://www.postgresql.org/docs/current/using-explain.html"
+        },
+        { "title": "Use The Index, Luke", "url": "https://use-the-index-luke.com/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["sql.performance.mid"]
+    },
+    {
+      "id": "sql.transactions.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "junior",
+      "summary": { "ro": "Folosești tranzacții pentru operații atomice." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.transactions.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "mid",
+      "summary": { "ro": "Explici ACID, nivelurile de izolare și anomaliile pe care le previn." },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": ["sql.transactions.junior"]
+    },
+    {
+      "id": "sql.transactions.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Tranzacții și concurență" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici MVCC, alegi între locking optimist și pesimist și previi deadlock-urile."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Transaction Isolation",
+          "url": "https://www.postgresql.org/docs/current/transaction-iso.html"
+        }
+      ],
+      "tags": ["transactions"],
+      "prerequisites": ["sql.transactions.mid"]
+    },
+    {
+      "id": "sql.operations.junior",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "junior",
+      "summary": { "ro": "Faci backup și restore pentru o bază de date." },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": []
+    },
+    {
+      "id": "sql.operations.mid",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "mid",
+      "summary": { "ro": "Folosești connection pooling (PgBouncer) și replici de citire." },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": ["sql.operations.junior"]
+    },
+    {
+      "id": "sql.operations.senior",
+      "categoryId": "sql",
+      "title": { "ro": "Operare și scalare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Proiectezi replicare, partiționare și high availability, cu obiective clare de recuperare (RPO, RTO)."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: High Availability",
+          "url": "https://www.postgresql.org/docs/current/high-availability.html"
+        }
+      ],
+      "tags": ["operations"],
+      "prerequisites": ["sql.operations.mid"]
+    },
+    {
+      "id": "mongodb.crud.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "junior",
+      "summary": { "ro": "Faci operații CRUD și interogări cu filtre și proiecții." },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.crud.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești operatori de update (`$set`, `$push`), upsert și operații bulk."
+      },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": ["mongodb.crud.junior"]
+    },
+    {
+      "id": "mongodb.crud.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Documente și CRUD" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici garanțiile de scriere și citire (write concern, read concern, read preference)."
+      },
+      "resources": [
+        { "title": "MongoDB: CRUD Operations", "url": "https://www.mongodb.com/docs/manual/crud/" }
+      ],
+      "tags": ["crud"],
+      "prerequisites": ["mongodb.crud.mid"]
+    },
+    {
+      "id": "mongodb.modeling.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "junior",
+      "summary": { "ro": "Explici documentele și diferența față de tabelele relaționale." },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.modeling.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "mid",
+      "summary": { "ro": "Alegi între embedding și referencing după tiparele de acces." },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["mongodb.modeling.junior"]
+    },
+    {
+      "id": "mongodb.modeling.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Modelarea datelor" },
+      "level": "senior",
+      "summary": {
+        "ro": "Aplici pattern-uri de schemă (bucket, computed, subset) și validarea schemei și eviți array-urile care cresc nelimitat."
+      },
+      "resources": [
+        {
+          "title": "MongoDB: Data Modeling",
+          "url": "https://www.mongodb.com/docs/manual/data-modeling/"
+        }
+      ],
+      "tags": ["modeling"],
+      "prerequisites": ["mongodb.modeling.mid"]
+    },
+    {
+      "id": "mongodb.performance.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "junior",
+      "summary": { "ro": "Creezi indecși simpli." },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.performance.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești indecși compuși după regula ESR, citești `explain()` și eviți scanările de colecție."
+      },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["mongodb.performance.junior"]
+    },
+    {
+      "id": "mongodb.performance.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Indecși și performanță" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi volume mari de date cu indecși parțiali, TTL, covered queries și profiler-ul."
+      },
+      "resources": [
+        { "title": "MongoDB: Indexes", "url": "https://www.mongodb.com/docs/manual/indexes/" }
+      ],
+      "tags": ["performance"],
+      "prerequisites": ["mongodb.performance.mid"]
+    },
+    {
+      "id": "mongodb.aggregation.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "junior",
+      "summary": { "ro": "Folosești `$match`, `$group` și `$sort`." },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.aggregation.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "mid",
+      "summary": { "ro": "Construiești pipeline-uri cu `$lookup`, `$unwind` și `$project`." },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": ["mongodb.aggregation.junior"]
+    },
+    {
+      "id": "mongodb.aggregation.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Aggregation framework" },
+      "level": "senior",
+      "summary": {
+        "ro": "Optimizezi pipeline-urile (ordinea etapelor, folosirea indecșilor) și alegi între agregare la cerere și precalculare."
+      },
+      "resources": [
+        {
+          "title": "MongoDB: Aggregation",
+          "url": "https://www.mongodb.com/docs/manual/aggregation/"
+        }
+      ],
+      "tags": ["aggregation"],
+      "prerequisites": ["mongodb.aggregation.mid"]
+    },
+    {
+      "id": "mongodb.scaling.junior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "junior",
+      "summary": { "ro": "Explici ce este un replica set." },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": []
+    },
+    {
+      "id": "mongodb.scaling.mid",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "mid",
+      "summary": { "ro": "Folosești tranzacții multi-document și explici când sunt necesare." },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": ["mongodb.scaling.junior"]
+    },
+    {
+      "id": "mongodb.scaling.senior",
+      "categoryId": "mongodb",
+      "title": { "ro": "Replicare și sharding" },
+      "level": "senior",
+      "summary": {
+        "ro": "Alegi shard key-ul, explici compromisurile de consistență și argumentezi când PostgreSQL e o alegere mai bună."
+      },
+      "resources": [
+        { "title": "MongoDB: Sharding", "url": "https://www.mongodb.com/docs/manual/sharding/" }
+      ],
+      "tags": ["scaling"],
+      "prerequisites": ["mongodb.scaling.mid"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "sql.modeling.junior.q1",
+      "topicId": "sql.modeling.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce garantează o cheie străină `orders.customer_id REFERENCES customers(id)` în PostgreSQL?"
+      },
+      "explanation": {
+        "ro": "Cheia străină garantează doar că referința e validă. Ștergerea în cascadă apare numai cu `ON DELETE CASCADE`; implicit, ștergerea unui client cu comenzi e refuzată.\n\nCapcana frecventă: PostgreSQL indexează automat cheia primară referită, **nu** și coloana care referă. Fără un index pe `orders.customer_id`, JOIN-urile și ștergerile din `customers` (care verifică comenzile) fac scanări complete pe tabele mari."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Că fiecare `customer_id` nenul există în `customers` (integritate referențială)"
+          },
+          { "ro": "Că la ștergerea unui client se șterg automat comenzile lui" },
+          { "ro": "Că `customer_id` e unic în `orders`" },
+          { "ro": "Că PostgreSQL creează automat un index pe `orders.customer_id`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.queries.mid.q1",
+      "topicId": "sql.queries.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Tabelul `teams` are un rând cu `manager_id` NULL. Ce întoarce interogarea?\n\n~~~sql\nSELECT name\nFROM users\nWHERE id NOT IN (SELECT manager_id FROM teams);\n~~~"
+      },
+      "explanation": {
+        "ro": "`x NOT IN (a, b, NULL)` înseamnă `x <> a AND x <> b AND x <> NULL`. Ultima comparație e mereu `UNKNOWN`, deci întreaga condiție nu poate fi niciodată `TRUE` și nu se întoarce niciun rând.\n\nFolosește `NOT EXISTS (SELECT 1 FROM teams t WHERE t.manager_id = u.id)`, care tratează NULL-urile intuitiv și e adesea și mai eficient. Bug-ul e periculos pentru că funcționează corect până apare primul NULL în date."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "O eroare de sintaxă" },
+          { "ro": "Toți utilizatorii" },
+          { "ro": "Utilizatorii care nu sunt manageri" },
+          { "ro": "Niciun rând" }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "sql.transactions.mid.q1",
+      "topicId": "sql.transactions.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Ce anomalii previne nivelul de izolare `REPEATABLE READ` **în PostgreSQL**?"
+      },
+      "explanation": {
+        "ro": "În PostgreSQL, `REPEATABLE READ` e implementat ca snapshot isolation: tranzacția vede un snapshot fix al datelor de la prima interogare. Deci nu vede date necomise, nu vede rânduri modificate de alții între două citiri și nici rânduri noi (phantoms). Standardul SQL permite phantoms la acest nivel, dar PostgreSQL le previne.\n\nWrite skew rămâne posibil: două tranzacții citesc aceleași date, fiecare scrie în alt rând, iar împreună încalcă o regulă (ex. „cel puțin un medic de gardă”). Pentru asta ai nevoie de `SERIALIZABLE` sau de blocare explicită (`SELECT ... FOR UPDATE`), plus retry la eroarea de serializare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Write skew" },
+          { "ro": "Non-repeatable read" },
+          { "ro": "Phantom read" },
+          { "ro": "Dirty read" }
+        ],
+        "correctIndices": [1, 2, 3]
+      }
+    },
+    {
+      "id": "sql.queries.senior.q1",
+      "topicId": "sql.queries.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Tabelul `orders` conține, în ordinea lui `created_at`: (client 1, 10), (client 1, 5), (client 2, 7). Ce valori are coloana `running`?\n\n~~~sql\nSELECT customer_id, amount,\n       SUM(amount) OVER (\n         PARTITION BY customer_id\n         ORDER BY created_at\n       ) AS running\nFROM orders;\n~~~"
+      },
+      "explanation": {
+        "ro": "Cu `ORDER BY` în fereastră, frame-ul implicit e `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`, deci obții un total cumulativ pe fiecare client: 10, apoi 15, iar pentru clientul 2, 7.\n\nFără `ORDER BY`, frame-ul e toată partiția și fiecare rând primește totalul clientului (15, 15, 7). Capcană: cu valori egale în `created_at`, `RANGE` include toți „egalii” în același total; specifică `ROWS` dacă vrei rând cu rând."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "10, 15, 7" },
+          { "ro": "15, 15, 7" },
+          { "ro": "10, 5, 7" },
+          { "ro": "22, 22, 22" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.performance.senior.f1",
+      "topicId": "sql.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ai un index B-tree compus pe `(tenant_id, created_at)`. Ce interogări îl pot folosi eficient și care nu?"
+      },
+      "explanation": {
+        "ro": "Ordinea coloanelor într-un index compus e o decizie de design: pune întâi coloana folosită la egalitate în toate interogările importante (aici tenant-ul, într-un sistem multi-tenant)."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Indexul e sortat întâi după `tenant_id`, apoi după `created_at` în cadrul fiecărui tenant. Îl folosesc eficient:\n\n- `WHERE tenant_id = $1`;\n- `WHERE tenant_id = $1 AND created_at >= $2` (egalitate pe prima coloană, interval pe a doua);\n- `WHERE tenant_id = $1 ORDER BY created_at DESC LIMIT 20` (fără sortare suplimentară).\n\nNu îl folosesc eficient:\n\n- `WHERE created_at >= $1` fără tenant (lipsește prefixul din stânga); PostgreSQL 18 poate face skip scan când `tenant_id` are puține valori distincte, dar nu te baza pe asta;\n- `WHERE date(created_at) = ...`, pentru că o funcție aplicată pe coloană anulează indexul (ai nevoie de un index pe expresie sau de un interval);\n- `WHERE tenant_id = $1 OR ...` pe coloane neindexate.\n\nVerifici întotdeauna cu `EXPLAIN (ANALYZE, BUFFERS)`, pe date realiste."
+        },
+        "keyPoints": [
+          { "ro": "Regula prefixului din stânga" },
+          { "ro": "Egalitate întâi, apoi interval sau sortare" },
+          { "ro": "Funcțiile pe coloană anulează indexul" },
+          { "ro": "Verificare cu EXPLAIN ANALYZE" }
+        ]
+      }
+    },
+    {
+      "id": "mongodb.modeling.mid.q1",
+      "topicId": "mongodb.modeling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un articol de blog poate avea zeci de mii de comentarii, afișate paginat. Cum modelezi comentariile?"
+      },
+      "explanation": {
+        "ro": "Un array care crește nelimitat e un antipattern: documentul se apropie de limita de 16 MB, fiecare comentariu nou rescrie un document mare, iar paginarea în array e incomodă.\n\nEmbedding-ul e potrivit când datele sunt mărginite și citite împreună (ex. adresele unui client). Un compromis frecvent e **subset pattern**: păstrezi ultimele câteva comentarii în articol pentru afișare rapidă, iar restul în colecția separată."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "O colecție separată pentru fiecare articol" },
+          { "ro": "Colecție separată `comments`, cu `postId` indexat" },
+          { "ro": "Un array cu toate comentariile, inclus (embedded) în documentul articolului" },
+          { "ro": "Toate comentariile ca un singur string JSON în articol" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "mongodb.performance.mid.q1",
+      "topicId": "mongodb.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce index servește cel mai bine interogarea?\n\n~~~js\ndb.users\n  .find({ status: 'active', age: { $gt: 30 } })\n  .sort({ createdAt: -1 });\n~~~"
+      },
+      "explanation": {
+        "ro": "Regula **ESR**: câmpurile de **E**galitate întâi, apoi cele după care **S**ortezi, apoi cele cu interval (**R**ange). Așa MongoDB parcurge indexul deja sortat după `createdAt` pentru utilizatorii activi și filtrează `age` din index.\n\nCu `age` înaintea lui `createdAt`, intervalul „sparge” ordinea, iar sortarea se face în memorie (vezi `SORT` în `explain()`), care e lentă și limitată ca memorie."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ createdAt: -1 }`" },
+          { "ro": "`{ status: 1, age: 1, createdAt: -1 }`" },
+          { "ro": "`{ status: 1, createdAt: -1, age: 1 }`" },
+          { "ro": "`{ age: 1, status: 1, createdAt: -1 }`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "mongodb.aggregation.mid.q1",
+      "topicId": "mongodb.aggregation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Colecția `orders` conține: (c1, 10, paid), (c1, 20, paid), (c2, 25, paid), (c2, 30, cancelled). Ce întoarce pipeline-ul?\n\n~~~js\ndb.orders.aggregate([\n  { $match: { status: 'paid' } },\n  { $group: { _id: '$customerId', total: { $sum: '$amount' } } },\n  { $sort: { total: -1 } },\n  { $limit: 1 },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "`$match` elimină comanda anulată, deci c1 are 10 + 20 = 30, iar c2 are 25. După sortarea descrescătoare și `$limit: 1` rămâne c1 cu 30.\n\nOrdinea etapelor contează și pentru performanță: `$match` la început poate folosi un index și reduce documentele care ajung în `$group`. Un `$sort` urmat imediat de `$limit` e optimizat ca top-k, fără sortarea completă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ _id: \"c2\", total: 55 }`" },
+          { "ro": "`{ _id: \"c1\", total: 20 }`" },
+          { "ro": "`{ _id: \"c1\", total: 30 }`" },
+          { "ro": "`{ _id: \"c2\", total: 25 }`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "mongodb.crud.senior.q1",
+      "topicId": "mongodb.crud.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Ce garanții obții cu `writeConcern: { w: \"majority\" }`?" },
+      "explanation": {
+        "ro": "„Majority” înseamnă că scrierea a ajuns pe majoritatea replicilor, deci supraviețuiește alegerii unui nou primary. Cu `w: 1`, o scriere confirmată poate fi pierdută la failover.\n\nCitirile sunt controlate separat: `readConcern` și `readPreference`. Un secundar poate rămâne în urmă; pentru „read your writes” folosești sesiuni cu consistență cauzală sau citești de pe primary. Atomicitatea pe mai multe documente necesită tranzacții multi-document."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Scrierea confirmată nu va fi anulată (rollback) la schimbarea primary-ului" },
+          {
+            "ro": "Scrierea e confirmată după ce a fost aplicată pe majoritatea membrilor cu drept de vot"
+          },
+          { "ro": "Orice citire ulterioară, de pe orice secundar, va vedea scrierea" },
+          { "ro": "Scrierea devine atomică pe mai multe documente" }
+        ],
+        "correctIndices": [0, 1]
+      }
+    },
+    {
+      "id": "mongodb.scaling.senior.f1",
+      "topicId": "mongodb.scaling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum alegi **shard key**-ul unei colecții MongoDB și ce greșeli trebuie evitate?"
+      },
+      "explanation": {
+        "ro": "Alegerea shard key-ului e cea mai greu de schimbat decizie din MongoDB. Un senior pornește de la tiparele de acces și de la volumul de scrieri, nu de la schemă."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Un shard key bun are:\n\n- **cardinalitate mare** (multe valori distincte), ca datele să se poată împărți în multe chunk-uri;\n- **frecvență mică** (nicio valoare dominantă), ca un chunk să nu devină uriaș și imposibil de mutat;\n- **creștere nemonotonă**, altfel toate inserările ajung pe ultimul shard (hotspot);\n- **potrivire cu interogările**: interogările care conțin cheia ajung la un singur shard (targeted), celelalte sunt trimise la toate (scatter-gather).\n\nGreșeli tipice: `_id` de tip ObjectId sau un timestamp ca shard key pe interval, care creează un hotspot la inserare; o cheie cu puține valori (ex. `country`); o cheie pe care interogările nu o folosesc. Un shard key hashed distribuie uniform scrierile, dar pierzi interogările eficiente pe interval. Cheile compuse (ex. `{ tenantId: 1, _id: 1 }`) combină localitatea cu distribuția. Resharding-ul e posibil din MongoDB 5.0, dar e o operație costisitoare."
+        },
+        "keyPoints": [
+          { "ro": "Cardinalitate mare, frecvență mică" },
+          { "ro": "Evită cheile monotone (hotspot)" },
+          { "ro": "Interogări targeted vs scatter-gather" },
+          { "ro": "Hashed vs ranged; chei compuse" }
+        ]
+      }
+    },
+    {
+      "id": "sql.queries.junior.q1",
+      "topicId": "sql.queries.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei clienții care au plasat mai mult de 5 comenzi. Ce cuvânt cheie lipsește?\n\n~~~sql\nSELECT customer_id, COUNT(*) AS orders\nFROM orders\nGROUP BY customer_id\n??? COUNT(*) > 5;\n~~~"
+      },
+      "explanation": {
+        "ro": "`WHERE` filtrează **rândurile** înainte de grupare, deci nu poate folosi agregate precum `COUNT(*)`. `HAVING` filtrează **grupurile** după agregare.\n\nOrdinea logică a unei interogări: `FROM` → `WHERE` → `GROUP BY` → `HAVING` → `SELECT` → `ORDER BY` → `LIMIT`. Ea explică și de ce un alias definit în `SELECT` nu poate fi folosit în `WHERE`. Pune în `WHERE` tot ce se poate filtra înainte de grupare: baza de date grupează astfel mai puține rânduri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`ORDER BY`" },
+          { "ro": "`LIMIT`" },
+          { "ro": "`HAVING`" },
+          { "ro": "`WHERE`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "sql.performance.junior.q1",
+      "topicId": "sql.performance.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Tabelul `users` are 5 milioane de rânduri. Interogarea `SELECT * FROM users WHERE email = 'ana@example.com'` durează câteva secunde. Ce schimbare ajută cel mai mult?"
+      },
+      "explanation": {
+        "ro": "Fără index, PostgreSQL face un **sequential scan**: citește toate cele 5 milioane de rânduri ca să găsească unul. Un index B-tree pe `email` găsește rândul în câțiva pași, indiferent de mărimea tabelului.\n\nO constrângere `UNIQUE` creează automat indexul și garantează unicitatea. Indecșii au un cost: fiecare scriere îi actualizează și ocupă spațiu. Atenție și la forma condiției: `WHERE lower(email) = ...` nu folosește un index simplu pe `email`; are nevoie de un index pe expresia `lower(email)`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Înlocuiești `SELECT *` cu `SELECT id, email`" },
+          { "ro": "Adaugi `LIMIT 1` și păstrezi interogarea" },
+          {
+            "ro": "Un index pe `users(email)`, ideal prin constrângerea `UNIQUE`, dacă email-ul e unic"
+          },
+          { "ro": "Muți tabelul pe un disc mai rapid" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "sql.queries.mid.q2",
+      "topicId": "sql.queries.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei **toți** clienții, iar lângă fiecare comenzile lui plătite (sau `NULL` dacă nu are). Ce problemă are interogarea?\n\n~~~sql\nSELECT c.name, o.id\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.status = 'paid';\n~~~"
+      },
+      "explanation": {
+        "ro": "`LEFT JOIN` păstrează clienții fără comenzi, completând coloanele din `orders` cu `NULL`. Apoi `WHERE o.status = 'paid'` evaluează `NULL = 'paid'`, adică `NULL`, deci acele rânduri dispar. Rezultatul e identic cu un `INNER JOIN`.\n\nCorect: `LEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'`. Condiția din `ON` decide ce rânduri se potrivesc, iar `WHERE` filtrează rezultatul final. Bug-ul e frecvent în rapoarte: lipsesc tocmai clienții fără activitate, pe care raportul ar fi trebuit să-i arate."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lipsește `GROUP BY c.name`" },
+          { "ro": "`LEFT JOIN` nu poate fi folosit cu `WHERE`" },
+          { "ro": "Interogarea e corectă" },
+          {
+            "ro": "Condiția din `WHERE` elimină rândurile în care `o` e `NULL`, deci interogarea se comportă ca un `INNER JOIN`; condiția trebuie mutată în `ON`"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "sql.modeling.mid.q1",
+      "topicId": "sql.modeling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Proiectezi tabelul `payments` în PostgreSQL. Care alegeri sunt corecte?" },
+      "explanation": {
+        "ro": "Tipurile în virgulă mobilă nu pot reprezenta exact valori precum 0,1, deci sumele adunate acumulează erori. Pentru bani, `numeric` sau o sumă întreagă în subunități (bani, cenți).\n\n`timestamptz` stochează un moment absolut (în UTC) și îl afișează în fusul sesiunii. `timestamp` simplu pierde informația despre fus și produce bug-uri la ora de vară și între servere.\n\nConstrângerile sunt ultima linie de apărare: orice aplicație, script sau migrare care scrie în tabel le respectă. Pentru `status`, un `CHECK (status IN (...))` sau un tip enum. Copierea numelui clientului încalcă 3NF: la redenumire, datele devin inconsistente."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "`status text` fără nicio constrângere, validat doar în aplicație" },
+          { "ro": "`amount numeric(12, 2)`, nu `double precision`" },
+          { "ro": "`created_at timestamptz`, nu `timestamp` fără fus orar" },
+          { "ro": "Coloana `customer_name` copiată în fiecare plată, ca să eviți un `JOIN`" },
+          { "ro": "`CHECK (amount > 0)` pe coloana `amount`" }
+        ],
+        "correctIndices": [1, 2, 4]
+      }
+    },
+    {
+      "id": "sql.performance.mid.q1",
+      "topicId": "sql.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ai indexul `CREATE INDEX ON orders (customer_id, created_at)`. Care interogare îl folosește cel mai eficient?"
+      },
+      "explanation": {
+        "ro": "Un index B-tree compus e sortat întâi după prima coloană, apoi după a doua în cadrul fiecărei valori a primei. Pentru `customer_id = 42`, intrările sunt consecutive și deja ordonate după `created_at`, deci baza de date citește direct ultimele 10, fără sortare.\n\nFără condiție pe prima coloană, indexul nu oferă un punct de intrare: datele dintr-o zi sunt împrăștiate printre toți clienții. PostgreSQL 18 poate face un „skip scan”, dar acesta ajută doar când prima coloană are puține valori distincte. Regula practică: coloanele cu egalitate primele, apoi cea folosită pentru interval sau sortare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`WHERE customer_id > 0 OR created_at > now() - interval '1 day'`" },
+          { "ro": "`ORDER BY created_at LIMIT 10`" },
+          { "ro": "`WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 10`" },
+          { "ro": "`WHERE created_at > now() - interval '1 day'`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "sql.operations.mid.q1",
+      "topicId": "sql.operations.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre PgBouncer și replicile de citire în PostgreSQL, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "PostgreSQL creează un **proces** per conexiune, cu memorie proprie. Câteva sute de conexiuni active degradează deja performanța, iar zeci de instanțe ale unui serviciu, fiecare cu propriul pool, ajung ușor la acest număr.\n\nModul `transaction` e cel mai eficient, dar presupune că aplicația nu se bazează pe starea sesiunii între tranzacții.\n\nReplicile scalează citirile, nu scrierile: doar primarul acceptă scrieri. Pentru „citește ce ai scris”, trimite citirile imediat următoare către primar sau așteaptă ca replica să ajungă la poziția WAL a scrierii."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Replicile sunt de obicei asincrone, deci o citire imediat după o scriere poate returna date vechi"
+          },
+          {
+            "ro": "În modul `transaction`, o conexiune de server e alocată clientului doar pe durata unei tranzacții, deci mulți clienți împart puține conexiuni"
+          },
+          {
+            "ro": "În modul `transaction`, setările de sesiune (`SET`, `LISTEN`, advisory locks la nivel de sesiune) nu se păstrează între tranzacții"
+          },
+          { "ro": "Scrierile pot fi trimise la oricare replică" },
+          {
+            "ro": "Conexiunile PostgreSQL sunt foarte ieftine, deci pooling-ul contează doar peste 10 000 de clienți"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "sql.transactions.senior.q1",
+      "topicId": "sql.transactions.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Două transferuri rulează în paralel. Ce se întâmplă și cum previi problema?\n\n~~~sql\n-- T1                                   -- T2\nUPDATE accounts SET balance = balance - 10 WHERE id = 1;\n                                        UPDATE accounts SET balance = balance - 5 WHERE id = 2;\nUPDATE accounts SET balance = balance + 10 WHERE id = 2;\n                                        UPDATE accounts SET balance = balance + 5 WHERE id = 1;\n~~~"
+      },
+      "explanation": {
+        "ro": "MVCC face ca cititorii să nu blocheze scriitorii, dar două scrieri pe **același rând** se blochează: a doua așteaptă commit-ul primei. Aici T1 deține rândul 1 și așteaptă rândul 2, iar T2 deține rândul 2 și așteaptă rândul 1. După `deadlock_timeout`, PostgreSQL detectează ciclul și anulează una dintre tranzacții cu eroarea `40P01`.\n\nPrevenire: ordine consistentă de blocare (sortezi id-urile înainte de update sau le blochezi cu `SELECT ... ORDER BY id FOR UPDATE`), tranzacții scurte și retry automat pentru erorile `40P01` și `40001`. `SERIALIZABLE` adaugă erori de serializare; nu elimină deadlock-urile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Ambele tranzacții așteaptă la nesfârșit, până la restartul bazei de date" },
+          { "ro": "Nivelul `SERIALIZABLE` elimină complet deadlock-urile" },
+          {
+            "ro": "Nu se întâmplă nimic: MVCC face ca două `UPDATE`-uri să nu se blocheze niciodată"
+          },
+          {
+            "ro": "Deadlock: PostgreSQL îl detectează și anulează una dintre tranzacții; îl previi blocând rândurile mereu în aceeași ordine (de exemplu crescător după id) și reîncercând tranzacția anulată"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "sql.queries.senior.q2",
+      "topicId": "sql.queries.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei clienții care nu au recomandat pe nimeni. Coloana `referrer_id` e `NULL` pentru clienții veniți fără recomandare. Ce returnează interogarea?\n\n~~~sql\nSELECT name\nFROM customers\nWHERE id NOT IN (SELECT referrer_id FROM customers);\n~~~"
+      },
+      "explanation": {
+        "ro": "`x NOT IN (a, b, NULL)` înseamnă `x <> a AND x <> b AND x <> NULL`. Ultima comparație e `NULL` (necunoscut), deci întreaga condiție nu poate fi niciodată adevărată, iar interogarea nu returnează nimic.\n\nCorect: `WHERE NOT EXISTS (SELECT 1 FROM customers r WHERE r.referrer_id = c.id)`. `NOT EXISTS` tratează corect `NULL`-urile și e, în general, executat eficient ca un anti-join. Bug-ul e periculos pentru că interogarea funcționează în teste până când apare primul `NULL` în date."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Toți clienții" },
+          { "ro": "Clienții care nu au recomandat pe nimeni, corect" },
+          { "ro": "Niciun rând, dacă există măcar un `referrer_id` egal cu `NULL`" },
+          { "ro": "O eroare de sintaxă" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "sql.modeling.senior.f1",
+      "topicId": "sql.modeling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Trebuie să redenumești coloana `users.name` în `full_name` și s-o faci `NOT NULL`, pe un tabel cu 50 de milioane de rânduri, fără downtime. Cum procedezi?"
+      },
+      "explanation": {
+        "ro": "Un simplu `ALTER TABLE ... RENAME` e instantaneu, dar strică imediat versiunea aplicației care încă rulează. Un `SET NOT NULL` direct scanează tot tabelul sub un lock exclusiv.\n\nÎntrebarea testează dacă te gândești la migrare ca la un proces în mai mulți pași, coordonat cu deploy-urile, nu ca la o singură comandă SQL."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Folosesc pattern-ul **expand / contract**, pentru că în timpul unui rolling deploy rulează simultan versiunea veche și cea nouă a aplicației.\n\n1. **Expand:** adaug coloana `full_name`, nullable. Operația e instantanee.\n2. Deploy: aplicația scrie în **ambele** coloane și citește încă din `name`.\n3. **Backfill** în loturi mici (de exemplu 10 000 de rânduri), cu pauze, ca să nu țin lock-uri lungi și să nu întârzii replicile.\n4. Adaug `CHECK (full_name IS NOT NULL) NOT VALID`, apoi `VALIDATE CONSTRAINT`, care nu blochează scrierile. Din PostgreSQL 12, `SET NOT NULL` poate folosi constrângerea validată și evită scanarea tabelului.\n5. Deploy: aplicația citește din `full_name`.\n6. **Contract:** după ce nicio versiune nu mai folosește `name`, o șterg.\n\nPe parcurs: `lock_timeout` scurt pe fiecare DDL, ca o migrare blocată să eșueze rapid în loc să blocheze tot traficul, și `CREATE INDEX CONCURRENTLY` pentru orice index nou."
+        },
+        "keyPoints": [
+          { "ro": "Expand / contract: versiunea veche și cea nouă coexistă" },
+          { "ro": "Scriere în ambele coloane, apoi backfill în loturi" },
+          { "ro": "`NOT VALID` + `VALIDATE` în loc de `SET NOT NULL` direct" },
+          { "ro": "`lock_timeout` pe DDL și indecși `CONCURRENTLY`" },
+          { "ro": "Ștergerea coloanei vechi abia la final" }
+        ]
+      }
+    },
+    {
+      "id": "sql.operations.senior.f1",
+      "topicId": "sql.operations.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Business-ul cere: „pierdem cel mult 1 minut de date și revenim în cel mult 15 minute”. Cum proiectezi high availability și recuperarea pentru PostgreSQL?"
+      },
+      "explanation": {
+        "ro": "Confuzia clasică: „avem replici, deci avem backup”. Replicarea acoperă căderea unui server; backup-ul cu PITR acoperă greșelile umane și corupția datelor. Ai nevoie de amândouă.\n\nUn răspuns senior pornește de la cifrele cerute de business și justifică fiecare componentă prin ele, inclusiv costul."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Cerința înseamnă **RPO ≤ 1 minut** (cât pot pierde) și **RTO ≤ 15 minute** (cât durează revenirea).\n\n- **Replicare prin streaming** către cel puțin o replică în altă zonă de disponibilitate. Asincronă, lag-ul e de obicei sub o secundă; sincronă, RPO devine 0, cu prețul latenței la fiecare commit. Aleg după cerință și monitorizez lag-ul cu alertă.\n- **Failover automat** (Patroni sau serviciul gestionat al cloud-ului), cu detectarea primarului căzut și rutarea conexiunilor către noul primar (DNS, proxy, PgBouncer), pentru un RTO de minute, nu de ore.\n- **Backup-uri cu PITR** (pgBackRest sau echivalent): backup complet periodic plus arhivarea continuă a WAL-ului. Replicarea nu protejează de erori logice: un `DELETE` greșit se replică instantaneu. PITR permite restaurarea la momentul dinaintea greșelii.\n- **Restaurări testate** regulat, cronometrate: un backup netestat nu e un backup. Exerciții de failover planificate.\n- Tabelele foarte mari, partiționate (de exemplu pe lună), ca restaurarea, mentenanța și ștergerea datelor vechi să rămână gestionabile."
+        },
+        "keyPoints": [
+          { "ro": "RPO și RTO definite înaintea arhitecturii" },
+          { "ro": "Replicare sincronă vs asincronă, cu lag monitorizat" },
+          { "ro": "Failover automat și rutarea conexiunilor" },
+          { "ro": "PITR pentru erori logice, pe care replicarea nu le acoperă" },
+          { "ro": "Restaurări și failover testate regulat" }
+        ]
+      }
+    },
+    {
+      "id": "mongodb.crud.junior.q1",
+      "topicId": "mongodb.crud.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce câmpuri conțin documentele returnate?\n\n~~~js\ndb.users.find({ country: 'RO' }, { name: 1, email: 1 });\n~~~"
+      },
+      "explanation": {
+        "ro": "Al doilea argument al lui `find` e **proiecția**: alege ce câmpuri se întorc. `_id` e inclus implicit, chiar dacă nu apare în proiecție; îl excluzi explicit cu `_id: 0`.\n\nProiecția reduce datele transferate prin rețea și memoria folosită de aplicație. Când toate câmpurile cerute (inclusiv filtrul) sunt într-un index și `_id` e exclus, interogarea poate fi servită doar din index, fără să citească documentele."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Doar `name` și `email`" },
+          { "ro": "`country`, `name` și `email`" },
+          { "ro": "`_id`, `name` și `email`" },
+          { "ro": "Toate câmpurile, pentru că proiecția se aplică doar la sortare" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "mongodb.modeling.junior.q1",
+      "topicId": "mongodb.modeling.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Inserezi un document fără câmpul `_id`. Ce se întâmplă?" },
+      "explanation": {
+        "ro": "Fiecare document are nevoie de un `_id` unic în colecție. Dacă lipsește, driverul (sau serverul) generează un `ObjectId`: 12 octeți care conțin un timestamp, o valoare aleatoare și un contor. Id-urile pot fi generate astfel pe client, fără coordonare cu serverul.\n\nColecția are automat un index unic pe `_id`, iar valoarea nu se poate modifica după inserare. Poți folosi și propriul `_id` (un cod de business, un UUID), dacă e unic și stabil."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Se generează un număr incremental, ca un `SERIAL` din SQL" },
+          { "ro": "Documentul e salvat cu `_id: null`" },
+          {
+            "ro": "Se generează automat un `ObjectId`, unic în colecție, care include și momentul creării"
+          },
+          { "ro": "Inserarea eșuează, pentru că `_id` e obligatoriu" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "mongodb.scaling.junior.q1",
+      "topicId": "mongodb.scaling.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un replica set are trei membri: un primar și doi secundari. Serverul primar cade. Ce se întâmplă?"
+      },
+      "explanation": {
+        "ro": "Un replica set ține aceleași date pe mai mulți membri. Doar primarul acceptă scrieri, iar secundarii îi replică operațiile. Când primarul nu mai răspunde, membrii rămași aleg un nou primar; alegerea cere o **majoritate** (2 din 3), de aceea replica set-urile au un număr impar de membri.\n\nDriverele moderne descoperă singure noul primar, iar `retryable writes` reîncearcă automat o scriere întreruptă de failover. Scrierile confirmate doar de vechiul primar (nu și de majoritate) pot fi anulate (rollback); de aceea contează `w: \"majority\"`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Toate datele scrise de la ultimul backup se pierd" },
+          { "ro": "Baza de date devine read-only până când un administrator repornește primarul" },
+          { "ro": "Ambii secundari devin primari, ca să împartă scrierile" },
+          {
+            "ro": "Secundarii țin o alegere și unul devine primar în câteva secunde; driverele trimit scrierile către noul primar"
+          }
+        ],
+        "correctIndex": 3
+      }
+    },
+    {
+      "id": "mongodb.crud.mid.q1",
+      "topicId": "mongodb.crud.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Numeri vizitele pe pagină pe zi. Ce face operația dacă documentul pentru `/home` și ziua respectivă **nu există** încă?\n\n~~~js\ndb.pageStats.updateOne(\n  { page: '/home', day: '2026-11-10' },\n  { $inc: { views: 1 }, $setOnInsert: { createdAt: new Date() } },\n  { upsert: true },\n);\n~~~"
+      },
+      "explanation": {
+        "ro": "Cu `upsert: true`, dacă niciun document nu se potrivește, MongoDB creează unul din câmpurile de egalitate ale filtrului, aplică operatorii de update (`$inc` pornește de la 0) și adaugă câmpurile din `$setOnInsert`. Dacă documentul există, se aplică doar `$inc`; `$setOnInsert` e ignorat.\n\nOperația e atomică pe document, deci contorul e corect și la cereri concurente, fără citire urmată de scriere. Adaugă un index unic pe `{ page: 1, day: 1 }`: fără el, două upsert-uri simultane pot crea două documente pentru aceeași zi."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Creează un document doar cu `views: 1` și `createdAt`" },
+          { "ro": "Creează documentul cu `page`, `day` (din filtru), `views: 1` și `createdAt`" },
+          { "ro": "Nu face nimic, pentru că `$inc` nu poate crea câmpuri" },
+          { "ro": "Aruncă o eroare, pentru că `$inc` și `$setOnInsert` nu pot fi combinate" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "mongodb.aggregation.mid.q2",
+      "topicId": "mongodb.aggregation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Comanda `o3` are `items: []`. Ce se întâmplă cu ea în pipeline?\n\n~~~js\ndb.orders.aggregate([\n  { $unwind: '$items' },\n  { $group: { _id: '$_id', products: { $sum: 1 } } },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "`$unwind` produce câte un document pentru fiecare element al array-ului. Un array gol, un câmp lipsă sau `null` nu produc nimic, deci comanda dispare tăcut din raport.\n\nDacă vrei să o păstrezi: `{ $unwind: { path: '$items', preserveNullAndEmptyArrays: true } }`, apoi numeri cu o condiție. Pentru o simplă numărare, `{ $size: '$items' }` într-un `$project` e mai ieftin decât `$unwind` + `$group`. Aceeași capcană apare după `$lookup` fără potriviri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Pipeline-ul aruncă o eroare" },
+          {
+            "ro": "Dispare din rezultat: `$unwind` nu produce niciun document pentru un array gol"
+          },
+          { "ro": "Apare cu `products: 0`" },
+          { "ro": "Apare cu `products: 1`" }
+        ],
+        "correctIndex": 1
+      }
+    },
+    {
+      "id": "mongodb.scaling.mid.q1",
+      "topicId": "mongodb.scaling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre atomicitate și tranzacții în MongoDB, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Modelarea bună în MongoDB pune datele modificate împreună în același document, iar atunci atomicitatea pe document e suficientă pentru majoritatea cazurilor.\n\nTranzacțiile multi-document există (de exemplu, un transfer între două conturi), dar au cost: lock-uri ținute mai mult, presiune pe cache, conflicte care cer retry. De aceea au o durată limitată. O aplicație care are nevoie de tranzacții peste tot e, de obicei, un semn că modelul de date e relațional și ar sta mai bine în PostgreSQL."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O tranzacție are o limită de durată (implicit 60 de secunde) și trebuie ținută scurtă"
+          },
+          { "ro": "Tranzacțiile multi-document necesită un replica set sau un cluster sharded" },
+          {
+            "ro": "O operație pe un singur document e atomică fără tranzacție, inclusiv modificările în sub-documente și array-uri"
+          },
+          {
+            "ro": "Cu tranzacții, modelarea nu mai contează: poți normaliza totul ca în SQL, fără cost"
+          },
+          { "ro": "Tranzacțiile funcționează și pe un server standalone" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "mongodb.performance.senior.q1",
+      "topicId": "mongodb.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Despre indecșii speciali din MongoDB, care afirmații sunt corecte?" },
+      "explanation": {
+        "ro": "TTL e potrivit pentru sesiuni, loguri temporare sau coduri de verificare. Ștergerea o face un proces de fundal care rulează periodic (implicit la 60 de secunde), deci un document poate rămâne puțin după expirare. Nu te baza pe TTL pentru logică exactă: filtrează și în interogare.\n\nUn index parțial, de exemplu doar pe comenzile `status: \"pending\"`, e mic și rapid, dar optimizatorul îl folosește doar când interogarea garantează aceeași condiție.\n\nCovered queries elimină citirea documentelor, cel mai mare cost la volume mari. Verifică în `explain()`: `totalDocsExamined: 0`."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Indexul TTL șterge documentul exact în secunda în care expiră" },
+          {
+            "ro": "Un index TTL pe `createdAt` cu `expireAfterSeconds` șterge automat documentele expirate"
+          },
+          {
+            "ro": "Un index parțial (`partialFilterExpression`) conține doar documentele care respectă filtrul, deci e mai mic"
+          },
+          {
+            "ro": "Un index parțial e folosit și de interogările care nu includ condiția filtrului"
+          },
+          {
+            "ro": "O covered query citește doar indexul, dacă filtrul și câmpurile proiectate sunt în index și `_id` e exclus"
+          }
+        ],
+        "correctIndices": [1, 2, 4]
+      }
+    },
+    {
+      "id": "mongodb.aggregation.senior.q1",
+      "topicId": "mongodb.aggregation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Colecția `orders` are 50 de milioane de documente și un index pe `{ status: 1, createdAt: 1 }`. Pipeline-ul e lent. Ce schimbare ajută cel mai mult?\n\n~~~js\ndb.orders.aggregate([\n  { $lookup: { from: 'customers', localField: 'customerId', foreignField: '_id', as: 'customer' } },\n  { $unwind: '$customer' },\n  { $match: { status: 'paid', createdAt: { $gte: ISODate('2026-11-01') } } },\n  { $group: { _id: '$customer.country', total: { $sum: '$amount' } } },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "Doar etapele de la începutul pipeline-ului pot folosi indecșii colecției. Aici `$lookup` rulează pentru toate cele 50 de milioane de comenzi, iar filtrul elimină apoi majoritatea lor. Cu `$match` primul, indexul selectează doar comenzile plătite din noiembrie, iar `$lookup` rulează doar pentru ele.\n\nOptimizatorul poate reordona unele etape, dar nu te baza pe el: scrie pipeline-ul în ordinea corectă și verifică cu `explain()`. Regula: filtrează și proiectează cât mai devreme, fă join-urile și grupările pe cât mai puține documente. `allowDiskUse` evită eroarea de memorie, nu face pipeline-ul mai rapid."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Adaugi un index pe `customers.country`" },
+          { "ro": "Înlocuiești `$group` cu un `$project`" },
+          {
+            "ro": "Muți `$match` la început: folosește indexul și reduce documentele pentru care rulează `$lookup`"
+          },
+          { "ro": "Adaugi `allowDiskUse: true`" }
+        ],
+        "correctIndex": 2
+      }
+    },
+    {
+      "id": "mongodb.modeling.senior.f1",
+      "topicId": "mongodb.modeling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ce pattern-uri de schemă MongoDB folosești pentru volume mari și de ce sunt periculoase array-urile care cresc nelimitat?"
+      },
+      "explanation": {
+        "ro": "În MongoDB, schema se proiectează după **tiparele de acces**, nu după entități. Fiecare pattern face un compromis: citiri mai rapide în schimbul unor scrieri mai complexe sau al unor date duplicate, care trebuie ținute sincronizate."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Array-urile nelimitate** (toate comentariile, toate citirile unui senzor într-un document) sunt periculoase pentru că:\n\n- documentul are o limită de 16 MB;\n- fiecare update rescrie și mută un document din ce în ce mai mare;\n- un index pe array (multikey) are câte o intrare per element și crește proporțional.\n\n**Pattern-uri:**\n\n- **Bucket:** grupezi datele de tip serie de timp pe intervale (un document per senzor per oră, cu un array limitat de citiri și sumare precalculate). Pentru serii de timp, colecțiile time series fac asta automat.\n- **Subset:** păstrezi în document doar ce se afișează des (ultimele 10 recenzii), iar restul într-o colecție separată.\n- **Computed:** stochezi valori calculate (total, număr, medie), actualizate la scriere, în loc să le recalculezi la fiecare citire.\n- **Extended reference:** copiezi câteva câmpuri stabile ale entității referite (numele clientului) ca să eviți un `$lookup` frecvent.\n\nValidarea schemei cu `$jsonSchema` la nivel de colecție și un câmp `schemaVersion` în documente fac evoluția schemei controlabilă."
+        },
+        "keyPoints": [
+          { "ro": "Limita de 16 MB, rescrieri costisitoare, indecși multikey mari" },
+          { "ro": "Bucket pentru serii de timp" },
+          { "ro": "Subset pentru datele afișate des" },
+          { "ro": "Computed și extended reference ca să eviți calcule și join-uri la citire" },
+          { "ro": "Validare `$jsonSchema` și versionarea schemei" }
+        ]
+      }
+    },
+    {
+      "id": "mongodb.aggregation.senior.f1",
+      "topicId": "mongodb.aggregation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Un dashboard afișează vânzările pe zi și pe țară, calculate din 100 de milioane de comenzi, și se încarcă în 20 de secunde. Când agregi la cerere și când precalculezi? Cum ai rezolva cazul acesta?"
+      },
+      "explanation": {
+        "ro": "Agregarea repetată a acelorași date istorice la fiecare încărcare de pagină e risipă. Un răspuns senior pornește de la frecvența citirii, volumul datelor și cât de proaspete trebuie să fie, apoi alege mecanismul."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**La cerere** e potrivit când datele sunt puține, interogările sunt ad-hoc sau rezultatul trebuie să fie exact în timp real.\n\nAici datele sunt multe, întrebarea e mereu aceeași, iar zilele trecute nu se mai schimbă, deci **precalculez**:\n\n- O colecție de sumar `dailySales` (`{ day, country, total, count }`), completată de un pipeline care se termină cu `$merge`. Rulez periodic doar pentru intervalul nou (ziua curentă), nu pentru tot istoricul.\n- Alternativ, pattern-ul computed: actualizez sumarul la fiecare comandă (cu `$inc` și upsert) sau dintr-un consumator de change streams, dacă vreau sumarul aproape în timp real.\n- Dashboard-ul citește din sumar: câteva sute de documente, cu index pe `day`.\n\nCompromisuri: prospețimea datelor (câteva minute de întârziere), complexitatea recalculării când se modifică o comandă veche (rambursări) și încă o structură de întreținut. Agregările grele rulează pe un secundar sau pe un nod de analytics, nu pe primar."
+        },
+        "keyPoints": [
+          { "ro": "La cerere: date puține, interogări ad-hoc, nevoie de exactitate" },
+          { "ro": "Precalculare: interogare repetată pe date istorice stabile" },
+          { "ro": "`$merge` incremental într-o colecție de sumar" },
+          { "ro": "Computed pattern sau change streams pentru sumar aproape în timp real" },
+          { "ro": "Compromisuri: prospețime, recalculare, întreținere" }
+        ]
+      }
+    }
+  ]
+}

@@ -29,3 +29,12 @@ describe('rowAccessibilityLabel', () => {
     expect(rowAccessibilityLabel('Hooks')).toBe('Hooks');
   });
 });
+
+describe('ListRow accessory label', () => {
+  it('adds the accessory text to the accessible name', async () => {
+    await renderWithTheme(
+      <ListRow title="Hooks" meta="Mid" accessoryLabel="În lucru" onPress={jest.fn()} />,
+    );
+    expect(screen.getByRole('button', { name: 'Hooks, Mid, În lucru' })).toBeOnTheScreen();
+  });
+});

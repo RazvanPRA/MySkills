@@ -32,6 +32,8 @@ On Windows, `powershell -ExecutionPolicy Bypass -File .claude\scripts\run-androi
 
 The debug build is installed as **Senior Prep Dev** (`com.razvanprajanu.seniorprep.dev`), next to the release build **Senior Prep** (`com.razvanprajanu.seniorprep`).
 
+On Android 17+, the debug build asks for access to devices on the local network (`ACCESS_LOCAL_NETWORK`, requested by React Native's debug manifest) so it can reach Metro. Allow it; if you declined, run `adb shell pm grant com.razvanprajanu.seniorprep.dev android.permission.ACCESS_LOCAL_NETWORK`. The release build does not request it.
+
 ## Scripts
 
 | Script                         | What it does                                                                                                                                                                                                     |
@@ -44,6 +46,7 @@ The debug build is installed as **Senior Prep Dev** (`com.razvanprajanu.seniorpr
 | `pnpm build:aab`               | Release App Bundle, for Google Play later                                                                                                                                                                        |
 | `pnpm content:validate`        | Validates every pack with the app's own rules: schemas, references, duplicate ids, registered exercise types and their payload schemas, ș/ț diacritics, plus a fresh manifest. Exits 1 on any error (runs in CI) |
 | `pnpm content:stats`           | Exercises per category × level × type, measured against the targets (15 per category, 60 for logic)                                                                                                              |
+| `pnpm content:matrix`          | Regenerates the categories and topics of the packs from [docs/competency-matrix.md](docs/competency-matrix.md), keeping their exercises (`--check` in CI)                                                        |
 | `pnpm content:index`           | Regenerates `content/packs/index.generated.ts` (`--check` in CI)                                                                                                                                                 |
 | `pnpm db:generate`             | Generates a SQL migration from `src/db/schema.ts` (drizzle-kit)                                                                                                                                                  |
 
@@ -83,9 +86,13 @@ If `JAVA_HOME` points to a newer JDK, run Gradle with JDK 17. Either set `JAVA_H
 
 Categories, topics and exercises are data, not code.
 
-1. Add or edit a pack in `content/packs/<pack-id>.json`. The file name must equal the pack `id`.
-2. Run `pnpm content:index` (only needed for a new file), then `pnpm content:validate`.
-3. If you change the pack schema, increase `CURRENT_CONTENT_SCHEMA_VERSION` and add a migration to `contentMigrations` (`src/features/content/services/migrateContentPack.service.ts`), with a test.
+- **Categories and topics** come from the competency matrix, [docs/competency-matrix.md](docs/competency-matrix.md). Each row × level is one topic. Edit the matrix, then run `pnpm content:matrix`: it rewrites the categories and topics of the packs it describes, keeps their exercises, bumps the pack version when something changed, and refreshes the pack manifest. Do not edit categories or topics in the JSON by hand; CI fails if the packs and the matrix disagree.
+- **Exercises** are written by hand in `content/packs/<pack-id>.json`, and reference topic ids such as `react.hooks.mid`.
+- **A pack outside the matrix** (e.g. `logic-core`) is a JSON file in `content/packs/` whose file name equals the pack `id`. Run `pnpm content:index` after adding the file.
+
+Run `pnpm content:validate` after any change, and `pnpm content:stats` to see where exercises are missing.
+
+If you change the pack schema, increase `CURRENT_CONTENT_SCHEMA_VERSION` and add a migration to `contentMigrations` (`src/features/content/services/migrateContentPack.service.ts`), with a test.
 
 At startup, invalid content is left out of the catalog and reported. The app never crashes because of it.
 

@@ -17,3 +17,20 @@ describe('ScreenContainer', () => {
     expect(ref.current).not.toBeNull();
   });
 });
+
+describe('ScreenContainer safe area', () => {
+  it('leaves the bottom edge to the tab bar by default, and reserves it on stack screens', async () => {
+    await renderWithTheme(
+      <ScreenContainer>
+        <AppText>Tab</AppText>
+      </ScreenContainer>,
+    );
+    expect(screen.root?.props.edges).toMatchObject({ top: 'additive', bottom: 'off' });
+    await renderWithTheme(
+      <ScreenContainer bottomInset>
+        <AppText>Stack</AppText>
+      </ScreenContainer>,
+    );
+    expect(screen.root?.props.edges).toMatchObject({ top: 'additive', bottom: 'additive' });
+  });
+});
