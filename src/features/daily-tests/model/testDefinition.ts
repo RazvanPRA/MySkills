@@ -39,6 +39,11 @@ export type TestDefinition = {
   kind: string;
   title: LocalizedText;
   schedule: TestSchedule;
+  /**
+   * Whether answers update the exercises' FSRS cards. True for knowledge tests; false for
+   * the logic test, which avoids repeats with its own 30-day rule.
+   */
+  spacedRepetition: boolean;
   /** Pure and deterministic for a given context. */
   buildSession: (context: TestBuildContext) => SessionPlan;
 };

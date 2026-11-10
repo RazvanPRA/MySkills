@@ -5,6 +5,7 @@ const definition = (kind: string, schedule: TestDefinition['schedule']): TestDef
   kind,
   title: { ro: kind },
   schedule,
+  spacedRepetition: false,
   buildSession: () => ({ exerciseIds: [] }),
 });
 

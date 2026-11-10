@@ -3,6 +3,7 @@ import { createTestRegistry } from '@/features/daily-tests';
 import { flashcardSelfGraded } from '@/features/exercise-types/flashcard-self-graded';
 import { multipleChoice } from '@/features/exercise-types/multiple-choice';
 import { singleChoice } from '@/features/exercise-types/single-choice';
+import { knowledgeTest } from '@/features/test-definitions/knowledge';
 
 /*
  * The ONLY place where exercise types and test types are registered (brief §6, §11).
@@ -19,4 +20,5 @@ exerciseTypeRegistry.register(flashcardSelfGraded);
 // Phase 3: code_output, find_bug, ordering
 
 export const testRegistry = createTestRegistry();
-// Phase 2: knowledge · Phase 3: logic
+testRegistry.register(knowledgeTest);
+// Phase 3: logic
