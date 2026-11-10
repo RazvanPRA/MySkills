@@ -1572,6 +1572,268 @@
           { "ro": "Rezultatul devine task-uri, iar modelul se revizuiește" }
         ]
       }
+    },
+    {
+      "id": "soft-skills.code-review.junior.q1",
+      "topicId": "soft-skills.code-review.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un reviewer îți cere să schimbi abordarea dintr-un pull request, dar tu crezi că varianta ta e mai bună. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Review-ul e o conversație despre cod, nu un verdict despre tine. Întrebarea „ce problemă vezi?” scoate adesea la iveală un context pe care nu-l aveai (un caz limită, o convenție a echipei) sau arată că reviewer-ul a înțeles greșit codul.\n\nCând schimbul de comentarii se lungește, o discuție scurtă rezolvă mai repede, iar concluzia se notează în PR pentru cei care îl citesc mai târziu. Acceptarea oarbă te lipsește de învățare și lasă bug-uri dacă reviewer-ul greșește. Ocolirea review-ului strică încrederea în echipă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Întrebi ce problemă vede, îți explici argumentele în comentariu, iar dacă nu ajungeți la un acord, discutați câteva minute live"
+          },
+          { "ro": "Accepți fără discuție, ca să nu creezi conflicte" },
+          { "ro": "Ignori comentariul și faci merge după ce primești altă aprobare" },
+          { "ro": "Răspunzi că abordarea ta e corectă și închizi discuția" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.ownership.junior.q1",
+      "topicId": "soft-skills.ownership.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ai estimat un task la 2 zile. La finalul primei zile îți dai seama că va dura cel puțin 4. Ce faci?"
+      },
+      "explanation": {
+        "ro": "O întârziere anunțată devreme e o informație de planificare: echipa poate muta priorități, reduce scope-ul sau anunța clienții. Aceeași întârziere descoperită în ziua termenului e o surpriză, iar opțiunile au dispărut.\n\nVestea e mai utilă cu motivul („integrarea cu API-ul de plăți cere și un flux de retry”) și cu variante. Orele suplimentare ascunse fac estimările tale viitoare nesigure, iar livrarea incompletă fără avertisment mută problema la colegii care testează sau la utilizatori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Anunți acum lead-ul sau PM-ul: noua estimare, motivul și, dacă se poate, variante (de exemplu, o parte livrată mai devreme)"
+          },
+          { "ro": "Lucrezi seara, ca să te încadrezi fără să spui nimic" },
+          { "ro": "Aștepți până în ziua termenului, poate rezolvi mai repede decât crezi" },
+          { "ro": "Livrezi ce ai la termen, fără să menționezi ce lipsește" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.communication.mid.q1",
+      "topicId": "soft-skills.communication.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Product managerul te întreabă de ce vrei două săptămâni pentru refactorizarea modulului de plăți, „care funcționează deja”. Cum explici?"
+      },
+      "explanation": {
+        "ro": "PM-ul decide între investiții, deci are nevoie de costul și beneficiul în termenii lui: timp de livrare, incidente, risc pentru clienți. Datele concrete (din istoricul task-urilor și al incidentelor) transformă o preferință tehnică într-o decizie de business.\n\nUn plan incremental reduce riscul perceput: rezultatele apar repede și poți opri oricând. Jargonul tehnic nu convinge pe cineva care nu poate evalua argumentul. Refactorizarea ascunsă subminează încrederea și face estimările echipei inutilizabile pentru planificare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Prin impact: fiecare schimbare în plăți durează de trei ori mai mult decât în restul aplicației, iar modulul a produs patru incidente trimestrul trecut; propui un plan incremental, cu un prim rezultat după câteva zile"
+          },
+          { "ro": "Explici principiile SOLID încălcate și cât de greu se citește codul" },
+          { "ro": "Spui că e o decizie tehnică și că trebuie să ai încredere în echipă" },
+          { "ro": "Faci refactorizarea fără să întrebi, ascunsă în estimările altor task-uri" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.ownership.mid.q1",
+      "topicId": "soft-skills.ownership.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Primești o funcționalitate estimată vag la „o lună”. Care practici te ajută să o livrezi predictibil?"
+      },
+      "explanation": {
+        "ro": "Incrementele verticale (o funcționalitate mică, de la UI la baza de date) arată progres real, permit feedback devreme și pot fi livrate chiar dacă proiectul se oprește. Împărțirea pe straturi ascunde riscul de integrare până la final.\n\nRiscul atacat primul transformă necunoscutele în informație cât timp mai e timp de reacție. Un interval cu ipoteze („3–5 săptămâni, dacă API-ul partenerului e gata”) e mai onest decât o cifră și arată exact ce trebuie urmărit.\n\nFeedback-ul târziu e cel mai scump. O estimare optimistă doar mută conversația dificilă mai târziu, când opțiunile sunt mai puține."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O împarți în incremente mici, fiecare livrabil și verificabil cap-coadă, nu pe straturi (tot backend-ul, apoi tot frontend-ul)"
+          },
+          {
+            "ro": "Începi cu partea cea mai riscantă sau necunoscută, ca să afli devreme ce nu știi"
+          },
+          {
+            "ro": "Dai estimarea ca interval, cu ipotezele ei, și o actualizezi pe măsură ce afli lucruri noi"
+          },
+          { "ro": "Nu arăți nimic până nu e totul gata, ca să nu primești feedback prematur" },
+          { "ro": "Dai o estimare fixă și optimistă, ca să nu pară că echipa se mișcă încet" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "soft-skills.leadership.mid.q1",
+      "topicId": "soft-skills.leadership.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Faci pair programming cu un coleg junior pe un bug. Cum procedezi ca el să învețe cât mai mult?"
+      },
+      "explanation": {
+        "ro": "Învățarea vine din a face, nu din a privi. Când juniorul ține tastatura, ritmul e al lui, iar întrebările tale îl învață **procesul** de depanare (formulezi ipoteze, verifici, restrângi), care se transferă la bug-urile viitoare.\n\nLasă-l să facă greșeli mici și sigure: o descoperire proprie se ține minte mai bine decât o explicație. Rezumatul de la final fixează lecția. Când termenul presează, poți face tu partea critică, dar spune explicit că e o excepție și revedeți-o împreună mai târziu."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "El scrie codul, tu ghidezi cu întrebări („ce crezi că se întâmplă aici?”) și îl lași să descopere; la final rezumați împreună ce ați învățat"
+          },
+          { "ro": "Tu scrii rapid soluția, iar el urmărește" },
+          { "ro": "Îi spui direct unde e bug-ul, ca să nu piardă timp" },
+          { "ro": "Îl corectezi la fiecare linie pe care o scrie" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.code-review.mid.q2",
+      "topicId": "soft-skills.code-review.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre comentariile de code review de mai jos sunt constructive?" },
+      "explanation": {
+        "ro": "Un comentariu constructiv e **specific** (unde și ce), **explică de ce** contează și arată **cât de important** e: blocant sau doar o sugestie. Prefixe precum „Nit:” sau „Sugestie:” spun autorului ce poate lăsa pentru altă dată.\n\nÎntrebările („ce se întâmplă dacă…?”) invită la discuție și funcționează și când reviewer-ul greșește. Preferințele personale fără argument și tonul care vizează persoana, nu codul, transformă review-ul într-un loc de evitat. Rezultatul: PR-uri mai mari, trimise mai rar, exact opusul a ce vrei."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "„Ce se întâmplă dacă lista e goală? Cred că `items[0]` poate fi `undefined` aici.”"
+          },
+          { "ro": "„Nit: aș extrage condiția într-o funcție cu nume, dar nu blochează merge-ul.”" },
+          {
+            "ro": "„Funcția face și validarea, și salvarea. Ce zici să le separăm? Ar fi mai ușor de testat.”"
+          },
+          { "ro": "„Nu e cum aș fi făcut eu. Rescrie.”" },
+          { "ro": "„E evident că nu merge așa. N-ai testat?”" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "soft-skills.communication.senior.q1",
+      "topicId": "soft-skills.communication.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Arhitectul principal propune ca toate serviciile să treacă la event sourcing. Crezi că pentru domeniul echipei tale e o greșeală, dar nu ai autoritate formală asupra deciziei. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Influența fără autoritate se bazează pe încredere și pe argumente pe care ceilalți le pot verifica. Discuția privată întâi evită o confruntare publică și scoate la iveală motive pe care poate nu le cunoșteai. Documentul mută dezbaterea de la opinii la criterii: complexitate, competențele echipei, cerințele reale de audit.\n\n„Disagree and commit”: după o decizie luată corect, o implementezi cu toată seriozitatea. Altfel, sistemul ajunge să conțină două arhitecturi și nimeni nu mai are încredere în procesul de decizie. Blocarea sau sabotajul îți consumă credibilitatea pentru discuțiile viitoare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Discuți întâi unu-la-unu, apoi scrii un document scurt: problema, criteriile, opțiunile cu compromisuri și dovezi (date, un prototip); dacă decizia rămâne alta, o accepți și o implementezi bine"
+          },
+          { "ro": "Blochezi în code review orice PR care introduce event sourcing" },
+          { "ro": "Îți exprimi nemulțumirea pe canalul echipei, ca să strângi susținere" },
+          { "ro": "Accepți public, dar în serviciile tale implementezi abordarea ta" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.code-review.senior.q1",
+      "topicId": "soft-skills.code-review.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Stabilești standardele de code review ale echipei. Care măsuri sunt potrivite?"
+      },
+      "explanation": {
+        "ro": "Review-ul bun e rapid și concentrat. Automatizarea elimină discuțiile despre virgule. Un timp-țintă și PR-urile mici previn blocajele: un PR care așteaptă trei zile ajunge în conflict cu restul codului.\n\nEtichetele de importanță fac clar ce trebuie schimbat acum și ce e opțional, iar autorii mai noi nu mai tratează fiecare sugestie ca pe un ordin.\n\nAprobarea rezervată seniorilor creează un blocaj și le ia celorlalți ocazia să învețe făcând review. Măsurarea după comentarii primite îi învață pe oameni să trimită PR-uri mai puține și mai mari, ca să fie văzute mai rar."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Stilul și formatarea sunt verificate automat (linter, formatter), ca oamenii să se concentreze pe design și corectitudine"
+          },
+          {
+            "ro": "Un timp-țintă pentru primul răspuns (de exemplu, o zi lucrătoare) și PR-uri mici"
+          },
+          { "ro": "Comentarii etichetate după importanță (blocant, sugestie, nit)" },
+          { "ro": "Doar seniorii pot aproba PR-uri, indiferent de mărimea lor" },
+          { "ro": "Fiecare developer e evaluat după numărul de comentarii primite" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "soft-skills.ownership.senior.q1",
+      "topicId": "soft-skills.ownership.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Echipa pierde aproximativ 40% din timp cu incidente și workaround-uri într-un modul vechi, dar roadmap-ul cere doar funcționalități noi. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Datoria tehnică devine o decizie de business doar când are un cost vizibil: „40% din capacitate” e un argument pe care orice PM îl înțelege. Refactorizarea legată de roadmap (de exemplu, cu pattern-ul strangler fig: noile funcționalități construiesc partea nouă, iar cea veche se retrage treptat) aduce valoare continuă și nu cere oprirea livrărilor.\n\nȚinta măsurabilă (incidente pe lună, timpul unei schimbări în modul) arată dacă investiția funcționează. Rescrierile complete au un istoric slab: durează mai mult decât estimat și reproduc bug-urile vechi. Estimările umflate în secret distrug încrederea și ascund problema de cei care ar putea s-o prioritizeze."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cuantifici costul (incidente, timp pierdut, întârzieri), propui o refactorizare incrementală legată de funcționalitățile din roadmap care ating modulul și agreezi o țintă măsurabilă"
+          },
+          { "ro": "Propui oprirea funcționalităților pentru o rescriere completă de trei luni" },
+          { "ro": "Accepți situația, pentru că business-ul a decis prioritățile" },
+          {
+            "ro": "Umfli estimările funcționalităților noi și folosești timpul în plus pentru refactorizare"
+          }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "soft-skills.leadership.senior.f1",
+      "topicId": "soft-skills.leadership.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Devii tech lead într-o echipă de șase developeri, majoritatea juniori și mid. Cum ridici nivelul echipei în următoarele șase luni?"
+      },
+      "explanation": {
+        "ro": "Întrebarea verifică trecerea de la „cel mai bun programator din echipă” la „cel care face echipa mai bună”. Un răspuns slab se concentrează pe propriile contribuții tehnice sau pe cursuri generice.\n\nRezultatul urmărit e o echipă care ia decizii bune și fără tine."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Înțeleg întâi oamenii:** discuții unu-la-unu despre obiectivele fiecăruia, punctele forte și ce i-ar ajuta să crească. Un plan de dezvoltare individual, cu pași concreți, nu doar „mai multă experiență”.\n\n**Învățare în munca de zi cu zi:**\n\n- Pair programming și code review ca instrumente de mentorat, cu explicații, nu doar corecturi.\n- Ownership delegat: fiecare devine responsabil de o zonă (cu sprijin), inclusiv de decizii și de prezentarea lor.\n- Juniorii fac și ei review, ca să învețe să citească cod.\n\n**Standarde și context comun:** convenții scrise, ADR-uri pentru deciziile importante, prezentări scurte interne despre ce a învățat fiecare.\n\n**Siguranță psihologică:** întrebările și greșelile sunt normale; postmortem-uri fără vinovați.\n\n**Mă multiplic:** pregătesc colegii care pot mentora la rândul lor, ca echipa să nu depindă de mine.\n\n**Măsor progresul:** autonomia (cât de des am nevoie să intervin), calitatea livrărilor (incidente, timpul de livrare) și feedback-ul periodic de la echipă."
+        },
+        "keyPoints": [
+          { "ro": "Planuri individuale, pornite din discuții unu-la-unu" },
+          { "ro": "Pair programming, review și ownership delegat ca mentorat" },
+          { "ro": "Standarde scrise și ADR-uri" },
+          { "ro": "Siguranță psihologică" },
+          { "ro": "Te multiplici prin alți mentori și măsori autonomia" }
+        ]
+      }
     }
   ]
 }
