@@ -1304,6 +1304,274 @@
           { "ro": "Metrici: bug-uri scăpate, instabilitate, durata pipeline-ului" }
         ]
       }
+    },
+    {
+      "id": "devops.ci-cd.junior.q1",
+      "topicId": "devops.ci-cd.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un commit care strică build-ul a ajuns pe `main`, iar colegii au tras deja branch-ul. Cum îl anulezi?"
+      },
+      "explanation": {
+        "ro": "`git revert` păstrează istoria: adaugă un commit care face exact inversul celui problematic. Colegii fac `pull` normal, fără conflicte cu istoria lor.\n\n`reset` urmat de `push --force` rescrie istoria unui branch partajat: colegii care au tras commit-ul ajung cu istorii divergente și îl pot reintroduce fără să-și dea seama. De aceea `main` e de obicei protejat împotriva force push. Rescrierea istoriei e în regulă doar pe branch-ul tău, înainte să-l folosească altcineva."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`git revert <sha>`, apoi push: se creează un commit nou care anulează schimbările"
+          },
+          { "ro": "`git reset --hard HEAD~1`, apoi `git push --force`" },
+          { "ro": "Ștergi fișierele modificate și faci un commit nou cu mesajul „fix”" },
+          { "ro": "Ștergi branch-ul `main` și îl recreezi din copia ta locală" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.containers.junior.q1",
+      "topicId": "devops.containers.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Rulezi aplicația cu Docker Compose. Serviciul `api` nu se poate conecta la baza de date: `connection refused`. De ce?\n\n~~~yaml\nservices:\n  api:\n    build: .\n    environment:\n      DATABASE_URL: postgres://app:app@localhost:5432/app\n  db:\n    image: postgres:17\n~~~"
+      },
+      "explanation": {
+        "ro": "Fiecare container are propria interfață de rețea, iar `localhost` indică containerul însuși. Compose creează o rețea comună în care fiecare serviciu e accesibil după numele lui: `postgres://app:app@db:5432/app`.\n\n`ports` publică un port **către mașina gazdă**; containerele din aceeași rețea comunică direct, fără el. O a doua problemă frecventă: `api` pornește înaintea bazei de date. `depends_on` cu `condition: service_healthy` și un healthcheck pe `db` o rezolvă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "În containerul `api`, `localhost` e chiar containerul `api`; host-ul bazei de date e numele serviciului, `db`"
+          },
+          { "ro": "Portul 5432 trebuie expus cu `ports` pentru comunicarea dintre containere" },
+          { "ro": "PostgreSQL nu poate rula în Docker" },
+          { "ro": "Lipsește `network_mode: host` pe baza de date" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.ci-cd.mid.q1",
+      "topicId": "devops.ci-cd.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pipeline-ul GitHub Actions durează 12 minute, din care 6 sunt instalarea dependențelor la fiecare rulare. Ce schimbare ajută cel mai mult?"
+      },
+      "explanation": {
+        "ro": "Cu cheia bazată pe hash-ul lockfile-ului, cache-ul e refolosit cât timp dependențele nu se schimbă și e invalidat automat când se schimbă. `actions/setup-node` face asta cu opțiunea `cache`. Instalarea cu lockfile înghețat (`pnpm install --frozen-lockfile`, `npm ci`) garantează că CI-ul instalează exact versiunile verificate.\n\nAlte câștiguri: job-uri paralele (lint, typecheck și teste separat), rularea doar a ce s-a schimbat într-un monorepo și `concurrency` care anulează rulările vechi ale aceluiași branch. Fără lockfile, build-urile devin nereproductibile; `node_modules` comis umflă repository-ul și conține binare dependente de platformă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cache pentru store-ul managerului de pachete, cu cheia derivată din hash-ul lockfile-ului, plus instalare cu lockfile înghețat"
+          },
+          { "ro": "Ștergi lockfile-ul, ca instalarea să aleagă cele mai noi versiuni" },
+          { "ro": "Rulezi pipeline-ul doar o dată pe zi" },
+          { "ro": "Comiți folderul `node_modules` în repository" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.cloud.mid.q1",
+      "topicId": "devops.cloud.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Echipa ta gestionează infrastructura cu Terraform. Care practici sunt corecte?"
+      },
+      "explanation": {
+        "ro": "State-ul e harta dintre cod și resursele reale. Remote cu locking previne două `apply` simultane care îl corup; criptarea contează pentru că state-ul conține adesea valori sensibile.\n\n`plan` revizuit în PR face din schimbările de infrastructură un proces ca orice code review: vezi exact ce se creează, se modifică sau se **distruge**.\n\nModificările manuale creează **drift**: următorul `apply` le anulează sau eșuează. Dacă o intervenție manuală e inevitabilă, o aduci imediat în cod. Secretele vin dintr-un secret manager, nu din repository."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "State-ul e stocat remote (de exemplu într-un bucket), criptat și cu locking, nu în repository"
+          },
+          {
+            "ro": "Rezultatul lui `terraform plan` e revizuit, de exemplu în pull request, înainte de `apply`"
+          },
+          {
+            "ro": "Mediile (dev, staging, prod) au state-uri separate și refolosesc aceleași module cu variabile diferite"
+          },
+          {
+            "ro": "În situații urgente modifici resursele direct din consolă, iar Terraform le va ignora"
+          },
+          { "ro": "Secretele se pun în fișiere `.tfvars` comise în repository" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "devops.observability.mid.q1",
+      "topicId": "devops.observability.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O cerere trece prin trei servicii și uneori eșuează. Logurile sunt text liber, în trei sisteme diferite, și nu poți spune care linii aparțin aceleiași cereri. Ce introduci?"
+      },
+      "explanation": {
+        "ro": "Logurile structurate se pot filtra și agrega după câmpuri (`traceId`, `userId`, `status`), nu prin căutări în text. Trace id-ul, generat la intrare și propagat prin headere, leagă toate liniile unei cereri, indiferent de serviciu.\n\nCu OpenTelemetry primești și **tracing distribuit**: fiecare serviciu raportează span-uri, iar un instrument precum Jaeger sau Tempo afișează cererea ca o cascadă cu durata fiecărui pas. Așa vezi imediat unde a apărut eroarea sau latența. Mai multe loguri fără corelare înseamnă doar mai mult zgomot."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Loguri structurate (JSON) și un trace id propagat între servicii (W3C `traceparent`, OpenTelemetry), inclus în fiecare linie de log"
+          },
+          { "ro": "Mai multe loguri la nivel `DEBUG` în toate serviciile" },
+          { "ro": "Un timestamp mai precis în fiecare linie" },
+          { "ro": "Logurile tuturor serviciilor scrise în același fișier" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.security.mid.q2",
+      "topicId": "devops.security.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre practicile de securitate de mai jos sunt corecte?" },
+      "explanation": {
+        "ro": "SHA-256 e sigur ca funcție hash, dar e **rapid**: un GPU încearcă miliarde de parole pe secundă. Algoritmii pentru parole sunt lenți intenționat și configurabili (Argon2id e și costisitor ca memorie), iar salt-ul unic face inutile tabelele precalculate.\n\n`HttpOnly` ascunde cookie-ul de JavaScript (limitează efectul unui XSS), `Secure` îl trimite doar prin HTTPS, iar `SameSite` reduce CSRF-ul. Parametrii separă codul SQL de date, deci input-ul nu mai poate schimba interogarea.\n\nSSRF se ocolește ușor: `127.0.0.1`, IPv6, DNS care rezolvă spre IP-uri interne, redirect-uri. Apărarea corectă: allowlist de destinații și verificarea IP-ului rezolvat."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Parolele se stochează cu un algoritm lent, cu salt, precum Argon2id sau bcrypt"
+          },
+          { "ro": "Cookie-ul de sesiune are atributele `HttpOnly`, `Secure` și `SameSite`" },
+          {
+            "ro": "Interogările SQL folosesc parametri (prepared statements), nu concatenarea input-ului"
+          },
+          { "ro": "Parolele se stochează cu SHA-256, pentru că e un algoritm criptografic sigur" },
+          {
+            "ro": "Împotriva SSRF e suficient să respingi URL-urile care conțin textul `localhost`"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "devops.containers.senior.q1",
+      "topicId": "devops.containers.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Liveness probe-ul serviciului verifică și conexiunea la baza de date. Baza de date are o întrerupere de 30 de secunde. Ce se întâmplă și ce schimbi?"
+      },
+      "explanation": {
+        "ro": "Un liveness probe care pică înseamnă „procesul e blocat, repornește-l”. Când toate pod-urile depind de aceeași bază de date, toate pică simultan și sunt repornite în același timp. Pornirile încarcă baza de date abia revenită, iar căderea se prelungește: un eșec în cascadă.\n\nCorect: **liveness** verifică doar că procesul răspunde (nu e în deadlock). **Readiness** scoate pod-ul din trafic când nu poate servi cereri, fără să-l repornească; chiar și acolo, dependențele comune trebuie verificate cu grijă, ca să nu scoți toate pod-urile deodată. **startupProbe** protejează aplicațiile care pornesc greu de restart-uri premature."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Kubernetes repornește toate pod-urile simultan, iar întreruperea scurtă devine o cădere mai lungă; liveness verifică doar procesul, iar dependențele țin, cel mult, de readiness"
+          },
+          { "ro": "Nimic: Kubernetes ignoră probe-urile cât timp baza de date e indisponibilă" },
+          {
+            "ro": "Pod-urile sunt scoase din load balancer, apoi revin singure; configurarea e corectă"
+          },
+          { "ro": "Kubernetes mută baza de date pe alt nod" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.security.senior.q1",
+      "topicId": "devops.security.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pipeline-ul tău folosește `uses: some-org/deploy-action@v2` și instalează pachete npm, apoi face deploy cu credențiale de producție. Ce reduce cel mai mult riscul unui atac de supply chain?"
+      },
+      "explanation": {
+        "ro": "Un tag precum `v2` poate fi mutat de oricine controlează repository-ul action-ului (sau de un atacator care l-a compromis), iar codul nou rulează imediat în pipeline-ul tău, cu acces la secrete. SHA-ul e imutabil.\n\nLockfile-ul fixează exact versiunile verificate. O întârziere înainte de a accepta versiuni foarte noi (de exemplu `minimumReleaseAge` în pnpm) evită pachetele compromise retrase după câteva ore. Permisiunile minime și OIDC (token-uri scurte, emise per rulare) limitează ce poate face un pas compromis.\n\n`@latest` face exact opusul: aduce automat orice versiune compromisă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Fixezi action-urile terțe la SHA-ul commit-ului, instalezi strict din lockfile, dai token-ului `GITHUB_TOKEN` permisiuni minime și folosești OIDC în locul cheilor de cloud de lungă durată"
+          },
+          {
+            "ro": "Folosești `@latest` peste tot, ca să primești automat patch-urile de securitate"
+          },
+          { "ro": "Rulezi `npm audit` o dată pe trimestru" },
+          { "ro": "Muți workflow-ul într-un repository privat" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "devops.cloud.senior.f1",
+      "topicId": "devops.cloud.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Proiectezi infrastructura cloud pentru un API cu trafic variabil și o bază de date PostgreSQL. Cum o faci scalabilă, rezistentă, sigură și eficientă ca cost?"
+      },
+      "explanation": {
+        "ro": "Întrebarea are patru dimensiuni care se influențează reciproc: mai multă rezistență costă mai mult, iar o rețea mai strictă complică operarea. Un răspuns senior le atinge pe toate și spune ce compromisuri face pentru cerințele concrete (SLO, buget), nu enumeră servicii."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Rezistență:** totul în cel puțin două zone de disponibilitate; baza de date gestionată, cu replică în altă zonă și failover automat; backup-uri cu PITR, testate.\n\n**Scalare:** serviciile stateless, scalate orizontal după o metrică relevantă (CPU, latență sau lungimea cozii), cu limite minime și maxime; load balancer în față; cache (CDN, Redis) pentru citirile repetate.\n\n**Rețea:** baza de date și serviciile interne în subrețele private, fără IP-uri publice; doar load balancer-ul e expus; security groups cu reguli minime; ieșirea spre internet controlată.\n\n**IAM:** un rol per workload, cu privilegii minime; fără chei de acces de lungă durată (OIDC pentru CI, roluri pentru servicii); conturi separate pentru producție și non-producție.\n\n**Cost:** dimensionare după măsurători reale, capacitate rezervată (savings plans) pentru încărcarea de bază, instanțe spot pentru job-uri tolerante la întreruperi, oprirea mediilor de test noaptea, tag-uri pe resurse și bugete cu alerte. Atenție la costurile de transfer de date între zone și spre internet.\n\nToate acestea descrise ca infrastructură-ca-cod, revizuită ca orice cod."
+        },
+        "keyPoints": [
+          { "ro": "Multi-AZ, failover automat, backup-uri testate" },
+          { "ro": "Servicii stateless scalate după metrica potrivită" },
+          { "ro": "Subrețele private, expunere minimă" },
+          { "ro": "Roluri IAM cu privilegii minime, fără chei de lungă durată" },
+          { "ro": "Cost: rezervări, spot, bugete, atenție la transferul de date" }
+        ]
+      }
+    },
+    {
+      "id": "devops.security.senior.f1",
+      "topicId": "devops.security.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Echipa adaugă upload de fișiere (avatare și documente PDF) în aplicație. Cum faci threat modeling pentru această funcționalitate?"
+      },
+      "explanation": {
+        "ro": "Threat modeling nu e un audit la final, ci o discuție structurată la design, când măsurile sunt ieftine. Upload-ul de fișiere e un exemplu bun pentru că atinge aproape toate categoriile de risc.\n\nUn răspuns senior arată metoda (flux, granițe, amenințări, prioritizare), nu doar o listă de măsuri memorate."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**1. Modelez fluxul:** client → API → storage → procesare (redimensionare, extragere de text) → servire către alți utilizatori. Marchez **granițele de încredere**: input-ul utilizatorului, storage-ul, serviciile interne.\n\n**2. Identific amenințările**, de exemplu cu STRIDE pe fiecare element:\n\n- **Spoofing / elevation:** cineva urcă un fișier în contul altuia sau îl citește fără drept.\n- **Tampering:** fișiere malițioase (HTML sau SVG cu script, PDF-uri cu exploit-uri, „zip bomb”), parsere vulnerabile în procesare.\n- **Information disclosure:** URL-uri ghicibile, metadate EXIF cu locația.\n- **Denial of service:** fișiere uriașe, mii de upload-uri.\n\n**3. Prioritizez după risc** (probabilitate × impact) și aleg măsuri:\n\n- Limite de dimensiune și de rată.\n- Validarea tipului după conținut, nu după extensie.\n- Stocare în afara aplicației, în bucket privat, cu URL-uri semnate și cu expirare.\n- Servirea conținutului de pe un domeniu separat, cu `Content-Disposition` și `Content-Type` corecte.\n- Procesare izolată, scanare antivirus, eliminarea metadatelor.\n\n**4.** Măsurile devin task-uri și teste, iar modelul se revizuiește când funcționalitatea se schimbă."
+        },
+        "keyPoints": [
+          { "ro": "Diagrama fluxului de date și granițele de încredere" },
+          { "ro": "Amenințări identificate sistematic (STRIDE)" },
+          { "ro": "Prioritizare după probabilitate și impact" },
+          {
+            "ro": "Măsuri concrete: limite, validare după conținut, bucket privat, domeniu separat"
+          },
+          { "ro": "Rezultatul devine task-uri, iar modelul se revizuiește" }
+        ]
+      }
     }
   ]
 }
