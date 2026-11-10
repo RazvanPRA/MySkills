@@ -706,6 +706,258 @@
           { "ro": "Hashed vs ranged; chei compuse" }
         ]
       }
+    },
+    {
+      "id": "sql.queries.junior.q1",
+      "topicId": "sql.queries.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei clienții care au plasat mai mult de 5 comenzi. Ce cuvânt cheie lipsește?\n\n~~~sql\nSELECT customer_id, COUNT(*) AS orders\nFROM orders\nGROUP BY customer_id\n??? COUNT(*) > 5;\n~~~"
+      },
+      "explanation": {
+        "ro": "`WHERE` filtrează **rândurile** înainte de grupare, deci nu poate folosi agregate precum `COUNT(*)`. `HAVING` filtrează **grupurile** după agregare.\n\nOrdinea logică a unei interogări: `FROM` → `WHERE` → `GROUP BY` → `HAVING` → `SELECT` → `ORDER BY` → `LIMIT`. Ea explică și de ce un alias definit în `SELECT` nu poate fi folosit în `WHERE`. Pune în `WHERE` tot ce se poate filtra înainte de grupare: baza de date grupează astfel mai puține rânduri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`HAVING`" },
+          { "ro": "`WHERE`" },
+          { "ro": "`ORDER BY`" },
+          { "ro": "`LIMIT`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.performance.junior.q1",
+      "topicId": "sql.performance.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Tabelul `users` are 5 milioane de rânduri. Interogarea `SELECT * FROM users WHERE email = 'ana@example.com'` durează câteva secunde. Ce schimbare ajută cel mai mult?"
+      },
+      "explanation": {
+        "ro": "Fără index, PostgreSQL face un **sequential scan**: citește toate cele 5 milioane de rânduri ca să găsească unul. Un index B-tree pe `email` găsește rândul în câțiva pași, indiferent de mărimea tabelului.\n\nO constrângere `UNIQUE` creează automat indexul și garantează unicitatea. Indecșii au un cost: fiecare scriere îi actualizează și ocupă spațiu. Atenție și la forma condiției: `WHERE lower(email) = ...` nu folosește un index simplu pe `email`; are nevoie de un index pe expresia `lower(email)`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Un index pe `users(email)`, ideal prin constrângerea `UNIQUE`, dacă email-ul e unic"
+          },
+          { "ro": "Înlocuiești `SELECT *` cu `SELECT id, email`" },
+          { "ro": "Adaugi `LIMIT 1` și păstrezi interogarea" },
+          { "ro": "Muți tabelul pe un disc mai rapid" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.queries.mid.q2",
+      "topicId": "sql.queries.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei **toți** clienții, iar lângă fiecare comenzile lui plătite (sau `NULL` dacă nu are). Ce problemă are interogarea?\n\n~~~sql\nSELECT c.name, o.id\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nWHERE o.status = 'paid';\n~~~"
+      },
+      "explanation": {
+        "ro": "`LEFT JOIN` păstrează clienții fără comenzi, completând coloanele din `orders` cu `NULL`. Apoi `WHERE o.status = 'paid'` evaluează `NULL = 'paid'`, adică `NULL`, deci acele rânduri dispar. Rezultatul e identic cu un `INNER JOIN`.\n\nCorect: `LEFT JOIN orders o ON o.customer_id = c.id AND o.status = 'paid'`. Condiția din `ON` decide ce rânduri se potrivesc, iar `WHERE` filtrează rezultatul final. Bug-ul e frecvent în rapoarte: lipsesc tocmai clienții fără activitate, pe care raportul ar fi trebuit să-i arate."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Condiția din `WHERE` elimină rândurile în care `o` e `NULL`, deci interogarea se comportă ca un `INNER JOIN`; condiția trebuie mutată în `ON`"
+          },
+          { "ro": "`LEFT JOIN` nu poate fi folosit cu `WHERE`" },
+          { "ro": "Lipsește `GROUP BY c.name`" },
+          { "ro": "Interogarea e corectă" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.modeling.mid.q1",
+      "topicId": "sql.modeling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Proiectezi tabelul `payments` în PostgreSQL. Care alegeri sunt corecte?" },
+      "explanation": {
+        "ro": "Tipurile în virgulă mobilă nu pot reprezenta exact valori precum 0,1, deci sumele adunate acumulează erori. Pentru bani, `numeric` sau o sumă întreagă în subunități (bani, cenți).\n\n`timestamptz` stochează un moment absolut (în UTC) și îl afișează în fusul sesiunii. `timestamp` simplu pierde informația despre fus și produce bug-uri la ora de vară și între servere.\n\nConstrângerile sunt ultima linie de apărare: orice aplicație, script sau migrare care scrie în tabel le respectă. Pentru `status`, un `CHECK (status IN (...))` sau un tip enum. Copierea numelui clientului încalcă 3NF: la redenumire, datele devin inconsistente."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "`amount numeric(12, 2)`, nu `double precision`" },
+          { "ro": "`created_at timestamptz`, nu `timestamp` fără fus orar" },
+          { "ro": "`CHECK (amount > 0)` pe coloana `amount`" },
+          { "ro": "`status text` fără nicio constrângere, validat doar în aplicație" },
+          { "ro": "Coloana `customer_name` copiată în fiecare plată, ca să eviți un `JOIN`" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "sql.performance.mid.q1",
+      "topicId": "sql.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ai indexul `CREATE INDEX ON orders (customer_id, created_at)`. Care interogare îl folosește cel mai eficient?"
+      },
+      "explanation": {
+        "ro": "Un index B-tree compus e sortat întâi după prima coloană, apoi după a doua în cadrul fiecărei valori a primei. Pentru `customer_id = 42`, intrările sunt consecutive și deja ordonate după `created_at`, deci baza de date citește direct ultimele 10, fără sortare.\n\nFără condiție pe prima coloană, indexul nu oferă un punct de intrare: datele dintr-o zi sunt împrăștiate printre toți clienții. PostgreSQL 18 poate face un „skip scan”, dar acesta ajută doar când prima coloană are puține valori distincte. Regula practică: coloanele cu egalitate primele, apoi cea folosită pentru interval sau sortare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 10`" },
+          { "ro": "`WHERE created_at > now() - interval '1 day'`" },
+          { "ro": "`WHERE customer_id > 0 OR created_at > now() - interval '1 day'`" },
+          { "ro": "`ORDER BY created_at LIMIT 10`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.operations.mid.q1",
+      "topicId": "sql.operations.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre PgBouncer și replicile de citire în PostgreSQL, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "PostgreSQL creează un **proces** per conexiune, cu memorie proprie. Câteva sute de conexiuni active degradează deja performanța, iar zeci de instanțe ale unui serviciu, fiecare cu propriul pool, ajung ușor la acest număr.\n\nModul `transaction` e cel mai eficient, dar presupune că aplicația nu se bazează pe starea sesiunii între tranzacții.\n\nReplicile scalează citirile, nu scrierile: doar primarul acceptă scrieri. Pentru „citește ce ai scris”, trimite citirile imediat următoare către primar sau așteaptă ca replica să ajungă la poziția WAL a scrierii."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "În modul `transaction`, o conexiune de server e alocată clientului doar pe durata unei tranzacții, deci mulți clienți împart puține conexiuni"
+          },
+          {
+            "ro": "În modul `transaction`, setările de sesiune (`SET`, `LISTEN`, advisory locks la nivel de sesiune) nu se păstrează între tranzacții"
+          },
+          {
+            "ro": "Replicile sunt de obicei asincrone, deci o citire imediat după o scriere poate returna date vechi"
+          },
+          {
+            "ro": "Conexiunile PostgreSQL sunt foarte ieftine, deci pooling-ul contează doar peste 10 000 de clienți"
+          },
+          { "ro": "Scrierile pot fi trimise la oricare replică" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "sql.transactions.senior.q1",
+      "topicId": "sql.transactions.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Două transferuri rulează în paralel. Ce se întâmplă și cum previi problema?\n\n~~~sql\n-- T1                                   -- T2\nUPDATE accounts SET balance = balance - 10 WHERE id = 1;\n                                        UPDATE accounts SET balance = balance - 5 WHERE id = 2;\nUPDATE accounts SET balance = balance + 10 WHERE id = 2;\n                                        UPDATE accounts SET balance = balance + 5 WHERE id = 1;\n~~~"
+      },
+      "explanation": {
+        "ro": "MVCC face ca cititorii să nu blocheze scriitorii, dar două scrieri pe **același rând** se blochează: a doua așteaptă commit-ul primei. Aici T1 deține rândul 1 și așteaptă rândul 2, iar T2 deține rândul 2 și așteaptă rândul 1. După `deadlock_timeout`, PostgreSQL detectează ciclul și anulează una dintre tranzacții cu eroarea `40P01`.\n\nPrevenire: ordine consistentă de blocare (sortezi id-urile înainte de update sau le blochezi cu `SELECT ... ORDER BY id FOR UPDATE`), tranzacții scurte și retry automat pentru erorile `40P01` și `40001`. `SERIALIZABLE` adaugă erori de serializare; nu elimină deadlock-urile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Deadlock: PostgreSQL îl detectează și anulează una dintre tranzacții; îl previi blocând rândurile mereu în aceeași ordine (de exemplu crescător după id) și reîncercând tranzacția anulată"
+          },
+          { "ro": "Ambele tranzacții așteaptă la nesfârșit, până la restartul bazei de date" },
+          {
+            "ro": "Nu se întâmplă nimic: MVCC face ca două `UPDATE`-uri să nu se blocheze niciodată"
+          },
+          { "ro": "Nivelul `SERIALIZABLE` elimină complet deadlock-urile" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.queries.senior.q2",
+      "topicId": "sql.queries.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei clienții care nu au recomandat pe nimeni. Coloana `referrer_id` e `NULL` pentru clienții veniți fără recomandare. Ce returnează interogarea?\n\n~~~sql\nSELECT name\nFROM customers\nWHERE id NOT IN (SELECT referrer_id FROM customers);\n~~~"
+      },
+      "explanation": {
+        "ro": "`x NOT IN (a, b, NULL)` înseamnă `x <> a AND x <> b AND x <> NULL`. Ultima comparație e `NULL` (necunoscut), deci întreaga condiție nu poate fi niciodată adevărată, iar interogarea nu returnează nimic.\n\nCorect: `WHERE NOT EXISTS (SELECT 1 FROM customers r WHERE r.referrer_id = c.id)`. `NOT EXISTS` tratează corect `NULL`-urile și e, în general, executat eficient ca un anti-join. Bug-ul e periculos pentru că interogarea funcționează în teste până când apare primul `NULL` în date."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Niciun rând, dacă există măcar un `referrer_id` egal cu `NULL`" },
+          { "ro": "Clienții care nu au recomandat pe nimeni, corect" },
+          { "ro": "Toți clienții" },
+          { "ro": "O eroare de sintaxă" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.modeling.senior.f1",
+      "topicId": "sql.modeling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Trebuie să redenumești coloana `users.name` în `full_name` și s-o faci `NOT NULL`, pe un tabel cu 50 de milioane de rânduri, fără downtime. Cum procedezi?"
+      },
+      "explanation": {
+        "ro": "Un simplu `ALTER TABLE ... RENAME` e instantaneu, dar strică imediat versiunea aplicației care încă rulează. Un `SET NOT NULL` direct scanează tot tabelul sub un lock exclusiv.\n\nÎntrebarea testează dacă te gândești la migrare ca la un proces în mai mulți pași, coordonat cu deploy-urile, nu ca la o singură comandă SQL."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Folosesc pattern-ul **expand / contract**, pentru că în timpul unui rolling deploy rulează simultan versiunea veche și cea nouă a aplicației.\n\n1. **Expand:** adaug coloana `full_name`, nullable. Operația e instantanee.\n2. Deploy: aplicația scrie în **ambele** coloane și citește încă din `name`.\n3. **Backfill** în loturi mici (de exemplu 10 000 de rânduri), cu pauze, ca să nu țin lock-uri lungi și să nu întârzii replicile.\n4. Adaug `CHECK (full_name IS NOT NULL) NOT VALID`, apoi `VALIDATE CONSTRAINT`, care nu blochează scrierile. Din PostgreSQL 12, `SET NOT NULL` poate folosi constrângerea validată și evită scanarea tabelului.\n5. Deploy: aplicația citește din `full_name`.\n6. **Contract:** după ce nicio versiune nu mai folosește `name`, o șterg.\n\nPe parcurs: `lock_timeout` scurt pe fiecare DDL, ca o migrare blocată să eșueze rapid în loc să blocheze tot traficul, și `CREATE INDEX CONCURRENTLY` pentru orice index nou."
+        },
+        "keyPoints": [
+          { "ro": "Expand / contract: versiunea veche și cea nouă coexistă" },
+          { "ro": "Scriere în ambele coloane, apoi backfill în loturi" },
+          { "ro": "`NOT VALID` + `VALIDATE` în loc de `SET NOT NULL` direct" },
+          { "ro": "`lock_timeout` pe DDL și indecși `CONCURRENTLY`" },
+          { "ro": "Ștergerea coloanei vechi abia la final" }
+        ]
+      }
+    },
+    {
+      "id": "sql.operations.senior.f1",
+      "topicId": "sql.operations.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Business-ul cere: „pierdem cel mult 1 minut de date și revenim în cel mult 15 minute”. Cum proiectezi high availability și recuperarea pentru PostgreSQL?"
+      },
+      "explanation": {
+        "ro": "Confuzia clasică: „avem replici, deci avem backup”. Replicarea acoperă căderea unui server; backup-ul cu PITR acoperă greșelile umane și corupția datelor. Ai nevoie de amândouă.\n\nUn răspuns senior pornește de la cifrele cerute de business și justifică fiecare componentă prin ele, inclusiv costul."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Cerința înseamnă **RPO ≤ 1 minut** (cât pot pierde) și **RTO ≤ 15 minute** (cât durează revenirea).\n\n- **Replicare prin streaming** către cel puțin o replică în altă zonă de disponibilitate. Asincronă, lag-ul e de obicei sub o secundă; sincronă, RPO devine 0, cu prețul latenței la fiecare commit. Aleg după cerință și monitorizez lag-ul cu alertă.\n- **Failover automat** (Patroni sau serviciul gestionat al cloud-ului), cu detectarea primarului căzut și rutarea conexiunilor către noul primar (DNS, proxy, PgBouncer), pentru un RTO de minute, nu de ore.\n- **Backup-uri cu PITR** (pgBackRest sau echivalent): backup complet periodic plus arhivarea continuă a WAL-ului. Replicarea nu protejează de erori logice: un `DELETE` greșit se replică instantaneu. PITR permite restaurarea la momentul dinaintea greșelii.\n- **Restaurări testate** regulat, cronometrate: un backup netestat nu e un backup. Exerciții de failover planificate.\n- Tabelele foarte mari, partiționate (de exemplu pe lună), ca restaurarea, mentenanța și ștergerea datelor vechi să rămână gestionabile."
+        },
+        "keyPoints": [
+          { "ro": "RPO și RTO definite înaintea arhitecturii" },
+          { "ro": "Replicare sincronă vs asincronă, cu lag monitorizat" },
+          { "ro": "Failover automat și rutarea conexiunilor" },
+          { "ro": "PITR pentru erori logice, pe care replicarea nu le acoperă" },
+          { "ro": "Restaurări și failover testate regulat" }
+        ]
+      }
     }
   ]
 }
