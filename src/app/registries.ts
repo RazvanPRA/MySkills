@@ -7,6 +7,7 @@ import { multipleChoice } from '@/features/exercise-types/multiple-choice';
 import { ordering } from '@/features/exercise-types/ordering';
 import { singleChoice } from '@/features/exercise-types/single-choice';
 import { knowledgeTest } from '@/features/test-definitions/knowledge';
+import { logicTest } from '@/features/test-definitions/logic';
 
 /*
  * The ONLY place where exercise types and test types are registered (brief §6, §11).
@@ -25,5 +26,6 @@ exerciseTypeRegistry.register(findBug);
 exerciseTypeRegistry.register(ordering);
 
 export const testRegistry = createTestRegistry();
+// Today shows one card per daily test, in registration order (brief §2: logic, then knowledge).
+testRegistry.register(logicTest);
 testRegistry.register(knowledgeTest);
-// Phase 3: logic
