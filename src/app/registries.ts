@@ -1,7 +1,10 @@
 import { createExerciseTypeRegistry } from '@/features/content';
 import { createTestRegistry } from '@/features/daily-tests';
+import { codeOutput } from '@/features/exercise-types/code-output';
+import { findBug } from '@/features/exercise-types/find-bug';
 import { flashcardSelfGraded } from '@/features/exercise-types/flashcard-self-graded';
 import { multipleChoice } from '@/features/exercise-types/multiple-choice';
+import { ordering } from '@/features/exercise-types/ordering';
 import { singleChoice } from '@/features/exercise-types/single-choice';
 import { knowledgeTest } from '@/features/test-definitions/knowledge';
 
@@ -17,7 +20,9 @@ export const exerciseTypeRegistry = createExerciseTypeRegistry();
 exerciseTypeRegistry.register(singleChoice);
 exerciseTypeRegistry.register(multipleChoice);
 exerciseTypeRegistry.register(flashcardSelfGraded);
-// Phase 3: code_output, find_bug, ordering
+exerciseTypeRegistry.register(codeOutput);
+exerciseTypeRegistry.register(findBug);
+exerciseTypeRegistry.register(ordering);
 
 export const testRegistry = createTestRegistry();
 testRegistry.register(knowledgeTest);
