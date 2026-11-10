@@ -16,5 +16,6 @@ export * from './ReorderList';
 export * from './ScreenContainer';
 export * from './ScreenHeader';
 export * from './SegmentedControl';
+export * from './StatTile';
 export * from './Tag';
 export * from './TextField';
