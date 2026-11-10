@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { TodayScreen } from '@/features/daily-tests';
-import { TodayStats } from '@/features/progress';
+import { ProgressScreen, TodayStats } from '@/features/progress';
 import { StudyMapScreen } from '@/features/study-map';
 import { PlaceholderScreen } from './PlaceholderScreen';
 
@@ -37,5 +37,17 @@ export function StudyTab() {
   return <StudyMapScreen onOpenTopic={openTopic} />;
 }
 
-export const ProgressTab = () => <PlaceholderScreen section="progress" phase={4} />;
+export function ProgressTab() {
+  const navigation = useNavigation();
+  const openTopic = useCallback(
+    (topicId: string) => navigation.navigate('Topic', { topicId }),
+    [navigation],
+  );
+  const openSession = useCallback(
+    (sessionId: string) => navigation.navigate('SessionResults', { sessionId }),
+    [navigation],
+  );
+  return <ProgressScreen onOpenTopic={openTopic} onOpenSession={openSession} />;
+}
+
 export const SettingsTab = () => <PlaceholderScreen section="settings" phase={4} />;

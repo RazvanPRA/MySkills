@@ -45,6 +45,9 @@ export const loadProgress = createAsyncThunk<Loaded, void, { extra: ProgressDepe
       cards: cardRows.map(toCardFact),
       sessions: sessionRows.map(toSessionFact),
       dailyKinds: testsWithSchedule(extra.registries.tests, 'daily').map(test => test.kind),
+      testTitles: Object.fromEntries(
+        extra.registries.tests.list().map(test => [test.kind, test.title]),
+      ),
     };
   },
 );

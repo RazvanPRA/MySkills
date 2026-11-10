@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import type { LocalizedText } from '@/shared/domain';
 import type { AttemptFact, CardFact, SessionFact } from '../model/facts';
 import { loadProgress } from './thunks';
 
@@ -13,6 +14,8 @@ export type ProgressState = {
   sessions: SessionFact[];
   /** Kinds of the daily tests: only they count for the streak. */
   dailyKinds: string[];
+  /** Title of every registered test, by kind (history rows). */
+  testTitles: Record<string, LocalizedText>;
 };
 
 export const initialProgressState: ProgressState = {
@@ -23,6 +26,7 @@ export const initialProgressState: ProgressState = {
   cards: [],
   sessions: [],
   dailyKinds: [],
+  testTitles: {},
 };
 
 const progressSlice = createSlice({

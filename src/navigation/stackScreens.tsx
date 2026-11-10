@@ -37,7 +37,14 @@ export function SessionRoute({ route, navigation }: RouteProps<'Session'>) {
 }
 
 export function SessionResultsRoute({ route, navigation }: RouteProps<'SessionResults'>) {
-  const done = useCallback(() => navigation.navigate('Tabs', { screen: 'Today' }), [navigation]);
+  // Back to where the results were opened from: Today after a test, Progress from history.
+  const done = useCallback(() => {
+    if (navigation.canGoBack()) {
+      navigation.goBack();
+    } else {
+      navigation.navigate('Tabs', { screen: 'Today' });
+    }
+  }, [navigation]);
   const openTopic = useCallback(
     (topicId: string) => navigation.navigate('Topic', { topicId }),
     [navigation],

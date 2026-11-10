@@ -22,5 +22,7 @@ export { progressReducer, type ProgressState } from './state/slice';
 export { loadProgress, type ProgressDependencies } from './state/thunks';
 export { selectStreak, selectWeekAccuracy } from './state/selectors';
 export type { TodayStatsProps } from './components/TodayStats/TodayStats';
+export type { ProgressScreenProps } from './screens/ProgressScreen';
 
 export const TodayStats = lazy(() => import('./components/TodayStats/TodayStats'));
+export const ProgressScreen = lazy(() => import('./screens/ProgressScreen'));

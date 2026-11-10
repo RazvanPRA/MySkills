@@ -1,5 +1,37 @@
 /** Progress: Today's stat tiles and suggestion, and the Progress tab. */
 export const progressRo = {
+  screen: {
+    loading: 'Se calculează progresul…',
+    error: 'Progresul nu a putut fi încărcat.',
+    retry: 'Încearcă din nou',
+  },
+  matrix: {
+    title: 'Matricea de competențe',
+    help: 'Procentul este stăpânirea medie a topicurilor care au exerciții. „—” înseamnă că nu ai exersat încă.',
+    category: 'Categorie',
+    estimated: 'Nivel estimat',
+    belowJunior: 'Sub Junior',
+    empty: '—',
+    cellLabel: (category: string, level: string, value: string) =>
+      `${category}, ${level}: ${value}`,
+    notStarted: 'neînceput',
+    noExercises: 'fără exerciții',
+    estimatedLabel: (category: string, level: string) => `${category}, nivel estimat: ${level}`,
+  },
+  logic: {
+    title: 'Acuratețe la logică',
+    week: (date: string) => `Săptămâna din ${date}`,
+    noAnswers: 'Fără răspunsuri',
+  },
+  weak: {
+    title: 'Puncte slabe',
+    empty: 'Niciun topic exersat nu e sub 60%.',
+    mastery: (value: number) => `Stăpânire ${value}%`,
+  },
+  history: {
+    title: 'Istoric',
+    empty: 'Niciun test terminat încă.',
+  },
   stats: {
     streak: 'Serie',
     todayDone: 'Testele de azi sunt gata.',
@@ -18,6 +50,38 @@ export const progressRo = {
 };
 
 export const progressEn: typeof progressRo = {
+  screen: {
+    loading: 'Calculating your progress…',
+    error: 'Your progress could not be loaded.',
+    retry: 'Try again',
+  },
+  matrix: {
+    title: 'Competency matrix',
+    help: 'The percentage is the average mastery of topics that have exercises. "—" means nothing practised yet.',
+    category: 'Category',
+    estimated: 'Estimated level',
+    belowJunior: 'Below Junior',
+    empty: '—',
+    cellLabel: (category: string, level: string, value: string) =>
+      `${category}, ${level}: ${value}`,
+    notStarted: 'not started',
+    noExercises: 'no exercises',
+    estimatedLabel: (category: string, level: string) => `${category}, estimated level: ${level}`,
+  },
+  logic: {
+    title: 'Logic accuracy',
+    week: (date: string) => `Week of ${date}`,
+    noAnswers: 'No answers',
+  },
+  weak: {
+    title: 'Weak spots',
+    empty: 'No practised topic is below 60%.',
+    mastery: (value: number) => `Mastery ${value}%`,
+  },
+  history: {
+    title: 'History',
+    empty: 'No finished test yet.',
+  },
   stats: {
     streak: 'Streak',
     todayDone: "Today's tests are done.",
