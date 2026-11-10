@@ -385,6 +385,268 @@
         ],
         "correctIndices": [0, 1, 2]
       }
+    },
+    {
+      "id": "nestjs.request-pipeline.junior.q1",
+      "topicId": "nestjs.request-pipeline.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "`ValidationPipe` e configurat global cu `{ whitelist: true }`. Clientul trimite corpul de mai jos. Ce primește handler-ul?\n\n~~~ts\nclass UpdateProfileDto {\n  @IsEmail()\n  email: string;\n}\n\n// POST body: { \"email\": \"ana@example.com\", \"isAdmin\": true }\n~~~"
+      },
+      "explanation": {
+        "ro": "`whitelist: true` elimină orice proprietate care nu are un decorator class-validator în DTO. Asta previne **mass assignment**: un client nu poate strecura câmpuri precum `isAdmin` sau `role` care ajung apoi direct în baza de date.\n\nVarianta strictă, `forbidNonWhitelisted: true`, respinge cererea cu 400 în loc să elimine tăcut câmpurile, util ca să afle clientul că trimite ceva greșit. Adaugă și `transform: true` ca să primești o instanță a DTO-ului, cu tipurile convertite."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Un obiect doar cu `email`; `isAdmin` e eliminat pentru că nu are niciun decorator de validare"
+          },
+          { "ro": "Ambele câmpuri, pentru că `isAdmin` nu încalcă nicio regulă" },
+          { "ro": "Un răspuns 400, pentru că a apărut un câmp necunoscut" },
+          { "ro": "Un obiect gol, pentru că DTO-ul nu are constructor" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.testing.junior.q1",
+      "topicId": "nestjs.testing.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Scrii un unit test pentru `UsersService`, care depinde de `UsersRepository`. Cum furnizezi un mock al repository-ului?"
+      },
+      "explanation": {
+        "ro": "Modulul de test folosește același container DI ca aplicația, deci înlocuiești o dependență declarând un provider cu același token și o implementare falsă (`useValue`, `useClass` sau `useFactory`). Serviciul testat nu știe că primește un mock.\n\nImportul întregului `AppModule` aduce baza de date, cozile și configurarea reală: testul devine lent și fragil. Accesul la câmpuri private ocolește contractul public. Alternativ, pentru servicii simple, constructorul poate fi apelat direct cu un obiect fals, fără TestingModule."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`Test.createTestingModule({ providers: [UsersService, { provide: UsersRepository, useValue: { findById: jest.fn() } }] })`"
+          },
+          { "ro": "`new UsersService()` și setezi apoi câmpul privat `repository` din test" },
+          { "ro": "Importi `AppModule` întreg în test" },
+          { "ro": "Folosești o bază de date reală, pentru că Nest nu permite mock-uri" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.modules.mid.q1",
+      "topicId": "nestjs.modules.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Clientul Redis trebuie creat cu URL-ul din `ConfigService` și injectat în mai multe servicii cu token-ul `REDIS`. Ce provider scrii?"
+      },
+      "explanation": {
+        "ro": "`useFactory` construiește valoarea folosind alte dependențe, declarate în `inject`. Factory-ul poate fi și `async` (de exemplu, așteaptă conexiunea), iar Nest amână pornirea aplicației până se rezolvă.\n\n`useValue` cu `process.env` citește configurarea la importul fișierului, ocolește validarea din `ConfigModule` și, repetat în fiecare modul, creează mai multe conexiuni. `useClass: Redis` lasă Nest să instanțieze clasa fără argumente. Pune providerul într-un modul dedicat care îl exportă, ca să existe o singură conexiune, și închide-o în `onModuleDestroy`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`{ provide: REDIS, useFactory: (config: ConfigService) => new Redis(config.getOrThrow('REDIS_URL')), inject: [ConfigService] }`"
+          },
+          {
+            "ro": "`{ provide: REDIS, useValue: new Redis(process.env.REDIS_URL) }` în fiecare modul care îl folosește"
+          },
+          { "ro": "`{ provide: REDIS, useClass: Redis }`" },
+          { "ro": "Creezi clientul în constructorul fiecărui serviciu" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.auth.mid.q1",
+      "topicId": "nestjs.auth.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Implementezi autentificarea cu access token și refresh token. Care practici sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Un JWT de acces e verificat fără să întrebi baza de date, deci nu poate fi revocat instant. De aceea trăiește puțin: dacă e furat, fereastra de abuz e mică.\n\nRefresh token-ul e credențialul de durată lungă, deci îl tratezi ca pe o parolă: hash pe server, revocare la logout, rotire. Detectarea reutilizării prinde furtul: dacă un token deja folosit apare din nou, cineva are o copie.\n\nPe web, refresh token-ul stă într-un cookie `HttpOnly`, `Secure`, `SameSite`, nu în `localStorage`, unde orice XSS îl poate citi. Pe mobil, în Keychain sau Keystore."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Access token cu viață scurtă (minute), refresh token cu viață mai lungă" },
+          {
+            "ro": "Refresh token-ul e rotit la fiecare folosire; reutilizarea unuia vechi invalidează toată familia de token-uri"
+          },
+          { "ro": "Pe server păstrezi un hash al refresh token-ului, ca să-l poți revoca" },
+          {
+            "ro": "Refresh token-ul stă în `localStorage`, ca să-l poată citi orice cod JavaScript"
+          },
+          { "ro": "Un access token JWT poate fi revocat instant fără nicio stare pe server" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "nestjs.messaging.mid.q1",
+      "topicId": "nestjs.messaging.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un consumator RabbitMQ procesează mesajul `PaymentCaptured` și trimite un email. Consumatorul cade după trimiterea email-ului, dar înainte de `ack`, iar mesajul e livrat din nou. Cum eviți al doilea email?"
+      },
+      "explanation": {
+        "ro": "Majoritatea brokerilor garantează livrare **at least once**: orice mesaj fără `ack` se livrează din nou. Duplicatele sunt deci normale, iar corectitudinea vine din consumator.\n\nIdempotența: înregistrezi id-ul mesajului (sau o cheie de business) în aceeași tranzacție cu efectul, iar o constrângere unică respinge a doua procesare. Pentru efecte externe precum email-ul, trimiți o cheie de idempotență furnizorului, dacă o acceptă.\n\n`ack` înainte de procesare transformă duplicatele în mesaje pierdute (at most once). „Exactly once” de la capăt la capăt nu există fără cooperarea consumatorului."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Faci consumatorul idempotent: salvezi id-ul mesajului procesat (cu o constrângere unică) și ignori duplicatele"
+          },
+          { "ro": "Trimiți `ack` înainte de procesare" },
+          { "ro": "Configurezi brokerul pentru livrare „exactly once”" },
+          { "ro": "Adaugi un `sleep` înainte de `ack`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.testing.mid.q1",
+      "topicId": "nestjs.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Producția folosește PostgreSQL. De ce rulezi testele e2e cu PostgreSQL în Testcontainers, nu cu SQLite in-memory?"
+      },
+      "explanation": {
+        "ro": "Un test care trece pe SQLite poate pica pe PostgreSQL: SQLite e permisiv cu tipurile, nu are `JSONB`, tratează altfel constrângerile, `ON CONFLICT` și nivelurile de izolare. Ai testa alt sistem decât cel din producție.\n\nTestcontainers pornește un container PostgreSQL real pentru suită, cu aceeași versiune ca producția, și rulezi migrațiile reale pe el. Costul: câteva secunde la pornire și Docker în CI. Ca să rămână rapid, pornești containerul o dată per suită și izolezi testele prin tranzacții sau prin curățarea tabelelor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Testezi pe același motor ca în producție: dialect SQL, constrângeri, tipuri (JSONB, enum), tranzacții și locking se comportă identic"
+          },
+          { "ro": "SQLite nu poate fi folosit din Node.js" },
+          { "ro": "Testcontainers face testele mai rapide decât o bază in-memory" },
+          { "ro": "Prisma și TypeORM nu au suport pentru SQLite" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.modules.senior.f1",
+      "topicId": "nestjs.modules.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum structurezi o aplicație NestJS mare ca **modular monolith**, astfel încât modulele să poată fi extrase mai târziu ca servicii separate?"
+      },
+      "explanation": {
+        "ro": "Monolitul modular păstrează simplitatea operațională a unui singur deploy, cu granițele care fac posibilă o extragere ulterioară. Majoritatea echipelor care încep direct cu microservicii plătesc complexitatea distribuită înainte să știe unde sunt granițele reale.\n\nUn răspuns bun spune și când **nu** ai extrage: dacă modulul nu are nevoi diferite de scalare, de echipă sau de ritm de livrare."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Fiecare modul corespunde unui **bounded context** (Comenzi, Plăți, Catalog) și își deține datele: tabelele lui nu sunt citite direct de alte module.\n\nGranițe explicite:\n\n- Modulul exportă doar o fațadă publică (un serviciu sau un set de use cases), nu repository-uri sau entități.\n- Comunicarea sincronă trece prin fațadă. Cea asincronă, prin evenimente de domeniu (EventEmitter intern sau un outbox), ca modulele să nu se cheme reciproc în lanț.\n- Fără dependențe circulare: un `forwardRef` e un semnal că granița e greșită.\n- Regulile sunt verificate automat (dependency-cruiser sau reguli ESLint pe importuri), nu doar la code review.\n\nAstfel, extragerea unui modul înseamnă înlocuirea fațadei cu un client HTTP sau gRPC și a evenimentelor in-process cu un broker, fără să rescrii restul aplicației."
+        },
+        "keyPoints": [
+          { "ro": "Module după bounded context, fiecare cu datele lui" },
+          { "ro": "Doar o fațadă publică exportată" },
+          { "ro": "Evenimente de domeniu pentru comunicare asincronă" },
+          { "ro": "Fără cicluri; `forwardRef` ca semnal de alarmă" },
+          { "ro": "Granițe verificate automat în CI" }
+        ]
+      }
+    },
+    {
+      "id": "nestjs.request-pipeline.senior.q1",
+      "topicId": "nestjs.request-pipeline.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Unde e potrivit să plasezi fiecare preocupare transversală în NestJS? Alege afirmațiile corecte."
+      },
+      "explanation": {
+        "ro": "Fiecare element din pipeline are acces la altceva:\n\n- **Middleware** rulează primul, fără să știe ce handler urmează: potrivit pentru request id, logarea cererii brute, CORS.\n- **Guards** primesc `ExecutionContext`: știu handler-ul și metadatele lui (`@Roles`), deci decid accesul. Rate limiting-ul (`ThrottlerGuard`) e tot aici.\n- **Interceptors** învelesc handler-ul (înainte și după, plus stream-ul de răspuns): timp de execuție, caching, mapare de răspuns.\n- **Pipes** transformă și validează argumentele.\n- **Exception filters** transformă excepțiile în răspunsuri.\n\nPlasarea greșită funcționează adesea, dar duplică logica sau o face să ruleze prea târziu."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Autorizarea pe roluri: într-un guard, care citește metadatele handler-ului prin `Reflector`"
+          },
+          {
+            "ro": "Măsurarea duratei handler-ului: într-un interceptor, care învelește execuția lui"
+          },
+          {
+            "ro": "Atribuirea unui request id pentru corelarea logurilor: într-un middleware, cât mai devreme"
+          },
+          { "ro": "Transformarea erorilor de domeniu în răspunsuri HTTP: într-un pipe" },
+          { "ro": "Validarea DTO-urilor: într-un interceptor" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "nestjs.data.senior.q1",
+      "topicId": "nestjs.data.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "După ce salvezi o comandă în PostgreSQL, publici `OrderCreated` în Kafka. Rar, comanda e salvată, dar evenimentul nu ajunge (aplicația cade între cele două operații). Care e soluția standard?"
+      },
+      "explanation": {
+        "ro": "Problema e **dual write**: două sisteme fără o tranzacție comună. Orice ordine lasă o fereastră în care unul reușește și celălalt nu. Publicarea înainte de commit poate anunța o comandă care nu există.\n\nOutbox-ul reduce totul la o singură tranzacție locală. Relay-ul (polling sau CDC cu Debezium) publică cel puțin o dată, deci consumatorii trebuie să fie idempotenți. Retry-ul în request nu ajută dacă procesul cade. 2PC nu e suportat practic de Kafka și cuplează disponibilitatea celor două sisteme."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Transactional outbox: scrii evenimentul într-un tabel `outbox`, în aceeași tranzacție cu comanda; un proces separat îl publică și îl marchează ca trimis"
+          },
+          { "ro": "Publici evenimentul înainte de commit" },
+          { "ro": "Folosești o tranzacție distribuită (2PC) între PostgreSQL și Kafka" },
+          { "ro": "Reîncerci publicarea într-un bloc `try/catch` în același request" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.testing.senior.f1",
+      "topicId": "nestjs.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Echipa ta are cinci servicii NestJS care comunică prin HTTP. Testele e2e care pornesc toate serviciile sunt lente și instabile. Ce strategie de testare propui?"
+      },
+      "explanation": {
+        "ro": "E2e-urile pe tot sistemul verifică compatibilitatea dintre servicii, dar o fac lent și cu multe cauze de eșec fără legătură cu schimbarea testată. Contract testing verifică exact acea compatibilitate, izolat, în secunde.\n\nUn răspuns senior leagă strategia de cost și de încredere, nu de numărul de teste."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Reduc dependența de e2e-urile pe tot sistemul și mut încrederea în teste mai ieftine:\n\n- **Unit tests** pentru logica de domeniu: rapide, fără framework.\n- **Teste de integrare per serviciu**, cu baza de date reală (Testcontainers) și dependențele externe simulate la nivel de HTTP.\n- **Contract tests** (consumer-driven, de exemplu Pact) la granițe: consumatorul descrie cererile și răspunsurile pe care se bazează, iar providerul verifică în CI că le respectă. Un pas de tip „can I deploy” blochează un deploy care ar strica un consumator.\n- **Câteva teste e2e** doar pentru fluxurile critice de business, rulate pe un mediu de staging, nu la fiecare commit.\n\nMăsor ce prind testele (bug-uri ajunse în producție, durata pipeline-ului, rata de teste instabile) și șterg testele care costă, dar nu prind nimic."
+        },
+        "keyPoints": [
+          { "ro": "Piramida: multe unit, integrare per serviciu, puține e2e" },
+          { "ro": "Contract tests consumer-driven la granițele dintre servicii" },
+          { "ro": "Verificarea contractului în CI-ul providerului, înainte de deploy" },
+          { "ro": "E2e doar pe fluxurile critice" },
+          { "ro": "Decizii bazate pe metrici: durată, instabilitate, bug-uri scăpate" }
+        ]
+      }
     }
   ]
 }
