@@ -44,6 +44,18 @@ describe('presentMasteryTable', () => {
     expect(logic?.estimatedText).toBe('Nivel estimat: —');
   });
 
+  it('adds the self-assessment after the estimate', () => {
+    const [react, logic] = presentMasteryTable(buildHeatmap(catalog, new Map()), {
+      ...ro,
+      selfAssessment: { react: 'senior', logic: 'none' },
+    });
+    expect(react).toMatchObject({
+      estimatedText: 'Nivel estimat: — · Autoevaluare: Senior',
+      estimatedLabel: 'React, nivel estimat: —, Autoevaluare: Senior',
+    });
+    expect(logic?.estimatedText).toBe('Nivel estimat: —');
+  });
+
   it('says "below Junior" once something was practised', () => {
     const [react] = presentMasteryTable(
       buildHeatmap(catalog, new Map([['react.a.junior', 20]])),

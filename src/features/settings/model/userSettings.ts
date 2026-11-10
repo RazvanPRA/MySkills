@@ -7,6 +7,10 @@ export const logicTestLengths = [3, 5, 8] as const;
 
 const HH_MM = /^([01]\d|2[0-3]):[0-5]\d$/;
 
+/** Onboarding self-assessment of one category: the level the user is at home with, or none. */
+export const selfAssessmentSchema = z.enum(['none', ...levels]);
+export type SelfAssessment = z.infer<typeof selfAssessmentSchema>;
+
 /**
  * User preferences, stored as one JSON document. Every field has a default, so
  * `userSettingsSchema.parse({})` is a valid first-run state and new fields need no migration.
@@ -22,6 +26,8 @@ export const userSettingsSchema = z.object({
   /** Study map filters, kept across restarts (design system §6.3). */
   studyLevels: z.array(levelSchema).default([...levels]),
   studyCategoryId: z.string().nullable().default(null),
+  /** Self-assessment by category id, from onboarding; Progress shows it next to the estimate. */
+  selfAssessment: z.record(z.string(), selfAssessmentSchema).default({}),
 });
 export type UserSettings = z.infer<typeof userSettingsSchema>;
 

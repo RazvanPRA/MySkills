@@ -7,6 +7,8 @@ export {
   defaultUserSettings,
   knowledgeTestLengths,
   logicTestLengths,
+  selfAssessmentSchema,
+  type SelfAssessment,
   type UserSettings,
 } from './model/userSettings';
 export { settingsReducer, type SettingsState } from './state/slice';

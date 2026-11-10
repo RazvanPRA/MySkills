@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { useContentCatalog } from '@/features/content';
+import { useSettings } from '@/features/settings';
 import { useLanguage, useStrings } from '@/shared/i18n';
 import { accuracyByWeek, fromFirstAnsweredWeek } from '../services/accuracy.service';
 import { buildHeatmap } from '../services/buildHeatmap.service';
@@ -25,6 +26,7 @@ export function useProgressScreen() {
   const language = useLanguage();
   const { status, mastery, reload } = useProgressData();
   const { attempts, sessions, today, testTitles } = useProgressSelector(selectProgress);
+  const { selfAssessment } = useSettings().settings;
 
   const sections = useMemo(() => {
     const context = { catalog, strings, language };
@@ -33,11 +35,11 @@ export function useProgressScreen() {
         ? []
         : accuracyByWeek(logicAttempts(catalog, attempts), { today, weeks: LOGIC_WEEKS });
     return {
-      table: presentMasteryTable(buildHeatmap(catalog, mastery), context),
+      table: presentMasteryTable(buildHeatmap(catalog, mastery), { ...context, selfAssessment }),
       weeks: presentWeeks(fromFirstAnsweredWeek(weeks), context),
       weak: presentWeakTopics(weakTopics(catalog, mastery), context),
       history: presentHistory(sessions, { ...context, testTitles }),
     };
-  }, [catalog, strings, language, attempts, sessions, today, testTitles, mastery]);
+  }, [catalog, strings, language, attempts, sessions, today, testTitles, mastery, selfAssessment]);
   return { status, reload, ...sections };
 }

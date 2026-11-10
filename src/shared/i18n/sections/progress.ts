@@ -17,6 +17,7 @@ export const progressRo = {
     notStarted: 'neînceput',
     noExercises: 'fără exerciții',
     estimatedLabel: (category: string, level: string) => `${category}, nivel estimat: ${level}`,
+    selfAssessed: (level: string) => `Autoevaluare: ${level}`,
   },
   logic: {
     title: 'Acuratețe la logică',
@@ -67,6 +68,7 @@ export const progressEn: typeof progressRo = {
     notStarted: 'not started',
     noExercises: 'no exercises',
     estimatedLabel: (category: string, level: string) => `${category}, estimated level: ${level}`,
+    selfAssessed: (level: string) => `Self-assessed: ${level}`,
   },
   logic: {
     title: 'Logic accuracy',

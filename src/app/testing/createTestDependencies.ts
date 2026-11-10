@@ -4,7 +4,11 @@ import type { NotificationPermission, ReminderScheduler } from '@/features/notif
 import migrations from '@/db/migrations/migrations';
 import { createTestDatabase } from '@/db/testing/createTestDatabase';
 import { createLocalContentRepository } from '@/features/content';
-import { createLocalSettingsRepository, createMemoryKeyValueStore } from '@/features/settings';
+import {
+  createLocalSettingsRepository,
+  createMemoryKeyValueStore,
+  SETTINGS_STORAGE_KEY,
+} from '@/features/settings';
 import { fixedClock } from '@/shared/utils/clock';
 import { createIdGenerator } from '@/shared/utils/idGenerator';
 import { createRepositories } from '../dependencies.shared';
@@ -39,6 +43,16 @@ export function createMemoryReminders(permission: 'granted' | 'denied' = 'grante
   return { reminders, notificationPermission, calls };
 }
 
+/**
+ * Most flows start after onboarding: stored settings get `onboardingDone: true` unless they set
+ * it themselves (the onboarding flow test passes false).
+ */
+function withOnboardingDone(stored: Record<string, string> = {}): Record<string, string> {
+  const current = stored[SETTINGS_STORAGE_KEY];
+  const parsed = current ? (JSON.parse(current) as Record<string, unknown>) : {};
+  return { ...stored, [SETTINGS_STORAGE_KEY]: JSON.stringify({ onboardingDone: true, ...parsed }) };
+}
+
 type TestDependencyOptions = {
   packs?: readonly unknown[];
   storedSettings?: Record<string, string>;
@@ -65,7 +79,9 @@ export async function createTestDependencies(options: TestDependencyOptions = {}
     repositories: {
       ...createRepositories(db),
       content: createLocalContentRepository(options.packs ?? []),
-      settings: createLocalSettingsRepository(createMemoryKeyValueStore(options.storedSettings)),
+      settings: createLocalSettingsRepository(
+        createMemoryKeyValueStore(withOnboardingDone(options.storedSettings)),
+      ),
     },
   };
   return { dependencies, sqlite };

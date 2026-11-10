@@ -15,6 +15,7 @@ export { createLocalTopicProgressRepository } from './repository/LocalTopicProgr
 export { studyMapReducer, type StudyMapState } from './state/slice';
 export {
   loadTopicProgress,
+  markTopicsStudied,
   setTopicNotes,
   setTopicStatus,
   type StudyMapDependencies,

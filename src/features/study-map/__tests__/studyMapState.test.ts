@@ -5,7 +5,7 @@ import type { TopicProgressRepository } from '../repository/TopicProgressReposit
 import { changeTopicStatus } from '../services/changeTopicStatus.service';
 import { selectStudyMapStatus, selectTopicStatus } from '../state/selectors';
 import { studyMapReducer } from '../state/slice';
-import { loadTopicProgress, setTopicStatus } from '../state/thunks';
+import { loadTopicProgress, markTopicsStudied, setTopicStatus } from '../state/thunks';
 
 const NOW = '2026-11-10T08:00:00.000Z';
 const EARLIER = '2026-11-01T08:00:00.000Z';
@@ -89,5 +89,19 @@ describe('study map state', () => {
     const { store } = setup([], () => Promise.reject(new Error('disk')));
     await store.dispatch(loadTopicProgress());
     expect(selectStudyMapStatus(store.getState())).toBe('error');
+  });
+
+  it('marks many topics as studied without downgrading covered ones', async () => {
+    const { store, saved } = setup([
+      { topicId: 'a', status: 'in_progress', updatedAt: EARLIER },
+      { topicId: 'b', status: 'not_started', notes: 'Idee', updatedAt: EARLIER },
+    ]);
+    await store.dispatch(markTopicsStudied(['a', 'b', 'c']));
+    expect(saved.map(entry => [entry.topicId, entry.status, entry.notes])).toEqual([
+      ['b', 'studied', 'Idee'],
+      ['c', 'studied', undefined],
+    ]);
+    expect(selectTopicStatus(store.getState(), 'b')).toBe('studied');
+    expect(selectTopicStatus(store.getState(), 'c')).toBe('studied');
   });
 });

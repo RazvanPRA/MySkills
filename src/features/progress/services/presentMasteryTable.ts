@@ -18,7 +18,21 @@ export type MasteryRowModel = {
   estimatedLabel: string;
 };
 
-type Context = { catalog: ContentCatalog; strings: Strings; language: Language };
+type Context = {
+  catalog: ContentCatalog;
+  strings: Strings;
+  language: Language;
+  /** Onboarding self-assessment by category id ('none' or a level). */
+  selfAssessment?: Readonly<Record<string, string>>;
+};
+
+/** "Autoevaluare: Senior" after the estimate, when the user rated the category. */
+function selfAssessedText(categoryId: string, { strings, selfAssessment }: Context): string | null {
+  const level = selfAssessment?.[categoryId];
+  return level && level !== 'none'
+    ? strings.progress.matrix.selfAssessed(strings.levels[level as Level])
+    : null;
+}
 
 function cellModel(cell: HeatmapCell, category: string, { strings }: Context): MasteryCellModel {
   const { matrix } = strings.progress;
@@ -58,12 +72,17 @@ export function presentMasteryTable(
     const category = context.catalog.categoriesById.get(row.categoryId);
     const title = category ? resolveText(category.title, context.language).text : row.categoryId;
     const estimated = estimatedText(row, context);
+    const self = selfAssessedText(row.categoryId, context);
     return {
       categoryId: row.categoryId,
       title,
       cells: row.cells.map(cell => cellModel(cell, title, context)),
-      estimatedText: `${context.strings.progress.matrix.estimated}: ${estimated}`,
-      estimatedLabel: context.strings.progress.matrix.estimatedLabel(title, estimated),
+      estimatedText: [`${context.strings.progress.matrix.estimated}: ${estimated}`, self]
+        .filter(Boolean)
+        .join(' · '),
+      estimatedLabel: [context.strings.progress.matrix.estimatedLabel(title, estimated), self]
+        .filter(Boolean)
+        .join(', '),
     };
   });
 }
