@@ -4,7 +4,7 @@ import { useMemo } from 'react';
 import { useTheme } from '@/shared/theme';
 import { linking } from './linking';
 import { toNavigationTheme } from './navigationTheme';
-import { TopicRoute } from './stackScreens';
+import { SessionResultsRoute, SessionRoute, TopicRoute } from './stackScreens';
 import { SuspenseLayout } from './SuspenseLayout';
 import { TabNavigator } from './TabNavigator';
 import type { RootStackParamList } from './types';
@@ -21,6 +21,8 @@ export function RootNavigator() {
       <Stack.Navigator screenOptions={STACK_OPTIONS} screenLayout={SuspenseLayout}>
         <Stack.Screen name="Tabs" component={TabNavigator} />
         <Stack.Screen name="Topic" component={TopicRoute} />
+        <Stack.Screen name="Session" component={SessionRoute} />
+        <Stack.Screen name="SessionResults" component={SessionResultsRoute} />
       </Stack.Navigator>
     </NavigationContainer>
   );

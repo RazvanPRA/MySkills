@@ -63,5 +63,19 @@ export const fixturePack = {
       },
       explanation: text('State și context, nu variabile locale.'),
     },
+    {
+      id: 'react.hooks.mid.f1',
+      type: 'flashcard_self_graded',
+      topicId: 'react.hooks.mid',
+      level: 'mid',
+      difficulty: 3,
+      estimatedSeconds: 90,
+      prompt: text('Când NU ai nevoie de `useEffect`?'),
+      payload: {
+        answer: text('Pentru date derivate și pentru evenimente.'),
+        keyPoints: [text('Date derivate')],
+      },
+      explanation: text('Efectele sincronizează cu sisteme externe.'),
+    },
   ],
 };
