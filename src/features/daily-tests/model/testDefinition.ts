@@ -10,6 +10,8 @@ export type TestSchedule = 'daily' | 'weekly' | 'on_demand';
 /** `mark_topics`: the pool grows when more topics are marked as covered in Study. */
 export type ShortfallRemedy = 'mark_topics';
 
+export type TestItemKind = 'question' | 'problem';
+
 /** Narrows an on-demand session ("Practice this topic only"). Ignored by daily tests. */
 export type TestScope = { topicIds?: readonly string[]; categoryIds?: readonly string[] };
 
@@ -55,6 +57,8 @@ export type TestDefinition = {
    * the logic test, which avoids repeats with its own 30-day rule.
    */
   spacedRepetition: boolean;
+  /** What Today counts: "10 întrebări" (default) or "5 probleme" (design system §6.3). */
+  itemKind?: TestItemKind;
   /** Pure and deterministic for a given context. */
   buildSession: (context: TestBuildContext) => SessionPlan;
 };

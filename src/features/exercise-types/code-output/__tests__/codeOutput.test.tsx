@@ -117,17 +117,18 @@ describe('CodeOutputRenderer', () => {
   it('input mode: a labelled monospace field that reports the typed text', async () => {
     const onAnswerChange = jest.fn();
     await render(input, { onAnswerChange });
-    const field = screen.getByLabelText('Output-ul programului');
+    const field = screen.getByLabelText('Răspunsul tău');
     expect(field).toHaveStyle({ fontFamily: fontFamily.mono });
     await fireEvent.changeText(field, 'A C B');
     expect(onAnswerChange).toHaveBeenCalledWith({ text: 'A C B' });
-    expect(screen.queryByText('Output corect')).toBeNull();
+    expect(screen.queryByText('Răspunsul corect')).toBeNull();
   });
 
   it('input mode after reveal: the field is read-only and the exact output is shown', async () => {
     await render(input, { answer: { text: 'A B C' }, revealed: true });
-    expect(screen.getByLabelText('Output-ul programului')).toBeDisabled();
-    expect(screen.getByText('Output corect')).toBeOnTheScreen();
+    expect(screen.getByLabelText('Răspunsul tău')).toBeDisabled();
+    expect(screen.getByLabelText('Răspunsul tău')).not.toHaveStyle({ opacity: 0.45 });
+    expect(screen.getByText('Răspunsul corect')).toBeOnTheScreen();
     expect(screen.getByText('C')).toBeOnTheScreen();
   });
 });

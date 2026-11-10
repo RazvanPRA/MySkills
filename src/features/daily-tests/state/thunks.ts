@@ -61,6 +61,7 @@ async function prepareCard(
   return {
     kind: definition.kind,
     title: definition.title,
+    itemKind: definition.itemKind ?? 'question',
     session,
     shortfall: plan.shortfall ?? null,
     answered,

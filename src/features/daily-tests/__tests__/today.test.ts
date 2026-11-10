@@ -119,6 +119,7 @@ describe('presentTodayCard', () => {
   const card = (overrides: Partial<TodayCardState>): TodayCardState => ({
     kind: 'knowledge',
     title: { ro: 'Test de cunoștințe', en: 'Knowledge test' },
+    itemKind: 'question',
     session: pending(['q1', 'q2', 'q3']),
     shortfall: null,
     answered: 0,
@@ -180,6 +181,11 @@ describe('presentTodayCard', () => {
       showMarkTopics: false,
       primary: null,
     });
+  });
+
+  it('counts problems for a test that declares them', () => {
+    expect(present({ itemKind: 'problem' }).meta).toBe('3 probleme · ~4 minute');
+    expect(present({ itemKind: 'problem' }, 'en').meta).toBe('3 problems · ~4 minutes');
   });
 
   it('skips exercises removed from the content', () => {

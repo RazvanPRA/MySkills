@@ -9,5 +9,6 @@ export const logicTest: TestDefinition = {
   schedule: 'daily',
   // Logic avoids repeats with its own 30-day rule instead of FSRS reviews.
   spacedRepetition: false,
+  itemKind: 'problem',
   buildSession: buildLogicSession,
 };

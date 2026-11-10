@@ -14,6 +14,7 @@ export type {
   ShortfallRemedy,
   TestBuildContext,
   TestDefinition,
+  TestItemKind,
   TestSchedule,
   TestScope,
 } from './model/testDefinition';

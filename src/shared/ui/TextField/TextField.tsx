@@ -13,8 +13,9 @@ function TextFieldBase(props: TextFieldProps) {
     help,
     monospace = false,
     multiline = false,
-    disabled = false,
+    mode = 'editable',
   } = props;
+  const editable = mode === 'editable';
   const styles = useThemedStyles(createStyles);
   const { color } = useTheme();
   const labelId = useId();
@@ -27,8 +28,8 @@ function TextFieldBase(props: TextFieldProps) {
         accessibilityLabel={label}
         accessibilityLabelledBy={labelId}
         accessibilityHint={help}
-        accessibilityState={{ disabled }}
-        editable={!disabled}
+        accessibilityState={{ disabled: !editable }}
+        editable={editable}
         value={value}
         onChangeText={onChangeText}
         multiline={multiline}
@@ -40,7 +41,7 @@ function TextFieldBase(props: TextFieldProps) {
           styles.input,
           monospace && styles.monospace,
           multiline && styles.multiline,
-          disabled && styles.disabled,
+          mode === 'disabled' && styles.disabled,
         ]}
       />
       {help ? (

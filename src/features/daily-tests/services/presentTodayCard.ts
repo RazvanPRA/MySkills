@@ -88,7 +88,8 @@ export function presentTodayCard({
     return { ...base, ...empty, notice, showMarkTopics };
   }
   const minutes = today.approxMinutes(counts.minutes(estimatedMinutes(ids, catalog)));
-  const meta = `${counts.questions(ids.length)} · ${minutes}`;
+  const count = card.itemKind === 'problem' ? counts.problems : counts.questions;
+  const meta = `${count(ids.length)} · ${minutes}`;
   const facts: CardFacts = { card, session: card.session, total: ids.length, today };
   return { ...base, meta, ...BY_STATUS[card.session.status](facts) };
 }

@@ -41,7 +41,7 @@ describe('logic test flow', () => {
     await openToday();
     const headers = screen.getAllByRole('header').map(header => header.props.children);
     expect(headers.indexOf('Test de logică')).toBeLessThan(headers.indexOf('Test de cunoștințe'));
-    expect(screen.getByText('3 întrebări · ~6 minute')).toBeOnTheScreen();
+    expect(screen.getByText('3 probleme · ~6 minute')).toBeOnTheScreen();
     expect(screen.getByText('Doar 3 din 5 probleme disponibile azi.')).toBeOnTheScreen();
   });
 
@@ -51,12 +51,12 @@ describe('logic test flow', () => {
 
     expect(await screen.findByText('1 / 3', undefined, TIMEOUT)).toBeOnTheScreen();
     await fireEvent.changeText(
-      await screen.findByLabelText('Output-ul programului', undefined, TIMEOUT),
+      await screen.findByLabelText('Răspunsul tău', undefined, TIMEOUT),
       ' 4,6\n',
     );
     await press('Verifică');
     expect(screen.getByText('Corect')).toBeOnTheScreen();
-    expect(screen.getByText('Output corect')).toBeOnTheScreen();
+    expect(screen.getByText('Răspunsul corect')).toBeOnTheScreen();
     await press('Următoarea');
 
     expect(await screen.findByText('2 / 3', undefined, TIMEOUT)).toBeOnTheScreen();
@@ -91,7 +91,7 @@ describe('logic test flow', () => {
     await openToday();
     await press('Începe');
     await fireEvent.changeText(
-      await screen.findByLabelText('Output-ul programului', undefined, TIMEOUT),
+      await screen.findByLabelText('Răspunsul tău', undefined, TIMEOUT),
       '2,4,6',
     );
     await checkAndAdvance('Greșit');

@@ -62,8 +62,11 @@ function toLines(spans: CodeSpan[]): CodeLine[] {
  * Pure: code → lines of colored spans. Unknown languages render as plain text.
  * A trailing newline does not create an empty last line.
  */
+/** Tabs are expanded: React Native draws a tab about one space wide (Go code uses tabs). */
+const TAB = '    ';
+
 export function highlightCode(code: string, language?: string): CodeLine[] {
-  const source = code.replace(/\r\n?/g, '\n').replace(/\n$/, '');
+  const source = code.replace(/\r\n?/g, '\n').replace(/\n$/, '').replace(/\t/g, TAB);
   const grammar = grammarFor(language);
   const spans = grammar
     ? flatten(Prism.tokenize(source, grammar), 'plain')

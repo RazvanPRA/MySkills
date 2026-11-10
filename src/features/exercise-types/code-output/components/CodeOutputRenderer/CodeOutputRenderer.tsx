@@ -42,7 +42,7 @@ function OutputInput({ exercise, answer, onAnswerChange, revealed }: ModeProps<I
         onChangeText={handleChange}
         monospace
         multiline
-        disabled={revealed}
+        mode={revealed ? 'readOnly' : 'editable'}
       />
       {revealed ? (
         <View style={styles.expected}>

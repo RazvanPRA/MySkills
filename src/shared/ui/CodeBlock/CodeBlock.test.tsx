@@ -9,6 +9,10 @@ const roles = (code: string, language?: string) =>
   highlightCode(code, language).map(line => line.map(span => `${span.role}:${span.text}`));
 
 describe('highlightCode', () => {
+  it('expands tabs to 4 spaces (React Native draws them one space wide)', () => {
+    expect(roles('	x').flat().join('')).toBe('plain:    x');
+  });
+
   it('maps Prism tokens to the design system roles', () => {
     const [line] = highlightCode('const n = 42; // answer', 'ts');
     expect(line).toEqual(

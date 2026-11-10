@@ -27,6 +27,8 @@ export const coreRo = {
   counts: {
     questions: (n: number) =>
       pluralRo(n, { one: '{n} întrebare', few: '{n} întrebări', other: '{n} de întrebări' }),
+    problems: (n: number) =>
+      pluralRo(n, { one: '{n} problemă', few: '{n} probleme', other: '{n} de probleme' }),
     minutes: (n: number) =>
       pluralRo(n, { one: '{n} minut', few: '{n} minute', other: '{n} de minute' }),
     days: (n: number) => pluralRo(n, { one: '{n} zi', few: '{n} zile', other: '{n} de zile' }),
@@ -62,6 +64,7 @@ export const coreEn: typeof coreRo = {
   },
   counts: {
     questions: (n: number) => pluralEn(n, '{n} question', '{n} questions'),
+    problems: (n: number) => pluralEn(n, '{n} problem', '{n} problems'),
     minutes: (n: number) => pluralEn(n, '{n} minute', '{n} minutes'),
     days: (n: number) => pluralEn(n, '{n} day', '{n} days'),
     topics: (n: number) => pluralEn(n, '{n} topic', '{n} topics'),
