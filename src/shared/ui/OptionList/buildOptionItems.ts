@@ -9,18 +9,24 @@ type OptionFacts = {
   /** Indices that are part of the correct answer. */
   correct: ReadonlySet<number>;
   revealed: boolean;
+  /** Display order as option indices (a permutation); defaults to the authored order. */
+  order?: readonly number[];
 };
 
-/** Pure: choice facts → OptionList items (ids are the option indices as strings). */
+/**
+ * Pure: choice facts → OptionList items, in display order. Ids stay the authored option
+ * indices as strings, so answers never depend on where an option is shown.
+ */
 export const buildOptionItems = ({
   texts,
   picked,
   correct,
   revealed,
+  order,
 }: OptionFacts): OptionListItem[] =>
-  texts.map((text, index) => ({
+  (order ?? texts.map((_, index) => index)).map(index => ({
     id: String(index),
-    text,
+    text: texts[index] ?? '',
     checked: picked.has(index),
     state: optionState({ picked: picked.has(index), isCorrect: correct.has(index), revealed }),
   }));

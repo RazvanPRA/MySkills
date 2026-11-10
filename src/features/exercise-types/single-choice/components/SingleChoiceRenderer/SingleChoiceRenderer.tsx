@@ -3,11 +3,15 @@ import type { ExerciseRendererProps } from '@/features/content';
 import { resolveText } from '@/shared/domain';
 import { useLanguage } from '@/shared/i18n';
 import { buildOptionItems, OptionList } from '@/shared/ui';
+import { seededPermutation } from '@/shared/utils/seededRandom';
 import type { SingleChoiceAnswer, SingleChoicePayload } from '../../model/schemas';
 
 type Props = ExerciseRendererProps<SingleChoicePayload, SingleChoiceAnswer>;
 
-/** Lettered options, `radio` role; after reveal the correct option is green, a wrong pick red. */
+/**
+ * Lettered options, `radio` role, in a stable shuffled order per exercise; after reveal the
+ * correct option is green, a wrong pick red.
+ */
 export default function SingleChoiceRenderer({
   exercise,
   answer,
@@ -16,6 +20,10 @@ export default function SingleChoiceRenderer({
 }: Props) {
   const language = useLanguage();
   const { options, correctIndex } = exercise.payload;
+  const order = useMemo(
+    () => seededPermutation(exercise.id, options.length),
+    [exercise.id, options.length],
+  );
   const items = useMemo(
     () =>
       buildOptionItems({
@@ -23,8 +31,9 @@ export default function SingleChoiceRenderer({
         picked: new Set(answer ? [answer.index] : []),
         correct: new Set([correctIndex]),
         revealed,
+        order,
       }),
-    [options, correctIndex, answer, revealed, language],
+    [options, correctIndex, answer, revealed, language, order],
   );
   const handlePress = useCallback(
     (id: string) => onAnswerChange({ index: Number(id) }),

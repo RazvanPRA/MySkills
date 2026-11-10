@@ -3,6 +3,8 @@ import type { Exercise } from '@/features/content';
 import { LanguageProvider } from '@/shared/i18n';
 import { lightColors } from '@/shared/theme';
 import { renderWithTheme } from '@/shared/testing/renderWithTheme';
+import { optionLetter } from '@/shared/ui';
+import { seededPermutation } from '@/shared/utils/seededRandom';
 import SingleChoiceRenderer from '../components/SingleChoiceRenderer/SingleChoiceRenderer';
 import { singleChoice } from '../index';
 import { type SingleChoicePayload, singleChoicePayloadSchema } from '../model/schemas';
@@ -84,21 +86,21 @@ describe('SingleChoiceRenderer', () => {
   it('lists lettered radio options and reports the picked index', async () => {
     const onAnswerChange = jest.fn();
     await render({ onAnswerChange });
-    await fireEvent.press(screen.getByRole('radio', { name: 'C. Niciunul' }));
+    await fireEvent.press(screen.getByRole('radio', { name: /\. Niciunul$/ }));
     expect(onAnswerChange).toHaveBeenCalledWith({ index: 2 });
   });
 
   it('shows the current pick as checked', async () => {
     await render({ answer: { index: 0 } });
-    expect(screen.getByRole('radio', { name: 'A. useEffect' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: /\. useEffect$/ })).toBeChecked();
   });
 
   it('after reveal: wrong pick red, correct option green, all disabled', async () => {
     await render({ answer: { index: 0 }, revealed: true });
-    expect(screen.getByRole('radio', { name: 'A. useEffect' })).toHaveStyle({
+    expect(screen.getByRole('radio', { name: /\. useEffect$/ })).toHaveStyle({
       borderColor: lightColors.danger,
     });
-    expect(screen.getByRole('radio', { name: 'B. useLayoutEffect' })).toHaveStyle({
+    expect(screen.getByRole('radio', { name: /\. useLayoutEffect$/ })).toHaveStyle({
       borderColor: lightColors.success,
     });
     screen.getAllByRole('radio').forEach(option => expect(option).toBeDisabled());
@@ -116,6 +118,27 @@ describe('SingleChoiceRenderer', () => {
         />
       </LanguageProvider>,
     );
-    expect(screen.getByRole('radio', { name: 'B. EN useLayoutEffect' })).toBeOnTheScreen();
+    expect(screen.getByRole('radio', { name: /\. EN useLayoutEffect$/ })).toBeOnTheScreen();
+  });
+});
+
+describe('SingleChoiceRenderer display order', () => {
+  it('shows the options in the exercise’s stable shuffled order', async () => {
+    await renderWithTheme(
+      <SingleChoiceRenderer
+        exercise={exercise}
+        answer={null}
+        onAnswerChange={jest.fn()}
+        revealed={false}
+        result={null}
+      />,
+    );
+    const texts = ['useEffect', 'useLayoutEffect', 'Niciunul'];
+    const expected = seededPermutation(exercise.id, 3).map(
+      (index, position) => `${optionLetter(position)}. ${texts[index]}`,
+    );
+    expect(screen.getAllByRole('radio').map(option => option.props.accessibilityLabel)).toEqual(
+      expected,
+    );
   });
 });
