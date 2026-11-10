@@ -314,6 +314,271 @@
           { "ro": "pprof și goleak pentru detectare" }
         ]
       }
+    },
+    {
+      "id": "go.concurrency.junior.q1",
+      "topicId": "go.concurrency.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce se întâmplă când rulezi programul?\n\n~~~go\nfunc main() {\n\tch := make(chan int)\n\tch <- 1\n\tfmt.Println(<-ch)\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Pe un channel **nebufferizat**, trimiterea se blochează până când altă goroutine primește valoarea. Aici există o singură goroutine (`main`), blocată la `ch <- 1`, deci nimeni nu ajunge la `<-ch`. Runtime-ul detectează că toate goroutine-urile sunt blocate și oprește programul.\n\nVariante corecte: trimiterea dintr-o goroutine separată (`go func() { ch <- 1 }()`) sau un channel cu buffer (`make(chan int, 1)`). Detectarea funcționează doar când **toate** goroutine-urile sunt blocate; într-un server, o goroutine blocată rămâne pur și simplu agățată, fără eroare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Programul se oprește cu `fatal error: all goroutines are asleep - deadlock!`" },
+          { "ro": "Afișează `1`" },
+          { "ro": "Afișează `0`" },
+          { "ro": "Nu se compilează" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.data-testing.junior.q1",
+      "topicId": "go.data-testing.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Într-un test Go, care e diferența dintre `t.Errorf` și `t.Fatalf`?" },
+      "explanation": {
+        "ro": "`t.Errorf` e potrivit când vrei să vezi toate diferențele într-o singură rulare, de exemplu mai multe câmpuri ale unui rezultat. `t.Fatalf` se folosește când continuarea nu mai are sens: setup-ul a eșuat sau o valoare e `nil` și următoarea linie ar da panic.\n\n`t.Fatalf` oprește doar testul (sau subtestul) curent, nu tot procesul. Trebuie apelat din goroutine-ul testului; dintr-o goroutine pornită de test, folosește `t.Errorf` și returnează."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`t.Errorf` marchează testul ca eșuat și continuă; `t.Fatalf` îl marchează și oprește imediat testul curent"
+          },
+          { "ro": "Nu există diferență, sunt alias-uri" },
+          { "ro": "`t.Fatalf` oprește toată suita de teste, din toate pachetele" },
+          { "ro": "`t.Errorf` doar afișează un mesaj, fără să marcheze testul ca eșuat" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.language.mid.q1",
+      "topicId": "go.language.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "De ce nu se compilează ultima linie?\n\n~~~go\ntype Notifier interface{ Notify() error }\n\ntype Email struct{ to string }\n\nfunc (e *Email) Notify() error { return nil }\n\nvar n Notifier = Email{to: \"ana@example.com\"}\n~~~"
+      },
+      "explanation": {
+        "ro": "Method set-ul lui `Email` (valoare) conține doar metodele cu receiver valoare. Method set-ul lui `*Email` le conține pe ambele. Cum `Notify` are receiver pointer, doar `*Email` satisface interfața.\n\nRegula are sens: o valoare stocată într-o interfață nu e adresabilă, deci Go nu poate obține un pointer către ea ca să apeleze o metodă care ar putea modifica originalul. Ca regulă practică, folosește receiver pointer când metoda modifică structura sau structura e mare, și păstrează consecvența pentru toate metodele tipului."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`Notify` are receiver pointer, deci doar `*Email` implementează `Notifier`; trebuie `&Email{...}`"
+          },
+          { "ro": "`Email` trebuie să declare explicit `implements Notifier`" },
+          { "ro": "Interfețele nu pot conține metode care returnează `error`" },
+          { "ro": "Câmpul `to` e neexportat, deci structura nu poate fi atribuită unei interfețe" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.errors.mid.q2",
+      "topicId": "go.errors.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Despre `errors.Is` și `errors.As`, care afirmații sunt corecte?" },
+      "explanation": {
+        "ro": "`%w` păstrează eroarea originală în lanț (prin `Unwrap`), deci `errors.Is` și `errors.As` o pot găsi. `%v` doar copiază textul: contextul rămâne, legătura se pierde. Comparația cu `==` vede doar eroarea exterioară.\n\n`errors.As` primește un **pointer** către o variabilă de tipul căutat și o completează, ca să poți citi câmpurile erorii (`target.Field`).\n\nFolosește `%w` doar când eroarea internă face parte din contractul funcției. Altfel, apelanții ajung să depindă de detalii de implementare, de exemplu de erorile driver-ului de bază de date."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`errors.Is(err, ErrNotFound)` găsește sentinel-ul și când a fost împachetat cu `fmt.Errorf(\"load user: %w\", err)`"
+          },
+          {
+            "ro": "`errors.As(err, &target)` extrage din lanț o eroare de un tip concret, de exemplu `*ValidationError`"
+          },
+          {
+            "ro": "Cu `%v` în loc de `%w`, lanțul se rupe și `errors.Is` nu mai găsește sentinel-ul"
+          },
+          { "ro": "`err == ErrNotFound` funcționează și după împachetare" },
+          { "ro": "`errors.As` primește tipul erorii ca valoare, nu un pointer către o variabilă" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "go.http.mid.q1",
+      "topicId": "go.http.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre un serviciu HTTP scris cu `net/http`, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Graceful shutdown: prinzi semnalul, apelezi `Shutdown` cu un timeout, iar `ListenAndServe` returnează `http.ErrServerClosed`, care nu e o eroare reală. Fără el, un deploy întrerupe cererile aflate în lucru.\n\n`ListenAndServe` blochează până când serverul se oprește, de aceea se pornește într-o goroutine, iar `main` așteaptă semnalul.\n\nDin Go 1.22, `http.ServeMux` suportă metode și wildcard-uri (`r.PathValue(\"id\")`), deci multe servicii nu mai au nevoie de un router extern. Middleware-urile se compun prin învelire: logare, recovery, autentificare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`srv.Shutdown(ctx)` nu mai acceptă conexiuni noi și așteaptă cererile în curs, până la deadline-ul contextului"
+          },
+          {
+            "ro": "Semnalul `SIGTERM` trimis de Kubernetes se poate prinde cu `signal.NotifyContext`"
+          },
+          {
+            "ro": "Un middleware e de obicei o funcție `func(http.Handler) http.Handler` care învelește handler-ul următor"
+          },
+          {
+            "ro": "Codul scris după `srv.ListenAndServe()` rulează imediat după pornirea serverului"
+          },
+          {
+            "ro": "Din Go 1.22, rutele cu metodă și parametri (`GET /users/{id}`) necesită o bibliotecă externă"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "go.data-testing.mid.q1",
+      "topicId": "go.data-testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Care e avantajul principal al lui `t.Run` într-un table-driven test?\n\n~~~go\nfor _, tt := range tests {\n\tt.Run(tt.name, func(t *testing.T) {\n\t\tif got := Parse(tt.in); got != tt.want {\n\t\t\tt.Errorf(\"Parse(%q) = %d, want %d\", tt.in, got, tt.want)\n\t\t}\n\t})\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Subtestele dau fiecărui caz identitatea lui: raportul arată exact care caz a picat, un `t.Fatalf` oprește doar acel caz, iar `-run` permite rularea unuia singur la depanare.\n\nRularea în paralel se activează explicit, cu `t.Parallel()` în subtest. De la Go 1.22, variabila buclei e nouă la fiecare iterație, deci closure-ul nu mai vede ultimul caz, capcana clasică a versiunilor mai vechi.\n\nUn nume bun descrie scenariul („empty input”, „negative number”), nu indexul cazului."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Fiecare caz devine un subtest cu nume: eșecurile se raportează per caz și poți rula unul singur cu `-run 'TestParse/empty'`"
+          },
+          { "ro": "Testele rulează automat în paralel, fără altă configurare" },
+          { "ro": "Fără `t.Run`, un table-driven test nu se compilează" },
+          { "ro": "`t.Run` generează automat cazurile de test" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.http.senior.q1",
+      "topicId": "go.http.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce problemă are această configurare într-un serviciu expus pe internet?\n\n~~~go\nsrv := &http.Server{\n\tAddr:    \":8080\",\n\tHandler: mux,\n}\nlog.Fatal(srv.ListenAndServe())\n~~~"
+      },
+      "explanation": {
+        "ro": "Valoarea zero pentru `ReadTimeout`, `ReadHeaderTimeout`, `WriteTimeout` și `IdleTimeout` înseamnă **fără limită**. Un client care trimite headerele octet cu octet ține ocupată o conexiune și o goroutine; câteva mii de astfel de clienți epuizează resursele serverului.\n\nSetează cel puțin `ReadHeaderTimeout` și `IdleTimeout`, plus timeouts pe citire și scriere potrivite endpoint-urilor. Pentru limite per cerere, folosește `http.TimeoutHandler` sau deadline-uri în context. Aceeași capcană există pe partea de client: `http.DefaultClient` nu are timeout, deci creează un `http.Client` cu `Timeout` setat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Nu are timeouts: clienții lenți pot ține conexiuni deschise la nesfârșit (de exemplu atacul slowloris)"
+          },
+          { "ro": "`mux` trebuie să fie `http.DefaultServeMux`" },
+          { "ro": "Portul 8080 nu poate fi folosit în producție" },
+          { "ro": "`log.Fatal` nu afișează nimic dacă serverul se oprește" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.concurrency.senior.q1",
+      "topicId": "go.concurrency.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre situațiile de mai jos produc un **goroutine leak**?" },
+      "explanation": {
+        "ro": "O goroutine nu poate fi oprită din afară: se termină doar când funcția ei returnează. Orice goroutine blocată pentru totdeauna e o scurgere de memorie (stack-ul ei și tot ce referă).\n\nRemedii pentru primele trei: channel cu buffer de 1 pentru rezultat (trimiterea nu mai blochează), închiderea channel-ului de către producător, context propagat și ascultat în fiecare operație blocantă.\n\nDetectare: `goleak` în teste, profilul `goroutine` din pprof și metrica `runtime.NumGoroutine()`, care crește continuu."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O goroutine trimite rezultatul pe un channel nebufferizat, dar apelantul a renunțat după un timeout și nu mai citește"
+          },
+          {
+            "ro": "O goroutine face `for v := range ch` pe un channel pe care nu-l închide nimeni"
+          },
+          {
+            "ro": "Un worker blocat într-un apel de rețea fără timeout, care nu ascultă `ctx.Done()`"
+          },
+          { "ro": "O goroutine care își termină munca și returnează" },
+          {
+            "ro": "O goroutine în care fiecare operație blocantă e într-un `select` cu `case <-ctx.Done()`"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "go.errors.senior.f1",
+      "topicId": "go.errors.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ce convenții de erori definești pentru un serviciu Go cu mai multe straturi (handler, serviciu, repository)?"
+      },
+      "explanation": {
+        "ro": "Simptomul convențiilor lipsă: aceeași eroare logată de cinci ori, cu stack-uri diferite, și handler-e care compară stringuri de eroare. Convențiile clare fac logurile utile și contractele dintre straturi explicite."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "- **Sentinel errors** (`var ErrNotFound = errors.New(...)`) pentru condițiile așteptate pe care apelanții le verifică cu `errors.Is`.\n- **Erori tipizate** când eroarea poartă date utile (de exemplu `ValidationError` cu câmpurile invalide), extrase cu `errors.As`.\n- **Context la fiecare strat**, scurt și fără repetiții: `fmt.Errorf(\"load order %d: %w\", id, err)`. Mesajul final se citește ca un lanț de cauze.\n- **Logare o singură dată**, la graniță (handler sau worker), cu tot contextul și request id-ul. Straturile interioare returnează eroarea, nu o loghează și o returnează.\n- **Maparea în HTTP într-un singur loc:** `ErrNotFound` devine 404, `ValidationError` devine 400, restul devine 500 cu un mesaj neutru.\n- Erorile driver-ului (de exemplu `sql.ErrNoRows`) sunt traduse în repository în erori de domeniu, ca să nu se scurgă detalii de implementare în straturile de sus.\n- `panic` doar pentru erori de programare, cu un middleware de recovery la graniță."
+        },
+        "keyPoints": [
+          { "ro": "Sentinel pentru condiții, tipizate când e nevoie de date" },
+          { "ro": "Wrapping cu context scurt la fiecare strat" },
+          { "ro": "Logare o singură dată, la graniță" },
+          { "ro": "Mapare centralizată erori → status HTTP" },
+          { "ro": "Erorile driver-ului traduse în erori de domeniu" }
+        ]
+      }
+    },
+    {
+      "id": "go.data-testing.senior.f1",
+      "topicId": "go.data-testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum proiectezi un serviciu Go ca să fie ușor de testat și ce tipuri de teste scrii pentru el?"
+      },
+      "explanation": {
+        "ro": "În Go, interfețele sunt implementate implicit, deci consumatorul își poate defini exact contractul de care are nevoie. Asta face testarea naturală, fără framework-uri de mocking și fără interfețe mari, greu de simulat.\n\nUn răspuns senior leagă designul de teste: codul greu de testat e, de obicei, cod cu dependențe ascunse."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Design testabil:**\n\n- Interfețe **mici, definite la consumator**, nu lângă implementare: serviciul de comenzi declară `type OrderStore interface { Get(ctx, id) (Order, error) }` cu doar metodele de care are nevoie.\n- „Accept interfaces, return structs”: constructorii primesc dependențele, fără variabile globale sau `init()` cu efecte.\n- Timpul și id-urile vin ca dependențe (un `clock`), ca testele să fie deterministe.\n- Fakes simple scrise de mână în locul mock-urilor generate, acolo unde se poate.\n\n**Teste:**\n\n- Table-driven unit tests pentru logica de domeniu.\n- Teste de integrare cu PostgreSQL real (testcontainers-go), separate prin `-short` sau build tags, ca să rămână rapidă bucla locală.\n- **Fuzzing** (`func FuzzParse(f *testing.F)`) pentru parsere și orice cod care primește input extern: găsește cazurile limită la care nu te-ai gândit.\n- `go test -race` în CI și benchmark-uri pentru căile critice."
+        },
+        "keyPoints": [
+          { "ro": "Interfețe mici, definite la consumator" },
+          { "ro": "Dependențe injectate prin constructor, inclusiv timpul" },
+          { "ro": "Fakes în loc de mock-uri generate" },
+          { "ro": "Integrare cu baza reală, separată de bucla rapidă" },
+          { "ro": "Fuzzing pentru input extern și `-race` în CI" }
+        ]
+      }
     }
   ]
 }
