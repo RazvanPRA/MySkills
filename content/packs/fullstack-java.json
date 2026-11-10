@@ -327,9 +327,9 @@
           {
             "ro": "`false` (aproape sigur): `hashCode` nu e suprascris, deci căutarea merge în alt bucket"
           },
+          { "ro": "Aruncă `NullPointerException`" },
           { "ro": "`true`, pentru că `equals` compară `x` și `y`" },
-          { "ro": "Nu compilează" },
-          { "ro": "Aruncă `NullPointerException`" }
+          { "ro": "Nu compilează" }
         ],
         "correctIndex": 0
       }
@@ -349,10 +349,10 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "Mapezi entitatea într-un DTO în serviciul tranzacțional și returnezi DTO-ul" },
           {
             "ro": "`JOIN FETCH` sau `@EntityGraph` în query-ul care încarcă comanda, când știi că ai nevoie de `items`"
           },
-          { "ro": "Mapezi entitatea într-un DTO în serviciul tranzacțional și returnezi DTO-ul" },
           { "ro": "Pui `FetchType.EAGER` pe toate relațiile" },
           { "ro": "Activezi `spring.jpa.open-in-view` ca soluție permanentă" }
         ],
@@ -422,12 +422,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`true`, apoi `false`" },
           { "ro": "`false`, apoi `true`" },
           { "ro": "`true`, apoi `true`" },
-          { "ro": "`false`, apoi `false`" },
-          { "ro": "`true`, apoi `false`" }
+          { "ro": "`false`, apoi `false`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -445,14 +445,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Exact 1 000, pentru că thread-urile se suprascriu complet" },
           {
             "ro": "Cel mult 2 000; adesea mai puțin, pentru că `counter++` nu e o operație atomică"
           },
           { "ro": "Exact 2 000, întotdeauna" },
-          { "ro": "Exact 1 000, pentru că thread-urile se suprascriu complet" },
           { "ro": "Programul aruncă `ConcurrentModificationException`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -470,12 +470,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`thenCompose`" },
           { "ro": "`thenApply`" },
-          { "ro": "`thenAccept`" },
-          { "ro": "`thenCombine`" }
+          { "ro": "`thenCombine`" },
+          { "ro": "`thenCompose`" },
+          { "ro": "`thenAccept`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -494,22 +494,22 @@
       "payload": {
         "options": [
           {
-            "ro": "`@ConfigurationProperties(prefix = \"payments\")` leagă un grup de proprietăți de un obiect tipizat, care poate fi validat cu `@Validated`"
+            "ro": "`@Value` e varianta recomandată pentru grupuri mari de proprietăți legate între ele"
           },
           {
             "ro": "Variabila de mediu `SPRING_DATASOURCE_URL` suprascrie `spring.datasource.url` din `application.yml`"
           },
           {
-            "ro": "Cu profilul `prod` activ, valorile din `application-prod.yml` suprascriu valorile comune din `application.yml`"
-          },
-          {
             "ro": "Auto-configurarea creează un `DataSource` chiar dacă ai definit deja propriul bean `DataSource`"
           },
           {
-            "ro": "`@Value` e varianta recomandată pentru grupuri mari de proprietăți legate între ele"
+            "ro": "Cu profilul `prod` activ, valorile din `application-prod.yml` suprascriu valorile comune din `application.yml`"
+          },
+          {
+            "ro": "`@ConfigurationProperties(prefix = \"payments\")` leagă un grup de proprietăți de un obiect tipizat, care poate fi validat cu `@Validated`"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 3, 4]
       }
     },
     {
@@ -527,14 +527,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Un `try/catch` în fiecare metodă de controller" },
           {
             "ro": "O clasă `@RestControllerAdvice` cu o metodă `@ExceptionHandler(OrderNotFoundException.class)` care returnează un `ProblemDetail`"
           },
-          { "ro": "Un `try/catch` în fiecare metodă de controller" },
-          { "ro": "Un filtru servlet care citește mesajul excepției" },
-          { "ro": "`@ResponseStatus(404)` pe fiecare metodă de controller" }
+          { "ro": "`@ResponseStatus(404)` pe fiecare metodă de controller" },
+          { "ro": "Un filtru servlet care citește mesajul excepției" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -555,8 +555,8 @@
           {
             "ro": "`@DataJpaTest` cu un container PostgreSQL din Testcontainers, fără înlocuirea bazei cu una embedded"
           },
-          { "ro": "`@SpringBootTest` cu tot contextul aplicației" },
           { "ro": "`@WebMvcTest` cu repository-ul mock-uit" },
+          { "ro": "`@SpringBootTest` cu tot contextul aplicației" },
           { "ro": "Un unit test cu Mockito care mock-uiește `EntityManager`" }
         ],
         "correctIndex": 0
@@ -577,12 +577,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Nu se mai compilează: `switch`-ul nu mai acoperă toate subtipurile" },
-          { "ro": "Se compilează și aruncă `MatchException` la runtime pentru un `Triangle`" },
+          { "ro": "Se compilează doar dacă `Shape` nu e sealed" },
           { "ro": "Se compilează și returnează 0 pentru un `Triangle`" },
-          { "ro": "Se compilează doar dacă `Shape` nu e sealed" }
+          { "ro": "Nu se mai compilează: `switch`-ul nu mai acoperă toate subtipurile" },
+          { "ro": "Se compilează și aruncă `MatchException` la runtime pentru un `Triangle`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -601,20 +601,20 @@
       "payload": {
         "options": [
           {
-            "ro": "Semnătura se verifică cu cheile publice din JWKS-ul emitentului, descoperit din `issuer-uri`"
-          },
-          {
             "ro": "Pe lângă `iss` și `exp`, verifici audiența (`aud`), ca un token emis pentru alt API să fie respins"
           },
           {
-            "ro": "Scope-urile și rolurile din claims devin authorities, folosite în reguli pe rute sau în `@PreAuthorize`"
+            "ro": "Resource server-ul gestionează login-ul utilizatorului și redirect-ul către IdP"
+          },
+          {
+            "ro": "Semnătura se verifică cu cheile publice din JWKS-ul emitentului, descoperit din `issuer-uri`"
           },
           { "ro": "Accepți și token-uri cu `alg: none`, pentru compatibilitate cu clienții vechi" },
           {
-            "ro": "Resource server-ul gestionează login-ul utilizatorului și redirect-ul către IdP"
+            "ro": "Scope-urile și rolurile din claims devin authorities, folosite în reguli pe rute sau în `@PreAuthorize`"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 2, 4]
       }
     },
     {

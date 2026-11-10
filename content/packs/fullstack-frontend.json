@@ -516,12 +516,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "O variabilă globală `let theme` importată în fiecare componentă" },
           { "ro": "Un `ThemeContext` cu un provider sus în arbore și `useContext` unde e nevoie" },
           { "ro": "Transmiți tema prin props prin fiecare nivel (prop drilling)" },
-          { "ro": "O variabilă globală `let theme` importată în fiecare componentă" },
           { "ro": "Fiecare componentă citește tema din `localStorage` la randare" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -538,8 +538,8 @@
       },
       "type": "single_choice",
       "payload": {
-        "options": [{ "ro": "`1`" }, { "ro": "`3`" }, { "ro": "`0`" }, { "ro": "`2`" }],
-        "correctIndex": 0
+        "options": [{ "ro": "`3`" }, { "ro": "`0`" }, { "ro": "`2`" }, { "ro": "`1`" }],
+        "correctIndex": 3
       }
     },
     {
@@ -555,13 +555,13 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "Sincronizezi un widget de hartă (non-React) cu prop-ul `zoom`" },
           { "ro": "Calculezi `fullName` din `firstName` și `lastName` aflate în state" },
           { "ro": "Trimiți un eveniment de analytics când utilizatorul apasă „Cumpără”" },
-          { "ro": "Te abonezi la `window.addEventListener(\"resize\", …)`" },
           { "ro": "Resetezi state-ul unui formular când se schimbă prop-ul `userId`" },
-          { "ro": "Sincronizezi un widget de hartă (non-React) cu prop-ul `zoom`" }
+          { "ro": "Te abonezi la `window.addEventListener(\"resize\", …)`" }
         ],
-        "correctIndices": [0, 1, 3]
+        "correctIndices": [1, 2, 3]
       }
     },
     {
@@ -579,14 +579,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "`options` e un obiect nou la fiecare randare, deci comparația superficială a props eșuează"
-          },
           { "ro": "`React.memo` nu funcționează cu function components" },
           { "ro": "Orice `setState` din părinte re-randează copiii, indiferent de `memo`" },
-          { "ro": "Lipsește un `key` pe `List`" }
+          { "ro": "Lipsește un `key` pe `List`" },
+          {
+            "ro": "`options` e un obiect nou la fiecare randare, deci comparația superficială a props eșuează"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -629,14 +629,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Sortează lista după `id`" },
           {
             "ro": "Identifică fiecare element, ca Angular să refolosească nodurile DOM când lista se schimbă"
           },
-          { "ro": "Sortează lista după `id`" },
-          { "ro": "Filtrează elementele `null` din listă" },
-          { "ro": "Activează încărcarea leneșă a componentelor" }
+          { "ro": "Activează încărcarea leneșă a componentelor" },
+          { "ro": "Filtrează elementele `null` din listă" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -655,9 +655,9 @@
       "payload": {
         "options": [
           { "ro": "`switchMap`" },
+          { "ro": "`exhaustMap`" },
           { "ro": "`mergeMap`" },
-          { "ro": "`concatMap`" },
-          { "ro": "`exhaustMap`" }
+          { "ro": "`concatMap`" }
         ],
         "correctIndex": 0
       }
@@ -677,13 +677,13 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "Un input primește o referință nouă" },
-          { "ro": "Un eveniment DOM tratat în template-ul componentei" },
+          { "ro": "Un `setTimeout` oarecare se termină în altă parte a aplicației" },
           { "ro": "Pipe-ul `async` din template primește o valoare nouă" },
+          { "ro": "Un eveniment DOM tratat în template-ul componentei" },
           { "ro": "Modifici un câmp în interiorul unui obiect primit ca input" },
-          { "ro": "Un `setTimeout` oarecare se termină în altă parte a aplicației" }
+          { "ro": "Un input primește o referință nouă" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 4]
       }
     },
     {
@@ -749,14 +749,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Lipsește `React.memo` pe `TodoRow`" },
           {
             "ro": "`key={index}`: după inserare, React asociază starea fiecărui rând cu poziția, nu cu sarcina"
           },
-          { "ro": "Lipsește `React.memo` pe `TodoRow`" },
           { "ro": "`map` nu păstrează ordinea elementelor" },
           { "ro": "Input-urile necontrolate nu pot fi folosite în liste" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -775,8 +775,8 @@
       "payload": {
         "options": [
           { "ro": "`screen.getByRole('button', { name: /trimite/i })`" },
-          { "ro": "`container.querySelector('.submit-btn')`" },
           { "ro": "`screen.getByTestId('submit')`" },
+          { "ro": "`container.querySelector('.submit-btn')`" },
           { "ro": "`wrapper.find(SubmitButton).props().onClick()`" }
         ],
         "correctIndex": 0
@@ -797,14 +797,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`useState` nu acceptă valori opționale" },
           {
             "ro": "La prima randare `email` e `undefined`, deci input-ul pornește necontrolat și devine controlat când primește un string"
           },
           { "ro": "`onChange` trebuie înlocuit cu `onInput`" },
-          { "ro": "Un input controlat nu poate avea state local" },
-          { "ro": "`useState` nu acceptă valori opționale" }
+          { "ro": "Un input controlat nu poate avea state local" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -823,10 +823,10 @@
       "payload": {
         "options": [
           { "ro": "Lista de produse primită de la API" },
-          { "ro": "Profilul utilizatorului autentificat, citit din API" },
-          { "ro": "Dacă modalul de confirmare e deschis" },
+          { "ro": "Numărul de notificări necitite, calculat pe server" },
           { "ro": "Textul tastat în câmpul de căutare" },
-          { "ro": "Numărul de notificări necitite, calculat pe server" }
+          { "ro": "Dacă modalul de confirmare e deschis" },
+          { "ro": "Profilul utilizatorului autentificat, citit din API" }
         ],
         "correctIndices": [0, 1, 4]
       }
@@ -846,14 +846,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Build static fără revalidare, cu redeploy la fiecare modificare" },
+          { "ro": "Randare doar pe client, cu `useEffect` care citește articolul" },
           {
             "ro": "Pagină statică cu revalidare (ISR): `revalidate` pe interval, plus revalidare la cerere când CMS-ul publică"
           },
-          { "ro": "SSR complet dinamic, cu datele citite din CMS la fiecare cerere" },
-          { "ro": "Randare doar pe client, cu `useEffect` care citește articolul" },
-          { "ro": "Build static fără revalidare, cu redeploy la fiecare modificare" }
+          { "ro": "SSR complet dinamic, cu datele citite din CMS la fiecare cerere" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -871,12 +871,12 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          {
+            "ro": "MSW interceptează cererile la nivel de rețea, deci componenta folosește codul real de `fetch`"
+          },
           { "ro": "`findByText` așteaptă (implicit până la 1 s) ca elementul să apară" },
           {
             "ro": "`queryByText` returnează `null` în loc să arunce, deci e potrivit pentru a verifica absența unui element"
-          },
-          {
-            "ro": "MSW interceptează cererile la nivel de rețea, deci componenta folosește codul real de `fetch`"
           },
           {
             "ro": "În `waitFor` e bine să pui și acțiunea, de exemplu `fireEvent.click`, ca să fie reîncercată"
@@ -931,8 +931,8 @@
             "ro": "Marchezi actualizarea listei ca non-urgentă cu `useDeferredValue` (sau `startTransition`), ca input-ul să răspundă imediat"
           },
           { "ro": "Muți filtrarea într-un `useEffect` care scrie rezultatul în state" },
-          { "ro": "Învelești câmpul de căutare în `React.memo`" },
-          { "ro": "Adaugi un `Suspense` în jurul listei" }
+          { "ro": "Adaugi un `Suspense` în jurul listei" },
+          { "ro": "Învelești câmpul de căutare în `React.memo`" }
         ],
         "correctIndex": 0
       }
@@ -981,9 +981,9 @@
           {
             "ro": "Teste care verifică state-ul intern, apelurile către hooks private sau snapshot-uri mari ale întregului arbore"
           },
-          { "ro": "Teste care caută elementele după rol și verifică textul afișat" },
           { "ro": "Teste e2e Playwright pe fluxurile critice" },
-          { "ro": "Teste de integrare care simulează rețeaua cu MSW" }
+          { "ro": "Teste de integrare care simulează rețeaua cu MSW" },
+          { "ro": "Teste care caută elementele după rol și verifică textul afișat" }
         ],
         "correctIndex": 0
       }
@@ -1001,14 +1001,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Fiecare componentă care îl injectează primește o instanță nouă" },
+          { "ro": "Serviciul trebuie adăugat manual și în lista `providers` a fiecărui modul" },
+          { "ro": "Serviciul poate fi injectat doar în `AppComponent`" },
           {
             "ro": "Serviciul are o singură instanță pentru toată aplicația și e eliminat din bundle dacă nu e injectat nicăieri"
-          },
-          { "ro": "Fiecare componentă care îl injectează primește o instanță nouă" },
-          { "ro": "Serviciul poate fi injectat doar în `AppComponent`" },
-          { "ro": "Serviciul trebuie adăugat manual și în lista `providers` a fiecărui modul" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1026,14 +1026,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Marchezi componenta cu `ChangeDetectionStrategy.OnPush`" },
+          { "ro": "Înlocuiești `interval` cu `setInterval`" },
           {
             "ro": "Expui un Observable și îl afișezi cu pipe-ul `async`, sau închizi abonarea cu `takeUntilDestroyed()`"
           },
-          { "ro": "Muți codul din `ngOnInit` în constructor" },
-          { "ro": "Înlocuiești `interval` cu `setInterval`" },
-          { "ro": "Marchezi componenta cu `ChangeDetectionStrategy.OnPush`" }
+          { "ro": "Muți codul din `ngOnInit` în constructor" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -1051,12 +1051,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`ngOnInit`" },
           { "ro": "`ngAfterViewInit`" },
           { "ro": "`constructor`" },
-          { "ro": "`ngOnInit`" },
           { "ro": "`ngOnChanges`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1074,14 +1074,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "O interfață `ApiConfig` folosită ca token de injecție" },
           {
             "ro": "Un `InjectionToken<string>`, furnizat cu `{ provide: API_URL, useValue: ... }` și citit cu `inject(API_URL)`"
           },
-          { "ro": "O interfață `ApiConfig` folosită ca token de injecție" },
-          { "ro": "O variabilă exportată dintr-un fișier `config.ts`, importată direct" },
-          { "ro": "Un serviciu cu un câmp static `url`" }
+          { "ro": "Un serviciu cu un câmp static `url`" },
+          { "ro": "O variabilă exportată dintr-un fișier `config.ts`, importată direct" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1099,15 +1099,15 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "Rulează doar după ce validatorii sincroni ai controlului trec" },
-          { "ro": "Cât timp rulează, controlul are statusul `PENDING`" },
           {
             "ro": "Observable-ul returnat trebuie să se termine (complete), altfel controlul rămâne `PENDING`"
           },
+          { "ro": "Cât timp rulează, controlul are statusul `PENDING`" },
           { "ro": "Se pun în același array cu validatorii sincroni" },
+          { "ro": "Rulează doar după ce validatorii sincroni ai controlului trec" },
           { "ro": "Rulează obligatoriu la fiecare tastă, frecvența nu poate fi controlată" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 1, 3]
       }
     },
     {
@@ -1125,14 +1125,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Resetează `HttpClient` la versiunea reală" },
+          { "ro": "Verifică dacă serverul real răspunde" },
+          { "ro": "Trimite răspunsurile pentru toate cererile rămase" },
           {
             "ro": "Pică testul dacă au rămas cereri făcute, dar netratate de `expectOne` și `flush`"
-          },
-          { "ro": "Trimite răspunsurile pentru toate cererile rămase" },
-          { "ro": "Verifică dacă serverul real răspunde" },
-          { "ro": "Resetează `HttpClient` la versiunea reală" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1150,12 +1150,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`any`" },
           { "ro": "`string | null | undefined`" },
-          { "ro": "`string`" },
           { "ro": "`string | null`" },
-          { "ro": "`any`" }
+          { "ro": "`string`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1174,12 +1174,12 @@
       "payload": {
         "options": [
           { "ro": "Setarea unui signal citit în template" },
-          { "ro": "Un handler legat în template, de exemplu `(click)`, care modifică un câmp" },
-          { "ro": "Pipe-ul `async` care primește o valoare nouă" },
+          { "ro": "Un `subscribe()` manual care atribuie o valoare unui câmp simplu" },
           { "ro": "Un `setTimeout` care atribuie o valoare unui câmp simplu (nu signal)" },
-          { "ro": "Un `subscribe()` manual care atribuie o valoare unui câmp simplu" }
+          { "ro": "Un handler legat în template, de exemplu `(click)`, care modifică un câmp" },
+          { "ro": "Pipe-ul `async` care primește o valoare nouă" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 3, 4]
       }
     },
     {
@@ -1223,14 +1223,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Elimină nevoia de date de test" },
+          { "ro": "Generează automat teste e2e din testele de componentă" },
+          { "ro": "Înlocuiesc TestBed, deci testele rulează fără Angular" },
           {
             "ro": "Testele interacționează printr-un API stabil (`getValue()`, `open()`), nu prin structura internă a DOM-ului, care se poate schimba între versiuni"
-          },
-          { "ro": "Înlocuiesc TestBed, deci testele rulează fără Angular" },
-          { "ro": "Generează automat teste e2e din testele de componentă" },
-          { "ro": "Elimină nevoia de date de test" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     }
   ]

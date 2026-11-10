@@ -277,12 +277,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`UsersModule` îl pune în `exports`, iar `OrdersModule` importă `UsersModule`" },
           { "ro": "Adaugi `UsersService` și în `providers` din `OrdersModule`" },
           { "ro": "Marchezi toate modulele cu `@Global()`" },
-          { "ro": "Îl creezi în constructor cu `new UsersService()`" }
+          { "ro": "Îl creezi în constructor cu `new UsersService()`" },
+          { "ro": "`UsersModule` îl pune în `exports`, iar `OrdersModule` importă `UsersModule`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -300,14 +300,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Interceptors → Middleware → Guards → Pipes → Handler" },
+          { "ro": "Pipes → Guards → Interceptors → Middleware → Handler" },
           {
             "ro": "Middleware → Guards → Interceptors (înainte) → Pipes → Handler → Interceptors (după); exception filters la erori"
           },
-          { "ro": "Guards → Middleware → Pipes → Interceptors → Handler" },
-          { "ro": "Pipes → Guards → Interceptors → Middleware → Handler" },
-          { "ro": "Interceptors → Middleware → Guards → Pipes → Handler" }
+          { "ro": "Guards → Middleware → Pipes → Interceptors → Handler" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -325,14 +325,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "1; TypeORM combină automat apelurile din buclă" },
+          { "ro": "2; cache-ul de entități refolosește rezultatele" },
+          { "ro": "50; un index pe `customerId` rezolvă problema" },
           {
             "ro": "51; încarci relația în aceeași interogare (JOIN / `relations`) sau iei toți clienții odată cu `In(ids)`"
-          },
-          { "ro": "1; TypeORM combină automat apelurile din buclă" },
-          { "ro": "50; un index pe `customerId` rezolvă problema" },
-          { "ro": "2; cache-ul de entități refolosește rezultatele" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -379,11 +379,11 @@
           {
             "ro": "Confirmare (ack sau commit de offset) după ce procesarea s-a terminat, nu înainte"
           },
-          { "ro": "Dead-letter queue pentru mesajele care eșuează repetat" },
+          { "ro": "Presupui că fiecare mesaj vine o singură dată și în ordine" },
           { "ro": "Retry imediat și infinit, fără backoff" },
-          { "ro": "Presupui că fiecare mesaj vine o singură dată și în ordine" }
+          { "ro": "Dead-letter queue pentru mesajele care eșuează repetat" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 1, 4]
       }
     },
     {
@@ -401,14 +401,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Ambele câmpuri, pentru că `isAdmin` nu încalcă nicio regulă" },
           {
             "ro": "Un obiect doar cu `email`; `isAdmin` e eliminat pentru că nu are niciun decorator de validare"
           },
-          { "ro": "Ambele câmpuri, pentru că `isAdmin` nu încalcă nicio regulă" },
-          { "ro": "Un răspuns 400, pentru că a apărut un câmp necunoscut" },
-          { "ro": "Un obiect gol, pentru că DTO-ul nu are constructor" }
+          { "ro": "Un obiect gol, pentru că DTO-ul nu are constructor" },
+          { "ro": "Un răspuns 400, pentru că a apărut un câmp necunoscut" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -426,14 +426,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Folosești o bază de date reală, pentru că Nest nu permite mock-uri" },
+          { "ro": "Importi `AppModule` întreg în test" },
+          { "ro": "`new UsersService()` și setezi apoi câmpul privat `repository` din test" },
           {
             "ro": "`Test.createTestingModule({ providers: [UsersService, { provide: UsersRepository, useValue: { findById: jest.fn() } }] })`"
-          },
-          { "ro": "`new UsersService()` și setezi apoi câmpul privat `repository` din test" },
-          { "ro": "Importi `AppModule` întreg în test" },
-          { "ro": "Folosești o bază de date reală, pentru că Nest nu permite mock-uri" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -451,16 +451,16 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`{ provide: REDIS, useClass: Redis }`" },
           {
             "ro": "`{ provide: REDIS, useFactory: (config: ConfigService) => new Redis(config.getOrThrow('REDIS_URL')), inject: [ConfigService] }`"
           },
+          { "ro": "Creezi clientul în constructorul fiecărui serviciu" },
           {
             "ro": "`{ provide: REDIS, useValue: new Redis(process.env.REDIS_URL) }` în fiecare modul care îl folosește"
-          },
-          { "ro": "`{ provide: REDIS, useClass: Redis }`" },
-          { "ro": "Creezi clientul în constructorul fiecărui serviciu" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -478,17 +478,17 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "Access token cu viață scurtă (minute), refresh token cu viață mai lungă" },
-          {
-            "ro": "Refresh token-ul e rotit la fiecare folosire; reutilizarea unuia vechi invalidează toată familia de token-uri"
-          },
-          { "ro": "Pe server păstrezi un hash al refresh token-ului, ca să-l poți revoca" },
+          { "ro": "Un access token JWT poate fi revocat instant fără nicio stare pe server" },
           {
             "ro": "Refresh token-ul stă în `localStorage`, ca să-l poată citi orice cod JavaScript"
           },
-          { "ro": "Un access token JWT poate fi revocat instant fără nicio stare pe server" }
+          { "ro": "Access token cu viață scurtă (minute), refresh token cu viață mai lungă" },
+          { "ro": "Pe server păstrezi un hash al refresh token-ului, ca să-l poți revoca" },
+          {
+            "ro": "Refresh token-ul e rotit la fiecare folosire; reutilizarea unuia vechi invalidează toată familia de token-uri"
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [2, 3, 4]
       }
     },
     {
@@ -509,8 +509,8 @@
           {
             "ro": "Faci consumatorul idempotent: salvezi id-ul mesajului procesat (cu o constrângere unică) și ignori duplicatele"
           },
-          { "ro": "Trimiți `ack` înainte de procesare" },
           { "ro": "Configurezi brokerul pentru livrare „exactly once”" },
+          { "ro": "Trimiți `ack` înainte de procesare" },
           { "ro": "Adaugi un `sleep` înainte de `ack`" }
         ],
         "correctIndex": 0
@@ -531,14 +531,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Testezi pe același motor ca în producție: dialect SQL, constrângeri, tipuri (JSONB, enum), tranzacții și locking se comportă identic"
-          },
+          { "ro": "Prisma și TypeORM nu au suport pentru SQLite" },
           { "ro": "SQLite nu poate fi folosit din Node.js" },
           { "ro": "Testcontainers face testele mai rapide decât o bază in-memory" },
-          { "ro": "Prisma și TypeORM nu au suport pentru SQLite" }
+          {
+            "ro": "Testezi pe același motor ca în producție: dialect SQL, constrângeri, tipuri (JSONB, enum), tranzacții și locking se comportă identic"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -582,19 +582,19 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Autorizarea pe roluri: într-un guard, care citește metadatele handler-ului prin `Reflector`"
-          },
+          { "ro": "Transformarea erorilor de domeniu în răspunsuri HTTP: într-un pipe" },
+          { "ro": "Validarea DTO-urilor: într-un interceptor" },
           {
             "ro": "Măsurarea duratei handler-ului: într-un interceptor, care învelește execuția lui"
           },
           {
             "ro": "Atribuirea unui request id pentru corelarea logurilor: într-un middleware, cât mai devreme"
           },
-          { "ro": "Transformarea erorilor de domeniu în răspunsuri HTTP: într-un pipe" },
-          { "ro": "Validarea DTO-urilor: într-un interceptor" }
+          {
+            "ro": "Autorizarea pe roluri: într-un guard, care citește metadatele handler-ului prin `Reflector`"
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [2, 3, 4]
       }
     },
     {
@@ -612,14 +612,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Reîncerci publicarea într-un bloc `try/catch` în același request" },
+          { "ro": "Folosești o tranzacție distribuită (2PC) între PostgreSQL și Kafka" },
           {
             "ro": "Transactional outbox: scrii evenimentul într-un tabel `outbox`, în aceeași tranzacție cu comanda; un proces separat îl publică și îl marchează ca trimis"
           },
-          { "ro": "Publici evenimentul înainte de commit" },
-          { "ro": "Folosești o tranzacție distribuită (2PC) între PostgreSQL și Kafka" },
-          { "ro": "Reîncerci publicarea într-un bloc `try/catch` în același request" }
+          { "ro": "Publici evenimentul înainte de commit" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {

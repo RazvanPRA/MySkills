@@ -215,8 +215,8 @@
         "options": [
           { "ro": "Panic: `assignment to entry in nil map`" },
           { "ro": "Afișează `map[go:1]`" },
-          { "ro": "Nu compilează" },
-          { "ro": "Afișează `map[]`" }
+          { "ro": "Afișează `map[]`" },
+          { "ro": "Nu compilează" }
         ],
         "correctIndex": 0
       }
@@ -260,9 +260,9 @@
       "payload": {
         "options": [
           { "ro": "Cifrele 0, 1 și 2, într-o ordine nedeterminată" },
+          { "ro": "Nu compilează" },
           { "ro": "`333`" },
-          { "ro": "`012`, mereu în această ordine" },
-          { "ro": "Nu compilează" }
+          { "ro": "`012`, mereu în această ordine" }
         ],
         "correctIndex": 0
       }
@@ -331,8 +331,8 @@
       "payload": {
         "options": [
           { "ro": "Programul se oprește cu `fatal error: all goroutines are asleep - deadlock!`" },
-          { "ro": "Afișează `1`" },
           { "ro": "Afișează `0`" },
+          { "ro": "Afișează `1`" },
           { "ro": "Nu se compilează" }
         ],
         "correctIndex": 0
@@ -351,14 +351,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "`t.Fatalf` oprește toată suita de teste, din toate pachetele" },
+          { "ro": "Nu există diferență, sunt alias-uri" },
           {
             "ro": "`t.Errorf` marchează testul ca eșuat și continuă; `t.Fatalf` îl marchează și oprește imediat testul curent"
           },
-          { "ro": "Nu există diferență, sunt alias-uri" },
-          { "ro": "`t.Fatalf` oprește toată suita de teste, din toate pachetele" },
           { "ro": "`t.Errorf` doar afișează un mesaj, fără să marcheze testul ca eșuat" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -376,14 +376,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Interfețele nu pot conține metode care returnează `error`" },
+          { "ro": "`Email` trebuie să declare explicit `implements Notifier`" },
           {
             "ro": "`Notify` are receiver pointer, deci doar `*Email` implementează `Notifier`; trebuie `&Email{...}`"
           },
-          { "ro": "`Email` trebuie să declare explicit `implements Notifier`" },
-          { "ro": "Interfețele nu pot conține metode care returnează `error`" },
           { "ro": "Câmpul `to` e neexportat, deci structura nu poate fi atribuită unei interfețe" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -402,16 +402,16 @@
           {
             "ro": "`errors.Is(err, ErrNotFound)` găsește sentinel-ul și când a fost împachetat cu `fmt.Errorf(\"load user: %w\", err)`"
           },
-          {
-            "ro": "`errors.As(err, &target)` extrage din lanț o eroare de un tip concret, de exemplu `*ValidationError`"
-          },
+          { "ro": "`err == ErrNotFound` funcționează și după împachetare" },
+          { "ro": "`errors.As` primește tipul erorii ca valoare, nu un pointer către o variabilă" },
           {
             "ro": "Cu `%v` în loc de `%w`, lanțul se rupe și `errors.Is` nu mai găsește sentinel-ul"
           },
-          { "ro": "`err == ErrNotFound` funcționează și după împachetare" },
-          { "ro": "`errors.As` primește tipul erorii ca valoare, nu un pointer către o variabilă" }
+          {
+            "ro": "`errors.As(err, &target)` extrage din lanț o eroare de un tip concret, de exemplu `*ValidationError`"
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 3, 4]
       }
     },
     {
@@ -430,22 +430,22 @@
       "payload": {
         "options": [
           {
-            "ro": "`srv.Shutdown(ctx)` nu mai acceptă conexiuni noi și așteaptă cererile în curs, până la deadline-ul contextului"
+            "ro": "Codul scris după `srv.ListenAndServe()` rulează imediat după pornirea serverului"
+          },
+          {
+            "ro": "Din Go 1.22, rutele cu metodă și parametri (`GET /users/{id}`) necesită o bibliotecă externă"
           },
           {
             "ro": "Semnalul `SIGTERM` trimis de Kubernetes se poate prinde cu `signal.NotifyContext`"
           },
           {
+            "ro": "`srv.Shutdown(ctx)` nu mai acceptă conexiuni noi și așteaptă cererile în curs, până la deadline-ul contextului"
+          },
+          {
             "ro": "Un middleware e de obicei o funcție `func(http.Handler) http.Handler` care învelește handler-ul următor"
-          },
-          {
-            "ro": "Codul scris după `srv.ListenAndServe()` rulează imediat după pornirea serverului"
-          },
-          {
-            "ro": "Din Go 1.22, rutele cu metodă și parametri (`GET /users/{id}`) necesită o bibliotecă externă"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [2, 3, 4]
       }
     },
     {
@@ -463,14 +463,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Fără `t.Run`, un table-driven test nu se compilează" },
+          { "ro": "Testele rulează automat în paralel, fără altă configurare" },
+          { "ro": "`t.Run` generează automat cazurile de test" },
           {
             "ro": "Fiecare caz devine un subtest cu nume: eșecurile se raportează per caz și poți rula unul singur cu `-run 'TestParse/empty'`"
-          },
-          { "ro": "Testele rulează automat în paralel, fără altă configurare" },
-          { "ro": "Fără `t.Run`, un table-driven test nu se compilează" },
-          { "ro": "`t.Run` generează automat cazurile de test" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -488,14 +488,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Portul 8080 nu poate fi folosit în producție" },
+          { "ro": "`log.Fatal` nu afișează nimic dacă serverul se oprește" },
           {
             "ro": "Nu are timeouts: clienții lenți pot ține conexiuni deschise la nesfârșit (de exemplu atacul slowloris)"
           },
-          { "ro": "`mux` trebuie să fie `http.DefaultServeMux`" },
-          { "ro": "Portul 8080 nu poate fi folosit în producție" },
-          { "ro": "`log.Fatal` nu afișează nimic dacă serverul se oprește" }
+          { "ro": "`mux` trebuie să fie `http.DefaultServeMux`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -512,20 +512,20 @@
       "payload": {
         "options": [
           {
-            "ro": "O goroutine trimite rezultatul pe un channel nebufferizat, dar apelantul a renunțat după un timeout și nu mai citește"
-          },
-          {
             "ro": "O goroutine face `for v := range ch` pe un channel pe care nu-l închide nimeni"
           },
+          { "ro": "O goroutine care își termină munca și returnează" },
           {
             "ro": "Un worker blocat într-un apel de rețea fără timeout, care nu ascultă `ctx.Done()`"
           },
-          { "ro": "O goroutine care își termină munca și returnează" },
+          {
+            "ro": "O goroutine trimite rezultatul pe un channel nebufferizat, dar apelantul a renunțat după un timeout și nu mai citește"
+          },
           {
             "ro": "O goroutine în care fiecare operație blocantă e într-un `select` cu `case <-ctx.Done()`"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 2, 3]
       }
     },
     {

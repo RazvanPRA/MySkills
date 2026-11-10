@@ -489,9 +489,9 @@
           {
             "ro": "Că fiecare `customer_id` nenul există în `customers` (integritate referențială)"
           },
+          { "ro": "Că la ștergerea unui client se șterg automat comenzile lui" },
           { "ro": "Că `customer_id` e unic în `orders`" },
-          { "ro": "Că PostgreSQL creează automat un index pe `orders.customer_id`" },
-          { "ro": "Că la ștergerea unui client se șterg automat comenzile lui" }
+          { "ro": "Că PostgreSQL creează automat un index pe `orders.customer_id`" }
         ],
         "correctIndex": 0
       }
@@ -511,12 +511,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Niciun rând" },
-          { "ro": "Utilizatorii care nu sunt manageri" },
+          { "ro": "O eroare de sintaxă" },
           { "ro": "Toți utilizatorii" },
-          { "ro": "O eroare de sintaxă" }
+          { "ro": "Utilizatorii care nu sunt manageri" },
+          { "ro": "Niciun rând" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -534,12 +534,12 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "Dirty read" },
+          { "ro": "Write skew" },
           { "ro": "Non-repeatable read" },
           { "ro": "Phantom read" },
-          { "ro": "Write skew" }
+          { "ro": "Dirty read" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 3]
       }
     },
     {
@@ -605,12 +605,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "O colecție separată pentru fiecare articol" },
           { "ro": "Colecție separată `comments`, cu `postId` indexat" },
           { "ro": "Un array cu toate comentariile, inclus (embedded) în documentul articolului" },
-          { "ro": "Toate comentariile ca un singur string JSON în articol" },
-          { "ro": "O colecție separată pentru fiecare articol" }
+          { "ro": "Toate comentariile ca un singur string JSON în articol" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -628,12 +628,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`{ status: 1, createdAt: -1, age: 1 }`" },
+          { "ro": "`{ createdAt: -1 }`" },
           { "ro": "`{ status: 1, age: 1, createdAt: -1 }`" },
-          { "ro": "`{ age: 1, status: 1, createdAt: -1 }`" },
-          { "ro": "`{ createdAt: -1 }`" }
+          { "ro": "`{ status: 1, createdAt: -1, age: 1 }`" },
+          { "ro": "`{ age: 1, status: 1, createdAt: -1 }`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -651,12 +651,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`{ _id: \"c1\", total: 30 }`" },
           { "ro": "`{ _id: \"c2\", total: 55 }`" },
-          { "ro": "`{ _id: \"c2\", total: 25 }`" },
-          { "ro": "`{ _id: \"c1\", total: 20 }`" }
+          { "ro": "`{ _id: \"c1\", total: 20 }`" },
+          { "ro": "`{ _id: \"c1\", total: 30 }`" },
+          { "ro": "`{ _id: \"c2\", total: 25 }`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -672,10 +672,10 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "Scrierea confirmată nu va fi anulată (rollback) la schimbarea primary-ului" },
           {
             "ro": "Scrierea e confirmată după ce a fost aplicată pe majoritatea membrilor cu drept de vot"
           },
-          { "ro": "Scrierea confirmată nu va fi anulată (rollback) la schimbarea primary-ului" },
           { "ro": "Orice citire ulterioară, de pe orice secundar, va vedea scrierea" },
           { "ro": "Scrierea devine atomică pe mai multe documente" }
         ],
@@ -722,12 +722,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`HAVING`" },
-          { "ro": "`WHERE`" },
           { "ro": "`ORDER BY`" },
-          { "ro": "`LIMIT`" }
+          { "ro": "`LIMIT`" },
+          { "ro": "`HAVING`" },
+          { "ro": "`WHERE`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -745,14 +745,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Înlocuiești `SELECT *` cu `SELECT id, email`" },
+          { "ro": "Adaugi `LIMIT 1` și păstrezi interogarea" },
           {
             "ro": "Un index pe `users(email)`, ideal prin constrângerea `UNIQUE`, dacă email-ul e unic"
           },
-          { "ro": "Înlocuiești `SELECT *` cu `SELECT id, email`" },
-          { "ro": "Adaugi `LIMIT 1` și păstrezi interogarea" },
           { "ro": "Muți tabelul pe un disc mai rapid" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -770,14 +770,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Lipsește `GROUP BY c.name`" },
+          { "ro": "`LEFT JOIN` nu poate fi folosit cu `WHERE`" },
+          { "ro": "Interogarea e corectă" },
           {
             "ro": "Condiția din `WHERE` elimină rândurile în care `o` e `NULL`, deci interogarea se comportă ca un `INNER JOIN`; condiția trebuie mutată în `ON`"
-          },
-          { "ro": "`LEFT JOIN` nu poate fi folosit cu `WHERE`" },
-          { "ro": "Lipsește `GROUP BY c.name`" },
-          { "ro": "Interogarea e corectă" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -793,13 +793,13 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "`status text` fără nicio constrângere, validat doar în aplicație" },
           { "ro": "`amount numeric(12, 2)`, nu `double precision`" },
           { "ro": "`created_at timestamptz`, nu `timestamp` fără fus orar" },
-          { "ro": "`CHECK (amount > 0)` pe coloana `amount`" },
-          { "ro": "`status text` fără nicio constrângere, validat doar în aplicație" },
-          { "ro": "Coloana `customer_name` copiată în fiecare plată, ca să eviți un `JOIN`" }
+          { "ro": "Coloana `customer_name` copiată în fiecare plată, ca să eviți un `JOIN`" },
+          { "ro": "`CHECK (amount > 0)` pe coloana `amount`" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 4]
       }
     },
     {
@@ -817,12 +817,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 10`" },
-          { "ro": "`WHERE created_at > now() - interval '1 day'`" },
           { "ro": "`WHERE customer_id > 0 OR created_at > now() - interval '1 day'`" },
-          { "ro": "`ORDER BY created_at LIMIT 10`" }
+          { "ro": "`ORDER BY created_at LIMIT 10`" },
+          { "ro": "`WHERE customer_id = 42 ORDER BY created_at DESC LIMIT 10`" },
+          { "ro": "`WHERE created_at > now() - interval '1 day'`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -841,18 +841,18 @@
       "payload": {
         "options": [
           {
+            "ro": "Replicile sunt de obicei asincrone, deci o citire imediat după o scriere poate returna date vechi"
+          },
+          {
             "ro": "În modul `transaction`, o conexiune de server e alocată clientului doar pe durata unei tranzacții, deci mulți clienți împart puține conexiuni"
           },
           {
             "ro": "În modul `transaction`, setările de sesiune (`SET`, `LISTEN`, advisory locks la nivel de sesiune) nu se păstrează între tranzacții"
           },
-          {
-            "ro": "Replicile sunt de obicei asincrone, deci o citire imediat după o scriere poate returna date vechi"
-          },
+          { "ro": "Scrierile pot fi trimise la oricare replică" },
           {
             "ro": "Conexiunile PostgreSQL sunt foarte ieftine, deci pooling-ul contează doar peste 10 000 de clienți"
-          },
-          { "ro": "Scrierile pot fi trimise la oricare replică" }
+          }
         ],
         "correctIndices": [0, 1, 2]
       }
@@ -872,16 +872,16 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Deadlock: PostgreSQL îl detectează și anulează una dintre tranzacții; îl previi blocând rândurile mereu în aceeași ordine (de exemplu crescător după id) și reîncercând tranzacția anulată"
-          },
           { "ro": "Ambele tranzacții așteaptă la nesfârșit, până la restartul bazei de date" },
+          { "ro": "Nivelul `SERIALIZABLE` elimină complet deadlock-urile" },
           {
             "ro": "Nu se întâmplă nimic: MVCC face ca două `UPDATE`-uri să nu se blocheze niciodată"
           },
-          { "ro": "Nivelul `SERIALIZABLE` elimină complet deadlock-urile" }
+          {
+            "ro": "Deadlock: PostgreSQL îl detectează și anulează una dintre tranzacții; îl previi blocând rândurile mereu în aceeași ordine (de exemplu crescător după id) și reîncercând tranzacția anulată"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -899,12 +899,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Niciun rând, dacă există măcar un `referrer_id` egal cu `NULL`" },
-          { "ro": "Clienții care nu au recomandat pe nimeni, corect" },
           { "ro": "Toți clienții" },
+          { "ro": "Clienții care nu au recomandat pe nimeni, corect" },
+          { "ro": "Niciun rând, dacă există măcar un `referrer_id` egal cu `NULL`" },
           { "ro": "O eroare de sintaxă" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -974,12 +974,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`_id`, `name` și `email`" },
           { "ro": "Doar `name` și `email`" },
-          { "ro": "Toate câmpurile, pentru că proiecția se aplică doar la sortare" },
-          { "ro": "`country`, `name` și `email`" }
+          { "ro": "`country`, `name` și `email`" },
+          { "ro": "`_id`, `name` și `email`" },
+          { "ro": "Toate câmpurile, pentru că proiecția se aplică doar la sortare" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -995,14 +995,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Se generează un număr incremental, ca un `SERIAL` din SQL" },
+          { "ro": "Documentul e salvat cu `_id: null`" },
           {
             "ro": "Se generează automat un `ObjectId`, unic în colecție, care include și momentul creării"
           },
-          { "ro": "Inserarea eșuează, pentru că `_id` e obligatoriu" },
-          { "ro": "Documentul e salvat cu `_id: null`" },
-          { "ro": "Se generează un număr incremental, ca un `SERIAL` din SQL" }
+          { "ro": "Inserarea eșuează, pentru că `_id` e obligatoriu" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -1020,14 +1020,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Secundarii țin o alegere și unul devine primar în câteva secunde; driverele trimit scrierile către noul primar"
-          },
+          { "ro": "Toate datele scrise de la ultimul backup se pierd" },
           { "ro": "Baza de date devine read-only până când un administrator repornește primarul" },
           { "ro": "Ambii secundari devin primari, ca să împartă scrierile" },
-          { "ro": "Toate datele scrise de la ultimul backup se pierd" }
+          {
+            "ro": "Secundarii țin o alegere și unul devine primar în câteva secunde; driverele trimit scrierile către noul primar"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1045,12 +1045,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Creează un document doar cu `views: 1` și `createdAt`" },
           { "ro": "Creează documentul cu `page`, `day` (din filtru), `views: 1` și `createdAt`" },
           { "ro": "Nu face nimic, pentru că `$inc` nu poate crea câmpuri" },
-          { "ro": "Creează un document doar cu `views: 1` și `createdAt`" },
           { "ro": "Aruncă o eroare, pentru că `$inc` și `$setOnInsert` nu pot fi combinate" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1068,14 +1068,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Pipeline-ul aruncă o eroare" },
           {
             "ro": "Dispare din rezultat: `$unwind` nu produce niciun document pentru un array gol"
           },
           { "ro": "Apare cu `products: 0`" },
-          { "ro": "Apare cu `products: 1`" },
-          { "ro": "Pipeline-ul aruncă o eroare" }
+          { "ro": "Apare cu `products: 1`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1094,11 +1094,11 @@
       "payload": {
         "options": [
           {
-            "ro": "O operație pe un singur document e atomică fără tranzacție, inclusiv modificările în sub-documente și array-uri"
+            "ro": "O tranzacție are o limită de durată (implicit 60 de secunde) și trebuie ținută scurtă"
           },
           { "ro": "Tranzacțiile multi-document necesită un replica set sau un cluster sharded" },
           {
-            "ro": "O tranzacție are o limită de durată (implicit 60 de secunde) și trebuie ținută scurtă"
+            "ro": "O operație pe un singur document e atomică fără tranzacție, inclusiv modificările în sub-documente și array-uri"
           },
           {
             "ro": "Cu tranzacții, modelarea nu mai contează: poți normaliza totul ca în SQL, fără cost"
@@ -1121,6 +1121,7 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "Indexul TTL șterge documentul exact în secunda în care expiră" },
           {
             "ro": "Un index TTL pe `createdAt` cu `expireAfterSeconds` șterge automat documentele expirate"
           },
@@ -1128,14 +1129,13 @@
             "ro": "Un index parțial (`partialFilterExpression`) conține doar documentele care respectă filtrul, deci e mai mic"
           },
           {
-            "ro": "O covered query citește doar indexul, dacă filtrul și câmpurile proiectate sunt în index și `_id` e exclus"
-          },
-          { "ro": "Indexul TTL șterge documentul exact în secunda în care expiră" },
-          {
             "ro": "Un index parțial e folosit și de interogările care nu includ condiția filtrului"
+          },
+          {
+            "ro": "O covered query citește doar indexul, dacă filtrul și câmpurile proiectate sunt în index și `_id` e exclus"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 4]
       }
     },
     {
@@ -1153,14 +1153,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Adaugi un index pe `customers.country`" },
+          { "ro": "Înlocuiești `$group` cu un `$project`" },
           {
             "ro": "Muți `$match` la început: folosește indexul și reduce documentele pentru care rulează `$lookup`"
           },
-          { "ro": "Adaugi `allowDiskUse: true`" },
-          { "ro": "Înlocuiești `$group` cu un `$project`" },
-          { "ro": "Adaugi un index pe `customers.country`" }
+          { "ro": "Adaugi `allowDiskUse: true`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {

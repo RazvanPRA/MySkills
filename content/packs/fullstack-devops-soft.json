@@ -708,12 +708,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`A E C D B`" },
-          { "ro": "`A B C D E`" },
+          { "ro": "`A C D E B`" },
           { "ro": "`A E B C D`" },
-          { "ro": "`A C D E B`" }
+          { "ro": "`A E C D B`" },
+          { "ro": "`A B C D E`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -731,14 +731,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Doar cu un cast `r as { ok: true; value: number }`" },
+          { "ro": "Nu: `value` nu există pe tipul `Result`" },
+          { "ro": "Doar dacă `strict` e dezactivat" },
           {
             "ro": "Da: verificarea lui `ok` restrânge tipul, deci fiecare ramură vede doar câmpurile ei"
-          },
-          { "ro": "Nu: `value` nu există pe tipul `Result`" },
-          { "ro": "Doar cu un cast `r as { ok: true; value: number }`" },
-          { "ro": "Doar dacă `strict` e dezactivat" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -754,13 +754,13 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "`GET`" },
-          { "ro": "`PUT`" },
           { "ro": "`DELETE`" },
           { "ro": "`POST`" },
-          { "ro": "`PATCH`" }
+          { "ro": "`GET`" },
+          { "ro": "`PATCH`" },
+          { "ro": "`PUT`" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 2, 4]
       }
     },
     {
@@ -826,12 +826,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Într-un secret manager (ex. AWS Secrets Manager, Vault), injectată la runtime" },
-          { "ro": "Într-un fișier `.env` comis în repository" },
           { "ro": "Hardcodată în configurația aplicației" },
-          { "ro": "În imaginea Docker, la build" }
+          { "ro": "În imaginea Docker, la build" },
+          { "ro": "Într-un fișier `.env` comis în repository" },
+          { "ro": "Într-un secret manager (ex. AWS Secrets Manager, Vault), injectată la runtime" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -849,13 +849,13 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          { "ro": "Build multi-stage: imaginea finală conține doar artefactele și runtime-ul" },
-          { "ro": "Procesul rulează cu un utilizator non-root" },
-          { "ro": "Un `.dockerignore` care exclude `node_modules`, `.git` și fișierele `.env`" },
           { "ro": "Imaginea de bază cu tag-ul `latest`" },
-          { "ro": "Copiezi tot repository-ul în imagine, pentru orice eventualitate" }
+          { "ro": "Build multi-stage: imaginea finală conține doar artefactele și runtime-ul" },
+          { "ro": "Copiezi tot repository-ul în imagine, pentru orice eventualitate" },
+          { "ro": "Procesul rulează cu un utilizator non-root" },
+          { "ro": "Un `.dockerignore` care exclude `node_modules`, `.git` și fișierele `.env`" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 3, 4]
       }
     },
     {
@@ -873,12 +873,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Stored XSS; escaping contextual la afișare, cu CSP ca a doua linie de apărare" },
           { "ro": "CSRF; un token anti-CSRF" },
           { "ro": "SQL injection; interogări parametrizate" },
-          { "ro": "Reflected XSS; limitarea lungimii comentariului" }
+          { "ro": "Reflected XSS; limitarea lungimii comentariului" },
+          { "ro": "Stored XSS; escaping contextual la afișare, cu CSP ca a doua linie de apărare" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -896,14 +896,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Oprești aplicația noaptea și faci redenumirea" },
+          { "ro": "Un feature flag în interfață, cu aceeași migrare într-un singur pas" },
           {
             "ro": "Expand–contract: adaugi coloana nouă, scrii în ambele, migrezi datele, muți citirile, apoi ștergi coloana veche, în release-uri separate"
           },
-          { "ro": "Un singur `ALTER TABLE ... RENAME COLUMN` în același deploy cu codul nou" },
-          { "ro": "Oprești aplicația noaptea și faci redenumirea" },
-          { "ro": "Un feature flag în interfață, cu aceeași migrare într-un singur pas" }
+          { "ro": "Un singur `ALTER TABLE ... RENAME COLUMN` în același deploy cu codul nou" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -944,12 +944,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Ceri ajutor, explicând ce ai încercat deja și ce ipoteze ai eliminat" },
-          { "ro": "Mai aștepți câteva zile, ca să nu-i deranjezi pe ceilalți" },
           { "ro": "Treci la alt task fără să spui nimănui" },
-          { "ro": "Rescrii modulul de la zero" }
+          { "ro": "Mai aștepți câteva zile, ca să nu-i deranjezi pe ceilalți" },
+          { "ro": "Rescrii modulul de la zero" },
+          { "ro": "Ceri ajutor, explicând ce ai încercat deja și ce ipoteze ai eliminat" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -967,12 +967,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "Situation, Task, Action, Result" },
-          { "ro": "Strategy, Tactics, Action, Review" },
           { "ro": "Situation, Target, Analysis, Response" },
-          { "ro": "Start, Talk, Act, Reflect" }
+          { "ro": "Situation, Task, Action, Result" },
+          { "ro": "Start, Talk, Act, Reflect" },
+          { "ro": "Strategy, Tactics, Action, Review" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -990,14 +990,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Lași 80 de comentarii despre stilul codului" },
           {
             "ro": "Ceri să-l împartă în PR-uri mai mici (refactorul separat de funcționalitate) și explici de ce reduce riscul"
           },
           { "ro": "Îl aprobi fără review, pentru că e urgent" },
-          { "ro": "Lași 80 de comentarii despre stilul codului" },
           { "ro": "Rescrii tu codul și deschizi alt PR" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1065,14 +1065,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Ambele linii funcționează" },
           {
             "ro": "Linia 2 funcționează; linia 3 aruncă `TypeError: Assignment to constant variable`"
           },
           { "ro": "Ambele linii aruncă eroare, pentru că obiectul e constant" },
-          { "ro": "Ambele linii funcționează" },
           { "ro": "Linia 2 aruncă eroare, linia 3 funcționează" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1090,14 +1090,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Tipul returnat trebuie să fie `string | undefined`" },
+          { "ro": "`slice` nu există pe tipul `string`" },
+          { "ro": "Uniunile nu sunt permise ca tip de parametru" },
           {
             "ro": "`name` poate fi `undefined`; verifici întâi valoarea, de exemplu `if (!name) return '';`, iar TypeScript restrânge tipul la `string`"
-          },
-          { "ro": "`slice` nu există pe tipul `string`" },
-          { "ro": "Tipul returnat trebuie să fie `string | undefined`" },
-          { "ro": "Uniunile nu sunt permise ca tip de parametru" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1115,12 +1115,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`403 Forbidden`" },
-          { "ro": "`401 Unauthorized`" },
+          { "ro": "`500 Internal Server Error`" },
           { "ro": "`400 Bad Request`" },
-          { "ro": "`500 Internal Server Error`" }
+          { "ro": "`403 Forbidden`" },
+          { "ro": "`401 Unauthorized`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -1141,9 +1141,9 @@
           {
             "ro": "Cursor (keyset): clientul trimite cursorul ultimului element, iar serverul cere `WHERE (created_at, id) < (...) ORDER BY created_at DESC, id DESC LIMIT 20`"
           },
-          { "ro": "Offset: `?page=500&size=20`, tradus în `OFFSET 9980 LIMIT 20`" },
+          { "ro": "Paginare după numărul paginii, cu un cache pe server al fiecărei pagini" },
           { "ro": "Returnezi tot feed-ul și paginezi pe client" },
-          { "ro": "Paginare după numărul paginii, cu un cache pe server al fiecărei pagini" }
+          { "ro": "Offset: `?page=500&size=20`, tradus în `OFFSET 9980 LIMIT 20`" }
         ],
         "correctIndex": 0
       }
@@ -1161,19 +1161,19 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Simulezi granițele pe care nu le controlezi (API-uri externe, timpul, generarea de id-uri), nu fiecare clasă internă"
-          },
           { "ro": "Fiecare test verifică un singur comportament și are un nume care îl descrie" },
           {
-            "ro": "Testele de integrare verifică împreună codul tău și infrastructura reală (baza de date, serializarea)"
+            "ro": "Testele rulează într-o anumită ordine, ca să refolosească datele create de testele anterioare"
           },
           { "ro": "Un coverage de 100% garantează că nu există bug-uri" },
           {
-            "ro": "Testele rulează într-o anumită ordine, ca să refolosească datele create de testele anterioare"
+            "ro": "Testele de integrare verifică împreună codul tău și infrastructura reală (baza de date, serializarea)"
+          },
+          {
+            "ro": "Simulezi granițele pe care nu le controlezi (API-uri externe, timpul, generarea de id-uri), nu fiecare clasă internă"
           }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 3, 4]
       }
     },
     {
@@ -1194,8 +1194,8 @@
           {
             "ro": "Dependency Inversion: serviciul creează o implementare concretă; definești o interfață `PaymentGateway` și o primești prin constructor"
           },
-          { "ro": "Liskov Substitution: `StripeClient` nu poate înlocui `OrderService`" },
           { "ro": "Open/Closed: trebuie adăugat un `switch` pentru fiecare furnizor de plăți" },
+          { "ro": "Liskov Substitution: `StripeClient` nu poate înlocui `OrderService`" },
           { "ro": "Interface Segregation: `Order` are prea multe câmpuri" }
         ],
         "correctIndex": 0
@@ -1220,8 +1220,8 @@
             "ro": "Limitezi cache-ul: LRU cu dimensiune maximă și TTL; un `Map` la nivel de modul trăiește cât procesul, iar intrările lui nu sunt colectate niciodată"
           },
           { "ro": "Apelezi `global.gc()` periodic" },
-          { "ro": "Mărești `--max-old-space-size`" },
-          { "ro": "Înlocuiești `Map` cu un obiect simplu `{}`" }
+          { "ro": "Înlocuiești `Map` cu un obiect simplu `{}`" },
+          { "ro": "Mărești `--max-old-space-size`" }
         ],
         "correctIndex": 0
       }
@@ -1241,12 +1241,12 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          { "ro": "`{ getName: () => string; getAge: () => number }`" },
           { "ro": "`{ name: () => string; age: () => number }`" },
           { "ro": "`{ getname: () => string; getage: () => number }`" },
-          { "ro": "`never`" }
+          { "ro": "`never`" },
+          { "ro": "`{ getName: () => string; getAge: () => number }`" }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1267,16 +1267,16 @@
           {
             "ro": "Fișierele cu hash în nume (`app.3f9a1c.js`) pot primi `Cache-Control: public, max-age=31536000, immutable`"
           },
+          { "ro": "`no-cache` înseamnă că răspunsul nu poate fi stocat deloc" },
+          { "ro": "Răspunsurile marcate `private` pot fi păstrate în cache-ul CDN-ului" },
           {
             "ro": "Documentul HTML primește `no-cache`, ca să fie revalidat la fiecare cerere și să indice mereu ultimele assets"
           },
           {
             "ro": "`s-maxage` setează cât păstrează CDN-ul un răspuns, separat de `max-age` pentru browser"
-          },
-          { "ro": "`no-cache` înseamnă că răspunsul nu poate fi stocat deloc" },
-          { "ro": "Răspunsurile marcate `private` pot fi păstrate în cache-ul CDN-ului" }
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 3, 4]
       }
     },
     {
@@ -1320,14 +1320,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "`git revert <sha>`, apoi push: se creează un commit nou care anulează schimbările"
-          },
+          { "ro": "Ștergi branch-ul `main` și îl recreezi din copia ta locală" },
           { "ro": "`git reset --hard HEAD~1`, apoi `git push --force`" },
           { "ro": "Ștergi fișierele modificate și faci un commit nou cu mesajul „fix”" },
-          { "ro": "Ștergi branch-ul `main` și îl recreezi din copia ta locală" }
+          {
+            "ro": "`git revert <sha>`, apoi push: se creează un commit nou care anulează schimbările"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1345,14 +1345,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Lipsește `network_mode: host` pe baza de date" },
           {
             "ro": "În containerul `api`, `localhost` e chiar containerul `api`; host-ul bazei de date e numele serviciului, `db`"
           },
           { "ro": "Portul 5432 trebuie expus cu `ports` pentru comunicarea dintre containere" },
-          { "ro": "PostgreSQL nu poate rula în Docker" },
-          { "ro": "Lipsește `network_mode: host` pe baza de date" }
+          { "ro": "PostgreSQL nu poate rula în Docker" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1370,14 +1370,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Comiți folderul `node_modules` în repository" },
+          { "ro": "Ștergi lockfile-ul, ca instalarea să aleagă cele mai noi versiuni" },
           {
             "ro": "Cache pentru store-ul managerului de pachete, cu cheia derivată din hash-ul lockfile-ului, plus instalare cu lockfile înghețat"
           },
-          { "ro": "Ștergi lockfile-ul, ca instalarea să aleagă cele mai noi versiuni" },
-          { "ro": "Rulezi pipeline-ul doar o dată pe zi" },
-          { "ro": "Comiți folderul `node_modules` în repository" }
+          { "ro": "Rulezi pipeline-ul doar o dată pe zi" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -1396,20 +1396,20 @@
       "payload": {
         "options": [
           {
-            "ro": "State-ul e stocat remote (de exemplu într-un bucket), criptat și cu locking, nu în repository"
-          },
-          {
             "ro": "Rezultatul lui `terraform plan` e revizuit, de exemplu în pull request, înainte de `apply`"
           },
+          {
+            "ro": "State-ul e stocat remote (de exemplu într-un bucket), criptat și cu locking, nu în repository"
+          },
+          { "ro": "Secretele se pun în fișiere `.tfvars` comise în repository" },
           {
             "ro": "Mediile (dev, staging, prod) au state-uri separate și refolosesc aceleași module cu variabile diferite"
           },
           {
             "ro": "În situații urgente modifici resursele direct din consolă, iar Terraform le va ignora"
-          },
-          { "ro": "Secretele se pun în fișiere `.tfvars` comise în repository" }
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 1, 3]
       }
     },
     {
@@ -1427,14 +1427,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Un timestamp mai precis în fiecare linie" },
           {
             "ro": "Loguri structurate (JSON) și un trace id propagat între servicii (W3C `traceparent`, OpenTelemetry), inclus în fiecare linie de log"
           },
           { "ro": "Mai multe loguri la nivel `DEBUG` în toate serviciile" },
-          { "ro": "Un timestamp mai precis în fiecare linie" },
           { "ro": "Logurile tuturor serviciilor scrise în același fișier" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1451,18 +1451,16 @@
       "payload": {
         "options": [
           {
-            "ro": "Parolele se stochează cu un algoritm lent, cu salt, precum Argon2id sau bcrypt"
+            "ro": "Împotriva SSRF e suficient să respingi URL-urile care conțin textul `localhost`"
           },
-          { "ro": "Cookie-ul de sesiune are atributele `HttpOnly`, `Secure` și `SameSite`" },
           {
             "ro": "Interogările SQL folosesc parametri (prepared statements), nu concatenarea input-ului"
           },
+          { "ro": "Cookie-ul de sesiune are atributele `HttpOnly`, `Secure` și `SameSite`" },
           { "ro": "Parolele se stochează cu SHA-256, pentru că e un algoritm criptografic sigur" },
-          {
-            "ro": "Împotriva SSRF e suficient să respingi URL-urile care conțin textul `localhost`"
-          }
+          { "ro": "Parolele se stochează cu un algoritm lent, cu salt, precum Argon2id sau bcrypt" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 4]
       }
     },
     {
@@ -1481,15 +1479,15 @@
       "payload": {
         "options": [
           {
-            "ro": "Kubernetes repornește toate pod-urile simultan, iar întreruperea scurtă devine o cădere mai lungă; liveness verifică doar procesul, iar dependențele țin, cel mult, de readiness"
-          },
-          { "ro": "Nimic: Kubernetes ignoră probe-urile cât timp baza de date e indisponibilă" },
-          {
             "ro": "Pod-urile sunt scoase din load balancer, apoi revin singure; configurarea e corectă"
           },
-          { "ro": "Kubernetes mută baza de date pe alt nod" }
+          { "ro": "Nimic: Kubernetes ignoră probe-urile cât timp baza de date e indisponibilă" },
+          { "ro": "Kubernetes mută baza de date pe alt nod" },
+          {
+            "ro": "Kubernetes repornește toate pod-urile simultan, iar întreruperea scurtă devine o cădere mai lungă; liveness verifică doar procesul, iar dependențele țin, cel mult, de readiness"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1508,15 +1506,15 @@
       "payload": {
         "options": [
           {
-            "ro": "Fixezi action-urile terțe la SHA-ul commit-ului, instalezi strict din lockfile, dai token-ului `GITHUB_TOKEN` permisiuni minime și folosești OIDC în locul cheilor de cloud de lungă durată"
+            "ro": "Folosești `@latest` peste tot, ca să primești automat patch-urile de securitate"
           },
           {
-            "ro": "Folosești `@latest` peste tot, ca să primești automat patch-urile de securitate"
+            "ro": "Fixezi action-urile terțe la SHA-ul commit-ului, instalezi strict din lockfile, dai token-ului `GITHUB_TOKEN` permisiuni minime și folosești OIDC în locul cheilor de cloud de lungă durată"
           },
           { "ro": "Rulezi `npm audit` o dată pe trimestru" },
           { "ro": "Muți workflow-ul într-un repository privat" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1588,14 +1586,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Răspunzi că abordarea ta e corectă și închizi discuția" },
+          { "ro": "Ignori comentariul și faci merge după ce primești altă aprobare" },
+          { "ro": "Accepți fără discuție, ca să nu creezi conflicte" },
           {
             "ro": "Întrebi ce problemă vede, îți explici argumentele în comentariu, iar dacă nu ajungeți la un acord, discutați câteva minute live"
-          },
-          { "ro": "Accepți fără discuție, ca să nu creezi conflicte" },
-          { "ro": "Ignori comentariul și faci merge după ce primești altă aprobare" },
-          { "ro": "Răspunzi că abordarea ta e corectă și închizi discuția" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1613,14 +1611,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Aștepți până în ziua termenului, poate rezolvi mai repede decât crezi" },
+          { "ro": "Lucrezi seara, ca să te încadrezi fără să spui nimic" },
           {
             "ro": "Anunți acum lead-ul sau PM-ul: noua estimare, motivul și, dacă se poate, variante (de exemplu, o parte livrată mai devreme)"
           },
-          { "ro": "Lucrezi seara, ca să te încadrezi fără să spui nimic" },
-          { "ro": "Aștepți până în ziua termenului, poate rezolvi mai repede decât crezi" },
           { "ro": "Livrezi ce ai la termen, fără să menționezi ce lipsește" }
         ],
-        "correctIndex": 0
+        "correctIndex": 2
       }
     },
     {
@@ -1638,14 +1636,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
-          {
-            "ro": "Prin impact: fiecare schimbare în plăți durează de trei ori mai mult decât în restul aplicației, iar modulul a produs patru incidente trimestrul trecut; propui un plan incremental, cu un prim rezultat după câteva zile"
-          },
+          { "ro": "Faci refactorizarea fără să întrebi, ascunsă în estimările altor task-uri" },
           { "ro": "Explici principiile SOLID încălcate și cât de greu se citește codul" },
           { "ro": "Spui că e o decizie tehnică și că trebuie să ai încredere în echipă" },
-          { "ro": "Faci refactorizarea fără să întrebi, ascunsă în estimările altor task-uri" }
+          {
+            "ro": "Prin impact: fiecare schimbare în plăți durează de trei ori mai mult decât în restul aplicației, iar modulul a produs patru incidente trimestrul trecut; propui un plan incremental, cu un prim rezultat după câteva zile"
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1667,15 +1665,15 @@
             "ro": "O împarți în incremente mici, fiecare livrabil și verificabil cap-coadă, nu pe straturi (tot backend-ul, apoi tot frontend-ul)"
           },
           {
-            "ro": "Începi cu partea cea mai riscantă sau necunoscută, ca să afli devreme ce nu știi"
-          },
-          {
             "ro": "Dai estimarea ca interval, cu ipotezele ei, și o actualizezi pe măsură ce afli lucruri noi"
           },
+          { "ro": "Dai o estimare fixă și optimistă, ca să nu pară că echipa se mișcă încet" },
           { "ro": "Nu arăți nimic până nu e totul gata, ca să nu primești feedback prematur" },
-          { "ro": "Dai o estimare fixă și optimistă, ca să nu pară că echipa se mișcă încet" }
+          {
+            "ro": "Începi cu partea cea mai riscantă sau necunoscută, ca să afli devreme ce nu știi"
+          }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 1, 4]
       }
     },
     {
@@ -1693,14 +1691,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Îl corectezi la fiecare linie pe care o scrie" },
+          { "ro": "Îi spui direct unde e bug-ul, ca să nu piardă timp" },
+          { "ro": "Tu scrii rapid soluția, iar el urmărește" },
           {
             "ro": "El scrie codul, tu ghidezi cu întrebări („ce crezi că se întâmplă aici?”) și îl lași să descopere; la final rezumați împreună ce ați învățat"
-          },
-          { "ro": "Tu scrii rapid soluția, iar el urmărește" },
-          { "ro": "Îi spui direct unde e bug-ul, ca să nu piardă timp" },
-          { "ro": "Îl corectezi la fiecare linie pe care o scrie" }
+          }
         ],
-        "correctIndex": 0
+        "correctIndex": 3
       }
     },
     {
@@ -1719,14 +1717,14 @@
           {
             "ro": "„Ce se întâmplă dacă lista e goală? Cred că `items[0]` poate fi `undefined` aici.”"
           },
-          { "ro": "„Nit: aș extrage condiția într-o funcție cu nume, dar nu blochează merge-ul.”" },
+          { "ro": "„E evident că nu merge așa. N-ai testat?”" },
           {
             "ro": "„Funcția face și validarea, și salvarea. Ce zici să le separăm? Ar fi mai ușor de testat.”"
           },
-          { "ro": "„Nu e cum aș fi făcut eu. Rescrie.”" },
-          { "ro": "„E evident că nu merge așa. N-ai testat?”" }
+          { "ro": "„Nit: aș extrage condiția într-o funcție cu nume, dar nu blochează merge-ul.”" },
+          { "ro": "„Nu e cum aș fi făcut eu. Rescrie.”" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [0, 2, 3]
       }
     },
     {
@@ -1744,14 +1742,14 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Blochezi în code review orice PR care introduce event sourcing" },
           {
             "ro": "Discuți întâi unu-la-unu, apoi scrii un document scurt: problema, criteriile, opțiunile cu compromisuri și dovezi (date, un prototip); dacă decizia rămâne alta, o accepți și o implementezi bine"
           },
-          { "ro": "Blochezi în code review orice PR care introduce event sourcing" },
-          { "ro": "Îți exprimi nemulțumirea pe canalul echipei, ca să strângi susținere" },
-          { "ro": "Accepți public, dar în serviciile tale implementezi abordarea ta" }
+          { "ro": "Accepți public, dar în serviciile tale implementezi abordarea ta" },
+          { "ro": "Îți exprimi nemulțumirea pe canalul echipei, ca să strângi susținere" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
@@ -1769,17 +1767,17 @@
       "type": "multiple_choice",
       "payload": {
         "options": [
+          { "ro": "Fiecare developer e evaluat după numărul de comentarii primite" },
           {
             "ro": "Stilul și formatarea sunt verificate automat (linter, formatter), ca oamenii să se concentreze pe design și corectitudine"
           },
+          { "ro": "Comentarii etichetate după importanță (blocant, sugestie, nit)" },
           {
             "ro": "Un timp-țintă pentru primul răspuns (de exemplu, o zi lucrătoare) și PR-uri mici"
           },
-          { "ro": "Comentarii etichetate după importanță (blocant, sugestie, nit)" },
-          { "ro": "Doar seniorii pot aproba PR-uri, indiferent de mărimea lor" },
-          { "ro": "Fiecare developer e evaluat după numărul de comentarii primite" }
+          { "ro": "Doar seniorii pot aproba PR-uri, indiferent de mărimea lor" }
         ],
-        "correctIndices": [0, 1, 2]
+        "correctIndices": [1, 2, 3]
       }
     },
     {
@@ -1797,16 +1795,16 @@
       "type": "single_choice",
       "payload": {
         "options": [
+          { "ro": "Propui oprirea funcționalităților pentru o rescriere completă de trei luni" },
           {
             "ro": "Cuantifici costul (incidente, timp pierdut, întârzieri), propui o refactorizare incrementală legată de funcționalitățile din roadmap care ating modulul și agreezi o țintă măsurabilă"
           },
-          { "ro": "Propui oprirea funcționalităților pentru o rescriere completă de trei luni" },
-          { "ro": "Accepți situația, pentru că business-ul a decis prioritățile" },
           {
             "ro": "Umfli estimările funcționalităților noi și folosești timpul în plus pentru refactorizare"
-          }
+          },
+          { "ro": "Accepți situația, pentru că business-ul a decis prioritățile" }
         ],
-        "correctIndex": 0
+        "correctIndex": 1
       }
     },
     {
