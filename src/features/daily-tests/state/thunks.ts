@@ -1,40 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import type { ContentCatalog } from '@/features/content';
-import type { AttemptRepository } from '@/features/session-player';
-import { selectSettings, type SettingsState } from '@/features/settings';
-import type { ReviewCardRepository } from '@/features/spaced-repetition';
-import type { TopicProgressRepository } from '@/features/study-map';
-import type { Clock } from '@/shared/utils/clock';
-import type { IdGenerator } from '@/shared/utils/idGenerator';
-import { addDays, parseLocalDate, toLocalDate } from '@/shared/utils/localDate';
-import type { TestBuildContext, TestDefinition } from '../model/testDefinition';
-import type { SessionRepository } from '../repository/SessionRepository';
+import type { SettingsState } from '@/features/settings';
+import type { TestDefinition } from '../model/testDefinition';
 import { reconcileDailySession } from '../services/reconcileDailySession.service';
 import { sessionSeed } from '../services/sessionHelpers';
-import { type TestRegistry, testsWithSchedule } from '../services/testRegistry';
+import { testsWithSchedule } from '../services/testRegistry';
+import { type BuildInputs, readBuildInputs } from './buildInputs';
+import type { DailyTestsDependencies } from './dependencies';
 import type { TodayCardState } from './slice';
 
-/**
- * Attempts of the last 30 days feed today's tests: the logic test needs them for its 30-day
- * no-repeat rule (brief §7.2); each test narrows the window further.
- */
-const ATTEMPT_HISTORY_DAYS = 30;
-
-/** What this feature needs from the dependency container. */
-export type DailyTestsDependencies = {
-  clock: Clock;
-  generateId: IdGenerator;
-  registries: { tests: TestRegistry };
-  repositories: {
-    sessions: SessionRepository;
-    attempts: AttemptRepository;
-    topicProgress: TopicProgressRepository;
-    reviewCards: ReviewCardRepository;
-  };
-};
+export type { DailyTestsDependencies };
 
 type ThunkConfig = { extra: DailyTestsDependencies; state: { settings: SettingsState } };
-type BuildInputs = Omit<TestBuildContext, 'seed' | 'scope'>;
 
 async function prepareCard(
   definition: TestDefinition,
@@ -77,26 +54,11 @@ export const loadToday = createAsyncThunk<
   { catalog: ContentCatalog },
   ThunkConfig
 >('dailyTests/loadToday', async ({ catalog }, { extra, getState }) => {
-  const date = toLocalDate(extra.clock.now());
-  const since = parseLocalDate(addDays(date, -ATTEMPT_HISTORY_DAYS)).toISOString();
-  const { topicProgress, reviewCards, attempts } = extra.repositories;
-  const [progress, cards, recentAttempts] = await Promise.all([
-    topicProgress.getAll(),
-    reviewCards.getAll(),
-    attempts.listSince(since),
-  ]);
-  const inputs: BuildInputs = {
-    date,
-    catalog,
-    progress,
-    reviewCards: cards,
-    recentAttempts,
-    settings: selectSettings(getState()),
-  };
+  const inputs = await readBuildInputs(extra, getState(), catalog);
   const definitions = testsWithSchedule(extra.registries.tests, 'daily');
   const today: TodayCardState[] = [];
   for (const definition of definitions) {
     today.push(await prepareCard(definition, inputs, extra));
   }
-  return { date, cards: today };
+  return { date: inputs.date, cards: today };
 });

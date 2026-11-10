@@ -25,6 +25,8 @@ export { createLocalSessionRepository } from './repository/LocalSessionRepositor
 export { attemptsSince, availableExerciseIds, sessionSeed } from './services/sessionHelpers';
 export { dailyTestsReducer, type DailyTestsState, type TodayCardState } from './state/slice';
 export { loadToday, type DailyTestsDependencies } from './state/thunks';
+export { startOnDemandSession, type StartOnDemandInput } from './state/onDemandThunks';
+export { useStartOnDemand } from './hooks/useStartOnDemand';
 export type { TodayScreenProps } from './screens/TodayScreen';
 
 export const TodayScreen = lazy(() => import('./screens/TodayScreen'));
