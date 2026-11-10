@@ -30,6 +30,9 @@ export function useTopicDetail(topicId: string) {
       summary: summary.text,
       isFallback: title.isFallback || summary.isFallback,
       resources: topic.resources,
+      // Only topics of knowledge categories feed a test when marked (brief §7.1).
+      markable: category?.testKinds.includes('knowledge') ?? false,
+      exerciseCount: catalog.exercisesByTopic.get(topic.id)?.length ?? 0,
     };
   }, [topic, catalog, language, strings]);
 

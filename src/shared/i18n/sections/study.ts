@@ -17,6 +17,12 @@ export const studyRo = {
     notFound: 'Topicul nu mai există în conținut.',
     back: 'Înapoi',
     openLink: (title: string) => `Deschide ${title}`,
+    notes: 'Notițele mele',
+    notesHelp: 'Se salvează automat.',
+    practice: 'Exersează topicul',
+    noExercises: 'Topicul nu are încă exerciții.',
+    practiceError: 'Exersarea nu a putut porni. Încearcă din nou.',
+    notMarkable: 'Acest topic nu se marchează: testul de logică își alege singur problemele.',
   },
 };
 
@@ -38,5 +44,11 @@ export const studyEn: typeof studyRo = {
     notFound: 'This topic no longer exists in the content.',
     back: 'Back',
     openLink: (title: string) => `Open ${title}`,
+    notes: 'My notes',
+    notesHelp: 'Saved automatically.',
+    practice: 'Practise this topic',
+    noExercises: 'This topic has no exercises yet.',
+    practiceError: 'Practice could not start. Try again.',
+    notMarkable: 'This topic is not marked: the logic test picks its own problems.',
   },
 };

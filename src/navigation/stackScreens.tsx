@@ -1,7 +1,9 @@
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
+import { useStartOnDemand } from '@/features/daily-tests';
 import { SessionResultsScreen, SessionScreen } from '@/features/session-player';
 import { TopicScreen } from '@/features/study-map';
+import { practiceTest } from '@/features/test-definitions/practice';
 import type { RootStackParamList } from './types';
 
 // Thin route adapters: they map route params and navigation to the feature screens' props,
@@ -13,7 +15,19 @@ type RouteProps<Name extends keyof RootStackParamList> = NativeStackScreenProps<
 >;
 
 export function TopicRoute({ route, navigation }: RouteProps<'Topic'>) {
-  return <TopicScreen topicId={route.params.topicId} onBack={navigation.goBack} />;
+  // Composition across features: study-map shows the button, daily-tests starts the session.
+  const openSession = useCallback(
+    (sessionId: string) => navigation.navigate('Session', { sessionId }),
+    [navigation],
+  );
+  const { start, busy, failed } = useStartOnDemand(practiceTest.kind, openSession);
+  const practice = useMemo(
+    () => ({ onPress: (topicId: string) => start({ topicIds: [topicId] }), busy, failed }),
+    [start, busy, failed],
+  );
+  return (
+    <TopicScreen topicId={route.params.topicId} onBack={navigation.goBack} practice={practice} />
+  );
 }
 
 export function SessionRoute({ route, navigation }: RouteProps<'Session'>) {

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { TopicProgress } from '../model/topicProgress';
-import { loadTopicProgress, setTopicStatus } from './thunks';
+import { loadTopicProgress, setTopicNotes, setTopicStatus } from './thunks';
 
 export type StudyMapState = {
   /** The user's progress, by topic id. A topic without an entry is not started. */
@@ -27,6 +27,9 @@ const studyMapSlice = createSlice({
         state.status = 'error';
       })
       .addCase(setTopicStatus.fulfilled, (state, action) => {
+        state.byTopicId[action.payload.topicId] = action.payload;
+      })
+      .addCase(setTopicNotes.fulfilled, (state, action) => {
         state.byTopicId[action.payload.topicId] = action.payload;
       });
   },
