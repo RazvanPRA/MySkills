@@ -404,6 +404,268 @@
           { "ro": "Strategie de conflict pe tip de date; tombstones" }
         ]
       }
+    },
+    {
+      "id": "react-native.performance.junior.q1",
+      "topicId": "react-native.performance.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un ecran afișează 2 000 de mesaje cu `<ScrollView>{messages.map(...)}</ScrollView>`. Ecranul se deschide greu și consumă multă memorie. Ce schimbi?"
+      },
+      "explanation": {
+        "ro": "`ScrollView` randează **toți** copiii de la început, chiar dacă pe ecran încap zece. `FlatList` e virtualizată: montează doar o fereastră de elemente în jurul poziției curente și le demontează pe cele îndepărtate, deci timpul de deschidere și memoria nu mai cresc cu lungimea listei.\n\nPentru performanță bună: un `keyExtractor` stabil, rânduri memoizate și, când înălțimea e fixă, `getItemLayout`. Pentru liste mari și complexe, FlashList reciclează celulele și e și mai eficientă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Folosești `FlatList`, care randează doar elementele din jurul zonei vizibile" },
+          { "ro": "Învelești fiecare mesaj în `React.memo`" },
+          { "ro": "Adaugi `removeClippedSubviews` pe `ScrollView` și păstrezi `map`" },
+          { "ro": "Împarți lista în zece `ScrollView`-uri mai mici" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.offline.junior.q1",
+      "topicId": "react-native.offline.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să păstrezi între sesiuni tema aleasă (light/dark) și token-ul de autentificare. Ce variantă e corectă?"
+      },
+      "explanation": {
+        "ro": "AsyncStorage e un key-value store asincron, **necriptat**, care salvează doar string-uri (obiectele trec prin `JSON.stringify`). E potrivit pentru preferințe mici, nu pentru secrete: pe un telefon rootat sau dintr-un backup, datele se pot citi.\n\nKeychain (iOS) și Keystore (Android) păstrează secretele criptate, cu chei protejate de hardware. Nu există un eveniment sigur de „închidere a aplicației”, deci nu te baza pe el pentru salvare: scrie când valoarea se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Tema în AsyncStorage, token-ul în Keychain/Keystore (de exemplu cu `react-native-keychain`)"
+          },
+          { "ro": "Amândouă în AsyncStorage, pentru că e privat aplicației" },
+          { "ro": "Amândouă în Keychain, pentru că AsyncStorage e sincron și blochează UI-ul" },
+          { "ro": "Amândouă într-o variabilă globală, salvată la închiderea aplicației" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.navigation.mid.q1",
+      "topicId": "react-native.navigation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Cu React Navigation, care e abordarea recomandată pentru fluxul de autentificare?"
+      },
+      "explanation": {
+        "ro": "Când ecranele sunt definite condiționat, utilizatorul logat nici nu are ecranul Login în navigator. Butonul Back nu-l poate duce înapoi acolo, iar un deep link către un ecran protejat nu funcționează fără sesiune.\n\nCu `navigate('Home')`, Login rămâne în stivă și Back te întoarce la el. Verificările din fiecare ecran duplică logica și afișează scurt conținut protejat înainte de redirect. La logout, schimbarea stării elimină automat ecranele protejate și state-ul lor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Randezi seturi diferite de ecrane în funcție de `isSignedIn`; la login, navigatorul trece singur la ecranele aplicației"
+          },
+          { "ro": "După login apelezi `navigation.navigate('Home')`" },
+          {
+            "ro": "Ții toate ecranele montate și ascunzi conținutul cu `display: none` când utilizatorul nu e logat"
+          },
+          {
+            "ro": "Verifici autentificarea în `useEffect` pe fiecare ecran și redirecționezi la Login"
+          }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.native.mid.q1",
+      "topicId": "react-native.native.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei ca build-ul de dezvoltare și cel de producție al aplicației Android să fie instalate **simultan** pe același telefon. Ce configurezi în `android/app/build.gradle`?"
+      },
+      "explanation": {
+        "ro": "Android identifică o aplicație după `applicationId`. Două build-uri cu același id se înlocuiesc reciproc, oricât de diferite ar fi numele sau versiunea. Sufixul creează un id distinct (`com.firma.app.dev`), deci ambele pot fi instalate.\n\n`namespace` e pachetul claselor generate (de exemplu `R`), nu identitatea aplicației. Un nume diferit (prin `resValue` per build type) e totuși util, ca să le deosebești pe ecran. Atenție: serviciile legate de id (Firebase, deep links, Google Sign-In) au nevoie de configurare separată pentru varianta `.dev`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`applicationIdSuffix '.dev'` în build type-ul (sau flavor-ul) de dezvoltare" },
+          { "ro": "Un `versionCode` diferit pentru build-ul de dezvoltare" },
+          { "ro": "Un nume de afișare diferit în `strings.xml`" },
+          { "ro": "Un `namespace` diferit în build-ul de dezvoltare" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.offline.mid.q1",
+      "topicId": "react-native.offline.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Aplicația salvează datele într-o bază SQLite locală și le sincronizează cu un API. Care practici sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Într-o aplicație offline-first, baza locală e sursa de adevăr pentru UI, iar sincronizarea e un proces separat.\n\n- Migrațiile testate garantează că un update nu pierde datele utilizatorului.\n- Id-urile generate pe client elimină dependența de server la creare și simplifică maparea la sincronizare.\n- Coada de modificări (outbox) supraviețuiește restartului. Idempotența (o cheie per operație) face retry-ul sigur când răspunsul s-a pierdut pe drum.\n\nȘtergerea bazei la update înseamnă pierderea datelor nesincronizate. Așteptarea serverului transformă aplicația înapoi într-una online-only."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Migrațiile rulează la pornire, înainte ca UI-ul să citească date, și sunt testate pe o bază cu date vechi"
+          },
+          {
+            "ro": "Înregistrările primesc un id generat pe client (de exemplu UUID), ca să poată fi create offline"
+          },
+          {
+            "ro": "Modificările locale intră într-o coadă trimisă când revine conexiunea, cu cereri idempotente la retry"
+          },
+          { "ro": "La o versiune nouă cu schemă schimbată, ștergi baza și o recreezi" },
+          { "ro": "O scriere locală apare în UI abia după confirmarea serverului" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "react-native.release.mid.q1",
+      "topicId": "react-native.release.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre semnarea și versionarea build-urilor Android de release, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Semnătura e identitatea aplicației: Android refuză un update semnat cu altă cheie, iar o cheie scursă permite cuiva să publice „actualizări” false. De aceea secretele stau în afara repository-ului.\n\nPlay App Signing separă cele două roluri: cheia aplicației rămâne la Google, iar cheia de upload, dacă se pierde, poate fi resetată prin suport. Fără Play App Signing, pierderea cheii înseamnă că nu mai poți publica actualizări pentru acel `applicationId`.\n\nPlay respinge build-urile semnate cu cheia de debug. `versionCode` trebuie să crească la fiecare build publicat."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Keystore-ul și parolele nu intră în repository; vin din proprietăți locale sau din secretele CI"
+          },
+          {
+            "ro": "Cu Play App Signing, Google păstrează cheia de semnare a aplicației, iar tu încarci build-uri semnate cu o cheie de upload"
+          },
+          {
+            "ro": "Un APK instalat manual se poate actualiza doar cu un APK semnat cu aceeași cheie"
+          },
+          { "ro": "Google Play acceptă build-uri semnate cu cheia de debug" },
+          { "ro": "`versionCode` poate rămâne același de la un release la altul" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "react-native.components.senior.q1",
+      "topicId": "react-native.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "TalkBack citește un card de produs ca cinci elemente separate: imaginea, titlul, prețul, rating-ul și săgeata. Utilizatorul trebuie să gliseze de cinci ori pentru fiecare produs. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Pe un View, `accessible` grupează copiii într-un singur element focusabil. Eticheta compusă (`Căști X, 299 lei, 4,5 stele`) transmite informația într-un singur pas, iar rolul spune că elementul se poate activa. Imaginea decorativă și săgeata nu mai apar ca elemente separate.\n\nAscunderea copiilor fără o etichetă pe card îl face complet invizibil pentru cititorul de ecran. Dacă un card are acțiuni secundare (de exemplu „Adaugă la favorite”), le expui prin `accessibilityActions` în loc să le lași ca elemente separate. Verifică pe dispozitiv, cu TalkBack și VoiceOver."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Faci cardul un singur element accesibil (`accessible`, `accessibilityRole=\"button\"`) cu o etichetă care conține informațiile importante"
+          },
+          { "ro": "Setezi `importantForAccessibility=\"no-hide-descendants\"` pe card" },
+          { "ro": "Mărești fontul, ca TalkBack să citească mai repede" },
+          { "ro": "Adaugi `accessibilityHint` pe fiecare dintre cele cinci elemente" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.performance.senior.q1",
+      "topicId": "react-native.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pe un Android mid-range, aplicația devine interactivă după 4 s. Profilarea arată că cel mai mult durează încărcarea și execuția bundle-ului JavaScript înainte de primul ecran. Ce ajută cel mai direct?"
+      },
+      "explanation": {
+        "ro": "Hermes compilează JavaScript-ul în bytecode la build, deci la pornire nu mai există parsare și compilare. Codul se încarcă din fișier mapat în memorie, iar efectul cel mai mare se vede pe telefoanele slabe.\n\nAl doilea câștig: execuți doar ce trebuie pentru primul ecran. Inline requires și ecranele încărcate lazy amână inițializarea modulelor grele (SDK-uri de analytics, biblioteci de grafice) până la prima utilizare. Măsoară apoi pe un build de release, pe un telefon real: TTI, nu impresia. Un splash mai lung doar ascunde problema."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Hermes cu bytecode precompilat și amânarea modulelor care nu sunt necesare primului ecran (inline requires, ecrane lazy)"
+          },
+          { "ro": "Un splash screen afișat mai mult timp" },
+          { "ro": "Mutarea tuturor importurilor în `App.tsx`, ca să fie încărcate o singură dată" },
+          { "ro": "Activarea modului debug în release, pentru loguri mai detaliate" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.navigation.senior.f1",
+      "topicId": "react-native.navigation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Utilizatorul apasă o notificare „Comanda #123 a fost livrată”. Cum proiectezi deep link-ul, astfel încât să funcționeze corect în toate situațiile?"
+      },
+      "explanation": {
+        "ro": "Deep link-urile din notificări sunt o sursă clasică de bug-uri raportate doar din producție: aplicația deschide ecranul greșit la cold start, link-ul se pierde după login sau Back închide aplicația.\n\nUn răspuns senior enumeră stările aplicației și tratează fiecare explicit, nu doar „cazul fericit”."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Notificarea poartă un URL (`myapp://orders/123`), iar navigarea trece prin configurarea `linking` a React Navigation, nu prin apeluri `navigate` împrăștiate.\n\nSituațiile de acoperit:\n\n- **Cold start:** aplicația pornește din notificare. Citesc link-ul inițial (`getInitialURL`, plus notificarea inițială a bibliotecii de notificări) și îl aplic după bootstrap.\n- **Aplicația în fundal sau deschisă:** mă abonez la evenimentele de deschidere a notificării.\n- **Autentificare:** dacă sesiunea a expirat, păstrez link-ul în așteptare, trec prin login și abia apoi îl aplic.\n- **Stiva de navigare:** configurez ecranul inițial al navigatorului imbricat, ca Back să ducă la lista de comenzi, nu să închidă aplicația.\n- **Date invalide:** validez parametrii (id-ul poate fi greșit sau comanda ștearsă) și afișez un ecran de eroare clar.\n\nTestez fiecare caz cu `adb shell am start -d` și cu notificări reale, pe aplicația oprită, în fundal și deschisă."
+        },
+        "keyPoints": [
+          { "ro": "URL în notificare, rezolvat prin configurarea `linking`" },
+          { "ro": "Cold start vs aplicație în fundal sau deschisă" },
+          { "ro": "Link păstrat în așteptare până după autentificare" },
+          { "ro": "Stivă corectă: Back duce la ecranul părinte" },
+          { "ro": "Validarea parametrilor și starea de eroare" }
+        ]
+      }
+    },
+    {
+      "id": "react-native.release.senior.f1",
+      "topicId": "react-native.release.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum livrezi în siguranță o funcționalitate riscantă într-o aplicație React Native cu sute de mii de utilizatori? Discută OTA updates, feature flags și rollout-ul în magazine."
+      },
+      "explanation": {
+        "ro": "Pe mobil nu poți face rollback ca pe un server: un binar publicat rămâne pe telefoane săptămâni sau luni. De aceea întrebarea testează mecanismele care reduc impactul unei greșeli.\n\nApp Center CodePush a fost retras în 2025, deci un răspuns actual menționează alternativele și, mai important, limitele oricărei soluții OTA."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Separ **deploy-ul** (codul ajunge pe telefon) de **release** (utilizatorul vede funcționalitatea):\n\n- **Feature flags** controlate de la distanță: activez funcționalitatea treptat (intern, 1%, 10%, toți) și o pot opri instant (kill switch), fără build nou.\n- **Staged rollout** în Play Console (și phased release pe iOS): binarul nou ajunge întâi la un procent mic. Opresc rollout-ul dacă crash-free rate scade sau apar erori noi în Sentry sau Crashlytics.\n- **OTA updates** (de exemplu Expo Updates sau o soluție self-hosted) doar pentru JavaScript și assets. Orice schimbare de cod nativ cere un binar nou, iar fiecare update OTA trebuie legat de versiunea de runtime nativ compatibilă. Respect regulile magazinelor: OTA pentru corecturi, nu pentru a schimba scopul aplicației.\n\nÎn plus: API-ul rămâne compatibil cu versiunile vechi ale aplicației aflate încă pe telefoane și am un mecanism de update forțat pentru cazurile extreme. Decizia de a continua rollout-ul se bazează pe metrici definite dinainte, nu pe impresii."
+        },
+        "keyPoints": [
+          { "ro": "Deploy separat de release prin feature flags și kill switch" },
+          { "ro": "Staged rollout cu praguri pe crash-free rate" },
+          { "ro": "OTA doar pentru JS și assets, legat de runtime-ul nativ" },
+          { "ro": "API compatibil cu versiunile vechi ale aplicației" },
+          { "ro": "Monitorizare și criterii de oprire stabilite dinainte" }
+        ]
+      }
     }
   ]
 }
