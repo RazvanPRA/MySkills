@@ -592,6 +592,36 @@
       "payload": { "items": [{ "ro": "`A`" }, { "ro": "`C`" }, { "ro": "`B`" }] }
     },
     {
+      "id": "logic.event-loop.junior.q2",
+      "topicId": "logic.event-loop.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele?\n\n~~~js\nconsole.log('start');\nPromise.resolve().then(() => console.log('then'));\nconsole.log('end');\n~~~"
+      },
+      "explanation": {
+        "ro": "Chiar dacă promisiunea e deja rezolvată, callback-ul din `then` nu rulează imediat: intră în coada de **microtask-uri**, care se golește abia după ce codul sincron curent s-a terminat. Deci `start`, `end`, apoi `then`.\n\nGaranția e intenționată: un callback `then` rulează mereu asincron, indiferent dacă promisiunea era deja rezolvată sau nu. Codul se comportă la fel în ambele cazuri, ceea ce elimină o clasă întreagă de bug-uri de ordine."
+      },
+      "type": "ordering",
+      "payload": { "items": [{ "ro": "`start`" }, { "ro": "`end`" }, { "ro": "`then`" }] }
+    },
+    {
+      "id": "logic.event-loop.junior.q3",
+      "topicId": "logic.event-loop.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Ce afișează codul? Scrie mesajele în ordine, separate prin spațiu.\n\n~~~js\nasync function f() {\n  console.log('B');\n  return 'D';\n}\nconsole.log('A');\nf().then(console.log);\nconsole.log('C');\n~~~"
+      },
+      "explanation": {
+        "ro": "O funcție `async` rulează **sincron** până la primul `await`. `f` nu are niciun `await`, deci `B` se afișează imediat, între `A` și `C`.\n\nValoarea returnată nu ajunge însă direct la apelant: `f()` întoarce o promisiune rezolvată cu `'D'`, iar `then` rulează ca microtask, după codul sincron. De aici `D` la final.\n\nConcluzie: `async` nu mută codul pe alt fir și nu-l amână; doar împachetează rezultatul într-o promisiune."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "A\nB\nC\nD", "accepted": [] }
+    },
+    {
       "id": "logic.event-loop.mid.q1",
       "topicId": "logic.event-loop.mid",
       "level": "mid",
@@ -631,6 +661,23 @@
       "payload": { "mode": "input", "expected": "sync\nnextTick\npromise", "accepted": [] }
     },
     {
+      "id": "logic.event-loop.mid.q3",
+      "topicId": "logic.event-loop.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele (browser sau Node.js ≥ 11)?\n\n~~~js\nsetTimeout(() => {\n  console.log('t1');\n  Promise.resolve().then(() => console.log('p1'));\n}, 0);\nsetTimeout(() => console.log('t2'), 0);\nconsole.log('sync');\n~~~"
+      },
+      "explanation": {
+        "ro": "Întâi codul sincron: `sync`. Apoi event loop-ul ia **un** macrotask, primul timer: `t1`. Callback-ul lui programează un microtask, iar coada de microtask-uri se golește după fiecare macrotask, deci `p1` rulează înaintea celui de-al doilea timer.\n\nDetaliu de istorie: până la Node 11, Node rula toate timerele expirate dintr-o dată, apoi microtask-urile (ordinea era `t1`, `t2`, `p1`). Comportamentul a fost aliniat cu browserele. Ideea de reținut rămâne aceeași: microtask-urile au prioritate față de orice task următor."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [{ "ro": "`sync`" }, { "ro": "`t1`" }, { "ro": "`p1`" }, { "ro": "`t2`" }]
+      }
+    },
+    {
       "id": "logic.event-loop.senior.q1",
       "topicId": "logic.event-loop.senior",
       "level": "senior",
@@ -652,6 +699,38 @@
           { "ro": "`timeout`, apoi `done 3`" }
         ],
         "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.event-loop.senior.q2",
+      "topicId": "logic.event-loop.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele?\n\n~~~js\nasync function a() {\n  return Promise.resolve('a');\n}\nasync function b() {\n  return 'b';\n}\na().then(console.log);\nb().then(console.log);\nPromise.resolve().then(() => console.log('c'));\n~~~"
+      },
+      "explanation": {
+        "ro": "`b` returnează o valoare simplă: promisiunea lui e rezolvată imediat, iar `then` rulează la primul microtask.\n\n`a` returnează o **promisiune**. Promisiunea funcției async nu poate prelua valoarea direct: trebuie să „adopte” promisiunea întoarsă, ceea ce costă două microtask-uri în plus (unul pentru a apela `then` pe ea, unul pentru rezolvare). Între timp rulează `b` și `c`, deci `a` apare ultimul.\n\nÎn practică, nu te baza pe numărul exact de tick-uri: e un detaliu de implementare al specificației, iar codul a cărui corectitudine depinde de el e fragil. Lecția utilă e alta: `return promise` și `return await promise` nu sunt identice. Diferă ca ordine și, important, ca tratare a erorilor într-un `try/catch`."
+      },
+      "type": "ordering",
+      "payload": { "items": [{ "ro": "`b`" }, { "ro": "`c`" }, { "ro": "`a`" }] }
+    },
+    {
+      "id": "logic.event-loop.senior.q3",
+      "topicId": "logic.event-loop.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele?\n\n~~~js\nconst wait = (ms, value) =>\n  new Promise(resolve =>\n    setTimeout(() => {\n      console.log('done', value);\n      resolve(value);\n    }, ms),\n  );\nPromise.race([wait(20, 'slow'), wait(10, 'fast')]).then(v => console.log('winner', v));\n~~~"
+      },
+      "explanation": {
+        "ro": "`Promise.race` se rezolvă cu prima promisiune care se termină, dar **nu o oprește** pe cealaltă. Timer-ul de 20 ms rulează oricum, deci `done slow` apare și după ce cursa a fost decisă.\n\nAsta contează când folosești `race` pentru timeout: `Promise.race([fetch(url), timeout(5000)])` renunță la rezultat, dar cererea HTTP continuă în fundal și consumă resurse. Anularea reală cere `AbortController`: `fetch(url, { signal: AbortSignal.timeout(5000) })`."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [{ "ro": "`done fast`" }, { "ro": "`winner fast`" }, { "ro": "`done slow`" }]
       }
     },
     {
