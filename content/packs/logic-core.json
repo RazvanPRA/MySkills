@@ -1249,6 +1249,25 @@
       "payload": { "mode": "input", "expected": "8", "accepted": ["8 zile", "ziua 8", "a 8-a"] }
     },
     {
+      "id": "logic.puzzles.junior.q2",
+      "topicId": "logic.puzzles.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O minge și o bâtă costă împreună 1,10 lei. Bâta costă cu 1 leu mai mult decât mingea. Câți **bani** costă mingea? Scrie doar numărul."
+      },
+      "explanation": {
+        "ro": "Răspunsul care vine primul, 10 bani, e greșit: bâta ar costa 1,10 lei, iar împreună 1,20 lei.\n\nScrie ecuația: mingea costă x, bâta x + 1, deci 2x + 1 = 1,10 și x = 0,05 lei, adică 5 bani. Verificare: 0,05 + 1,05 = 1,10.\n\nProblema e celebră tocmai pentru că intuiția răspunde înainte de calcul. La interviu, același reflex te ajută: formulezi constrângerile explicit și verifici răspunsul în enunț înainte să-l spui."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "input",
+        "expected": "5",
+        "accepted": ["5 bani", "0,05", "0.05", "0,05 lei", "0.05 lei"]
+      }
+    },
+    {
       "id": "logic.puzzles.mid.q1",
       "topicId": "logic.puzzles.mid",
       "level": "mid",
@@ -1289,6 +1308,29 @@
       }
     },
     {
+      "id": "logic.puzzles.mid.q3",
+      "topicId": "logic.puzzles.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pe o insulă, cavalerii spun mereu adevărul, iar mincinoșii mint mereu. A spune: „Amândoi suntem mincinoși.” Ce sunt A și B?"
+      },
+      "explanation": {
+        "ro": "Ia pe rând ipotezele despre vorbitor:\n\n- Dacă A ar fi cavaler, afirmația ar fi adevărată, deci A ar fi mincinos: contradicție.\n- Deci A e mincinos, iar afirmația e falsă: nu e adevărat că amândoi sunt mincinoși. Cum A este, B trebuie să fie cavaler.\n\nMetoda e analiza pe cazuri cu eliminarea contradicțiilor, aceeași pe care o folosești când depanezi: presupui o cauză, urmărești consecințele și o elimini când contrazice ce observi."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "A e mincinos, B e cavaler" },
+          { "ro": "Amândoi sunt mincinoși" },
+          { "ro": "A e cavaler, B e mincinos" },
+          { "ro": "Nu se poate stabili" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.puzzles.senior.q1",
       "topicId": "logic.puzzles.senior",
       "level": "senior",
@@ -1305,6 +1347,36 @@
         "options": [{ "ro": "2" }, { "ro": "3" }, { "ro": "1" }, { "ro": "4" }],
         "correctIndex": 0
       }
+    },
+    {
+      "id": "logic.puzzles.senior.q2",
+      "topicId": "logic.puzzles.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Un hol are 100 de uși închise, numerotate de la 1 la 100. La trecerea k (k = 1…100), schimbi starea fiecărei uși al cărei număr e multiplu de k: o deschizi dacă e închisă și o închizi dacă e deschisă. Câte uși sunt deschise la final?"
+      },
+      "explanation": {
+        "ro": "Ușa n își schimbă starea o dată pentru fiecare divizor al lui n și rămâne deschisă dacă numărul de divizori e **impar**.\n\nDivizorii vin în perechi (d, n/d), de exemplu 12: (1, 12), (2, 6), (3, 4). Excepția sunt pătratele perfecte, unde perechea (√n, √n) are un singur element: 36 are 1, 2, 3, 4, **6**, 9, 12, 18, 36. Deci rămân deschise ușile 1, 4, 9, …, 100: zece uși.\n\nTehnica de reținut: în loc să simulezi 100 de treceri, schimbi perspectiva de la treceri la o singură ușă și cauți un invariant. Simularea e O(n log n); argumentul dă direct ⌊√n⌋."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "10", "accepted": ["10 uși"] }
+    },
+    {
+      "id": "logic.puzzles.senior.q3",
+      "topicId": "logic.puzzles.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 240,
+      "prompt": {
+        "ro": "Ai 2 ouă identice și o clădire cu 100 de etaje. Există un etaj critic: un ou aruncat de la acel etaj sau mai sus se sparge, de mai jos nu. Un ou spart nu mai poate fi folosit. Care e numărul minim de aruncări care **garantează** găsirea etajului critic, în cel mai rău caz?"
+      },
+      "explanation": {
+        "ro": "Cu un singur ou ești obligat să mergi etaj cu etaj. Deci primul ou trebuie să împartă clădirea în bucăți, iar al doilea le parcurge liniar.\n\nDacă ai voie la k aruncări, primul ou pornește de la etajul k: dacă se sparge, ai k − 1 aruncări pentru etajele de sub el. Dacă nu, următorul salt e mai mic cu 1 (k − 1 etaje), pentru că ai consumat deja o aruncare. Acoperi astfel k + (k − 1) + … + 1 = k(k + 1)/2 etaje. Cel mai mic k cu k(k + 1)/2 ≥ 100 e 14 (14 · 15 / 2 = 105).\n\nStrategia: 14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100. Ideea de senior e echilibrarea celui mai rău caz: fiecare ramură a deciziei trebuie să coste la fel. Salturile egale, de câte 10, dau 19 aruncări în cel mai rău caz."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "14", "accepted": ["14 aruncări"] }
     },
     {
       "id": "logic.debugging.junior.q1",
