@@ -958,6 +958,262 @@
           { "ro": "Restaurări și failover testate regulat" }
         ]
       }
+    },
+    {
+      "id": "mongodb.crud.junior.q1",
+      "topicId": "mongodb.crud.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce câmpuri conțin documentele returnate?\n\n~~~js\ndb.users.find({ country: 'RO' }, { name: 1, email: 1 });\n~~~"
+      },
+      "explanation": {
+        "ro": "Al doilea argument al lui `find` e **proiecția**: alege ce câmpuri se întorc. `_id` e inclus implicit, chiar dacă nu apare în proiecție; îl excluzi explicit cu `_id: 0`.\n\nProiecția reduce datele transferate prin rețea și memoria folosită de aplicație. Când toate câmpurile cerute (inclusiv filtrul) sunt într-un index și `_id` e exclus, interogarea poate fi servită doar din index, fără să citească documentele."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`_id`, `name` și `email`" },
+          { "ro": "Doar `name` și `email`" },
+          { "ro": "Toate câmpurile, pentru că proiecția se aplică doar la sortare" },
+          { "ro": "`country`, `name` și `email`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.modeling.junior.q1",
+      "topicId": "mongodb.modeling.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Inserezi un document fără câmpul `_id`. Ce se întâmplă?" },
+      "explanation": {
+        "ro": "Fiecare document are nevoie de un `_id` unic în colecție. Dacă lipsește, driverul (sau serverul) generează un `ObjectId`: 12 octeți care conțin un timestamp, o valoare aleatoare și un contor. Id-urile pot fi generate astfel pe client, fără coordonare cu serverul.\n\nColecția are automat un index unic pe `_id`, iar valoarea nu se poate modifica după inserare. Poți folosi și propriul `_id` (un cod de business, un UUID), dacă e unic și stabil."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Se generează automat un `ObjectId`, unic în colecție, care include și momentul creării"
+          },
+          { "ro": "Inserarea eșuează, pentru că `_id` e obligatoriu" },
+          { "ro": "Documentul e salvat cu `_id: null`" },
+          { "ro": "Se generează un număr incremental, ca un `SERIAL` din SQL" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.scaling.junior.q1",
+      "topicId": "mongodb.scaling.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un replica set are trei membri: un primar și doi secundari. Serverul primar cade. Ce se întâmplă?"
+      },
+      "explanation": {
+        "ro": "Un replica set ține aceleași date pe mai mulți membri. Doar primarul acceptă scrieri, iar secundarii îi replică operațiile. Când primarul nu mai răspunde, membrii rămași aleg un nou primar; alegerea cere o **majoritate** (2 din 3), de aceea replica set-urile au un număr impar de membri.\n\nDriverele moderne descoperă singure noul primar, iar `retryable writes` reîncearcă automat o scriere întreruptă de failover. Scrierile confirmate doar de vechiul primar (nu și de majoritate) pot fi anulate (rollback); de aceea contează `w: \"majority\"`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Secundarii țin o alegere și unul devine primar în câteva secunde; driverele trimit scrierile către noul primar"
+          },
+          { "ro": "Baza de date devine read-only până când un administrator repornește primarul" },
+          { "ro": "Ambii secundari devin primari, ca să împartă scrierile" },
+          { "ro": "Toate datele scrise de la ultimul backup se pierd" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.crud.mid.q1",
+      "topicId": "mongodb.crud.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Numeri vizitele pe pagină pe zi. Ce face operația dacă documentul pentru `/home` și ziua respectivă **nu există** încă?\n\n~~~js\ndb.pageStats.updateOne(\n  { page: '/home', day: '2026-11-10' },\n  { $inc: { views: 1 }, $setOnInsert: { createdAt: new Date() } },\n  { upsert: true },\n);\n~~~"
+      },
+      "explanation": {
+        "ro": "Cu `upsert: true`, dacă niciun document nu se potrivește, MongoDB creează unul din câmpurile de egalitate ale filtrului, aplică operatorii de update (`$inc` pornește de la 0) și adaugă câmpurile din `$setOnInsert`. Dacă documentul există, se aplică doar `$inc`; `$setOnInsert` e ignorat.\n\nOperația e atomică pe document, deci contorul e corect și la cereri concurente, fără citire urmată de scriere. Adaugă un index unic pe `{ page: 1, day: 1 }`: fără el, două upsert-uri simultane pot crea două documente pentru aceeași zi."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Creează documentul cu `page`, `day` (din filtru), `views: 1` și `createdAt`" },
+          { "ro": "Nu face nimic, pentru că `$inc` nu poate crea câmpuri" },
+          { "ro": "Creează un document doar cu `views: 1` și `createdAt`" },
+          { "ro": "Aruncă o eroare, pentru că `$inc` și `$setOnInsert` nu pot fi combinate" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.aggregation.mid.q2",
+      "topicId": "mongodb.aggregation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Comanda `o3` are `items: []`. Ce se întâmplă cu ea în pipeline?\n\n~~~js\ndb.orders.aggregate([\n  { $unwind: '$items' },\n  { $group: { _id: '$_id', products: { $sum: 1 } } },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "`$unwind` produce câte un document pentru fiecare element al array-ului. Un array gol, un câmp lipsă sau `null` nu produc nimic, deci comanda dispare tăcut din raport.\n\nDacă vrei să o păstrezi: `{ $unwind: { path: '$items', preserveNullAndEmptyArrays: true } }`, apoi numeri cu o condiție. Pentru o simplă numărare, `{ $size: '$items' }` într-un `$project` e mai ieftin decât `$unwind` + `$group`. Aceeași capcană apare după `$lookup` fără potriviri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Dispare din rezultat: `$unwind` nu produce niciun document pentru un array gol"
+          },
+          { "ro": "Apare cu `products: 0`" },
+          { "ro": "Apare cu `products: 1`" },
+          { "ro": "Pipeline-ul aruncă o eroare" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.scaling.mid.q1",
+      "topicId": "mongodb.scaling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre atomicitate și tranzacții în MongoDB, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Modelarea bună în MongoDB pune datele modificate împreună în același document, iar atunci atomicitatea pe document e suficientă pentru majoritatea cazurilor.\n\nTranzacțiile multi-document există (de exemplu, un transfer între două conturi), dar au cost: lock-uri ținute mai mult, presiune pe cache, conflicte care cer retry. De aceea au o durată limitată. O aplicație care are nevoie de tranzacții peste tot e, de obicei, un semn că modelul de date e relațional și ar sta mai bine în PostgreSQL."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O operație pe un singur document e atomică fără tranzacție, inclusiv modificările în sub-documente și array-uri"
+          },
+          { "ro": "Tranzacțiile multi-document necesită un replica set sau un cluster sharded" },
+          {
+            "ro": "O tranzacție are o limită de durată (implicit 60 de secunde) și trebuie ținută scurtă"
+          },
+          {
+            "ro": "Cu tranzacții, modelarea nu mai contează: poți normaliza totul ca în SQL, fără cost"
+          },
+          { "ro": "Tranzacțiile funcționează și pe un server standalone" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "mongodb.performance.senior.q1",
+      "topicId": "mongodb.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Despre indecșii speciali din MongoDB, care afirmații sunt corecte?" },
+      "explanation": {
+        "ro": "TTL e potrivit pentru sesiuni, loguri temporare sau coduri de verificare. Ștergerea o face un proces de fundal care rulează periodic (implicit la 60 de secunde), deci un document poate rămâne puțin după expirare. Nu te baza pe TTL pentru logică exactă: filtrează și în interogare.\n\nUn index parțial, de exemplu doar pe comenzile `status: \"pending\"`, e mic și rapid, dar optimizatorul îl folosește doar când interogarea garantează aceeași condiție.\n\nCovered queries elimină citirea documentelor, cel mai mare cost la volume mari. Verifică în `explain()`: `totalDocsExamined: 0`."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Un index TTL pe `createdAt` cu `expireAfterSeconds` șterge automat documentele expirate"
+          },
+          {
+            "ro": "Un index parțial (`partialFilterExpression`) conține doar documentele care respectă filtrul, deci e mai mic"
+          },
+          {
+            "ro": "O covered query citește doar indexul, dacă filtrul și câmpurile proiectate sunt în index și `_id` e exclus"
+          },
+          { "ro": "Indexul TTL șterge documentul exact în secunda în care expiră" },
+          {
+            "ro": "Un index parțial e folosit și de interogările care nu includ condiția filtrului"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "mongodb.aggregation.senior.q1",
+      "topicId": "mongodb.aggregation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Colecția `orders` are 50 de milioane de documente și un index pe `{ status: 1, createdAt: 1 }`. Pipeline-ul e lent. Ce schimbare ajută cel mai mult?\n\n~~~js\ndb.orders.aggregate([\n  { $lookup: { from: 'customers', localField: 'customerId', foreignField: '_id', as: 'customer' } },\n  { $unwind: '$customer' },\n  { $match: { status: 'paid', createdAt: { $gte: ISODate('2026-11-01') } } },\n  { $group: { _id: '$customer.country', total: { $sum: '$amount' } } },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "Doar etapele de la începutul pipeline-ului pot folosi indecșii colecției. Aici `$lookup` rulează pentru toate cele 50 de milioane de comenzi, iar filtrul elimină apoi majoritatea lor. Cu `$match` primul, indexul selectează doar comenzile plătite din noiembrie, iar `$lookup` rulează doar pentru ele.\n\nOptimizatorul poate reordona unele etape, dar nu te baza pe el: scrie pipeline-ul în ordinea corectă și verifică cu `explain()`. Regula: filtrează și proiectează cât mai devreme, fă join-urile și grupările pe cât mai puține documente. `allowDiskUse` evită eroarea de memorie, nu face pipeline-ul mai rapid."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Muți `$match` la început: folosește indexul și reduce documentele pentru care rulează `$lookup`"
+          },
+          { "ro": "Adaugi `allowDiskUse: true`" },
+          { "ro": "Înlocuiești `$group` cu un `$project`" },
+          { "ro": "Adaugi un index pe `customers.country`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.modeling.senior.f1",
+      "topicId": "mongodb.modeling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ce pattern-uri de schemă MongoDB folosești pentru volume mari și de ce sunt periculoase array-urile care cresc nelimitat?"
+      },
+      "explanation": {
+        "ro": "În MongoDB, schema se proiectează după **tiparele de acces**, nu după entități. Fiecare pattern face un compromis: citiri mai rapide în schimbul unor scrieri mai complexe sau al unor date duplicate, care trebuie ținute sincronizate."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Array-urile nelimitate** (toate comentariile, toate citirile unui senzor într-un document) sunt periculoase pentru că:\n\n- documentul are o limită de 16 MB;\n- fiecare update rescrie și mută un document din ce în ce mai mare;\n- un index pe array (multikey) are câte o intrare per element și crește proporțional.\n\n**Pattern-uri:**\n\n- **Bucket:** grupezi datele de tip serie de timp pe intervale (un document per senzor per oră, cu un array limitat de citiri și sumare precalculate). Pentru serii de timp, colecțiile time series fac asta automat.\n- **Subset:** păstrezi în document doar ce se afișează des (ultimele 10 recenzii), iar restul într-o colecție separată.\n- **Computed:** stochezi valori calculate (total, număr, medie), actualizate la scriere, în loc să le recalculezi la fiecare citire.\n- **Extended reference:** copiezi câteva câmpuri stabile ale entității referite (numele clientului) ca să eviți un `$lookup` frecvent.\n\nValidarea schemei cu `$jsonSchema` la nivel de colecție și un câmp `schemaVersion` în documente fac evoluția schemei controlabilă."
+        },
+        "keyPoints": [
+          { "ro": "Limita de 16 MB, rescrieri costisitoare, indecși multikey mari" },
+          { "ro": "Bucket pentru serii de timp" },
+          { "ro": "Subset pentru datele afișate des" },
+          { "ro": "Computed și extended reference ca să eviți calcule și join-uri la citire" },
+          { "ro": "Validare `$jsonSchema` și versionarea schemei" }
+        ]
+      }
+    },
+    {
+      "id": "mongodb.aggregation.senior.f1",
+      "topicId": "mongodb.aggregation.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Un dashboard afișează vânzările pe zi și pe țară, calculate din 100 de milioane de comenzi, și se încarcă în 20 de secunde. Când agregi la cerere și când precalculezi? Cum ai rezolva cazul acesta?"
+      },
+      "explanation": {
+        "ro": "Agregarea repetată a acelorași date istorice la fiecare încărcare de pagină e risipă. Un răspuns senior pornește de la frecvența citirii, volumul datelor și cât de proaspete trebuie să fie, apoi alege mecanismul."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**La cerere** e potrivit când datele sunt puține, interogările sunt ad-hoc sau rezultatul trebuie să fie exact în timp real.\n\nAici datele sunt multe, întrebarea e mereu aceeași, iar zilele trecute nu se mai schimbă, deci **precalculez**:\n\n- O colecție de sumar `dailySales` (`{ day, country, total, count }`), completată de un pipeline care se termină cu `$merge`. Rulez periodic doar pentru intervalul nou (ziua curentă), nu pentru tot istoricul.\n- Alternativ, pattern-ul computed: actualizez sumarul la fiecare comandă (cu `$inc` și upsert) sau dintr-un consumator de change streams, dacă vreau sumarul aproape în timp real.\n- Dashboard-ul citește din sumar: câteva sute de documente, cu index pe `day`.\n\nCompromisuri: prospețimea datelor (câteva minute de întârziere), complexitatea recalculării când se modifică o comandă veche (rambursări) și încă o structură de întreținut. Agregările grele rulează pe un secundar sau pe un nod de analytics, nu pe primar."
+        },
+        "keyPoints": [
+          { "ro": "La cerere: date puține, interogări ad-hoc, nevoie de exactitate" },
+          { "ro": "Precalculare: interogare repetată pe date istorice stabile" },
+          { "ro": "`$merge` incremental într-o colecție de sumar" },
+          { "ro": "Computed pattern sau change streams pentru sumar aproape în timp real" },
+          { "ro": "Compromisuri: prospețime, recalculare, întreținere" }
+        ]
+      }
     }
   ]
 }
