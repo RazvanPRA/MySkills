@@ -1049,6 +1049,261 @@
           { "ro": "Lecție transformată în proces" }
         ]
       }
+    },
+    {
+      "id": "fundamentals.javascript.junior.q1",
+      "topicId": "fundamentals.javascript.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce se întâmplă la rularea codului?\n\n~~~js\nconst user = { name: 'Ana' };\nuser.name = 'Ion';   // linia 2\nuser = { name: 'Maria' };   // linia 3\n~~~"
+      },
+      "explanation": {
+        "ro": "`const` interzice **reatribuirea variabilei**, nu modificarea valorii. `user` indică mereu același obiect, dar proprietățile obiectului se pot schimba.\n\nDacă vrei un obiect care nu se poate modifica, `Object.freeze(user)` (superficial: obiectele imbricate rămân modificabile) sau, în TypeScript, `Readonly<T>` și `as const`, verificate la compilare. Folosește `const` implicit și `let` doar când variabila chiar se reatribuie: codul spune astfel ce se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Linia 2 funcționează; linia 3 aruncă `TypeError: Assignment to constant variable`"
+          },
+          { "ro": "Ambele linii aruncă eroare, pentru că obiectul e constant" },
+          { "ro": "Ambele linii funcționează" },
+          { "ro": "Linia 2 aruncă eroare, linia 3 funcționează" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.typescript.junior.q1",
+      "topicId": "fundamentals.typescript.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Cu `strict` activat, de ce nu se compilează funcția și cum o repari?\n\n~~~ts\nfunction initials(name: string | undefined): string {\n  return name.slice(0, 2).toUpperCase();\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`strictNullChecks` (parte din `strict`) face ca `undefined` și `null` să fie tipuri separate. Accesul la o proprietate pe o valoare care poate fi `undefined` e o eroare de compilare, nu un crash la runtime.\n\nDupă o verificare (`if`, `typeof`, `??`, `?.`), TypeScript **restrânge** (narrowing) tipul în restul blocului. Evită `name!.slice(...)`: operatorul `!` doar reduce compilatorul la tăcere, iar crash-ul revine la runtime."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`name` poate fi `undefined`; verifici întâi valoarea, de exemplu `if (!name) return '';`, iar TypeScript restrânge tipul la `string`"
+          },
+          { "ro": "`slice` nu există pe tipul `string`" },
+          { "ro": "Tipul returnat trebuie să fie `string | undefined`" },
+          { "ro": "Uniunile nu sunt permise ca tip de parametru" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.http.junior.q1",
+      "topicId": "fundamentals.http.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un utilizator autentificat încearcă să șteargă articolul altui utilizator, iar regulile nu îi permit. Ce status HTTP returnează API-ul?"
+      },
+      "explanation": {
+        "ro": "`401` înseamnă „nu știu cine ești”: lipsește autentificarea sau token-ul e invalid ori expirat. Clientul ar trebui să se autentifice (din nou). `403` înseamnă „știu cine ești, dar nu ai voie”: re-autentificarea nu schimbă nimic.\n\nUneori se returnează `404` în loc de `403`, ca să nu confirmi că resursa există, de exemplu pentru documentele private ale altor utilizatori. `400` e pentru o cerere malformată, iar `500` pentru erori ale serverului, niciodată pentru reguli de business."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`403 Forbidden`" },
+          { "ro": "`401 Unauthorized`" },
+          { "ro": "`400 Bad Request`" },
+          { "ro": "`500 Internal Server Error`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.api-design.mid.q1",
+      "topicId": "fundamentals.api-design.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un feed are milioane de postări, iar postările noi apar continuu. Clientul încarcă pagini de câte 20. Ce paginare alegi?"
+      },
+      "explanation": {
+        "ro": "Offset are două probleme pe un feed mare și viu:\n\n- **Performanță:** `OFFSET 9980` citește și aruncă 9 980 de rânduri; costul crește cu fiecare pagină.\n- **Corectitudine:** dacă apar postări noi între cereri, elementele se mută între pagini, iar clientul vede duplicate sau sare peste unele.\n\nCursorul (de obicei opac, codificat în Base64) indică poziția exactă, iar cu un index pe `(created_at, id)` fiecare pagină costă la fel. Id-ul din cursor departajează postările cu același timestamp. Compromisul: nu poți sări direct la pagina 500, ceea ce un feed rareori cere."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cursor (keyset): clientul trimite cursorul ultimului element, iar serverul cere `WHERE (created_at, id) < (...) ORDER BY created_at DESC, id DESC LIMIT 20`"
+          },
+          { "ro": "Offset: `?page=500&size=20`, tradus în `OFFSET 9980 LIMIT 20`" },
+          { "ro": "Returnezi tot feed-ul și paginezi pe client" },
+          { "ro": "Paginare după numărul paginii, cu un cache pe server al fiecărei pagini" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.testing.mid.q1",
+      "topicId": "fundamentals.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre practicile de testare de mai jos sunt sănătoase?" },
+      "explanation": {
+        "ro": "Mock-urile pe fiecare clasă internă cuplează testele de implementare: orice refactorizare le strică, deși comportamentul e același. Simulează doar ce e lent, nedeterminist sau extern.\n\nUn test cu un singur comportament și un nume clar (`returnează 404 când comanda nu există`) spune exact ce s-a stricat când pică.\n\nCoverage-ul arată ce cod a rulat, nu ce a fost verificat: un test fără aserțiuni crește coverage-ul. Testele dependente de ordine pică aleator când rulează în paralel sau separat; fiecare test își creează propriile date."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Simulezi granițele pe care nu le controlezi (API-uri externe, timpul, generarea de id-uri), nu fiecare clasă internă"
+          },
+          { "ro": "Fiecare test verifică un singur comportament și are un nume care îl descrie" },
+          {
+            "ro": "Testele de integrare verifică împreună codul tău și infrastructura reală (baza de date, serializarea)"
+          },
+          { "ro": "Un coverage de 100% garantează că nu există bug-uri" },
+          {
+            "ro": "Testele rulează într-o anumită ordine, ca să refolosească datele create de testele anterioare"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "fundamentals.architecture.mid.q1",
+      "topicId": "fundamentals.architecture.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce principiu SOLID încalcă `OrderService` și ce schimbi?\n\n~~~ts\nclass OrderService {\n  private payments = new StripeClient(process.env.STRIPE_KEY!);\n\n  async checkout(order: Order) {\n    await this.payments.charge(order.total);\n  }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Logica de business (checkout) depinde direct de un detaliu de infrastructură (Stripe), pe care îl și construiește. Consecințe: nu poți testa `checkout` fără Stripe, nu poți schimba furnizorul fără să modifici serviciul, iar configurarea (`process.env`) e ascunsă în interiorul clasei.\n\nCu inversarea dependenței, serviciul declară ce are nevoie (`PaymentGateway.charge`), iar compunerea aplicației decide implementarea: Stripe în producție, un fake în teste. Un `switch` pe furnizori ar fi exact problema pe care Open/Closed o descrie, nu soluția."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Dependency Inversion: serviciul creează o implementare concretă; definești o interfață `PaymentGateway` și o primești prin constructor"
+          },
+          { "ro": "Liskov Substitution: `StripeClient` nu poate înlocui `OrderService`" },
+          { "ro": "Open/Closed: trebuie adăugat un `switch` pentru fiecare furnizor de plăți" },
+          { "ro": "Interface Segregation: `Order` are prea multe câmpuri" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.javascript.senior.q1",
+      "topicId": "fundamentals.javascript.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Memoria unui serviciu Node.js crește constant până când procesul e oprit cu OOM. Două heap snapshot-uri, la o oră distanță, arată că diferența e un `Map` declarat la nivel de modul, cu milioane de intrări. Ce faci?\n\n~~~js\nconst cache = new Map();\n\nexport async function getUser(id) {\n  if (!cache.has(id)) cache.set(id, await db.users.find(id));\n  return cache.get(id);\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Garbage collector-ul eliberează doar obiectele **la care nu mai există referințe**. Cache-ul e accesibil din modul pe toată durata procesului, deci fiecare utilizator citit rămâne în memorie. Nu e un bug al GC-ului, ci o scurgere logică: o structură care doar crește.\n\nSoluții: un cache cu limită și expirare (de exemplu `lru-cache`), un cache extern (Redis) partajat între instanțe sau `WeakMap`, când cheile sunt obiecte cu propria durată de viață. Mai multă memorie doar amână crash-ul. Metoda de diagnostic e cea din enunț: snapshot-uri comparate în timp și „retainers” pentru obiectele care cresc."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Limitezi cache-ul: LRU cu dimensiune maximă și TTL; un `Map` la nivel de modul trăiește cât procesul, iar intrările lui nu sunt colectate niciodată"
+          },
+          { "ro": "Apelezi `global.gc()` periodic" },
+          { "ro": "Mărești `--max-old-space-size`" },
+          { "ro": "Înlocuiești `Map` cu un obiect simplu `{}`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.typescript.senior.q1",
+      "topicId": "fundamentals.typescript.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce tip are `G`?\n\n~~~ts\ntype Getters<T> = {\n  [K in keyof T as `get${Capitalize<string & K>}`]: () => T[K];\n};\n\ntype G = Getters<{ name: string; age: number }>;\n~~~"
+      },
+      "explanation": {
+        "ro": "E un **mapped type** cu **key remapping** (`as`): parcurge cheile lui `T` și redenumește fiecare cheie folosind un **template literal type**. `Capitalize` face prima literă mare, iar `string & K` păstrează doar cheile de tip string (cheile pot fi și `number` sau `symbol`).\n\nAceleași mecanisme stau în spatele tipurilor generate din scheme: rute tipizate, event emitters cu nume și payload verificate, clienți de API derivați din contract. Folosește-le pentru a elimina duplicarea dintre tipuri, nu ca exercițiu de stil: un tip pe care colegii nu-l pot citi e o datorie."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ getName: () => string; getAge: () => number }`" },
+          { "ro": "`{ name: () => string; age: () => number }`" },
+          { "ro": "`{ getname: () => string; getage: () => number }`" },
+          { "ro": "`never`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "fundamentals.http.senior.q1",
+      "topicId": "fundamentals.http.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Proiectezi caching-ul unei aplicații web servite printr-un CDN. Care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Strategia standard: assets imutabile, cu hash în nume, cache-uite „pentru totdeauna”; orice schimbare produce alt nume, deci nu e nevoie de invalidare. HTML-ul, punctul de intrare, se revalidează (ETag, `304 Not Modified`), ca un deploy nou să fie vizibil imediat.\n\n`no-cache` permite stocarea, dar cere revalidare înainte de folosire; `no-store` interzice stocarea. `private` limitează cache-ul la browser: e obligatoriu pentru răspunsurile personalizate, altfel CDN-ul poate servi datele unui utilizator altuia. Pentru API-uri, `stale-while-revalidate` și cheile de cache (header-ul `Vary`) completează strategia."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Fișierele cu hash în nume (`app.3f9a1c.js`) pot primi `Cache-Control: public, max-age=31536000, immutable`"
+          },
+          {
+            "ro": "Documentul HTML primește `no-cache`, ca să fie revalidat la fiecare cerere și să indice mereu ultimele assets"
+          },
+          {
+            "ro": "`s-maxage` setează cât păstrează CDN-ul un răspuns, separat de `max-age` pentru browser"
+          },
+          { "ro": "`no-cache` înseamnă că răspunsul nu poate fi stocat deloc" },
+          { "ro": "Răspunsurile marcate `private` pot fi păstrate în cache-ul CDN-ului" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "fundamentals.testing.senior.f1",
+      "topicId": "fundamentals.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Echipa ta are 90% coverage și o suită e2e cu 15% teste instabile, dar bug-urile ajung în continuare în producție. Ce schimbi în strategia de calitate?"
+      },
+      "explanation": {
+        "ro": "Coverage-ul mare cu bug-uri în producție arată că testele verifică ce e ușor de testat, nu ce se strică. Întrebarea testează dacă tratezi calitatea ca pe un sistem, cu feedback și metrici, nu ca pe un procent."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Întâi **măsor** ce se întâmplă, apoi schimb:\n\n- **Bug-urile scăpate:** le analizez pe cele din ultimele luni. Ce tip de test le-ar fi prins? Adesea sunt la granițe (integrare, contracte, date reale), nu în logica deja acoperită de unit tests.\n- **Testele instabile:** le pun în carantină imediat (rulează, dar nu blochează), cu un owner și un termen. O suită care pică aleator învață echipa să ignore roșul, iar atunci nici testele bune nu mai protejează. Cauzele uzuale: așteptări pe timp fix, date partajate între teste, dependențe externe reale.\n- **Coverage:** îl tratez ca indicator al codului netestat, nu ca țintă. Verific calitatea aserțiunilor (mutation testing pe modulele critice).\n- **Mix-ul de teste:** mai multe teste de integrare cu infrastructura reală, contract tests între servicii, e2e doar pe fluxurile critice, stabile și rapide.\n- **TDD** acolo unde merită: logică de business complexă și reproducerea unui bug cu un test înainte de fix.\n\nMetricile urmărite: bug-uri scăpate, rata de teste instabile, durata pipeline-ului și timpul de recuperare."
+        },
+        "keyPoints": [
+          { "ro": "Analiza bug-urilor scăpate ghidează ce teste lipsesc" },
+          { "ro": "Carantină și owner pentru testele instabile" },
+          { "ro": "Coverage ca indicator, nu ca țintă; mutation testing" },
+          { "ro": "Integrare și contract tests la granițe, e2e puține și stabile" },
+          { "ro": "Metrici: bug-uri scăpate, instabilitate, durata pipeline-ului" }
+        ]
+      }
     }
   ]
 }
