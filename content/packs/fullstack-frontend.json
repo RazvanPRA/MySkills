@@ -987,6 +987,251 @@
         ],
         "correctIndex": 0
       }
+    },
+    {
+      "id": "angular.di.junior.q1",
+      "topicId": "angular.di.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": { "ro": "Ce înseamnă `@Injectable({ providedIn: 'root' })` pe un serviciu?" },
+      "explanation": {
+        "ro": "`providedIn: 'root'` înregistrează serviciul în injectorul rădăcină, deci toată aplicația împarte aceeași instanță. Fiind declarat pe serviciu, nu într-o listă de provideri, compilatorul îl poate elimina din bundle (tree-shaking) dacă nimeni nu-l folosește.\n\nDacă ai nevoie de o instanță per ecran sau per componentă (de exemplu state-ul unui formular), îl declari în `providers` al rutei sau al componentei: fiecare injector nou creează propria instanță."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Serviciul are o singură instanță pentru toată aplicația și e eliminat din bundle dacă nu e injectat nicăieri"
+          },
+          { "ro": "Fiecare componentă care îl injectează primește o instanță nouă" },
+          { "ro": "Serviciul poate fi injectat doar în `AppComponent`" },
+          { "ro": "Serviciul trebuie adăugat manual și în lista `providers` a fiecărui modul" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.reactivity.junior.q1",
+      "topicId": "angular.reactivity.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "După ce părăsești ecranul, în consolă apar în continuare mesajele de mai jos, iar memoria crește la fiecare vizită. Cum repari cel mai simplu?\n\n~~~ts\nexport class ClockComponent implements OnInit {\n  time = '';\n  ngOnInit() {\n    interval(1000).subscribe(() => {\n      this.time = new Date().toLocaleTimeString();\n      console.log(this.time);\n    });\n  }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`interval` nu se termină niciodată, iar abonarea ține în viață callback-ul și componenta după ce aceasta a fost distrusă. Fiecare vizită pe ecran adaugă încă o abonare: un memory leak clasic.\n\nPipe-ul `async` se abonează și se dezabonează singur, odată cu view-ul. Când chiar ai nevoie de `subscribe` în cod, `takeUntilDestroyed()` (din `@angular/core/rxjs-interop`) închide abonarea la distrugerea componentei. `setInterval` are aceeași problemă, fără să o rezolve. Observable-urile care se termină singure, precum o cerere `HttpClient`, nu au nevoie de dezabonare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Expui un Observable și îl afișezi cu pipe-ul `async`, sau închizi abonarea cu `takeUntilDestroyed()`"
+          },
+          { "ro": "Muți codul din `ngOnInit` în constructor" },
+          { "ro": "Înlocuiești `interval` cu `setInterval`" },
+          { "ro": "Marchezi componenta cu `ChangeDetectionStrategy.OnPush`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.components.mid.q1",
+      "topicId": "angular.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Elementul `#chart` e într-un bloc `@if`. În ce lifecycle hook e garantat că `chartRef` e setat (când condiția e adevărată)?\n\n~~~ts\n@Component({\n  template: `@if (hasData) { <canvas #chart></canvas> }`,\n})\nexport class ReportComponent {\n  @ViewChild('chart') chartRef?: ElementRef<HTMLCanvasElement>;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "View queries sunt rezolvate după ce view-ul componentei a fost creat, deci rezultatul e disponibil în `ngAfterViewInit`. Un element dintr-un `@if` nu poate fi rezolvat static, înainte de prima detectare a schimbărilor, așa că în `ngOnInit` referința e încă `undefined`.\n\nDacă condiția devine adevărată mai târziu, query-ul se actualizează la detectarea următoare. Varianta modernă e `chart = viewChild<ElementRef>('chart')`: un signal pe care îl citești într-un `effect` sau `afterNextRender`, fără să ghicești momentul."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`ngAfterViewInit`" },
+          { "ro": "`constructor`" },
+          { "ro": "`ngOnInit`" },
+          { "ro": "`ngOnChanges`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.di.mid.q1",
+      "topicId": "angular.di.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să injectezi URL-ul API-ului (un simplu `string`) în mai multe servicii, cu valori diferite în teste și în producție. Interfețele TypeScript nu există la runtime. Ce folosești?"
+      },
+      "explanation": {
+        "ro": "Injectorul are nevoie de o cheie care există la runtime. Pentru clase, cheia e chiar clasa; pentru valori primitive sau interfețe, creezi un `InjectionToken`, care poartă și tipul valorii.\n\nAvantajul față de un import direct: valoarea vine prin DI, deci poate fi înlocuită per mediu, per rută sau în teste (`providers: [{ provide: API_URL, useValue: 'http://localhost' }]`), fără mock-uri de module. Un token poate avea și o valoare implicită, prin opțiunea `factory`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Un `InjectionToken<string>`, furnizat cu `{ provide: API_URL, useValue: ... }` și citit cu `inject(API_URL)`"
+          },
+          { "ro": "O interfață `ApiConfig` folosită ca token de injecție" },
+          { "ro": "O variabilă exportată dintr-un fișier `config.ts`, importată direct" },
+          { "ro": "Un serviciu cu un câmp static `url`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.forms.mid.q1",
+      "topicId": "angular.forms.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre validatorii **asincroni** din Reactive Forms (de exemplu „email-ul e deja folosit”), care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Angular evită cererile inutile: dacă un email e invalid ca format, nu mai întreabă serverul. Statusul `PENDING` îți permite să afișezi un indicator și să dezactivezi butonul de trimitere.\n\nValidatorul primește controlul și returnează un Observable sau o Promise cu `ValidationErrors | null`. Un Observable care nu se termină (de exemplu `valueChanges`) lasă controlul blocat în `PENDING`; de aceea se folosește `first()` sau o cerere HTTP, care se termină singură.\n\nValidatorii asincroni au argumentul lor separat (`asyncValidators`). Frecvența se controlează cu `updateOn: 'blur'` sau cu un `timer` în validator."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Rulează doar după ce validatorii sincroni ai controlului trec" },
+          { "ro": "Cât timp rulează, controlul are statusul `PENDING`" },
+          {
+            "ro": "Observable-ul returnat trebuie să se termine (complete), altfel controlul rămâne `PENDING`"
+          },
+          { "ro": "Se pun în același array cu validatorii sincroni" },
+          { "ro": "Rulează obligatoriu la fiecare tastă, frecvența nu poate fi controlată" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "angular.testing.mid.q1",
+      "topicId": "angular.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Într-un test cu `provideHttpClientTesting()`, ce face apelul `httpMock.verify()` din `afterEach`?\n\n~~~ts\nit('loads users', () => {\n  service.getUsers().subscribe(users => expect(users.length).toBe(2));\n  const req = httpMock.expectOne('/api/users');\n  req.flush([{ id: 1 }, { id: 2 }]);\n});\n\nafterEach(() => httpMock.verify());\n~~~"
+      },
+      "explanation": {
+        "ro": "`HttpTestingController` oprește cererile: nimic nu pleacă în rețea, iar testul decide când și cu ce răspunde (`flush`, `error`). `expectOne` verifică faptul că a plecat exact o cerere potrivită.\n\n`verify()` prinde cererile neașteptate: un apel duplicat, o cerere făcută de alt cod sau un retry la care nu te gândeai. Fără el, testul ar trece deși serviciul face mai multe cereri decât crezi. Cum `flush` răspunde sincron, aserțiunea din `subscribe` rulează înainte de sfârșitul testului."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Pică testul dacă au rămas cereri făcute, dar netratate de `expectOne` și `flush`"
+          },
+          { "ro": "Trimite răspunsurile pentru toate cererile rămase" },
+          { "ro": "Verifică dacă serverul real răspunde" },
+          { "ro": "Resetează `HttpClient` la versiunea reală" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.forms.senior.q1",
+      "topicId": "angular.forms.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Cu typed forms, ce tip are `form.value.email`?\n\n~~~ts\nconst form = new FormGroup({\n  email: new FormControl(''),\n});\n~~~"
+      },
+      "explanation": {
+        "ro": "Două motive se adună:\n\n- `FormControl('')` are tipul `FormControl<string | null>`, pentru că `reset()` setează valoarea la `null`. Cu `nonNullable: true` (sau `NonNullableFormBuilder`), `reset()` revine la valoarea inițială și tipul devine `string`.\n- `form.value` e un `Partial`: controalele dezactivate lipsesc din el, deci orice câmp poate fi `undefined`. `form.getRawValue()` include și controalele dezactivate și nu are `undefined`.\n\nPentru formulare mari, folosește `NonNullableFormBuilder` și `getRawValue()` la submit, iar tipurile vor reflecta exact ce trimiți la API."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`string | null | undefined`" },
+          { "ro": "`string`" },
+          { "ro": "`string | null`" },
+          { "ro": "`any`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.performance.senior.q1",
+      "topicId": "angular.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Treci aplicația pe **zoneless change detection** (`provideZonelessChangeDetection()`). Care dintre schimbările de mai jos actualizează **automat** ecranul?"
+      },
+      "explanation": {
+        "ro": "Fără zone.js, Angular nu mai află „magic” că s-a terminat un task asincron. Detectarea e programată doar de notificări explicite: un signal citit în template care se schimbă, evenimentele legate în template, `markForCheck()` (pe care pipe-ul `async` îl apelează), `setInput()`.\n\nUn `setTimeout` sau un `subscribe` care scrie într-un câmp simplu nu notifică nimic, deci ecranul rămâne vechi. Migrarea înseamnă: state-ul afișat devine signals (sau trece prin `async`), iar componentele sunt deja compatibile cu `OnPush`, un bun pas intermediar. Câștigul: bundle mai mic, mai puține verificări și stack trace-uri curate."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Setarea unui signal citit în template" },
+          { "ro": "Un handler legat în template, de exemplu `(click)`, care modifică un câmp" },
+          { "ro": "Pipe-ul `async` care primește o valoare nouă" },
+          { "ro": "Un `setTimeout` care atribuie o valoare unui câmp simplu (nu signal)" },
+          { "ro": "Un `subscribe()` manual care atribuie o valoare unui câmp simplu" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "angular.components.senior.f1",
+      "topicId": "angular.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum migrezi o aplicație Angular mare, cu zeci de NgModules, la componente standalone, fără să oprești livrarea de feature-uri?"
+      },
+      "explanation": {
+        "ro": "Întrebarea testează mai mult strategia de migrare decât sintaxa. Un răspuns slab propune o rescriere completă sau un branch de migrare care trăiește luni de zile.\n\nCâștigurile merită menționate: dependențe explicite per componentă, lazy loading mai fin și mai puțin cod de legătură."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Migrez **incremental**, pentru că cele două modele coexistă: o componentă standalone poate fi importată într-un NgModule, iar un NgModule poate fi importat de o componentă standalone.\n\n1. Rulez schematic-ul oficial (`ng generate @angular/core:standalone`) pe rând, pe directoare: întâi convertește declarațiile în standalone, apoi elimină modulele devenite inutile, apoi trece bootstrap-ul la `bootstrapApplication`.\n2. Rutele lazy trec de la `loadChildren` cu module la `loadComponent` sau la fișiere de rute.\n3. `forRoot()` devine funcții `provideX()` în `app.config.ts`; pentru bibliotecile vechi, `importProvidersFrom` ca punte.\n4. Testele: componentele standalone se pun în `imports` din TestBed, nu în `declarations`.\n\nFac fiecare pas într-un PR mic, cu CI verde, pornind de la frunze (componente shared) spre feature-uri, și opresc adăugarea de NgModules noi printr-o regulă de lint."
+        },
+        "keyPoints": [
+          { "ro": "Interoperabilitate: migrare incrementală, nu big bang" },
+          { "ro": "Schematic-ul oficial, rulat pe pași și pe directoare" },
+          { "ro": "Rute cu `loadComponent`, `provideX()` în loc de `forRoot()`" },
+          { "ro": "Teste: componentele în `imports` din TestBed" },
+          { "ro": "PR-uri mici și o regulă care oprește NgModules noi" }
+        ]
+      }
+    },
+    {
+      "id": "angular.testing.senior.q1",
+      "topicId": "angular.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce problemă rezolvă **component harnesses** (Angular CDK testing) în testele care folosesc componente Angular Material?"
+      },
+      "explanation": {
+        "ro": "Fără harness, un test pentru un `mat-select` caută clase CSS și elemente interne, deschide overlay-ul și așteaptă animații. Când biblioteca își schimbă DOM-ul la un upgrade major, sute de teste pică, deși aplicația funcționează.\n\nUn harness ascunde aceste detalii în spatele unor metode precum `select.open()` sau `select.getValueText()` și așteaptă automat ca aplicația să fie stabilă. Poți scrie harness-uri și pentru propriile componente reutilizabile: echipele care le folosesc primesc astfel un API de testare stabil, exact ca API-ul componentei."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Testele interacționează printr-un API stabil (`getValue()`, `open()`), nu prin structura internă a DOM-ului, care se poate schimba între versiuni"
+          },
+          { "ro": "Înlocuiesc TestBed, deci testele rulează fără Angular" },
+          { "ro": "Generează automat teste e2e din testele de componentă" },
+          { "ro": "Elimină nevoia de date de test" }
+        ],
+        "correctIndex": 0
+      }
     }
   ]
 }
