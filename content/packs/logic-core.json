@@ -1100,6 +1100,30 @@
       }
     },
     {
+      "id": "logic.concurrency.junior.q2",
+      "topicId": "logic.concurrency.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Ce se întâmplă când rulează programul?\n\n~~~go\nfunc main() {\n\tch := make(chan int)\n\tch <- 1\n\tfmt.Println(<-ch)\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Un channel fără buffer nu stochează nimic: trimiterea așteaptă până când altcineva citește. Singurul goroutine, `main`, se blochează la `ch <- 1` și nu ajunge niciodată la citire. Runtime-ul Go observă că toate goroutine-urile sunt blocate și oprește programul cu o eroare fatală.\n\nSoluții: citirea sau scrierea se mută într-un alt goroutine, sau channel-ul primește buffer (`make(chan int, 1)`). Detectorul vede doar cazul în care **toate** goroutine-urile sunt blocate; într-un server, unde alte goroutine-uri rulează, același bug devine un goroutine blocat în tăcere."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "Se oprește cu `fatal error: all goroutines are asleep - deadlock!`" },
+          { "ro": "Afișează `1`" },
+          { "ro": "Afișează `0`" },
+          { "ro": "Rămâne blocat la nesfârșit, fără niciun mesaj" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.concurrency.mid.q1",
       "topicId": "logic.concurrency.mid",
       "level": "mid",
@@ -1134,6 +1158,31 @@
       "payload": { "mode": "input", "expected": "10", "accepted": [] }
     },
     {
+      "id": "logic.concurrency.mid.q3",
+      "topicId": "logic.concurrency.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Două thread-uri Java rulează fiecare `for (int i = 0; i < 100_000; i++) count++;` pe același câmp `static int count = 0`, fără sincronizare. Ce valoare are `count` după ce ambele termină?"
+      },
+      "explanation": {
+        "ro": "`count++` înseamnă trei pași: citește, adună 1, scrie. Dacă ambele thread-uri citesc aceeași valoare, ambele scriu valoarea + 1 și o incrementare se pierde (lost update). Pe un procesor cu mai multe nuclee se pierd frecvent zeci de mii de incrementări. Rezultatul nu poate depăși 200 000, pentru că nicio incrementare nu se numără de două ori.\n\n`volatile` **nu** rezolvă problema: garantează vizibilitatea, dar nu face operația atomică. Soluții: `AtomicInteger.incrementAndGet()`, `LongAdder` pentru contorizare intensă, sau `synchronized` când mai multe câmpuri trebuie actualizate împreună."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cel mult 200 000; de obicei mai puțin, iar valoarea diferă de la o rulare la alta"
+          },
+          { "ro": "Exact 200 000" },
+          { "ro": "Exact 100 000" },
+          { "ro": "Poate depăși 200 000" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.concurrency.senior.q1",
       "topicId": "logic.concurrency.senior",
       "level": "senior",
@@ -1147,6 +1196,42 @@
       },
       "type": "code_output",
       "payload": { "mode": "input", "expected": "1 true 2 true 0 false 0 false", "accepted": [] }
+    },
+    {
+      "id": "logic.concurrency.senior.q2",
+      "topicId": "logic.concurrency.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": { "ro": "După 1000 de apeluri `c.Inc()`, `c.n` e tot 0. Care linie e greșită?" },
+      "explanation": {
+        "ro": "`Inc` are receiver **prin valoare**: la fiecare apel primește o copie a structurii, inclusiv o copie a mutex-ului. Incrementarea modifică copia, care dispare la ieșirea din funcție, iar fiecare apel blochează alt mutex, deci nici sincronizarea nu există.\n\nFix: `func (c *Counter) Inc()`. Regula Go: dacă o metodă modifică structura sau structura conține un `sync.Mutex`, toate metodele folosesc receiver prin pointer. `go vet` semnalează cazul: `Inc passes lock by value`."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "type Counter struct {\n\tmu sync.Mutex\n\tn  int\n}\n\nfunc (c Counter) Inc() {\n\tc.mu.Lock()\n\tdefer c.mu.Unlock()\n\tc.n++\n}",
+        "language": "go",
+        "bugLines": [6]
+      }
+    },
+    {
+      "id": "logic.concurrency.senior.q3",
+      "topicId": "logic.concurrency.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Funcția răspunde corect, dar sub încărcare numărul de goroutine-uri crește continuu (vezi `runtime.NumGoroutine()`). Care linie e cauza?"
+      },
+      "explanation": {
+        "ro": "După un timeout, `fetch` returnează și nimeni nu mai citește din `ch`. Când `slowCall` termină, goroutine-ul încearcă să trimită pe un channel fără buffer și rămâne blocat **pentru totdeauna**: un goroutine leak. Fiecare timeout lasă în urmă un goroutine și memoria lui.\n\nFix minim: `make(chan string, 1)`. Trimiterea reușește chiar dacă nu mai citește nimeni, goroutine-ul se termină, iar garbage collector-ul eliberează channel-ul. Fix complet: `slowCall` primește un `context.Context` cu termen limită, ca munca însăși să se oprească, nu doar așteptarea.\n\nLeak-urile de acest tip nu dau erori; se văd doar ca memorie în creștere. În teste, `go.uber.org/goleak` le prinde automat."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "func fetch() (string, error) {\n\tch := make(chan string)\n\tgo func() {\n\t\tch <- slowCall()\n\t}()\n\tselect {\n\tcase v := <-ch:\n\t\treturn v, nil\n\tcase <-time.After(time.Second):\n\t\treturn \"\", errors.New(\"timeout\")\n\t}\n}",
+        "language": "go",
+        "bugLines": [2]
+      }
     },
     {
       "id": "logic.puzzles.junior.q1",
