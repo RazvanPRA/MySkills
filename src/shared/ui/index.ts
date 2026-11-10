@@ -9,6 +9,7 @@ export * from './CodeBlock';
 export * from './FeedbackBox';
 export * from './ListRow';
 export * from './MarkdownText';
+export * from './MasteryCell';
 export * from './OptionList';
 export * from './OptionRow';
 export * from './ProgressBar';
