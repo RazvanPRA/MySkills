@@ -426,6 +426,36 @@
       "payload": { "mode": "input", "expected": "4,6", "accepted": [] }
     },
     {
+      "id": "logic.trace.junior.q2",
+      "topicId": "logic.trace.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nconst s = 'abc';\nconsole.log(s.split('').reverse().join('') + s.length);\n~~~"
+      },
+      "explanation": {
+        "ro": "`split('')` transformă string-ul în `['a', 'b', 'c']`, `reverse` inversează array-ul, iar `join('')` îl lipește la loc: `'cba'`. `s` rămâne neschimbat, pentru că string-urile sunt imutabile, deci `s.length` e 3. `'cba' + 3` e concatenare: `cba3`.\n\nAtenție: `reverse` modifică array-ul pe loc. Aici nu contează, pentru că array-ul e temporar; pe un array primit ca parametru, folosește `toReversed()`."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "cba3", "accepted": [] }
+    },
+    {
+      "id": "logic.trace.junior.q3",
+      "topicId": "logic.trace.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nconsole.log(0 == '', 0 === '', null == undefined, null === undefined);\n~~~"
+      },
+      "explanation": {
+        "ro": "`==` convertește operanzii înainte de comparație: `''` devine numărul 0, deci `0 == ''` e `true`. `===` compară fără conversie: număr contra string, `false`.\n\n`null` și `undefined` sunt egale doar între ele la `==` (regulă specială, fără conversie numerică), dar au tipuri diferite, deci `===` dă `false`.\n\nRegula practică: folosește mereu `===`. Singura excepție acceptată des în cod de producție e `x == null`, care prinde dintr-o dată și `null`, și `undefined`."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "true false true false", "accepted": [] }
+    },
+    {
       "id": "logic.trace.mid.q1",
       "topicId": "logic.trace.mid",
       "level": "mid",
@@ -465,6 +495,30 @@
       }
     },
     {
+      "id": "logic.trace.mid.q3",
+      "topicId": "logic.trace.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează codul (un modul ES)?\n\n~~~js\nconst obj = {\n  name: 'obj',\n  regular() {\n    return this?.name;\n  },\n  arrow: () => this?.name,\n};\nconst f = obj.regular;\nconsole.log(obj.regular(), f(), obj.arrow());\n~~~"
+      },
+      "explanation": {
+        "ro": "La o funcție obișnuită, `this` depinde de **cum** e apelată, nu de unde e definită:\n\n- `obj.regular()`: apel pe obiect, `this` e `obj`.\n- `f()`: aceeași funcție, apelată fără obiect. În modul strict (modulele sunt mereu strict), `this` e `undefined`.\n- `obj.arrow()`: arrow function-urile nu au `this` propriu; îl iau din locul unde au fost definite, adică nivelul modulului, unde `this` e `undefined`.\n\nBug-ul tipic: transmiți o metodă ca callback (`onClick={this.save}`, `setTimeout(obj.regular)`) și pierzi `this`. Soluții: `obj.regular.bind(obj)`, un arrow wrapper `() => obj.regular()` sau o metodă definită ca arrow function în clasă."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "`obj undefined undefined`" },
+          { "ro": "`obj obj obj`" },
+          { "ro": "`obj obj undefined`" },
+          { "ro": "`obj undefined obj`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.trace.senior.q1",
       "topicId": "logic.trace.senior",
       "level": "senior",
@@ -482,6 +536,45 @@
         "options": [{ "ro": "`0`" }, { "ro": "`2`" }, { "ro": "`undefined`" }, { "ro": "`1`" }],
         "correctIndex": 0
       }
+    },
+    {
+      "id": "logic.trace.senior.q2",
+      "topicId": "logic.trace.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce se întâmplă când rulează codul?\n\n~~~js\nfunction f() {\n  console.log(typeof a, typeof b);\n  var a = 1;\n  let b = 2;\n}\nf();\n~~~"
+      },
+      "explanation": {
+        "ro": "Ambele declarații sunt „ridicate” (hoisted) la începutul funcției, dar diferit:\n\n- `var a` e creată și inițializată cu `undefined`, deci `typeof a` e `'undefined'`.\n- `let b` e creată, dar **neinițializată** până la linia declarației. Zona dintre începutul blocului și declarație se numește temporal dead zone (TDZ), iar orice acces acolo aruncă `ReferenceError`, chiar și `typeof`, care altfel e sigur pe variabile nedeclarate.\n\nArgumentele lui `console.log` se evaluează înainte de apel, deci excepția apare înainte să se afișeze ceva. TDZ e intenționat: transformă folosirea prea devreme a unei variabile într-o eroare vizibilă, nu într-un `undefined` tăcut."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "Aruncă `ReferenceError` și nu afișează nimic" },
+          { "ro": "Afișează `undefined undefined`" },
+          { "ro": "Afișează `number number`" },
+          { "ro": "Afișează `undefined`, apoi aruncă `ReferenceError`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.trace.senior.q3",
+      "topicId": "logic.trace.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nfunction* gen() {\n  const x = yield 1;\n  const y = yield x * 2;\n  return x + y;\n}\nconst it = gen();\nconsole.log(it.next(10).value, it.next(3).value, it.next(4).value);\n~~~"
+      },
+      "explanation": {
+        "ro": "Cheia: argumentul lui `next(v)` devine valoarea expresiei `yield` la care generatorul **stă în acel moment**.\n\n1. `next(10)` pornește generatorul. Nu există încă un `yield` în așteptare, deci 10 se pierde. Generatorul se oprește la `yield 1`: valoarea 1.\n2. `next(3)`: `yield 1` primește 3, deci `x = 3`. Se oprește la `yield x * 2`: valoarea 6.\n3. `next(4)`: `y = 4`, funcția returnează `x + y = 7`, cu `done: true`.\n\nAcelași mecanism de schimb în ambele sensuri stă la baza `async/await` (un `await` e, conceptual, un `yield` al unei promisiuni) și a bibliotecilor precum redux-saga."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "1 6 7", "accepted": [] }
     },
     {
       "id": "logic.event-loop.junior.q1",
