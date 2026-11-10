@@ -1,3 +1,4 @@
+import type { DataFilePort, UserDataRepository } from '@/features/backup';
 import type { ContentRepository, ExerciseTypeRegistry } from '@/features/content';
 import type { SessionRepository, TestRegistry } from '@/features/daily-tests';
 import type { AttemptRepository } from '@/features/session-player';
@@ -14,6 +15,8 @@ import type { IdGenerator } from '@/shared/utils/idGenerator';
 export type AppDependencies = {
   clock: Clock;
   generateId: IdGenerator;
+  /** Files the user picks (backup export / import). */
+  files: DataFilePort;
   storage: {
     /** Runs pending database migrations. Safe to call on every start. */
     prepare: () => Promise<void>;
@@ -30,5 +33,6 @@ export type AppDependencies = {
     sessions: SessionRepository;
     attempts: AttemptRepository;
     settings: SettingsRepository;
+    userData: UserDataRepository;
   };
 };

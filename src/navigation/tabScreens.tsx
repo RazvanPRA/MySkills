@@ -1,9 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
+import { DataCard } from '@/features/backup';
 import { TodayScreen } from '@/features/daily-tests';
 import { ProgressScreen, TodayStats } from '@/features/progress';
 import { SettingsScreen } from '@/features/settings';
 import { StudyMapScreen } from '@/features/study-map';
+import { useAppRestart } from './AppRestart';
 
 // Thin screen components mounted by the tab navigator: they map navigation to the props of
 // feature screens (imported from each feature's index.ts) and compose features together.
@@ -50,4 +52,11 @@ export function ProgressTab() {
   return <ProgressScreen onOpenTopic={openTopic} onOpenSession={openSession} />;
 }
 
-export const SettingsTab = () => <SettingsScreen />;
+export function SettingsTab() {
+  const restart = useAppRestart();
+  return (
+    <SettingsScreen>
+      <DataCard onDataReplaced={restart} />
+    </SettingsScreen>
+  );
+}
