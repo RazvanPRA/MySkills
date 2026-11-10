@@ -285,5 +285,127 @@
       "prerequisites": ["java-spring.testing-security.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "java-spring.web.junior.q1",
+      "topicId": "java-spring.web.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Un endpoint primește un body adnotat cu `@Valid`, iar validarea eșuează (ex. email lipsă). Ce status HTTP e corect?"
+      },
+      "explanation": {
+        "ro": "Clientul a trimis date invalide, deci e o eroare 4xx. Spring aruncă `MethodArgumentNotValidException`, pe care o transformi într-un răspuns consistent într-un `@RestControllerAdvice`, de preferat în formatul `ProblemDetail` (RFC 9457), cu câmpurile invalide listate.\n\n`500` ar spune că e vina serverului și ar declanșa alerte inutile; `200` cu eroare în body strică clienții, retry-urile și monitorizarea, care se bazează pe status."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`400 Bad Request`, cu detaliile erorilor de validare" },
+          { "ro": "`500 Internal Server Error`" },
+          { "ro": "`404 Not Found`" },
+          { "ro": "`200 OK` cu un câmp `error` în body" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.language.mid.q1",
+      "topicId": "java-spring.language.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~java\nclass Point {\n  final int x, y;\n  Point(int x, int y) { this.x = x; this.y = y; }\n\n  @Override\n  public boolean equals(Object o) {\n    return o instanceof Point p && p.x == x && p.y == y;\n  }\n}\n\nSet<Point> set = new HashSet<>();\nset.add(new Point(1, 2));\nSystem.out.println(set.contains(new Point(1, 2)));\n~~~"
+      },
+      "explanation": {
+        "ro": "`HashSet` caută întâi după `hashCode`, apoi compară cu `equals` doar în bucket-ul găsit. `hashCode` moștenit din `Object` e (practic) diferit pentru două instanțe distincte, deci al doilea `Point` nu e găsit, deși obiectele sunt „egale”.\n\nContractul: obiectele egale trebuie să aibă același `hashCode`. Suprascrie-le mereu împreună (IDE, `Objects.hash`) sau folosește un `record`, care le generează corect pe amândouă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`false` (aproape sigur): `hashCode` nu e suprascris, deci căutarea merge în alt bucket"
+          },
+          { "ro": "`true`, pentru că `equals` compară `x` și `y`" },
+          { "ro": "Nu compilează" },
+          { "ro": "Aruncă `NullPointerException`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.data.mid.q1",
+      "topicId": "java-spring.data.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Primești `LazyInitializationException` când controller-ul serializează o entitate `Order` cu relația lazy `items`. Care sunt soluțiile potrivite?"
+      },
+      "explanation": {
+        "ro": "Excepția apare pentru că relația lazy e accesată după ce sesiunea Hibernate s-a închis (la sfârșitul tranzacției din serviciu). Soluția e să încarci explicit ce ai nevoie, acolo unde știi de ce ai nevoie, și să nu expui entități în API.\n\n`EAGER` peste tot aduce date inutile și, adesea, N+1. Open-in-view ține conexiunea la baza de date deschisă pe toată durata request-ului, inclusiv la serializare, și ascunde interogările lazy, care devin probleme de performanță greu de găsit. Spring Boot afișează un warning tocmai din acest motiv."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`JOIN FETCH` sau `@EntityGraph` în query-ul care încarcă comanda, când știi că ai nevoie de `items`"
+          },
+          { "ro": "Mapezi entitatea într-un DTO în serviciul tranzacțional și returnezi DTO-ul" },
+          { "ro": "Pui `FetchType.EAGER` pe toate relațiile" },
+          { "ro": "Activezi `spring.jpa.open-in-view` ca soluție permanentă" }
+        ],
+        "correctIndices": [0, 1]
+      }
+    },
+    {
+      "id": "java-spring.spring-boot.senior.q1",
+      "topicId": "java-spring.spring-boot.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un controller apelează `placeOrders`. Rulează `placeOrder` într-o tranzacție?\n\n~~~java\n@Service\npublic class OrderService {\n  public void placeOrders(List<Order> orders) {\n    orders.forEach(this::placeOrder);\n  }\n\n  @Transactional\n  public void placeOrder(Order order) { /* ... */ }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`@Transactional` funcționează printr-un **proxy** care înconjoară bean-ul. Doar apelurile care vin din afară, prin proxy, pornesc tranzacția. `this.placeOrder()` apelează direct obiectul real, deci adnotarea e ignorată, fără niciun warning. Metodele `private` nu pot fi interceptate deloc.\n\nSoluții: pui adnotarea pe metoda apelată din exterior, muți logica în alt bean, sau folosești `TransactionTemplate` pentru control explicit. Același mecanism explică de ce `@Async` și `@Cacheable` „nu merg” la apeluri interne."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Nu: apelul prin `this` ocolește proxy-ul Spring, deci `@Transactional` nu se aplică"
+          },
+          { "ro": "Da, câte o tranzacție pentru fiecare comandă" },
+          { "ro": "Da, o singură tranzacție pentru toată lista" },
+          { "ro": "Doar dacă `placeOrder` devine `private`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.concurrency.senior.f1",
+      "topicId": "java-spring.concurrency.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": { "ro": "Ce sunt **virtual threads** (Java 21) și când **nu** te ajută?" },
+      "explanation": {
+        "ro": "Un răspuns bun nu se oprește la „sunt mai rapide”. Virtual threads îmbunătățesc **throughput-ul** la concurență mare cu I/O, nu latența unui request. Intervievatorul verifică și dacă știi unde se mută gâtul de sticlă."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Virtual threads sunt thread-uri ușoare, gestionate de JVM și montate pe câteva thread-uri de platformă (carrier). Când un virtual thread se blochează în I/O, JVM-ul îl demontează și refolosește carrier-ul. Poți avea astfel sute de mii de thread-uri și păstra stilul simplu „un thread per request”, cu cod blocant, fără programare reactivă.\n\nNu te ajută la sarcini **CPU-bound**: procesoarele rămân aceleași. Nu le pune într-un pool; creezi unul nou pentru fiecare sarcină. Resursele din aval (pool-ul de conexiuni la baza de date, API-uri externe) trebuie în continuare limitate, de exemplu cu un `Semaphore`, altfel le copleșești. Atenție la `ThreadLocal` mari, multiplicați cu numărul de thread-uri, și la pinning: înainte de Java 24, blocarea în interiorul unui bloc `synchronized` ținea ocupat carrier-ul."
+        },
+        "keyPoints": [
+          { "ro": "Ieftine; ideale pentru I/O blocant, thread per request" },
+          { "ro": "Nu accelerează munca CPU-bound" },
+          { "ro": "Fără pool; limitezi resursele din aval" },
+          { "ro": "Pinning (`synchronized` înainte de Java 24), ThreadLocal" }
+        ]
+      }
+    }
+  ]
 }

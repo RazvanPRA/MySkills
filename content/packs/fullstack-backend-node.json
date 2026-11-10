@@ -261,5 +261,130 @@
       "prerequisites": ["nestjs.testing.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "nestjs.modules.junior.q1",
+      "topicId": "nestjs.modules.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "`UsersService` e declarat în `UsersModule`. `OrdersService`, din `OrdersModule`, vrea să-l injecteze. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Un modul își încapsulează providerii: doar ce pune în `exports` e vizibil modulelor care îl importă. Acesta e contractul public al modulului.\n\nDacă îl adaugi și în `providers` din alt modul, obții o **a doua instanță**, cu propriul state și propriile dependențe, o sursă clasică de bug-uri. `@Global()` e pentru câteva lucruri cu adevărat transversale (config, logger), nu o scurtătură. `new` ocolește DI-ul: pierzi dependențele injectate și posibilitatea de a-l înlocui în teste."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`UsersModule` îl pune în `exports`, iar `OrdersModule` importă `UsersModule`" },
+          { "ro": "Adaugi `UsersService` și în `providers` din `OrdersModule`" },
+          { "ro": "Marchezi toate modulele cu `@Global()`" },
+          { "ro": "Îl creezi în constructor cu `new UsersService()`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.request-pipeline.mid.q1",
+      "topicId": "nestjs.request-pipeline.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "În ce ordine rulează componentele NestJS pentru o cerere care ajunge într-un controller?"
+      },
+      "explanation": {
+        "ro": "Ordinea are sens: middleware-ul lucrează la nivel de request brut (ex. logging, CORS); guard-urile decid dacă cererea are voie mai departe (autorizare) și au acces la contextul de execuție; interceptorii înconjoară handler-ul (timing, transformarea răspunsului, cache); pipe-urile validează și transformă argumentele chiar înainte de apel. Exception filters prind orice eroare aruncată pe drum.\n\nConsecință practică: un guard rulează **înainte** de `ValidationPipe`, deci nu se poate baza pe un DTO deja validat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Middleware → Guards → Interceptors (înainte) → Pipes → Handler → Interceptors (după); exception filters la erori"
+          },
+          { "ro": "Guards → Middleware → Pipes → Interceptors → Handler" },
+          { "ro": "Pipes → Guards → Interceptors → Middleware → Handler" },
+          { "ro": "Interceptors → Middleware → Guards → Pipes → Handler" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.data.mid.q1",
+      "topicId": "nestjs.data.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Câte interogări rulează codul de mai jos și cum îl repari?\n\n~~~ts\nconst orders = await this.orders.find({ take: 50 });\nfor (const order of orders) {\n  order.customer = await this.customers.findOneBy({ id: order.customerId });\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Aceasta e problema **N+1**: o interogare pentru listă și încă una pentru fiecare element. Latența crește liniar cu numărul de rânduri, iar fiecare apel e un round-trip la baza de date.\n\nRepararea: un JOIN (`relations: { customer: true }` sau QueryBuilder), ori două interogări (comenzile, apoi clienții cu `WHERE id IN (...)`) unite în memorie, adică pattern-ul DataLoader. Un index face fiecare interogare mai rapidă, dar nu reduce numărul de round-trip-uri."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "51; încarci relația în aceeași interogare (JOIN / `relations`) sau iei toți clienții odată cu `In(ids)`"
+          },
+          { "ro": "1; TypeORM combină automat apelurile din buclă" },
+          { "ro": "50; un index pe `customerId` rezolvă problema" },
+          { "ro": "2; cache-ul de entități refolosește rezultatele" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "nestjs.auth.senior.f1",
+      "topicId": "nestjs.auth.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum implementezi autentificarea cu **access token și refresh token** într-un API NestJS? Ce riscuri acoperi?"
+      },
+      "explanation": {
+        "ro": "Diferența dintre mid și senior: mid-ul știe să emită două token-uri; senior-ul explică de ce sunt două (un JWT nu poate fi revocat ușor), unde se păstrează fiecare și ce se întâmplă când un refresh token e furat."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Access token-ul (JWT) are viață scurtă (minute) și e verificat fără stare de un guard, la fiecare cerere. Refresh token-ul are viață lungă, e opac, iar serverul îl ține **hash-uit** în baza de date, asociat unui device sau unei sesiuni.\n\nLa refresh faci **rotație**: emiți un refresh token nou și îl invalidezi pe cel vechi. Dacă apare din nou un token deja folosit, e un semn de furt: revoci toată familia de token-uri a sesiunii.\n\nÎn browser, refresh token-ul stă într-un cookie `HttpOnly`, `Secure`, `SameSite`, ca să nu fie accesibil din JavaScript (XSS); pe mobil, în Keychain sau Keystore. Logout-ul și schimbarea parolei revocă sesiunile. Limitezi rata pe login și refresh și loghezi evenimentele de securitate."
+        },
+        "keyPoints": [
+          { "ro": "Access scurt, fără stare; refresh lung, stocat hash-uit" },
+          { "ro": "Rotație și detectarea reutilizării" },
+          { "ro": "Cookie HttpOnly / Keychain, nu localStorage" },
+          { "ro": "Revocare la logout și la schimbarea parolei" }
+        ]
+      }
+    },
+    {
+      "id": "nestjs.messaging.senior.q1",
+      "topicId": "nestjs.messaging.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Un consumator de mesaje (RabbitMQ sau Kafka) procesează plăți cu livrare **at-least-once**. Ce măsuri sunt necesare?"
+      },
+      "explanation": {
+        "ro": "At-least-once înseamnă că **duplicatele sunt garantate** la un moment dat (restart, rebalansare, timeout). Idempotența, de exemplu un tabel cu chei procesate sau o constrângere unică, face ca a doua procesare să nu mai aibă efect.\n\nAck-ul după procesare garantează că nu pierzi mesaje la crash. DLQ-ul izolează mesajele „otrăvite”, ca să nu blocheze coada. Retry-ul fără backoff amplifică o cădere a unei dependențe. Ordinea e garantată doar în anumite condiții (o partiție Kafka, o coadă cu un singur consumator), deci nu o presupui fără să o proiectezi."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Handler idempotent, cu o cheie de idempotență stocată" },
+          {
+            "ro": "Confirmare (ack sau commit de offset) după ce procesarea s-a terminat, nu înainte"
+          },
+          { "ro": "Dead-letter queue pentru mesajele care eșuează repetat" },
+          { "ro": "Retry imediat și infinit, fără backoff" },
+          { "ro": "Presupui că fiecare mesaj vine o singură dată și în ordine" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    }
+  ]
 }

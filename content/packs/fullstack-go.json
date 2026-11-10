@@ -197,5 +197,123 @@
       "prerequisites": ["go.data-testing.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "go.language.junior.q1",
+      "topicId": "go.language.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce se întâmplă la rularea codului?\n\n~~~go\nvar counts map[string]int\ncounts[\"go\"] = 1\nfmt.Println(counts)\n~~~"
+      },
+      "explanation": {
+        "ro": "Valoarea zero a unui map e `nil`. Citirea dintr-un map `nil` e permisă (întoarce valoarea zero a tipului), dar scrierea provoacă panic. Inițializează-l cu `make(map[string]int)` sau cu un literal `map[string]int{}`.\n\nAceeași capcană apare la un map câmp dintr-un struct: valoarea zero a struct-ului are map-ul `nil`, deci ai nevoie de un constructor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Panic: `assignment to entry in nil map`" },
+          { "ro": "Afișează `map[go:1]`" },
+          { "ro": "Nu compilează" },
+          { "ro": "Afișează `map[]`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.errors.mid.q1",
+      "topicId": "go.errors.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează programul?\n\n~~~go\nvar ErrNotFound = errors.New(\"not found\")\n\nfunc find() error {\n  return fmt.Errorf(\"user 42: %w\", ErrNotFound)\n}\n\nerr := find()\nfmt.Println(err == ErrNotFound, errors.Is(err, ErrNotFound))\n~~~"
+      },
+      "explanation": {
+        "ro": "`%w` învelește eroarea: `err` e o eroare nouă, care o conține pe `ErrNotFound`. Comparația `==` verifică doar identitatea, deci e `false`. `errors.Is` parcurge lanțul de erori învelite (prin `Unwrap`) și o găsește.\n\nRegula: compară erorile sentinel cu `errors.Is`, iar tipurile de erori cu `errors.As`. Cu `%v` în loc de `%w`, contextul s-ar păstra doar ca text, iar `errors.Is` ar întoarce `false`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`false true`" },
+          { "ro": "`true true`" },
+          { "ro": "`false false`" },
+          { "ro": "`true false`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.concurrency.mid.q1",
+      "topicId": "go.concurrency.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează programul cu **Go 1.22 sau mai nou**?\n\n~~~go\nfor i := 0; i < 3; i++ {\n  go func() { fmt.Print(i) }()\n}\ntime.Sleep(100 * time.Millisecond)\n~~~"
+      },
+      "explanation": {
+        "ro": "Din Go 1.22, variabila buclei e nouă la fiecare iterație, deci fiecare goroutine își capturează propriul `i`. Înainte de 1.22 toate partajau aceeași variabilă și afișau de obicei `333`, un bug clasic.\n\nOrdinea depinde de scheduler, deci nu e garantată. Iar `time.Sleep` nu e sincronizare: un `sync.WaitGroup` (sau `errgroup`) e modul corect de a aștepta goroutine-urile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Cifrele 0, 1 și 2, într-o ordine nedeterminată" },
+          { "ro": "`333`" },
+          { "ro": "`012`, mereu în această ordine" },
+          { "ro": "Nu compilează" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.language.senior.q1",
+      "topicId": "go.language.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează programul?\n\n~~~go\na := make([]int, 3, 4)\nb := append(a, 1)\nc := append(a, 2)\nfmt.Println(b[3], c[3])\n~~~"
+      },
+      "explanation": {
+        "ro": "`a` are lungimea 3 și capacitatea 4. Primul `append` încape în capacitate, deci scrie 1 la indexul 3 al **aceluiași array** de bază și întoarce un slice care îl partajează. Al doilea `append` pornește tot de la `a` și suprascrie același index cu 2. `b` și `c` văd același array, deci se afișează `2 2`.\n\nCând capacitatea nu ajunge, `append` alocă un array nou și slice-urile se despart, ceea ce face bug-ul intermitent. Apărare: expresia de slice completă `a[:3:3]` (capacitate = lungime) sau `slices.Clone` înainte să dai un slice altui cod."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`2 2`" },
+          { "ro": "`1 2`" },
+          { "ro": "`1 1`" },
+          { "ro": "Panic: index out of range" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "go.concurrency.senior.f1",
+      "topicId": "go.concurrency.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum previi **goroutine leaks** într-un serviciu Go? Dă un exemplu tipic."
+      },
+      "explanation": {
+        "ro": "Goroutine-urile sunt ieftine, dar nu gratuite: fiecare blocată ține memorie și tot ce referă. Intervievatorul caută disciplina „cine oprește această goroutine și când”."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "O goroutine „scapă” când rămâne blocată pentru totdeauna: trimite pe un canal pe care nu mai citește nimeni, citește de pe un canal care nu se închide niciodată, sau așteaptă un I/O fără timeout.\n\nExemplu tipic: o funcție pornește o goroutine care trimite rezultatul pe un canal fără buffer, dar apelantul a ieșit deja din cauza unui timeout. Goroutine-ul rămâne blocat la trimitere pentru totdeauna.\n\nPrevenire:\n\n- fiecare goroutine are o cale de oprire: `select` cu `ctx.Done()`, propagarea `context.Context` peste tot;\n- canalele sunt închise de proprietar (cel care trimite);\n- un canal cu buffer de 1 pentru un rezultat pe care apelantul poate să nu-l mai aștepte;\n- `errgroup` pentru grupuri de goroutine cu anulare comună;\n- timeouts pe orice I/O.\n\nDetectare: profilul de goroutine din pprof (numărul crește în timp) și `goleak` în teste."
+        },
+        "keyPoints": [
+          { "ro": "Fiecare goroutine are o cale de ieșire (context)" },
+          { "ro": "Proprietarul închide canalul" },
+          { "ro": "Buffer de 1 când apelantul poate pleca" },
+          { "ro": "pprof și goleak pentru detectare" }
+        ]
+      }
+    }
+  ]
 }

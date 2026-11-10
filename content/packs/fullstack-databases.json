@@ -470,5 +470,242 @@
       "prerequisites": ["mongodb.scaling.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "sql.modeling.junior.q1",
+      "topicId": "sql.modeling.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce garantează o cheie străină `orders.customer_id REFERENCES customers(id)` în PostgreSQL?"
+      },
+      "explanation": {
+        "ro": "Cheia străină garantează doar că referința e validă. Ștergerea în cascadă apare numai cu `ON DELETE CASCADE`; implicit, ștergerea unui client cu comenzi e refuzată.\n\nCapcana frecventă: PostgreSQL indexează automat cheia primară referită, **nu** și coloana care referă. Fără un index pe `orders.customer_id`, JOIN-urile și ștergerile din `customers` (care verifică comenzile) fac scanări complete pe tabele mari."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Că fiecare `customer_id` nenul există în `customers` (integritate referențială)"
+          },
+          { "ro": "Că `customer_id` e unic în `orders`" },
+          { "ro": "Că PostgreSQL creează automat un index pe `orders.customer_id`" },
+          { "ro": "Că la ștergerea unui client se șterg automat comenzile lui" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.queries.mid.q1",
+      "topicId": "sql.queries.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Tabelul `teams` are un rând cu `manager_id` NULL. Ce întoarce interogarea?\n\n~~~sql\nSELECT name\nFROM users\nWHERE id NOT IN (SELECT manager_id FROM teams);\n~~~"
+      },
+      "explanation": {
+        "ro": "`x NOT IN (a, b, NULL)` înseamnă `x <> a AND x <> b AND x <> NULL`. Ultima comparație e mereu `UNKNOWN`, deci întreaga condiție nu poate fi niciodată `TRUE` și nu se întoarce niciun rând.\n\nFolosește `NOT EXISTS (SELECT 1 FROM teams t WHERE t.manager_id = u.id)`, care tratează NULL-urile intuitiv și e adesea și mai eficient. Bug-ul e periculos pentru că funcționează corect până apare primul NULL în date."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Niciun rând" },
+          { "ro": "Utilizatorii care nu sunt manageri" },
+          { "ro": "Toți utilizatorii" },
+          { "ro": "O eroare de sintaxă" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.transactions.mid.q1",
+      "topicId": "sql.transactions.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Ce anomalii previne nivelul de izolare `REPEATABLE READ` **în PostgreSQL**?"
+      },
+      "explanation": {
+        "ro": "În PostgreSQL, `REPEATABLE READ` e implementat ca snapshot isolation: tranzacția vede un snapshot fix al datelor de la prima interogare. Deci nu vede date necomise, nu vede rânduri modificate de alții între două citiri și nici rânduri noi (phantoms). Standardul SQL permite phantoms la acest nivel, dar PostgreSQL le previne.\n\nWrite skew rămâne posibil: două tranzacții citesc aceleași date, fiecare scrie în alt rând, iar împreună încalcă o regulă (ex. „cel puțin un medic de gardă”). Pentru asta ai nevoie de `SERIALIZABLE` sau de blocare explicită (`SELECT ... FOR UPDATE`), plus retry la eroarea de serializare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Dirty read" },
+          { "ro": "Non-repeatable read" },
+          { "ro": "Phantom read" },
+          { "ro": "Write skew" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "sql.queries.senior.q1",
+      "topicId": "sql.queries.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Tabelul `orders` conține, în ordinea lui `created_at`: (client 1, 10), (client 1, 5), (client 2, 7). Ce valori are coloana `running`?\n\n~~~sql\nSELECT customer_id, amount,\n       SUM(amount) OVER (\n         PARTITION BY customer_id\n         ORDER BY created_at\n       ) AS running\nFROM orders;\n~~~"
+      },
+      "explanation": {
+        "ro": "Cu `ORDER BY` în fereastră, frame-ul implicit e `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`, deci obții un total cumulativ pe fiecare client: 10, apoi 15, iar pentru clientul 2, 7.\n\nFără `ORDER BY`, frame-ul e toată partiția și fiecare rând primește totalul clientului (15, 15, 7). Capcană: cu valori egale în `created_at`, `RANGE` include toți „egalii” în același total; specifică `ROWS` dacă vrei rând cu rând."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "10, 15, 7" },
+          { "ro": "15, 15, 7" },
+          { "ro": "10, 5, 7" },
+          { "ro": "22, 22, 22" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "sql.performance.senior.f1",
+      "topicId": "sql.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ai un index B-tree compus pe `(tenant_id, created_at)`. Ce interogări îl pot folosi eficient și care nu?"
+      },
+      "explanation": {
+        "ro": "Ordinea coloanelor într-un index compus e o decizie de design: pune întâi coloana folosită la egalitate în toate interogările importante (aici tenant-ul, într-un sistem multi-tenant)."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Indexul e sortat întâi după `tenant_id`, apoi după `created_at` în cadrul fiecărui tenant. Îl folosesc eficient:\n\n- `WHERE tenant_id = $1`;\n- `WHERE tenant_id = $1 AND created_at >= $2` (egalitate pe prima coloană, interval pe a doua);\n- `WHERE tenant_id = $1 ORDER BY created_at DESC LIMIT 20` (fără sortare suplimentară).\n\nNu îl folosesc eficient:\n\n- `WHERE created_at >= $1` fără tenant (lipsește prefixul din stânga); PostgreSQL 18 poate face skip scan când `tenant_id` are puține valori distincte, dar nu te baza pe asta;\n- `WHERE date(created_at) = ...`, pentru că o funcție aplicată pe coloană anulează indexul (ai nevoie de un index pe expresie sau de un interval);\n- `WHERE tenant_id = $1 OR ...` pe coloane neindexate.\n\nVerifici întotdeauna cu `EXPLAIN (ANALYZE, BUFFERS)`, pe date realiste."
+        },
+        "keyPoints": [
+          { "ro": "Regula prefixului din stânga" },
+          { "ro": "Egalitate întâi, apoi interval sau sortare" },
+          { "ro": "Funcțiile pe coloană anulează indexul" },
+          { "ro": "Verificare cu EXPLAIN ANALYZE" }
+        ]
+      }
+    },
+    {
+      "id": "mongodb.modeling.mid.q1",
+      "topicId": "mongodb.modeling.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un articol de blog poate avea zeci de mii de comentarii, afișate paginat. Cum modelezi comentariile?"
+      },
+      "explanation": {
+        "ro": "Un array care crește nelimitat e un antipattern: documentul se apropie de limita de 16 MB, fiecare comentariu nou rescrie un document mare, iar paginarea în array e incomodă.\n\nEmbedding-ul e potrivit când datele sunt mărginite și citite împreună (ex. adresele unui client). Un compromis frecvent e **subset pattern**: păstrezi ultimele câteva comentarii în articol pentru afișare rapidă, iar restul în colecția separată."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Colecție separată `comments`, cu `postId` indexat" },
+          { "ro": "Un array cu toate comentariile, inclus (embedded) în documentul articolului" },
+          { "ro": "Toate comentariile ca un singur string JSON în articol" },
+          { "ro": "O colecție separată pentru fiecare articol" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.performance.mid.q1",
+      "topicId": "mongodb.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce index servește cel mai bine interogarea?\n\n~~~js\ndb.users\n  .find({ status: 'active', age: { $gt: 30 } })\n  .sort({ createdAt: -1 });\n~~~"
+      },
+      "explanation": {
+        "ro": "Regula **ESR**: câmpurile de **E**galitate întâi, apoi cele după care **S**ortezi, apoi cele cu interval (**R**ange). Așa MongoDB parcurge indexul deja sortat după `createdAt` pentru utilizatorii activi și filtrează `age` din index.\n\nCu `age` înaintea lui `createdAt`, intervalul „sparge” ordinea, iar sortarea se face în memorie (vezi `SORT` în `explain()`), care e lentă și limitată ca memorie."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ status: 1, createdAt: -1, age: 1 }`" },
+          { "ro": "`{ status: 1, age: 1, createdAt: -1 }`" },
+          { "ro": "`{ age: 1, status: 1, createdAt: -1 }`" },
+          { "ro": "`{ createdAt: -1 }`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.aggregation.mid.q1",
+      "topicId": "mongodb.aggregation.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Colecția `orders` conține: (c1, 10, paid), (c1, 20, paid), (c2, 25, paid), (c2, 30, cancelled). Ce întoarce pipeline-ul?\n\n~~~js\ndb.orders.aggregate([\n  { $match: { status: 'paid' } },\n  { $group: { _id: '$customerId', total: { $sum: '$amount' } } },\n  { $sort: { total: -1 } },\n  { $limit: 1 },\n]);\n~~~"
+      },
+      "explanation": {
+        "ro": "`$match` elimină comanda anulată, deci c1 are 10 + 20 = 30, iar c2 are 25. După sortarea descrescătoare și `$limit: 1` rămâne c1 cu 30.\n\nOrdinea etapelor contează și pentru performanță: `$match` la început poate folosi un index și reduce documentele care ajung în `$group`. Un `$sort` urmat imediat de `$limit` e optimizat ca top-k, fără sortarea completă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`{ _id: \"c1\", total: 30 }`" },
+          { "ro": "`{ _id: \"c2\", total: 55 }`" },
+          { "ro": "`{ _id: \"c2\", total: 25 }`" },
+          { "ro": "`{ _id: \"c1\", total: 20 }`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "mongodb.crud.senior.q1",
+      "topicId": "mongodb.crud.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Ce garanții obții cu `writeConcern: { w: \"majority\" }`?" },
+      "explanation": {
+        "ro": "„Majority” înseamnă că scrierea a ajuns pe majoritatea replicilor, deci supraviețuiește alegerii unui nou primary. Cu `w: 1`, o scriere confirmată poate fi pierdută la failover.\n\nCitirile sunt controlate separat: `readConcern` și `readPreference`. Un secundar poate rămâne în urmă; pentru „read your writes” folosești sesiuni cu consistență cauzală sau citești de pe primary. Atomicitatea pe mai multe documente necesită tranzacții multi-document."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Scrierea e confirmată după ce a fost aplicată pe majoritatea membrilor cu drept de vot"
+          },
+          { "ro": "Scrierea confirmată nu va fi anulată (rollback) la schimbarea primary-ului" },
+          { "ro": "Orice citire ulterioară, de pe orice secundar, va vedea scrierea" },
+          { "ro": "Scrierea devine atomică pe mai multe documente" }
+        ],
+        "correctIndices": [0, 1]
+      }
+    },
+    {
+      "id": "mongodb.scaling.senior.f1",
+      "topicId": "mongodb.scaling.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum alegi **shard key**-ul unei colecții MongoDB și ce greșeli trebuie evitate?"
+      },
+      "explanation": {
+        "ro": "Alegerea shard key-ului e cea mai greu de schimbat decizie din MongoDB. Un senior pornește de la tiparele de acces și de la volumul de scrieri, nu de la schemă."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Un shard key bun are:\n\n- **cardinalitate mare** (multe valori distincte), ca datele să se poată împărți în multe chunk-uri;\n- **frecvență mică** (nicio valoare dominantă), ca un chunk să nu devină uriaș și imposibil de mutat;\n- **creștere nemonotonă**, altfel toate inserările ajung pe ultimul shard (hotspot);\n- **potrivire cu interogările**: interogările care conțin cheia ajung la un singur shard (targeted), celelalte sunt trimise la toate (scatter-gather).\n\nGreșeli tipice: `_id` de tip ObjectId sau un timestamp ca shard key pe interval, care creează un hotspot la inserare; o cheie cu puține valori (ex. `country`); o cheie pe care interogările nu o folosesc. Un shard key hashed distribuie uniform scrierile, dar pierzi interogările eficiente pe interval. Cheile compuse (ex. `{ tenantId: 1, _id: 1 }`) combină localitatea cu distribuția. Resharding-ul e posibil din MongoDB 5.0, dar e o operație costisitoare."
+        },
+        "keyPoints": [
+          { "ro": "Cardinalitate mare, frecvență mică" },
+          { "ro": "Evită cheile monotone (hotspot)" },
+          { "ro": "Interogări targeted vs scatter-gather" },
+          { "ro": "Hashed vs ranged; chei compuse" }
+        ]
+      }
+    }
+  ]
 }

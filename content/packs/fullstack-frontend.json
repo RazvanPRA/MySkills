@@ -500,5 +500,239 @@
       "prerequisites": ["angular.testing.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "react.state.junior.q1",
+      "topicId": "react.state.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Tema aplicației (light/dark) trebuie citită de zeci de componente aflate la adâncimi diferite în arbore. Ce soluție e cea mai potrivită?"
+      },
+      "explanation": {
+        "ro": "Context-ul e făcut exact pentru date „ambientale” citite de multe componente: temă, limbă, utilizatorul autentificat. Prop drilling funcționează, dar cuplează zeci de componente intermediare de o valoare pe care nu o folosesc. O variabilă globală sau `localStorage` nu declanșează re-randare când tema se schimbă, deci UI-ul rămâne desincronizat.\n\nCapcana la nivel senior: orice schimbare a valorii din context re-randează toți consumatorii. Pentru date care se schimbă des, împarte contextul sau folosește un store cu selectori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un `ThemeContext` cu un provider sus în arbore și `useContext` unde e nevoie" },
+          { "ro": "Transmiți tema prin props prin fiecare nivel (prop drilling)" },
+          { "ro": "O variabilă globală `let theme` importată în fiecare componentă" },
+          { "ro": "Fiecare componentă citește tema din `localStorage` la randare" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.hooks.mid.q1",
+      "topicId": "react.hooks.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează butonul după primul click?\n\n~~~tsx\nfunction Counter() {\n  const [count, setCount] = useState(0);\n  const handleClick = () => {\n    setCount(count + 1);\n    setCount(count + 1);\n    setCount(count + 1);\n  };\n  return <button onClick={handleClick}>{count}</button>;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Toate cele trei apeluri citesc aceeași valoare `count` din randarea curentă (0), deci fiecare programează `setCount(1)`. React grupează actualizările (batching) și randează o singură dată, cu 1.\n\nDacă vrei trei incrementări, folosește forma funcțională `setCount(c => c + 1)`: primește valoarea din coada de actualizări, nu din closure. Întrebarea verifică modelul „fiecare randare are propriul snapshot de state”, sursa multor bug-uri cu closure-uri vechi în efecte și handler-e."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [{ "ro": "`1`" }, { "ro": "`3`" }, { "ro": "`0`" }, { "ro": "`2`" }],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.hooks.senior.q1",
+      "topicId": "react.hooks.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Care dintre situațiile de mai jos **nu** au nevoie de `useEffect`?" },
+      "explanation": {
+        "ro": "Efectele sunt pentru sincronizarea cu un **sistem extern** (API-uri ale browserului, widget-uri non-React, conexiuni).\n\n- Datele derivate se calculează direct la randare (cu `useMemo` doar dacă e scump).\n- Reacția la o acțiune a utilizatorului aparține handler-ului de eveniment, nu unui efect care „observă” state-ul.\n- Resetarea state-ului la schimbarea unei entități se face cu `key={userId}` pe componentă: React o montează din nou.\n\nAbonarea la `resize` și harta non-React sunt exact cazurile pentru efecte (pentru abonări, `useSyncExternalStore` e și mai potrivit). Efectele inutile adaugă randări în plus și bug-uri de sincronizare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Calculezi `fullName` din `firstName` și `lastName` aflate în state" },
+          { "ro": "Trimiți un eveniment de analytics când utilizatorul apasă „Cumpără”" },
+          { "ro": "Te abonezi la `window.addEventListener(\"resize\", …)`" },
+          { "ro": "Resetezi state-ul unui formular când se schimbă prop-ul `userId`" },
+          { "ro": "Sincronizezi un widget de hartă (non-React) cu prop-ul `zoom`" }
+        ],
+        "correctIndices": [0, 1, 3]
+      }
+    },
+    {
+      "id": "react.performance.mid.q1",
+      "topicId": "react.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "`List` e învelit în `React.memo`, dar se re-randează la fiecare tastă apăsată în input. Care e cauza?\n\n~~~tsx\nfunction Parent() {\n  const [query, setQuery] = useState('');\n  const options = { sortBy: 'name' };\n  return (\n    <>\n      <input value={query} onChange={e => setQuery(e.target.value)} />\n      <List options={options} />\n    </>\n  );\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`React.memo` compară props cu `Object.is`. Un obiect literal creat în corpul componentei are o referință nouă la fiecare randare, deci comparația spune mereu „s-a schimbat”.\n\nSoluții: mută constanta în afara componentei, sau `useMemo` când depinde de props/state; pentru funcții, `useCallback`. Dar măsoară întâi cu Profiler-ul: `memo` are și el un cost, iar o re-randare ieftină nu merită optimizată. React Compiler face multe dintre aceste memoizări automat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`options` e un obiect nou la fiecare randare, deci comparația superficială a props eșuează"
+          },
+          { "ro": "`React.memo` nu funcționează cu function components" },
+          { "ro": "Orice `setState` din părinte re-randează copiii, indiferent de `memo`" },
+          { "ro": "Lipsește un `key` pe `List`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.nextjs.senior.f1",
+      "topicId": "react.nextjs.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Când alegi **React Server Components** în locul client components și ce compromisuri accepți?"
+      },
+      "explanation": {
+        "ro": "Intervievatorul caută să vezi RSC ca pe o decizie de arhitectură (unde rulează codul, cât JavaScript livrezi, de unde vin datele), nu ca pe o sintaxă nouă. Un răspuns bun dă un exemplu concret de graniță: pagina de produs e server, butonul „Adaugă în coș” e client."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Server Components sunt implicite în App Router și potrivite pentru tot ce **citește date și nu are interactivitate**: listări, pagini de detaliu, layout-uri. Rulează doar pe server, pot accesa direct baza de date sau secrete, iar codul lor (și bibliotecile grele, ex. un parser Markdown) nu ajunge în bundle-ul clientului.\n\nTreci la `\"use client\"` doar pentru frunzele interactive: state, efecte, handler-e de evenimente, API-uri ale browserului. Granița se trasează cât mai jos în arbore; un Server Component poate primi un client component ca `children`.\n\nCompromisuri: nu ai state și efecte pe server; props care trec granița trebuie să fie serializabile; trebuie să gândești caching-ul și revalidarea datelor; modelul mental (ce rulează unde) e mai complex, iar unele biblioteci încă presupun client."
+        },
+        "keyPoints": [
+          { "ro": "Implicit server; `\"use client\"` doar la frunzele interactive" },
+          { "ro": "Mai puțin JavaScript livrat, acces direct la date și secrete" },
+          { "ro": "Props serializabile peste graniță" },
+          { "ro": "Caching și revalidare de gândit explicit" }
+        ]
+      }
+    },
+    {
+      "id": "angular.components.junior.q1",
+      "topicId": "angular.components.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce rol are `track` în blocul `@for`?\n\n~~~html\n@for (user of users(); track user.id) {\n  <app-user-card [user]=\"user\" />\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`track` spune lui Angular cum recunoaște un element între două randări, la fel ca `key` în React. Cu un id stabil, la reordonare sau inserare Angular mută nodurile existente în loc să le distrugă și să le creeze din nou, păstrând starea componentelor copil și focusul.\n\n`track $index` e acceptabil doar pentru liste statice; la o listă care se reordonează, componentele „își schimbă” datele între ele."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Identifică fiecare element, ca Angular să refolosească nodurile DOM când lista se schimbă"
+          },
+          { "ro": "Sortează lista după `id`" },
+          { "ro": "Filtrează elementele `null` din listă" },
+          { "ro": "Activează încărcarea leneșă a componentelor" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.reactivity.mid.q1",
+      "topicId": "angular.reactivity.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Fiecare tastă dintr-un câmp de căutare pornește un request HTTP. Vrei ca doar ultimul request să conteze, iar cele vechi să fie anulate. Ce operator RxJS folosești?\n\n~~~ts\nthis.results$ = this.query$.pipe(\n  debounceTime(300),\n  distinctUntilChanged(),\n  ???(q => this.api.search(q)),\n);\n~~~"
+      },
+      "explanation": {
+        "ro": "`switchMap` se dezabonează de observable-ul anterior când vine o valoare nouă; pentru `HttpClient`, asta anulează request-ul în curs. Rezultatul afișat corespunde mereu ultimului text introdus.\n\n- `mergeMap` rulează toate request-urile în paralel: răspunsurile pot sosi în altă ordine, iar unul vechi poate suprascrie unul nou (race condition).\n- `concatMap` le pune la coadă: corect pentru operații care trebuie executate în ordine (ex. salvări), prea lent pentru căutare.\n- `exhaustMap` ignoră valorile noi cât timp unul e activ: potrivit pentru un buton „Trimite” apăsat de mai multe ori."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`switchMap`" },
+          { "ro": "`mergeMap`" },
+          { "ro": "`concatMap`" },
+          { "ro": "`exhaustMap`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "angular.performance.mid.q1",
+      "topicId": "angular.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Ce declanșează verificarea (change detection) unei componente cu `ChangeDetectionStrategy.OnPush`?"
+      },
+      "explanation": {
+        "ro": "Cu `OnPush`, Angular verifică componenta doar când e marcată „dirty”: input nou (comparat prin referință), eveniment din template, `async` pipe (care apelează `markForCheck`), un signal citit în template care se schimbă, sau un `markForCheck` explicit.\n\nMutarea unui obiect păstrează aceeași referință, deci UI-ul nu se actualizează. Aceasta e capcana clasică: cu `OnPush` lucrezi cu date imutabile. Un `setTimeout` din alt loc rulează change detection global, dar sare peste subarborii `OnPush` care nu sunt marcați."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Un input primește o referință nouă" },
+          { "ro": "Un eveniment DOM tratat în template-ul componentei" },
+          { "ro": "Pipe-ul `async` din template primește o valoare nouă" },
+          { "ro": "Modifici un câmp în interiorul unui obiect primit ca input" },
+          { "ro": "Un `setTimeout` oarecare se termină în altă parte a aplicației" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "angular.di.senior.f1",
+      "topicId": "angular.di.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Explică ierarhia de injectori din Angular. Când primește o componentă o instanță **nouă** a unui serviciu?"
+      },
+      "explanation": {
+        "ro": "Ierarhia explică bug-uri reale: un serviciu „singleton” cu state duplicat pentru că a fost pus din greșeală în `providers` al unui modul lazy sau al unei componente. Folosită intenționat, dă state izolat per ecran sau per widget (ex. un store pentru fiecare tab)."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Angular are două ierarhii:\n\n- **Environment injectors**: root (pentru `providedIn: 'root'`), plus câte unul pentru fiecare rută lazy cu `providers`. Serviciile de aici sunt singleton-uri la nivelul aplicației, respectiv al rutei.\n- **Element injectors**: creați de componentele și directivele care declară `providers`. Fiecare instanță de componentă primește propria instanță a serviciului, vizibilă și copiilor ei.\n\nLa injectare, Angular caută întâi în ierarhia de elemente, de la componentă în sus, apoi în ierarhia de environment. Modificatorii `self`, `skipSelf`, `host` și `optional` schimbă căutarea.\n\nDeci o componentă primește o instanță nouă când ea (sau un strămoș pe același drum) are serviciul în `providers`, sau când se află sub o rută lazy care îl furnizează din nou."
+        },
+        "keyPoints": [
+          { "ro": "Environment vs element injectors" },
+          { "ro": "Căutarea pornește de la element și urcă" },
+          { "ro": "`providers` în componentă = instanță per componentă" },
+          { "ro": "Rutele lazy creează propriul environment injector" }
+        ]
+      }
+    },
+    {
+      "id": "angular.reactivity.senior.f1",
+      "topicId": "angular.reactivity.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": { "ro": "Signals sau RxJS? Cum decizi într-o aplicație Angular modernă?" },
+      "explanation": {
+        "ro": "Răspunsurile slabe sunt „signals înlocuiesc RxJS” sau „folosesc doar RxJS”. Un senior arată că fiecare are un rol și știe unde le leagă, fără să transforme totul într-un observable."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Signals** pentru state sincron afișat în UI: valori curente, derivate (`computed`), state local al componentelor și al store-urilor. Sunt simple, fără abonări de gestionat, și permit change detection granular (inclusiv zoneless).\n\n**RxJS** pentru fluxuri de evenimente în timp: request-uri HTTP cu anulare, debounce, retry, combinarea mai multor surse, WebSocket-uri. Operatorii de timp și de concurență (`switchMap`, `exhaustMap`) nu au echivalent în signals.\n\nLe legi la graniță: `toSignal` transformă un rezultat RxJS în state pentru template, `toObservable` transformă un signal în flux când ai nevoie de operatori. Regula practică: evenimentele și asincronul în RxJS, ce vede utilizatorul în signals."
+        },
+        "keyPoints": [
+          { "ro": "Signals: state sincron și derivat pentru UI" },
+          { "ro": "RxJS: evenimente în timp, anulare, concurență" },
+          { "ro": "`toSignal` / `toObservable` la graniță" },
+          { "ro": "Fără abonări manuale în componente" }
+        ]
+      }
+    }
+  ]
 }

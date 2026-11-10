@@ -276,5 +276,134 @@
       "prerequisites": ["react-native.release.mid"]
     }
   ],
-  "exercises": []
+  "exercises": [
+    {
+      "id": "react-native.navigation.junior.q1",
+      "topicId": "react-native.navigation.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei ca linkul `myapp://product/42` să deschidă ecranul de produs, atât cu aplicația pornită, cât și închisă. Ce configurezi în React Navigation?"
+      },
+      "explanation": {
+        "ro": "Config-ul `linking` mapează căi pe ecrane și parametri și tratează ambele cazuri: pornire la rece (URL-ul inițial) și link primit cu aplicația deschisă. Pe lângă el, schema trebuie declarată nativ (intent-filter în `AndroidManifest.xml`, URL types pe iOS).\n\nVarianta cu `getInitialURL` în fiecare ecran ratează linkurile primite cu aplicația deschisă și duplică logica de rutare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Opțiunea `linking` a containerului: prefixul `myapp://` și calea `product/:id` mapată pe ecran"
+          },
+          { "ro": "Un `useEffect` în fiecare ecran care citește `Linking.getInitialURL()`" },
+          { "ro": "`initialRouteName` pe stack navigator" },
+          { "ro": "`presentation: \"modal\"` pe ecranul de produs" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.components.mid.q1",
+      "topicId": "react-native.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Pe unele telefoane Android, butonul din partea de jos a ecranului e acoperit de bara de navigare a sistemului. Care e soluția corectă?"
+      },
+      "explanation": {
+        "ro": "Insets-urile vin de la sistem și reflectă exact ce acoperă bara de stare, notch-ul și bara de navigare (gesturi sau butoane), inclusiv în modul edge-to-edge, devenit implicit pe Android recent.\n\nValorile fixe arată bine pe un telefon și greșit pe altul. `StatusBar.currentHeight` acoperă doar partea de sus. Calculul cu `Dimensions` e fragil și nu ține cont de orientare sau de ferestre redimensionabile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Insets din `react-native-safe-area-context` (`SafeAreaView` sau `useSafeAreaInsets`)"
+          },
+          { "ro": "Un `marginBottom: 48` fix pe container" },
+          { "ro": "`StatusBar.currentHeight` adăugat la padding" },
+          { "ro": "Diferența dintre `Dimensions.get(\"screen\")` și `Dimensions.get(\"window\")`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.performance.mid.q1",
+      "topicId": "react-native.performance.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un ecran afișează 2.000 de produse cu `ScrollView` și `items.map(…)`. Pornirea durează câteva secunde, iar memoria crește mult. Care e prima schimbare corectă?"
+      },
+      "explanation": {
+        "ro": "`ScrollView` montează toți copiii de la început: 2.000 de componente, cu noduri native și imagini. O listă virtualizată randează doar fereastra vizibilă plus un buffer și reciclează elementele (FlashList refolosește vizualizările, deci e mai rapidă pe liste lungi).\n\n`React.memo` reduce re-randările, dar nu și costul montării inițiale. `removeClippedSubviews` detașează vizualizările din afara ecranului, dar componentele React rămân toate montate. Hermes ajută la pornire și memorie, deci dezactivarea lui ar înrăutăți lucrurile."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O listă virtualizată (`FlatList` sau `FlashList`) care randează doar ce e aproape de ecran"
+          },
+          { "ro": "`React.memo` pe componenta fiecărui produs" },
+          { "ro": "Dezactivezi Hermes" },
+          { "ro": "`removeClippedSubviews` pe `ScrollView`, fără alte schimbări" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react-native.native.senior.q1",
+      "topicId": "react-native.native.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": { "ro": "Ce aduce New Architecture față de vechiul bridge din React Native?" },
+      "explanation": {
+        "ro": "Bridge-ul vechi era asincron și serializa fiecare mesaj în JSON, ceea ce costa la apeluri frecvente și făcea imposibile apelurile sincrone. JSI expune obiecte C++ direct în runtime-ul JS. Peste el, TurboModules încarcă modulele la prima folosire, iar Codegen generează tipurile din specificații TypeScript. Fabric permite funcții precum `useLayoutEffect` cu măsurători sincrone și funcțiile concurente din React 18+.\n\nCodul nativ rămâne necesar pentru module și vizualizări native, iar JavaScript-ul rulează în continuare pe thread-ul lui; doar anumite lucrări (ex. worklet-urile Reanimated) rulează pe UI thread."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "JSI: JavaScript apelează direct cod nativ (C++), fără serializare JSON prin bridge"
+          },
+          {
+            "ro": "TurboModules: module native încărcate leneș, cu interfețe tipizate generate de Codegen"
+          },
+          {
+            "ro": "Fabric: un renderer nou, cu randare concurentă și măsurare sincronă a layout-ului"
+          },
+          { "ro": "Elimină complet nevoia de cod nativ" },
+          { "ro": "Rulează tot JavaScript-ul pe UI thread" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "react-native.offline.senior.f1",
+      "topicId": "react-native.offline.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum proiectezi o aplicație **offline-first** care se sincronizează cu un backend? Ce faci cu conflictele?"
+      },
+      "explanation": {
+        "ro": "„Pun un cache peste API” nu înseamnă offline-first. Intervievatorul vrea să vadă unde stă sursa de adevăr, cum nu pierzi scrieri, cum eviți duplicatele la retry și că nu există o singură regulă de conflict bună pentru toate datele."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Baza de date locală (ex. SQLite) e sursa de adevăr pentru UI: ecranele citesc mereu local, iar rețeaua doar actualizează datele locale.\n\nScrierile se fac local și intră într-o **coadă de operații** (outbox) cu id-uri generate pe client, trimisă la server cu retry și backoff când există conexiune. Operațiile sunt idempotente, ca un retry să nu dubleze date.\n\nPentru citire, sincronizarea e incrementală: ceri doar modificările de la ultimul cursor sau timestamp.\n\nConflictele se rezolvă după tipul datelor: last-write-wins cu `updatedAt` pentru date simple, merge pe câmpuri pentru documente, reguli de domeniu sau intervenția utilizatorului când contează (ex. două editări ale aceleiași note). Ștergerile se marchează (tombstones) ca să se propage."
+        },
+        "keyPoints": [
+          { "ro": "Local ca sursă de adevăr pentru UI" },
+          { "ro": "Outbox cu retry și operații idempotente" },
+          { "ro": "Sync incremental cu cursor" },
+          { "ro": "Strategie de conflict pe tip de date; tombstones" }
+        ]
+      }
+    }
+  ]
 }
