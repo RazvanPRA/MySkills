@@ -1,0 +1,960 @@
+{
+  "id": "logic-core",
+  "version": "1.0.0",
+  "schemaVersion": 1,
+  "title": { "ro": "Logică și raționament", "en": "Logic and reasoning" },
+  "categories": [
+    {
+      "id": "logic",
+      "title": { "ro": "Logică și raționament", "en": "Logic and reasoning" },
+      "testKinds": ["logic"],
+      "order": 120
+    }
+  ],
+  "topics": [
+    {
+      "id": "logic.trace.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Trasare de cod JS/TS" },
+      "level": "junior",
+      "summary": {
+        "ro": "Urmărești pas cu pas cod JavaScript simplu: variabile, condiții, bucle și metodele de array (`map`, `filter`, `reduce`)."
+      },
+      "resources": [
+        { "title": "javascript.info: Closures", "url": "https://javascript.info/closure" },
+        {
+          "title": "MDN: Spread syntax",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"
+        }
+      ],
+      "tags": ["trace"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.trace.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Trasare de cod JS/TS" },
+      "level": "mid",
+      "summary": {
+        "ro": "Prezici rezultatul codului cu closures, referințe și copii superficiale, `this` și conversii de tip."
+      },
+      "resources": [
+        { "title": "javascript.info: Closures", "url": "https://javascript.info/closure" },
+        {
+          "title": "MDN: Spread syntax",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"
+        }
+      ],
+      "tags": ["trace"],
+      "prerequisites": ["logic.trace.junior"]
+    },
+    {
+      "id": "logic.trace.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Trasare de cod JS/TS" },
+      "level": "senior",
+      "summary": {
+        "ro": "Urmărești cod subtil fără să-l rulezi: getteri, destructurare, generatori, ordinea evaluării și capcanele limbajului."
+      },
+      "resources": [
+        { "title": "javascript.info: Closures", "url": "https://javascript.info/closure" },
+        {
+          "title": "MDN: Spread syntax",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax"
+        }
+      ],
+      "tags": ["trace"],
+      "prerequisites": ["logic.trace.mid"]
+    },
+    {
+      "id": "logic.event-loop.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Event loop și cod asincron" },
+      "level": "junior",
+      "summary": {
+        "ro": "Explici de ce un callback din `setTimeout` rulează după tot codul sincron."
+      },
+      "resources": [
+        { "title": "javascript.info: Event loop", "url": "https://javascript.info/event-loop" },
+        {
+          "title": "Node.js: The event loop, timers and nextTick",
+          "url": "https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick"
+        }
+      ],
+      "tags": ["event-loop"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.event-loop.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Event loop și cod asincron" },
+      "level": "mid",
+      "summary": {
+        "ro": "Ordonezi corect codul sincron, microtask-urile (promisiuni, `await`) și macrotask-urile (timere)."
+      },
+      "resources": [
+        { "title": "javascript.info: Event loop", "url": "https://javascript.info/event-loop" },
+        {
+          "title": "Node.js: The event loop, timers and nextTick",
+          "url": "https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick"
+        }
+      ],
+      "tags": ["event-loop"],
+      "prerequisites": ["logic.event-loop.junior"]
+    },
+    {
+      "id": "logic.event-loop.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Event loop și cod asincron" },
+      "level": "senior",
+      "summary": {
+        "ro": "Explici particularitățile Node.js (`process.nextTick`, `setImmediate`), înfometarea cozii de microtask-uri și efectul lor asupra latenței."
+      },
+      "resources": [
+        { "title": "javascript.info: Event loop", "url": "https://javascript.info/event-loop" },
+        {
+          "title": "Node.js: The event loop, timers and nextTick",
+          "url": "https://nodejs.org/en/learn/asynchronous-work/event-loop-timers-and-nexttick"
+        }
+      ],
+      "tags": ["event-loop"],
+      "prerequisites": ["logic.event-loop.mid"]
+    },
+    {
+      "id": "logic.complexity.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Complexitate și algoritmi" },
+      "level": "junior",
+      "summary": {
+        "ro": "Recunoști complexitatea operațiilor uzuale pe array-uri, map-uri și seturi."
+      },
+      "resources": [
+        { "title": "Big-O Cheat Sheet", "url": "https://www.bigocheatsheet.com/" },
+        {
+          "title": "Wikipedia: Time complexity",
+          "url": "https://en.wikipedia.org/wiki/Time_complexity"
+        }
+      ],
+      "tags": ["complexity"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.complexity.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Complexitate și algoritmi" },
+      "level": "mid",
+      "summary": {
+        "ro": "Estimezi complexitatea buclelor imbricate și alegi structura de date care o reduce."
+      },
+      "resources": [
+        { "title": "Big-O Cheat Sheet", "url": "https://www.bigocheatsheet.com/" },
+        {
+          "title": "Wikipedia: Time complexity",
+          "url": "https://en.wikipedia.org/wiki/Time_complexity"
+        }
+      ],
+      "tags": ["complexity"],
+      "prerequisites": ["logic.complexity.junior"]
+    },
+    {
+      "id": "logic.complexity.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Complexitate și algoritmi" },
+      "level": "senior",
+      "summary": {
+        "ro": "Raționezi despre heap-uri, complexitate amortizată și compromisuri între timp și memorie."
+      },
+      "resources": [
+        { "title": "Big-O Cheat Sheet", "url": "https://www.bigocheatsheet.com/" },
+        {
+          "title": "Wikipedia: Time complexity",
+          "url": "https://en.wikipedia.org/wiki/Time_complexity"
+        }
+      ],
+      "tags": ["complexity"],
+      "prerequisites": ["logic.complexity.mid"]
+    },
+    {
+      "id": "logic.sql.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Predicția rezultatelor SQL" },
+      "level": "junior",
+      "summary": {
+        "ro": "Prezici rezultatul agregărilor simple și efectul valorilor `NULL` asupra lui `COUNT`."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Queries",
+          "url": "https://www.postgresql.org/docs/current/queries.html"
+        },
+        {
+          "title": "PostgreSQL: Window functions",
+          "url": "https://www.postgresql.org/docs/current/tutorial-window.html"
+        }
+      ],
+      "tags": ["sql"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.sql.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Predicția rezultatelor SQL" },
+      "level": "mid",
+      "summary": {
+        "ro": "Prezici rezultatul filtrelor cu `NULL`, al `JOIN`-urilor și al window functions."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Queries",
+          "url": "https://www.postgresql.org/docs/current/queries.html"
+        },
+        {
+          "title": "PostgreSQL: Window functions",
+          "url": "https://www.postgresql.org/docs/current/tutorial-window.html"
+        }
+      ],
+      "tags": ["sql"],
+      "prerequisites": ["logic.sql.junior"]
+    },
+    {
+      "id": "logic.sql.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Predicția rezultatelor SQL" },
+      "level": "senior",
+      "summary": {
+        "ro": "Detectezi rezultatele greșite produse de `JOIN`-uri care multiplică rânduri și de agregările pe date duplicate."
+      },
+      "resources": [
+        {
+          "title": "PostgreSQL: Queries",
+          "url": "https://www.postgresql.org/docs/current/queries.html"
+        },
+        {
+          "title": "PostgreSQL: Window functions",
+          "url": "https://www.postgresql.org/docs/current/tutorial-window.html"
+        }
+      ],
+      "tags": ["sql"],
+      "prerequisites": ["logic.sql.mid"]
+    },
+    {
+      "id": "logic.concurrency.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Concurență în Go și Java" },
+      "level": "junior",
+      "summary": {
+        "ro": "Explici ce garantează (și ce nu) pornirea unei goroutine sau a unui thread."
+      },
+      "resources": [
+        { "title": "A Tour of Go: Concurrency", "url": "https://go.dev/tour/concurrency/1" },
+        {
+          "title": "Java: CompletableFuture",
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html"
+        }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.concurrency.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Concurență în Go și Java" },
+      "level": "mid",
+      "summary": {
+        "ro": "Folosești corect `WaitGroup`, mutex-uri și `CompletableFuture` și recunoști un race condition."
+      },
+      "resources": [
+        { "title": "A Tour of Go: Concurrency", "url": "https://go.dev/tour/concurrency/1" },
+        {
+          "title": "Java: CompletableFuture",
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html"
+        }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": ["logic.concurrency.junior"]
+    },
+    {
+      "id": "logic.concurrency.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Concurență în Go și Java" },
+      "level": "senior",
+      "summary": {
+        "ro": "Prezici comportamentul channel-urilor închise, al lui `select` și al primitivelor de sincronizare în cazurile limită."
+      },
+      "resources": [
+        { "title": "A Tour of Go: Concurrency", "url": "https://go.dev/tour/concurrency/1" },
+        {
+          "title": "Java: CompletableFuture",
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/concurrent/CompletableFuture.html"
+        }
+      ],
+      "tags": ["concurrency"],
+      "prerequisites": ["logic.concurrency.mid"]
+    },
+    {
+      "id": "logic.puzzles.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Probleme de logică" },
+      "level": "junior",
+      "summary": {
+        "ro": "Rezolvi probleme de logică simple, pas cu pas, fără să sari la concluzii."
+      },
+      "resources": [
+        {
+          "title": "Wikipedia: Monty Hall problem",
+          "url": "https://en.wikipedia.org/wiki/Monty_Hall_problem"
+        },
+        {
+          "title": "Wikipedia: Balance puzzle",
+          "url": "https://en.wikipedia.org/wiki/Balance_puzzle"
+        }
+      ],
+      "tags": ["puzzles"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.puzzles.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Probleme de logică" },
+      "level": "mid",
+      "summary": {
+        "ro": "Rezolvi probleme cu constrângeri și probabilități care contrazic intuiția."
+      },
+      "resources": [
+        {
+          "title": "Wikipedia: Monty Hall problem",
+          "url": "https://en.wikipedia.org/wiki/Monty_Hall_problem"
+        },
+        {
+          "title": "Wikipedia: Balance puzzle",
+          "url": "https://en.wikipedia.org/wiki/Balance_puzzle"
+        }
+      ],
+      "tags": ["puzzles"],
+      "prerequisites": ["logic.puzzles.junior"]
+    },
+    {
+      "id": "logic.puzzles.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Probleme de logică" },
+      "level": "senior",
+      "summary": {
+        "ro": "Găsești strategii optime: numărul minim de pași, cazul cel mai defavorabil și argumentul că nu se poate mai bine."
+      },
+      "resources": [
+        {
+          "title": "Wikipedia: Monty Hall problem",
+          "url": "https://en.wikipedia.org/wiki/Monty_Hall_problem"
+        },
+        {
+          "title": "Wikipedia: Balance puzzle",
+          "url": "https://en.wikipedia.org/wiki/Balance_puzzle"
+        }
+      ],
+      "tags": ["puzzles"],
+      "prerequisites": ["logic.puzzles.mid"]
+    },
+    {
+      "id": "logic.debugging.junior",
+      "categoryId": "logic",
+      "title": { "ro": "Depanare" },
+      "level": "junior",
+      "summary": {
+        "ro": "Găsești bug-uri clasice: variabile neinițializate, condiții greșite, off-by-one."
+      },
+      "resources": [
+        {
+          "title": "MDN: Array.prototype.sort()",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+        },
+        { "title": "Go: Data race detector", "url": "https://go.dev/doc/articles/race_detector" }
+      ],
+      "tags": ["debugging"],
+      "prerequisites": []
+    },
+    {
+      "id": "logic.debugging.mid",
+      "categoryId": "logic",
+      "title": { "ro": "Depanare" },
+      "level": "mid",
+      "summary": {
+        "ro": "Găsești bug-uri subtile de limbaj: sortarea implicită, callback-uri async neașteptate, mutații neintenționate."
+      },
+      "resources": [
+        {
+          "title": "MDN: Array.prototype.sort()",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+        },
+        { "title": "Go: Data race detector", "url": "https://go.dev/doc/articles/race_detector" }
+      ],
+      "tags": ["debugging"],
+      "prerequisites": ["logic.debugging.junior"]
+    },
+    {
+      "id": "logic.debugging.senior",
+      "categoryId": "logic",
+      "title": { "ro": "Depanare" },
+      "level": "senior",
+      "summary": {
+        "ro": "Găsești bug-uri care apar doar pe anumite date: bucle infinite, cazuri limită ale algoritmilor, concurență."
+      },
+      "resources": [
+        {
+          "title": "MDN: Array.prototype.sort()",
+          "url": "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort"
+        },
+        { "title": "Go: Data race detector", "url": "https://go.dev/doc/articles/race_detector" }
+      ],
+      "tags": ["debugging"],
+      "prerequisites": ["logic.debugging.mid"]
+    }
+  ],
+  "exercises": [
+    {
+      "id": "logic.trace.junior.q1",
+      "topicId": "logic.trace.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nconst result = [1, 2, 3].map(x => x * 2).filter(x => x > 2);\nconsole.log(result.join(','));\n~~~"
+      },
+      "explanation": {
+        "ro": "Pas cu pas: `map` dublează fiecare element, `[2, 4, 6]`. `filter` le păstrează pe cele mai mari ca 2: `[4, 6]`. `join(',')` le unește cu virgulă, fără spații: `4,6`.\n\nObișnuiește-te să scrii valoarea intermediară după fiecare metodă din lanț: e exact ce faci la un interviu când urmărești cod pe tablă."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "4,6", "accepted": [] }
+    },
+    {
+      "id": "logic.trace.mid.q1",
+      "topicId": "logic.trace.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nconst a = { n: 1, inner: { m: 1 } };\nconst b = { ...a };\nb.n = 2;\nb.inner.m = 2;\nconsole.log(a.n, a.inner.m);\n~~~"
+      },
+      "explanation": {
+        "ro": "Spread-ul face o copie **superficială**: `b` are propriul câmp `n`, dar `b.inner` e aceeași referință ca `a.inner`. Modificarea lui `b.n` nu atinge `a`, în schimb `b.inner.m = 2` modifică obiectul comun.\n\nAcelași lucru se întâmplă cu `Object.assign` și cu spread-ul pe array-uri. Pentru o copie completă: `structuredClone(a)`. În React și Redux, bug-ul apare când „copiezi” state-ul cu spread și apoi modifici un obiect imbricat: referința rămâne aceeași, deci componenta nu se re-randează."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "1 2", "accepted": [] }
+    },
+    {
+      "id": "logic.trace.mid.q2",
+      "topicId": "logic.trace.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nfor (var i = 0; i < 3; i++) {\n  setTimeout(() => console.log(i), 0);\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`var` are scope de funcție: există o singură variabilă `i`, comună celor trei closures. Callback-urile rulează după ce bucla s-a terminat, când `i` e deja 3.\n\nCu `let`, fiecare iterație primește propria legătură a lui `i`, deci rezultatul ar fi 0, 1, 2. Întrebarea combină două idei: closures captează variabile, nu valori, iar `setTimeout` rulează după codul sincron."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "`3`, `3`, `3`" },
+          { "ro": "`0`, `1`, `2`" },
+          { "ro": "`2`, `2`, `2`" },
+          { "ro": "`undefined` de trei ori" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.trace.senior.q1",
+      "topicId": "logic.trace.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nfunction makeCounter() {\n  let count = 0;\n  return {\n    inc: () => ++count,\n    get value() {\n      return count;\n    },\n  };\n}\nconst { inc, value } = makeCounter();\ninc();\ninc();\nconsole.log(value);\n~~~"
+      },
+      "explanation": {
+        "ro": "Destructurarea **citește** proprietățile în momentul atribuirii. Getter-ul `value` rulează o singură dată, când `count` e 0, iar variabila `value` primește numărul 0, nu getter-ul. Apelurile `inc()` modifică `count` din closure, dar `value` nu se mai recalculează.\n\nVarianta corectă păstrează obiectul: `const counter = makeCounter(); counter.inc(); counter.value` dă 2. Aceeași capcană apare când destructurezi dintr-un store sau dintr-un obiect reactiv: obții o copie a valorii de atunci, nu o legătură vie."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [{ "ro": "`0`" }, { "ro": "`2`" }, { "ro": "`undefined`" }, { "ro": "`1`" }],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.event-loop.junior.q1",
+      "topicId": "logic.event-loop.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele?\n\n~~~js\nconsole.log('A');\nsetTimeout(() => console.log('B'), 0);\nconsole.log('C');\n~~~"
+      },
+      "explanation": {
+        "ro": "`setTimeout(..., 0)` nu înseamnă „acum”, ci „cel mai devreme după ce stiva de apeluri se golește”. Callback-ul intră în coada de task-uri, iar event loop-ul îl ia abia după ce tot codul sincron a rulat: întâi `A` și `C`, apoi `B`.\n\nDe aceea un calcul sincron lung blochează și timerele, și randarea: niciun callback nu rulează cât timp stiva e ocupată."
+      },
+      "type": "ordering",
+      "payload": { "items": [{ "ro": "`A`" }, { "ro": "`C`" }, { "ro": "`B`" }] }
+    },
+    {
+      "id": "logic.event-loop.mid.q1",
+      "topicId": "logic.event-loop.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "În ce ordine apar mesajele?\n\n~~~js\nconsole.log('1');\nsetTimeout(() => console.log('2'), 0);\nPromise.resolve().then(() => console.log('3'));\n(async () => {\n  console.log('4');\n  await null;\n  console.log('5');\n})();\nconsole.log('6');\n~~~"
+      },
+      "explanation": {
+        "ro": "Ordinea: codul sincron, apoi **toate** microtask-urile, apoi următorul macrotask.\n\n- Sincron: `1`, apoi corpul funcției async până la primul `await`: `4`, apoi `6`.\n- Microtask-uri, în ordinea în care au fost programate: callback-ul `then` (`3`) a fost programat înaintea continuării de după `await null` (`5`).\n- Macrotask: timer-ul (`2`).\n\nCapcana obișnuită: să crezi că o funcție `async` rulează în întregime asincron. Rulează sincron până la primul `await`."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [
+          { "ro": "`1`" },
+          { "ro": "`4`" },
+          { "ro": "`6`" },
+          { "ro": "`3`" },
+          { "ro": "`5`" },
+          { "ro": "`2`" }
+        ]
+      }
+    },
+    {
+      "id": "logic.event-loop.mid.q2",
+      "topicId": "logic.event-loop.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează codul în Node.js? Scrie mesajele în ordine, separate prin spațiu.\n\n~~~js\nPromise.resolve().then(() => console.log('promise'));\nprocess.nextTick(() => console.log('nextTick'));\nconsole.log('sync');\n~~~"
+      },
+      "explanation": {
+        "ro": "În Node.js, după codul sincron se golește întâi coada lui `process.nextTick`, apoi coada de microtask-uri a promisiunilor. Deși promisiunea a fost programată prima, `nextTick` rulează înaintea ei.\n\n`nextTick` e util pentru a amâna ceva „imediat după operația curentă”, dar folosit recursiv poate bloca event loop-ul: nicio operație I/O nu mai ajunge să ruleze. Pentru cod portabil între browser și Node, preferă `queueMicrotask`."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "sync\nnextTick\npromise", "accepted": [] }
+    },
+    {
+      "id": "logic.event-loop.senior.q1",
+      "topicId": "logic.event-loop.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nsetTimeout(() => console.log('timeout'), 0);\nlet n = 0;\nfunction spin() {\n  if (n++ < 3) {\n    Promise.resolve().then(spin);\n  } else {\n    console.log('done', n);\n  }\n}\nspin();\n~~~"
+      },
+      "explanation": {
+        "ro": "Event loop-ul golește **complet** coada de microtask-uri înainte de următorul task, inclusiv microtask-urile adăugate între timp. Fiecare `spin` programează următorul `spin` ca microtask, deci timer-ul așteaptă până se oprește lanțul.\n\nDespre `n`: comparația folosește valoarea veche, apoi o incrementează. La al patrulea apel, `3 < 3` e fals, iar `n` devine 4, deci se afișează `done 4`.\n\nConsecința practică: un lanț de microtask-uri care nu se oprește (de exemplu o buclă de promisiuni) înfometează timerele, I/O-ul și randarea, chiar dacă fiecare pas e „asincron”."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "`done 4`, apoi `timeout`" },
+          { "ro": "`timeout`, apoi `done 4`" },
+          { "ro": "`done 3`, apoi `timeout`" },
+          { "ro": "`timeout`, apoi `done 3`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.complexity.junior.q1",
+      "topicId": "logic.complexity.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Care dintre operațiile de mai jos au complexitate **O(1)** (în medie sau amortizat)?"
+      },
+      "explanation": {
+        "ro": "- Accesul după index calculează direct adresa: O(1).\n- `push` e O(1) **amortizat**: rar, array-ul se realocă și copiază tot, dar costul împărțit pe toate inserările rămâne constant.\n- `Map` e un hash table: O(1) în medie.\n- `includes` parcurge array-ul: O(n).\n- `shift` mută toate elementele rămase cu o poziție: O(n). Pentru cozi mari folosește o structură dedicată sau un index de început."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Citirea elementului de la un index dintr-un array: `arr[i]`" },
+          { "ro": "Adăugarea la sfârșitul unui array: `arr.push(x)`" },
+          { "ro": "Citirea unei chei dintr-un `Map`: `map.get(key)`" },
+          { "ro": "Căutarea unei valori într-un array: `arr.includes(x)`" },
+          { "ro": "Scoaterea primului element dintr-un array: `arr.shift()`" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "logic.complexity.mid.q1",
+      "topicId": "logic.complexity.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Funcția găsește elementele comune a două liste de câte n elemente. Ce complexitate are și cum o reduci?\n\n~~~js\nfunction common(a, b) {\n  return a.filter(x => b.includes(x));\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "`filter` parcurge `a` (n pași), iar pentru fiecare element `includes` parcurge `b` (până la n pași): O(n · n). Pentru 100 000 de elemente înseamnă 10 miliarde de comparații.\n\nCu `const set = new Set(b)` (O(n) o singură dată) și `a.filter(x => set.has(x))` (O(1) în medie per verificare), totalul devine O(n), cu O(n) memorie în plus. E schimbul clasic: memorie pentru timp. Tiparul „căutare într-o listă în interiorul unei bucle” e cea mai frecventă sursă de O(n²) ascuns în cod de producție."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O(n²); construiești un `Set` din `b` și verifici cu `set.has(x)`, ajungând la O(n)"
+          },
+          { "ro": "O(n); e deja optimă" },
+          { "ro": "O(n log n); sortarea internă a lui `filter` domină" },
+          { "ro": "O(n²); nu se poate mai bine" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.complexity.mid.q2",
+      "topicId": "logic.complexity.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ordonează complexitățile de la cea mai rapidă la cea mai lentă, pentru n mare."
+      },
+      "explanation": {
+        "ro": "Pentru n = 1 000 000, aproximativ: O(1) e un pas; O(log n) ≈ 20 de pași (căutare binară); O(n) un milion (o parcurgere); O(n log n) ≈ 20 de milioane (sortare bună); O(n²) un trilion (bucle imbricate); O(2ⁿ) imposibil (toate submulțimile).\n\nGranița practică e între O(n log n) și O(n²): prima rulează în milisecunde pe un milion de elemente, a doua durează ore."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [
+          { "ro": "O(1)" },
+          { "ro": "O(log n)" },
+          { "ro": "O(n)" },
+          { "ro": "O(n log n)" },
+          { "ro": "O(n²)" },
+          { "ro": "O(2ⁿ)" }
+        ]
+      }
+    },
+    {
+      "id": "logic.complexity.senior.q1",
+      "topicId": "logic.complexity.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei cele mai mari k valori dintr-un flux de n numere (n foarte mare, k mic). Păstrezi un min-heap de mărime k: fiecare număr nou mai mare decât minimul heap-ului îl înlocuiește. Ce complexitate are?"
+      },
+      "explanation": {
+        "ro": "Fiecare dintre cele n numere costă cel mult o operație pe un heap de k elemente: O(log k). Total O(n log k), cu doar k elemente în memorie, deci merge și pe un flux care nu încape în memorie.\n\nSortarea completă ar costa O(n log n) timp și O(n) memorie. Pentru k mic (top 10 din un miliard), log k e aproape constant, deci soluția e practic liniară. De ce min-heap și nu max-heap: ai nevoie rapid de **cel mai mic** dintre primii k, ca să decizi dacă un număr nou intră."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "O(n log k) timp, O(k) memorie" },
+          { "ro": "O(n log n) timp, O(n) memorie" },
+          { "ro": "O(n · k) timp, O(k) memorie" },
+          { "ro": "O(k log n) timp, O(1) memorie" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.sql.junior.q1",
+      "topicId": "logic.sql.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Tabelul `users` are 4 rânduri; unul dintre ele are `email` egal cu `NULL`. Ce întoarce interogarea?\n\n~~~sql\nSELECT COUNT(*) AS all_rows, COUNT(email) AS with_email\nFROM users;\n~~~"
+      },
+      "explanation": {
+        "ro": "`COUNT(*)` numără rândurile, indiferent de valori: 4. `COUNT(email)` numără doar valorile care nu sunt `NULL`: 3.\n\nRegula e generală pentru agregate: `SUM`, `AVG`, `MIN`, `MAX` ignoră `NULL`-urile. Capcană: `AVG(rating)` calculează media doar peste rândurile cu rating, nu peste toate; dacă vrei ca lipsa să conteze ca 0, scrie `AVG(COALESCE(rating, 0))`."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "`4` și `3`" },
+          { "ro": "`4` și `4`" },
+          { "ro": "`3` și `3`" },
+          { "ro": "`3` și `4`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.sql.mid.q1",
+      "topicId": "logic.sql.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Tabelul `orders` are 4 comenzi, cu statusurile `'paid'`, `'pending'`, `NULL` și `'cancelled'`. Ce număr întoarce interogarea?\n\n~~~sql\nSELECT COUNT(*)\nFROM orders\nWHERE status <> 'paid';\n~~~"
+      },
+      "explanation": {
+        "ro": "`NULL <> 'paid'` nu e adevărat, ci **necunoscut** (`NULL`), iar `WHERE` păstrează doar rândurile pentru care condiția e adevărată. Comanda fără status dispare, deci rezultatul e 2 (`pending` și `cancelled`), nu 3.\n\nDacă vrei și rândurile fără status: `WHERE status IS DISTINCT FROM 'paid'` (PostgreSQL) sau `WHERE status <> 'paid' OR status IS NULL`. Logica cu trei valori e una dintre cele mai frecvente surse de rapoarte greșite."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "2", "accepted": [] }
+    },
+    {
+      "id": "logic.sql.mid.q2",
+      "topicId": "logic.sql.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Scorurile sunt: Ana 90, Bogdan 90, Cristi 80, Dana 70. Ce valoare au `r` și `d` pentru Cristi?\n\n~~~sql\nSELECT name,\n       RANK()       OVER (ORDER BY score DESC) AS r,\n       DENSE_RANK() OVER (ORDER BY score DESC) AS d\nFROM scores;\n~~~"
+      },
+      "explanation": {
+        "ro": "Ana și Bogdan sunt la egalitate pe locul 1. `RANK` lasă un gol după egalitate (1, 1, 3, 4), ca la un clasament sportiv. `DENSE_RANK` nu lasă goluri (1, 1, 2, 3). `ROW_NUMBER` ar da numere unice (1, 2, 3, 4), cu ordinea egalităților nedeterminată dacă nu adaugi un criteriu de departajare.\n\nAlege funcția după întrebarea de business: „top 3 scoruri distincte” cere `DENSE_RANK`, „primele 3 rânduri” cere `ROW_NUMBER` cu departajare explicită."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "`r = 3`, `d = 2`" },
+          { "ro": "`r = 2`, `d = 2`" },
+          { "ro": "`r = 3`, `d = 3`" },
+          { "ro": "`r = 2`, `d = 3`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.sql.senior.q1",
+      "topicId": "logic.sql.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Ana are două comenzi: #1 de 100 lei și #2 de 50 lei. Comanda #1 are două etichete (`gift`, `express`), comanda #2 una (`gift`). Ce total afișează raportul pentru Ana?\n\n~~~sql\nSELECT c.name, SUM(o.total) AS total\nFROM customers c\nJOIN orders o     ON o.customer_id = c.id\nJOIN order_tags t ON t.order_id = o.id\nGROUP BY c.name;\n~~~"
+      },
+      "explanation": {
+        "ro": "Al doilea `JOIN` **multiplică** rândurile: comanda #1 apare de două ori (o dată pentru fiecare etichetă), deci suma devine 100 + 100 + 50 = 250 în loc de 150.\n\nProblema se numește fan-out și e greu de observat, pentru că interogarea nu dă nicio eroare. Soluții: agregi separat înainte de join (o subinterogare sau un CTE care calculează totalul pe comenzi), sau filtrezi cu `EXISTS` când etichetele sunt doar un criteriu, fără să le aduci în rezultat. Semnal de alarmă: un `SUM` pe o tabelă „părinte” după un `JOIN` cu o tabelă „copil”."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "250", "accepted": [] }
+    },
+    {
+      "id": "logic.concurrency.junior.q1",
+      "topicId": "logic.concurrency.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce afișează programul?\n\n~~~go\nfunc main() {\n\tfor i := 0; i < 3; i++ {\n\t\tgo fmt.Println(i)\n\t}\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Pornirea unei goroutine doar o programează. Când `main` returnează, procesul se oprește, indiferent dacă goroutine-urile au rulat sau nu. În practică, programul nu afișează de obicei nimic, dar poate afișa și o parte din numere: nimic nu e garantat.\n\nCa să aștepți: `sync.WaitGroup` (`Add` înainte de `go`, `Done` în goroutine, `Wait` în `main`) sau un channel prin care goroutine-urile anunță că au terminat. Și chiar și atunci, ordinea afișării rămâne nedeterminată."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Nimic garantat: programul se termină când `main` returnează, de obicei înainte ca goroutine-urile să apuce să ruleze"
+          },
+          { "ro": "`0 1 2`, în ordine" },
+          { "ro": "Numerele 0, 1, 2 într-o ordine oarecare, dar toate trei" },
+          { "ro": "Programul se blochează (deadlock)" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.concurrency.mid.q1",
+      "topicId": "logic.concurrency.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Programul ar trebui să aștepte toate cele 5 goroutine-uri, dar uneori afișează un rezultat incomplet. Care linie e greșită?"
+      },
+      "explanation": {
+        "ro": "`wg.Add(1)` rulează **în** goroutine, deci poate rula după `wg.Wait()`. Dacă `main` ajunge la `Wait` când contorul e încă 0, `Wait` returnează imediat, iar programul afișează rezultate parțiale.\n\nRegula: `Add` se apelează înainte de `go`, în goroutine-ul care pornește munca: `wg.Add(1); go func() { defer wg.Done(); ... }()`. Din Go 1.25 există și `wg.Go(func() { ... })`, care face corect ambii pași. Race detector-ul (`go test -race`, `go run -race`) semnalează astfel de probleme."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "func main() {\n\tvar wg sync.WaitGroup\n\tresults := make([]int, 5)\n\tfor i := 0; i < 5; i++ {\n\t\tgo func() {\n\t\t\twg.Add(1)\n\t\t\tdefer wg.Done()\n\t\t\tresults[i] = i * i\n\t\t}()\n\t}\n\twg.Wait()\n\tfmt.Println(results)\n}",
+        "language": "go",
+        "bugLines": [6]
+      }
+    },
+    {
+      "id": "logic.concurrency.mid.q2",
+      "topicId": "logic.concurrency.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Ce afișează programul Java?\n\n~~~java\nint result = CompletableFuture.supplyAsync(() -> 2)\n    .thenApply(x -> x * 3)\n    .thenCombine(CompletableFuture.completedFuture(4), Integer::sum)\n    .join();\nSystem.out.println(result);\n~~~"
+      },
+      "explanation": {
+        "ro": "`supplyAsync` produce 2, `thenApply` îl transformă în 6, iar `thenCombine` așteaptă ambele future-uri și le combină cu `Integer::sum`: 6 + 4 = 10. `join` blochează până la rezultat.\n\n`thenApply` transformă valoarea, `thenCompose` înlănțuie un alt future (ca `flatMap`), `thenCombine` combină două future-uri independente care pot rula în paralel. Fără un executor explicit, `supplyAsync` rulează pe `ForkJoinPool.commonPool()`; nu pune acolo operații blocante."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "10", "accepted": [] }
+    },
+    {
+      "id": "logic.concurrency.senior.q1",
+      "topicId": "logic.concurrency.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Ce afișează programul?\n\n~~~go\nfunc main() {\n\tch := make(chan int, 2)\n\tch <- 1\n\tch <- 2\n\tclose(ch)\n\tfor i := 0; i < 4; i++ {\n\t\tv, ok := <-ch\n\t\tfmt.Print(v, ok, \" \")\n\t}\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Un channel închis **își păstrează valorile din buffer**: primele două citiri primesc 1 și 2, cu `ok == true`. După ce buffer-ul s-a golit, citirea dintr-un channel închis nu blochează: întoarce imediat valoarea zero a tipului (0) și `ok == false`.\n\nDespre format: `fmt.Print` pune spațiu între doi operanzi când niciunul nu e string, deci `1 true`, iar `\" \"` separă perechile.\n\nDe reținut pentru cazurile limită: trimiterea pe un channel închis dă panic; închiderea de două ori dă panic; citirea și scrierea pe un channel `nil` blochează pentru totdeauna (util în `select` pentru a dezactiva un caz). Închide channel-ul doar din partea care trimite."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "1 true 2 true 0 false 0 false", "accepted": [] }
+    },
+    {
+      "id": "logic.puzzles.junior.q1",
+      "topicId": "logic.puzzles.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Un melc e pe fundul unui puț adânc de 10 m. Ziua urcă 3 m, noaptea alunecă 2 m. În a câta zi iese din puț? Scrie doar numărul."
+      },
+      "explanation": {
+        "ro": "Răspunsul grăbit e 10 (câte 1 m pe zi), dar ultima zi e diferită: odată ajuns sus, melcul nu mai alunecă.\n\nDupă 7 zile și 7 nopți e la 7 m. În ziua a 8-a urcă 3 m și ajunge la 10 m: a ieșit. Lecția pentru interviuri: verifică separat cazul de la capăt, exact ca la condiția de oprire a unei bucle (off-by-one)."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "8", "accepted": ["8 zile", "ziua 8", "a 8-a"] }
+    },
+    {
+      "id": "logic.puzzles.mid.q1",
+      "topicId": "logic.puzzles.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ești într-un concurs cu trei uși: în spatele uneia e o mașină, în spatele celorlalte câte o capră. Alegi ușa 1. Prezentatorul, care știe unde e mașina, deschide mereu o ușă cu o capră dintre celelalte două (aici ușa 3) și îți oferă să schimbi pe ușa 2. Ce faci?"
+      },
+      "explanation": {
+        "ro": "Prima alegere e corectă cu probabilitatea 1/3, iar deschiderea unei uși de către prezentator nu schimbă asta, pentru că el deschide **întotdeauna** o ușă cu capră. Restul de 2/3 se concentrează pe singura ușă rămasă închisă.\n\nIntuiția: dacă ai ales inițial o capră (2/3 din cazuri), schimbarea te duce sigur la mașină. Argumentul „au rămas două uși, deci 50%” ignoră informația din regula prezentatorului. Cheia în probleme de probabilitate: ce informație aduce fiecare eveniment și cum a fost el generat."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Schimbi: câștigi cu probabilitatea 2/3" },
+          { "ro": "Nu contează: au rămas două uși, deci 1/2 fiecare" },
+          { "ro": "Rămâi: prima alegere are probabilitatea 2/3" },
+          { "ro": "Schimbi: câștigi cu probabilitatea 3/4" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.puzzles.mid.q2",
+      "topicId": "logic.puzzles.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Patru prieteni (Ana, Bogdan, Cristi, Dana) au terminat o cursă, fără egalități. Știi că:\n\n- Cristi a terminat pe locul 2.\n- Bogdan a terminat imediat după Cristi.\n- Dana a terminat înaintea Anei.\n\nOrdonează-i de la primul la ultimul."
+      },
+      "explanation": {
+        "ro": "Pornește de la constrângerile fixe: Cristi e pe locul 2, deci Bogdan e pe locul 3. Rămân locurile 1 și 4 pentru Ana și Dana, iar Dana e înaintea Anei: Dana pe 1, Ana pe 4.\n\nMetoda contează mai mult decât problema: aplică întâi constrângerile care fixează o poziție, apoi pe cele relative. Aceeași strategie (propagarea constrângerilor) stă la baza rezolvitorilor de Sudoku și a planificatoarelor."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [{ "ro": "Dana" }, { "ro": "Cristi" }, { "ro": "Bogdan" }, { "ro": "Ana" }]
+      }
+    },
+    {
+      "id": "logic.puzzles.senior.q1",
+      "topicId": "logic.puzzles.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Ai 8 bile identice ca aspect; una e puțin mai grea. Ai o balanță cu două talere. Care e numărul minim de cântăriri care garantează găsirea bilei grele?"
+      },
+      "explanation": {
+        "ro": "O cântărire are **trei** rezultate (stânga mai grea, dreapta mai grea, echilibru), deci k cântăriri disting cel mult 3ᵏ cazuri. Pentru 8 bile ai nevoie de 3ᵏ ≥ 8, deci k = 2.\n\nStrategia: pui 3 bile pe fiecare taler și 2 deoparte. Dacă un taler e mai greu, bila e printre cele 3 de acolo: cântărești 1 contra 1 și, la echilibru, e a treia. Dacă e echilibru, bila e printre cele 2 lăsate deoparte: le cântărești una contra alteia.\n\nArgumentul de limită inferioară (3ᵏ rezultate) e partea care contează la un interviu: arată de ce nu se poate mai bine, nu doar că 2 e suficient. Răspunsul „3”, din împărțirea în jumătăți (căutare binară), ignoră rezultatul de echilibru."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [{ "ro": "2" }, { "ro": "3" }, { "ro": "1" }, { "ro": "4" }],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.debugging.junior.q1",
+      "topicId": "logic.debugging.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": { "ro": "`sum([1, 2])` întoarce `NaN` în loc de `3`. Care linie conține bug-ul?" },
+      "explanation": {
+        "ro": "`let total;` lasă variabila `undefined`. Prima adunare calculează `undefined + 1`, adică `NaN`, iar orice adunare cu `NaN` rămâne `NaN`.\n\nFix: `let total = 0;`. Sau, mai declarativ, `xs.reduce((acc, x) => acc + x, 0)`, unde valoarea inițială e explicită (fără ea, `reduce` pe un array gol aruncă eroare). TypeScript în modul `strict` ar fi semnalat folosirea variabilei înainte de atribuire."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "function sum(xs) {\n  let total;\n  for (const x of xs) total += x;\n  return total;\n}",
+        "language": "js",
+        "bugLines": [2]
+      }
+    },
+    {
+      "id": "logic.debugging.mid.q1",
+      "topicId": "logic.debugging.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Lista de prețuri ar trebui afișată crescător, dar apare `1 10 100 9`. Care linie e greșită?"
+      },
+      "explanation": {
+        "ro": "Fără funcție de comparare, `sort` convertește elementele în **string-uri** și le compară lexicografic: `\"100\"` vine înainte de `\"9\"`, pentru că `\"1\" < \"9\"`.\n\nFix: `prices.sort((a, b) => a - b)`. Atenție și la faptul că `sort` modifică array-ul pe loc; dacă îl primești ca parametru sau vine din state, folosește `toSorted`: `const sorted = prices.toSorted((a, b) => a - b)`."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "const prices = [10, 9, 100, 1];\nprices.sort();\nconsole.log(prices.join(' '));",
+        "language": "js",
+        "bugLines": [2]
+      }
+    },
+    {
+      "id": "logic.debugging.mid.q2",
+      "topicId": "logic.debugging.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Mesajul „Toate au fost salvate” apare înainte ca salvările să se termine, iar erorile de salvare nu sunt prinse de apelant. Care linie e cauza?"
+      },
+      "explanation": {
+        "ro": "`forEach` ignoră valoarea întoarsă de callback, deci nu așteaptă promisiunile create de callback-ul `async`. `saveAll` continuă imediat, afișează mesajul și se termină, iar o salvare eșuată devine o „unhandled rejection” pe care apelantul nu o poate prinde.\n\nFix, în paralel: `await Promise.all(items.map(item => db.save(item)))`. În serie, când ordinea contează sau vrei să limitezi încărcarea: `for (const item of items) { await db.save(item); }`. Pentru volume mari, o limită de concurență (de exemplu loturi de câte 10) e compromisul corect."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "async function saveAll(items) {\n  items.forEach(async item => {\n    await db.save(item);\n  });\n  console.log('Toate au fost salvate');\n}",
+        "language": "js",
+        "bugLines": [2]
+      }
+    },
+    {
+      "id": "logic.debugging.senior.q1",
+      "topicId": "logic.debugging.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "`lowerBound(a, x)` întoarce primul index cu `a[i] >= x` dintr-un array sortat. Pentru `lowerBound([1, 3, 5], 4)`, funcția nu se mai termină. Care linie e greșită?"
+      },
+      "explanation": {
+        "ro": "Când `hi = lo + 1`, `mid` e egal cu `lo`. Dacă `a[mid] < x`, atribuirea `lo = mid` nu schimbă nimic, iar bucla se repetă la nesfârșit. Pentru exemplul dat: `lo = 1`, `hi = 2`, `mid = 1`, `a[1] = 3 < 4`.\n\nFix: `lo = mid + 1`; `a[mid]` a fost deja verificat și e prea mic, deci poate fi exclus. Invariantul care te ajută să scrii corect orice căutare binară: `[lo, hi)` conține mereu răspunsul, iar **fiecare pas trebuie să micșoreze intervalul**. Bug-ul apare doar pe anumite date, de aceea testează intervalele de lungime 1 și 2."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "function lowerBound(a: number[], x: number): number {\n  let lo = 0;\n  let hi = a.length;\n  while (lo < hi) {\n    const mid = Math.floor((lo + hi) / 2);\n    if (a[mid] < x) lo = mid;\n    else hi = mid;\n  }\n  return lo;\n}",
+        "language": "ts",
+        "bugLines": [6]
+      }
+    }
+  ]
+}
