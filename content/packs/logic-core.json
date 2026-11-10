@@ -758,6 +758,24 @@
       }
     },
     {
+      "id": "logic.complexity.junior.q2",
+      "topicId": "logic.complexity.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Ce complexitate are codul, în funcție de n?\n\n~~~js\nlet count = 0;\nfor (let i = 0; i < n; i++) {\n  for (let j = 0; j < 10; j++) {\n    count++;\n  }\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Bucla interioară face mereu 10 pași, indiferent de n. Totalul e 10 · n, iar notația Big-O ignoră constantele: O(n).\n\nDouă bucle imbricate nu înseamnă automat O(n²); contează de ce depinde **fiecare** buclă. Întrebarea corectă: „dacă n se dublează, de câte ori crește timpul?” Aici, de două ori, deci liniar."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [{ "ro": "O(n)" }, { "ro": "O(n²)" }, { "ro": "O(10n²)" }, { "ro": "O(log n)" }],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.complexity.mid.q1",
       "topicId": "logic.complexity.mid",
       "level": "mid",
@@ -807,6 +825,21 @@
       }
     },
     {
+      "id": "logic.complexity.mid.q3",
+      "topicId": "logic.complexity.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~js\nlet count = 0;\nfor (let i = 1; i < 1000; i *= 2) count++;\nconsole.log(count);\n~~~"
+      },
+      "explanation": {
+        "ro": "`i` trece prin 1, 2, 4, …, 512: zece valori mai mici decât 1000. Următoarea, 1024, oprește bucla.\n\nCând variabila buclei se **înmulțește** (sau se împarte) la fiecare pas, numărul de pași e logaritmic: aproximativ log₂(1000) ≈ 10. Același tipar apare la căutarea binară, la arborii echilibrați și la „câte cifre are n”. Dacă vezi `i *= 2` sau `n = n / 2`, gândește-te imediat la O(log n)."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "10", "accepted": [] }
+    },
+    {
       "id": "logic.complexity.senior.q1",
       "topicId": "logic.complexity.senior",
       "level": "senior",
@@ -828,6 +861,46 @@
         ],
         "correctIndex": 0
       }
+    },
+    {
+      "id": "logic.complexity.senior.q2",
+      "topicId": "logic.complexity.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Primești un array **sortat** de n numere și o sumă S. Trebuie să afli dacă există două elemente cu suma S. Care e cea mai bună soluție?"
+      },
+      "explanation": {
+        "ro": "Pornești cu `lo = 0` și `hi = n - 1`. Dacă suma e prea mică, crești `lo`; dacă e prea mare, scazi `hi`. Fiecare pas elimină un element, deci cel mult n pași și doar doi indici în memorie.\n\nDe ce e corect: când `a[lo] + a[hi] < S`, `a[lo]` nu poate forma suma cu niciun element, pentru că `a[hi]` e cel mai mare rămas. Sortarea e cea care permite eliminarea.\n\nCelelalte variante: un `Set` merge și pe date nesortate, dar folosește O(n) memorie, nu O(1). Căutarea binară per element dă O(n log n), nu O(log n). La interviu, „array sortat” în enunț e aproape mereu un indiciu pentru doi indici sau căutare binară."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Doi indici, unul de la fiecare capăt, care se apropie: O(n) timp, O(1) memorie"
+          },
+          { "ro": "Un `Set` cu elementele văzute: O(n) timp, O(1) memorie" },
+          { "ro": "Căutare binară a lui `S - x` pentru fiecare x: O(log n) timp" },
+          { "ro": "Toate perechile: O(n²), nu se poate mai bine" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "logic.complexity.senior.q3",
+      "topicId": "logic.complexity.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "De câte ori se apelează `fib` (inclusiv primul apel) pentru `fib(6)`?\n\n~~~js\nfunction fib(n) {\n  return n < 2 ? n : fib(n - 1) + fib(n - 2);\n}\nfib(6);\n~~~"
+      },
+      "explanation": {
+        "ro": "Notează cu C(n) numărul de apeluri: C(0) = C(1) = 1, iar C(n) = 1 + C(n − 1) + C(n − 2). Rezultă C(2) = 3, C(3) = 5, C(4) = 9, C(5) = 15, C(6) = 25.\n\nRecurența seamănă cu Fibonacci însuși: C(n) = 2 · fib(n + 1) − 1, deci crește exponențial, cu baza ≈ 1,618. Pentru `fib(40)` înseamnă peste 300 de milioane de apeluri, deși există doar 41 de subprobleme distincte.\n\nCu memoizare (`Map` de la n la rezultat) sau iterativ, fiecare subproblemă se calculează o singură dată: O(n). Exact asta e ideea programării dinamice: subprobleme care se repetă plus o structură care le reține."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "25", "accepted": [] }
     },
     {
       "id": "logic.sql.junior.q1",
