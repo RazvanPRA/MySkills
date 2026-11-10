@@ -7,6 +7,9 @@ import type { LocalizedText } from '@/shared/domain';
 
 export type TestSchedule = 'daily' | 'weekly' | 'on_demand';
 
+/** `mark_topics`: the pool grows when more topics are marked as covered in Study. */
+export type ShortfallRemedy = 'mark_topics';
+
 /** Narrows an on-demand session ("Practice this topic only"). Ignored by daily tests. */
 export type TestScope = { topicIds?: readonly string[]; categoryIds?: readonly string[] };
 
@@ -19,7 +22,10 @@ export type TestBuildContext = {
   catalog: ContentCatalog;
   progress: readonly TopicProgress[];
   reviewCards: readonly ReviewCard[];
-  /** Attempts from the last 14 days. */
+  /**
+   * Attempts from the last 30 days (the logic test's no-repeat window). Each test narrows it to
+   * what it needs with `attemptsSince` (knowledge: 14 days, logic accuracy: 7).
+   */
   recentAttempts: readonly Attempt[];
   settings: UserSettings;
   scope?: TestScope;
@@ -28,7 +34,12 @@ export type TestBuildContext = {
 export type SessionPlan = {
   exerciseIds: string[];
   /** Present when the pool was too small for a full test (brief §7.1.6). */
-  shortfall?: { target: number; available: number };
+  shortfall?: {
+    target: number;
+    available: number;
+    /** What the user can do about it; none when only more content would help. */
+    remedy?: ShortfallRemedy;
+  };
 };
 
 /**

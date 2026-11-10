@@ -55,16 +55,17 @@ const inProgress = ({ card, session, total, today }: CardFacts): StatusPart => (
   showMarkTopics: false,
 });
 
+const marksTopics = (card: TodayCardState) => card.shortfall?.remedy === 'mark_topics';
+
 function pending({ card, session, today }: CardFacts): StatusPart {
-  const notice = card.shortfall
-    ? today.shortfall(card.shortfall.available, card.shortfall.target)
-    : null;
+  const { shortfall } = card;
+  const shortfallText = marksTopics(card) ? today.shortfall : today.shortfallContent;
   return {
     statusLabel: today.status.pending,
     primary: { label: today.start, sessionId: session.id },
     scoreText: null,
-    notice,
-    showMarkTopics: notice !== null,
+    notice: shortfall ? shortfallText(shortfall.available, shortfall.target) : null,
+    showMarkTopics: marksTopics(card),
   };
 }
 
@@ -82,7 +83,9 @@ export function presentTodayCard({
   const ids = card.session ? availableExerciseIds(card.session, catalog) : [];
   if (!card.session || ids.length === 0) {
     const empty = { meta: null, statusLabel: today.status.pending, primary: null, scoreText: null };
-    return { ...base, ...empty, notice: today.empty, showMarkTopics: true };
+    const showMarkTopics = marksTopics(card);
+    const notice = showMarkTopics ? today.empty : today.emptyContent;
+    return { ...base, ...empty, notice, showMarkTopics };
   }
   const minutes = today.approxMinutes(counts.minutes(estimatedMinutes(ids, catalog)));
   const meta = `${counts.questions(ids.length)} · ${minutes}`;

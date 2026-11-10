@@ -11,6 +11,7 @@ export {
 } from './model/dailySession';
 export type {
   SessionPlan,
+  ShortfallRemedy,
   TestBuildContext,
   TestDefinition,
   TestSchedule,
@@ -19,7 +20,7 @@ export type {
 export { createTestRegistry, testsWithSchedule, type TestRegistry } from './services/testRegistry';
 export type { SessionRepository } from './repository/SessionRepository';
 export { createLocalSessionRepository } from './repository/LocalSessionRepository';
-export { availableExerciseIds, sessionSeed } from './services/sessionHelpers';
+export { attemptsSince, availableExerciseIds, sessionSeed } from './services/sessionHelpers';
 export { dailyTestsReducer, type DailyTestsState, type TodayCardState } from './state/slice';
 export { loadToday, type DailyTestsDependencies } from './state/thunks';
 export type { TodayScreenProps } from './screens/TodayScreen';

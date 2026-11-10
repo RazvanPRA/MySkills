@@ -9,7 +9,7 @@ import type { TestDefinition } from '../model/testDefinition';
 import type { SessionRepository } from '../repository/SessionRepository';
 import { presentTodayCard } from '../services/presentTodayCard';
 import { reconcileDailySession } from '../services/reconcileDailySession.service';
-import { sessionSeed } from '../services/sessionHelpers';
+import { attemptsSince, sessionSeed } from '../services/sessionHelpers';
 import { createTestRegistry } from '../services/testRegistry';
 import { dailyTestsReducer, type TodayCardState } from '../state/slice';
 import { loadToday } from '../state/thunks';
@@ -154,7 +154,7 @@ describe('presentTodayCard', () => {
   });
 
   it('explains a short test and offers to mark topics', () => {
-    const model = present({ shortfall: { target: 10, available: 3 } });
+    const model = present({ shortfall: { target: 10, available: 3, remedy: 'mark_topics' } });
     expect(model.notice).toBe(
       'Doar 3 din 10 întrebări disponibile azi. Marchează mai multe topicuri pentru un test complet.',
     );
@@ -162,9 +162,24 @@ describe('presentTodayCard', () => {
   });
 
   it('shows the empty state when there is nothing to test', () => {
-    const model = present({ session: null, shortfall: { target: 10, available: 0 } });
+    const model = present({
+      session: null,
+      shortfall: { target: 10, available: 0, remedy: 'mark_topics' },
+    });
     expect(model).toMatchObject({ meta: null, primary: null, showMarkTopics: true });
     expect(model.notice).toMatch(/Nicio întrebare disponibilă azi/);
+  });
+
+  it('explains a content-limited test without offering to mark topics', () => {
+    const short = present({ shortfall: { target: 5, available: 2 } });
+    expect(short.notice).toBe('Doar 2 din 5 probleme disponibile azi.');
+    expect(short.showMarkTopics).toBe(false);
+    const empty = present({ session: null, shortfall: { target: 5, available: 0 } });
+    expect(empty).toMatchObject({
+      notice: 'Nicio problemă disponibilă azi pentru acest test.',
+      showMarkTopics: false,
+      primary: null,
+    });
   });
 
   it('skips exercises removed from the content', () => {
@@ -258,5 +273,18 @@ describe('loadToday', () => {
     const { store } = setup([started], 1);
     const { cards } = await store.dispatch(loadToday({ catalog })).unwrap();
     expect(cards[0]).toMatchObject({ session: started, answered: 1 });
+  });
+});
+
+describe('attemptsSince', () => {
+  const at = (answeredAt: string) => ({ answeredAt });
+
+  it('keeps attempts from the start of the local day `days` days ago onwards', () => {
+    const since = new Date(2026, 10, 3).toISOString();
+    const before = new Date(2026, 10, 2, 23, 59).toISOString();
+    const today = new Date(2026, 10, 10, 9).toISOString();
+    expect(
+      attemptsSince([at(before), at(since), at(today)], { date: '2026-11-10', days: 7 }),
+    ).toEqual([at(since), at(today)]);
   });
 });
