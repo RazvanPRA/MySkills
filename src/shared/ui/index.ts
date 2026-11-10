@@ -12,6 +12,7 @@ export * from './MarkdownText';
 export * from './OptionList';
 export * from './OptionRow';
 export * from './ProgressBar';
+export * from './ReorderList';
 export * from './ScreenContainer';
 export * from './ScreenHeader';
 export * from './SegmentedControl';
