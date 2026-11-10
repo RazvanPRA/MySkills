@@ -1,39 +1,58 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useContentCatalog } from '@/features/content';
-import { resolveText } from '@/shared/domain';
+import { useSettings } from '@/features/settings';
+import { type Level, resolveText } from '@/shared/domain';
 import { useLanguage, useStrings } from '@/shared/i18n';
-import { groupTopicsByLevel } from '../services/groupTopicsByLevel.service';
+import { groupStudyTopics, toggleLevel } from '../services/filterTopics.service';
+import { presentStudySections } from '../services/presentStudySections';
 import { selectTopicProgressById } from '../state/selectors';
 import { useStudyMapSelector } from '../state/hooks';
 
-export type TopicRowModel = { id: string; title: string; meta: string; statusLabel: string };
-export type TopicSection = { level: string; label: string; rows: TopicRowModel[] };
-
-/** Category tabs and the selected category's topics grouped by level, with their status. */
+/**
+ * The study map (design system §6.3): category tabs, a level filter and a search over every
+ * category. Category and levels are saved in settings, so they survive restarts.
+ */
 export function useStudyMap() {
   const catalog = useContentCatalog();
   const language = useLanguage();
   const strings = useStrings();
   const progress = useStudyMapSelector(selectTopicProgressById);
-  const [selectedId, setSelectedId] = useState(catalog.categories[0]?.id ?? null);
+  const { settings, update } = useSettings();
+  const [query, setQuery] = useState('');
+  const { studyCategoryId, studyLevels } = settings;
+  const selectedId = catalog.categoriesById.has(studyCategoryId ?? '')
+    ? studyCategoryId
+    : catalog.categories[0]?.id ?? null;
 
+  const select = useCallback((id: string) => update({ studyCategoryId: id }), [update]);
+  const toggle = useCallback(
+    (level: string) => update({ studyLevels: toggleLevel(studyLevels, level as Level) }),
+    [studyLevels, update],
+  );
   const tabs = useMemo(
     () => catalog.categories.map(c => ({ id: c.id, label: resolveText(c.title, language).text })),
     [catalog, language],
   );
-  const sections = useMemo((): TopicSection[] => {
-    const topics = selectedId ? catalog.topicsByCategory.get(selectedId) ?? [] : [];
-    return groupTopicsByLevel(topics).map(group => ({
-      level: group.level,
-      label: strings.levels[group.level],
-      rows: group.topics.map(topic => ({
-        id: topic.id,
-        title: resolveText(topic.title, language).text,
-        meta: strings.levels[topic.level],
-        statusLabel: strings.topicStatus[progress[topic.id]?.status ?? 'not_started'],
-      })),
-    }));
-  }, [catalog, selectedId, progress, language, strings]);
+  const sections = useMemo(() => {
+    const groups = groupStudyTopics({
+      catalog,
+      categoryId: selectedId,
+      levels: studyLevels,
+      query,
+      language,
+    });
+    return presentStudySections(groups, { catalog, strings, language, progress });
+  }, [catalog, selectedId, studyLevels, query, language, strings, progress]);
 
-  return { tabs, selectedId, select: setSelectedId, sections };
+  return {
+    tabs,
+    selectedId,
+    select,
+    levels: studyLevels,
+    toggleLevel: toggle,
+    query,
+    setQuery,
+    searching: query.trim().length > 0,
+    sections,
+  };
 }

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { levelSchema, levels } from '@/shared/domain';
 import { languages } from '@/shared/i18n';
 
 export const knowledgeTestLengths = [5, 10, 15] as const;
@@ -18,6 +19,9 @@ export const userSettingsSchema = z.object({
   notificationTime: z.string().regex(HH_MM, 'Expected HH:MM').nullable().default(null),
   timerEnabled: z.boolean().default(false),
   onboardingDone: z.boolean().default(false),
+  /** Study map filters, kept across restarts (design system §6.3). */
+  studyLevels: z.array(levelSchema).default([...levels]),
+  studyCategoryId: z.string().nullable().default(null),
 });
 export type UserSettings = z.infer<typeof userSettingsSchema>;
 

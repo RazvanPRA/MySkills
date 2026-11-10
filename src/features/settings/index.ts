@@ -9,6 +9,7 @@ export {
 export { settingsReducer, type SettingsState } from './state/slice';
 export { loadSettings, updateSettings, type SettingsDependencies } from './state/thunks';
 export { selectSettings, selectLanguage, selectSettingsLoaded } from './state/selectors';
+export { useSettings } from './hooks/useSettings';
 export type { SettingsRepository, KeyValueStore } from './repository/SettingsRepository';
 export {
   createLocalSettingsRepository,

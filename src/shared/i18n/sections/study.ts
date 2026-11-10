@@ -8,6 +8,11 @@ export const studyRo = {
     categories: 'Categorii',
     empty: 'Categoria nu are încă topicuri.',
     loadError: 'Progresul nu a putut fi încărcat.',
+    search: 'Caută un topic',
+    searchHelp: 'Caută în toate categoriile, după titlu sau etichete.',
+    levelFilter: 'Niveluri',
+    noMatches: 'Niciun topic nu se potrivește.',
+    noLevels: 'Alege cel puțin un nivel.',
   },
   topic: {
     summary: 'Ce trebuie să știi',
@@ -35,6 +40,11 @@ export const studyEn: typeof studyRo = {
     categories: 'Categories',
     empty: 'This category has no topics yet.',
     loadError: 'Your progress could not be loaded.',
+    search: 'Search for a topic',
+    searchHelp: 'Searches every category, by title or tags.',
+    levelFilter: 'Levels',
+    noMatches: 'No topic matches.',
+    noLevels: 'Pick at least one level.',
   },
   topic: {
     summary: 'What you should know',

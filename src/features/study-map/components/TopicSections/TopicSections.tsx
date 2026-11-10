@@ -2,7 +2,7 @@ import { memo } from 'react';
 import { View } from 'react-native';
 import { useThemedStyles } from '@/shared/theme';
 import { AppText } from '@/shared/ui';
-import type { TopicSection } from '../../hooks/useStudyMap';
+import type { TopicSection } from '../../services/presentStudySections';
 import { TopicRow } from '../TopicRow/TopicRow';
 import { createStyles } from './TopicSections.styles';
 
@@ -12,7 +12,7 @@ type TopicSectionsProps = {
   emptyText: string;
 };
 
-/** Topics of one category, grouped Junior → Mid → Senior. */
+/** Topics grouped by level (browsing) or by category (searching). */
 function TopicSectionsBase({ sections, onOpenTopic, emptyText }: TopicSectionsProps) {
   const styles = useThemedStyles(createStyles);
   if (sections.length === 0) {
@@ -21,7 +21,7 @@ function TopicSectionsBase({ sections, onOpenTopic, emptyText }: TopicSectionsPr
   return (
     <View style={styles.sections}>
       {sections.map(section => (
-        <View key={section.level} style={styles.section}>
+        <View key={section.key} style={styles.section}>
           <AppText variant="label" tone="muted" accessibilityRole="header">
             {section.label}
           </AppText>
