@@ -927,6 +927,46 @@
       }
     },
     {
+      "id": "logic.sql.junior.q2",
+      "topicId": "logic.sql.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Clienții sunt Ana, Bogdan și Cristi. Ana are 2 comenzi, Bogdan una, Cristi niciuna. Ce valoare are `n` pentru Cristi?\n\n~~~sql\nSELECT c.name, COUNT(o.id) AS n\nFROM customers c\nLEFT JOIN orders o ON o.customer_id = c.id\nGROUP BY c.name;\n~~~"
+      },
+      "explanation": {
+        "ro": "`LEFT JOIN` păstrează toți clienții. Pentru Cristi nu există nicio comandă, deci apare un singur rând cu toate coloanele din `orders` egale cu `NULL`. `COUNT(o.id)` ignoră `NULL`-urile: 0.\n\nCapcana: `COUNT(*)` ar fi dat 1, pentru că numără rândul, nu comenzile. Când numeri lucruri din partea „opțională” a unui `LEFT JOIN`, numără o coloană din tabela din dreapta, de preferință cheia ei."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "0", "accepted": [] }
+    },
+    {
+      "id": "logic.sql.junior.q3",
+      "topicId": "logic.sql.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": {
+        "ro": "Ordonează clauzele în ordinea în care baza de date le evaluează **logic**."
+      },
+      "explanation": {
+        "ro": "Ordinea scrierii nu e ordinea evaluării. Întâi se construiesc rândurile (`FROM`, `JOIN`), apoi se filtrează rândurile individuale (`WHERE`), se grupează (`GROUP BY`), se filtrează grupurile (`HAVING`), se calculează coloanele (`SELECT`), se sortează (`ORDER BY`) și se taie rezultatul (`LIMIT`).\n\nOrdinea explică erori frecvente: nu poți folosi un agregat în `WHERE`, pentru că grupurile nu există încă; un alias din `SELECT` nu e vizibil în `WHERE` (în PostgreSQL), dar e vizibil în `ORDER BY`. Planificatorul poate executa fizic altfel, dar rezultatul trebuie să fie ca și cum ar fi respectat ordinea logică."
+      },
+      "type": "ordering",
+      "payload": {
+        "items": [
+          { "ro": "`FROM` / `JOIN`" },
+          { "ro": "`WHERE`" },
+          { "ro": "`GROUP BY`" },
+          { "ro": "`HAVING`" },
+          { "ro": "`SELECT`" },
+          { "ro": "`ORDER BY`" },
+          { "ro": "`LIMIT`" }
+        ]
+      }
+    },
+    {
       "id": "logic.sql.mid.q1",
       "topicId": "logic.sql.mid",
       "level": "mid",
@@ -966,6 +1006,30 @@
       }
     },
     {
+      "id": "logic.sql.mid.q3",
+      "topicId": "logic.sql.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Tabelul `totals` conține: Ana 100, Ana 50, Bogdan 200, Cristi 30, Cristi 80. Ce întoarce interogarea?\n\n~~~sql\nSELECT customer, SUM(total) AS s\nFROM totals\nWHERE total > 40\nGROUP BY customer\nHAVING SUM(total) > 100\nORDER BY customer;\n~~~"
+      },
+      "explanation": {
+        "ro": "`WHERE` filtrează rândurile **înainte** de grupare: comanda de 30 a lui Cristi dispare. Sumele devin Ana 150, Bogdan 200, Cristi 80. `HAVING` filtrează **grupurile**: Cristi, cu 80, nu trece de 100.\n\nFără `WHERE`, Cristi ar fi avut 110 și ar fi apărut. Diferența are și efect asupra performanței: o condiție pe rânduri pusă în `WHERE` reduce datele înainte de agregare și poate folosi un index; în `HAVING` rămân doar condițiile care chiar depind de agregate."
+      },
+      "type": "code_output",
+      "payload": {
+        "mode": "choice",
+        "options": [
+          { "ro": "Ana 150, Bogdan 200" },
+          { "ro": "Ana 150, Bogdan 200, Cristi 110" },
+          { "ro": "Bogdan 200" },
+          { "ro": "Ana 150, Bogdan 200, Cristi 80" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
       "id": "logic.sql.senior.q1",
       "topicId": "logic.sql.senior",
       "level": "senior",
@@ -979,6 +1043,36 @@
       },
       "type": "code_output",
       "payload": { "mode": "input", "expected": "250", "accepted": [] }
+    },
+    {
+      "id": "logic.sql.senior.q2",
+      "topicId": "logic.sql.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "`products` are id-urile 1, 2 și 3. `order_items.product_id` conține valorile 1 și `NULL`. Câte rânduri numără interogarea?\n\n~~~sql\nSELECT COUNT(*)\nFROM products\nWHERE id NOT IN (SELECT product_id FROM order_items);\n~~~"
+      },
+      "explanation": {
+        "ro": "`id NOT IN (1, NULL)` înseamnă `id <> 1 AND id <> NULL`. A doua comparație e mereu **necunoscută**, deci întreaga condiție nu e niciodată adevărată: interogarea nu întoarce niciun produs, deși intenția era 2 (produsele 2 și 3).\n\nE unul dintre cele mai periculoase bug-uri SQL: rezultatul e plauzibil („nu există produse nevândute”), iar problema apare abia când un singur rând cu `NULL` intră în tabelă.\n\nFix: `NOT EXISTS (SELECT 1 FROM order_items i WHERE i.product_id = p.id)`, care tratează corect `NULL`-urile și e adesea și mai rapid. Sau filtrezi explicit `WHERE product_id IS NOT NULL` în subinterogare."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "0", "accepted": [] }
+    },
+    {
+      "id": "logic.sql.senior.q3",
+      "topicId": "logic.sql.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Tabelul `sales` are rândurile (day, amount): (1, 10), (2, 20), (2, 5), (3, 1). Ce valoare are `running` pe rândul (2, 20)?\n\n~~~sql\nSELECT day, amount,\n       SUM(amount) OVER (ORDER BY day) AS running\nFROM sales;\n~~~"
+      },
+      "explanation": {
+        "ro": "Cu `ORDER BY` și fără frame explicit, frame-ul implicit e `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`. `RANGE` include toți **egalii** rândului curent (peers), adică toate rândurile cu aceeași valoare `day`. Ambele rânduri din ziua 2 primesc 10 + 20 + 5 = 35.\n\nDacă vrei un total cumulat rând cu rând, cere-l explicit: `ROWS BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW`, plus un criteriu de departajare în `ORDER BY` (de exemplu `day, id`), altfel ordinea celor două rânduri din ziua 2 e nedeterminată. Bug-ul apare doar când există egalități, deci trece ușor de teste cu date „curate”."
+      },
+      "type": "code_output",
+      "payload": { "mode": "input", "expected": "35", "accepted": [] }
     },
     {
       "id": "logic.concurrency.junior.q1",
