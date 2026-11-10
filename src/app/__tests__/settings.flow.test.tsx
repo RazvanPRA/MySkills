@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from '@testing-library/react-native';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react-native';
 import { AppRoot } from '../AppRoot';
 import { createTestDependencies } from '../testing/createTestDependencies';
 import { logicFixturePack } from './logicFixturePack';
@@ -27,7 +27,9 @@ describe('Settings', () => {
     const { settings } = await openSettings();
     // 15 is only offered for the knowledge test (logic: 3 / 5 / 8).
     await fireEvent.press(screen.getByRole('radio', { name: '15' }));
-    await fireEvent.press(screen.getByRole('radio', { name: 'Pornit' }));
+    await fireEvent.press(
+      within(screen.getByLabelText('Cronometru')).getByRole('radio', { name: 'Pornit' }),
+    );
     await waitFor(async () =>
       expect(await settings()).toMatchObject({ knowledgeTestLength: 15, timerEnabled: true }),
     );
@@ -35,7 +37,9 @@ describe('Settings', () => {
 
   it('shows the timer in a session only when it is on', async () => {
     await openSettings();
-    await fireEvent.press(screen.getByRole('radio', { name: 'Pornit' }));
+    await fireEvent.press(
+      within(screen.getByLabelText('Cronometru')).getByRole('radio', { name: 'Pornit' }),
+    );
     await fireEvent.press(screen.getByLabelText('Azi'));
     await fireEvent.press(await screen.findByRole('button', { name: 'Începe' }, TIMEOUT));
     expect(

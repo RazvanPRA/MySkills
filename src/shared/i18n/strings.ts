@@ -1,5 +1,6 @@
 import { backupEn, backupRo } from './sections/backup';
 import { coreEn, coreRo } from './sections/core';
+import { notificationsEn, notificationsRo } from './sections/notifications';
 import { progressEn, progressRo } from './sections/progress';
 import { sessionEn, sessionRo } from './sections/session';
 import { settingsEn, settingsRo } from './sections/settings';
@@ -19,6 +20,7 @@ const ro = {
   progress: progressRo,
   settings: settingsRo,
   backup: backupRo,
+  notifications: notificationsRo,
 };
 
 export type Strings = typeof ro;
@@ -31,6 +33,7 @@ const en: Strings = {
   progress: progressEn,
   settings: settingsEn,
   backup: backupEn,
+  notifications: notificationsEn,
 };
 
 export const languages = ['ro', 'en'] as const;

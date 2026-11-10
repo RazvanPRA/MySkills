@@ -1,7 +1,19 @@
 import type { DataFilePort } from '@/features/backup';
+import NativeDataFiles from '@/native/specs/NativeDataFiles';
 
-/** Placeholder until the Android file module lands (next commit): export/import report failure. */
+/** Backups are JSON; files coming back from Drive or email may be typed loosely. */
+const OPENABLE_TYPES = ['application/json', 'text/plain', 'application/octet-stream'];
+
+const unavailable = () => Promise.reject(new Error('The DataFiles native module is missing'));
+
+/** Backup files through the Android system dialogs (src/native/specs/NativeDataFiles.ts). */
 export function createAndroidDataFiles(): DataFilePort {
-  const unavailable = () => Promise.reject(new Error('File access is not available yet'));
-  return { saveText: unavailable, openText: unavailable };
+  const native = NativeDataFiles;
+  if (!native) {
+    return { saveText: unavailable, openText: unavailable };
+  }
+  return {
+    saveText: ({ fileName, text }) => native.saveText(fileName, 'application/json', text),
+    openText: () => native.openText(OPENABLE_TYPES),
+  };
 }

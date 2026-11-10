@@ -78,5 +78,13 @@
   "engines": {
     "node": ">= 22.11.0"
   },
-  "packageManager": "pnpm@12.18.0"
+  "packageManager": "pnpm@12.18.0",
+  "codegenConfig": {
+    "name": "SeniorPrepSpecs",
+    "type": "modules",
+    "jsSrcsDir": "src/native/specs",
+    "android": {
+      "javaPackageName": "com.razvanprajanu.seniorprep.specs"
+    }
+  }
 }

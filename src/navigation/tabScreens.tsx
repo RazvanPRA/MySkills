@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { DataCard } from '@/features/backup';
 import { TodayScreen } from '@/features/daily-tests';
+import { ReminderCard } from '@/features/notifications';
 import { ProgressScreen, TodayStats } from '@/features/progress';
 import { SettingsScreen } from '@/features/settings';
 import { StudyMapScreen } from '@/features/study-map';
@@ -56,6 +57,7 @@ export function SettingsTab() {
   const restart = useAppRestart();
   return (
     <SettingsScreen>
+      <ReminderCard />
       <DataCard onDataReplaced={restart} />
     </SettingsScreen>
   );

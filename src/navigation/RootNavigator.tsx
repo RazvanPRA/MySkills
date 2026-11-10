@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useMemo } from 'react';
+import { Suspense, useMemo } from 'react';
+import { ReminderSync } from '@/features/notifications';
 import { useTheme } from '@/shared/theme';
 import { linking } from './linking';
 import { toNavigationTheme } from './navigationTheme';
@@ -18,6 +19,9 @@ export function RootNavigator() {
   const navigationTheme = useMemo(() => toNavigationTheme(theme), [theme]);
   return (
     <NavigationContainer theme={navigationTheme} linking={linking}>
+      <Suspense fallback={null}>
+        <ReminderSync />
+      </Suspense>
       <Stack.Navigator screenOptions={STACK_OPTIONS} screenLayout={SuspenseLayout}>
         <Stack.Screen name="Tabs" component={TabNavigator} />
         <Stack.Screen name="Topic" component={TopicRoute} />

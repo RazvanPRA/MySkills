@@ -1,5 +1,6 @@
 import type { DataFilePort, UserDataRepository } from '@/features/backup';
 import type { ContentRepository, ExerciseTypeRegistry } from '@/features/content';
+import type { NotificationPermission, ReminderScheduler } from '@/features/notifications';
 import type { SessionRepository, TestRegistry } from '@/features/daily-tests';
 import type { AttemptRepository } from '@/features/session-player';
 import type { SettingsRepository } from '@/features/settings';
@@ -17,6 +18,9 @@ export type AppDependencies = {
   generateId: IdGenerator;
   /** Files the user picks (backup export / import). */
   files: DataFilePort;
+  /** The daily local notification and the permission to post it. */
+  reminders: ReminderScheduler;
+  notificationPermission: NotificationPermission;
   storage: {
     /** Runs pending database migrations. Safe to call on every start. */
     prepare: () => Promise<void>;

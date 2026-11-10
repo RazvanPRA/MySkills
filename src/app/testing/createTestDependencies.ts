@@ -1,5 +1,6 @@
 import { migrateDatabase } from '@/db';
 import type { DataFilePort } from '@/features/backup';
+import type { NotificationPermission, ReminderScheduler } from '@/features/notifications';
 import migrations from '@/db/migrations/migrations';
 import { createTestDatabase } from '@/db/testing/createTestDatabase';
 import { createLocalContentRepository } from '@/features/content';
@@ -23,12 +24,28 @@ export function createMemoryFiles(opened: (string | null)[] = []) {
   return { files, saved, opened };
 }
 
+/** Records the scheduled reminder (null when cancelled); permission as given. */
+export function createMemoryReminders(permission: 'granted' | 'denied' = 'granted') {
+  const calls: { scheduled: Parameters<ReminderScheduler['schedule']> | null }[] = [];
+  const reminders: ReminderScheduler = {
+    schedule: async (time, texts) => {
+      calls.push({ scheduled: [time, texts] });
+    },
+    cancel: async () => {
+      calls.push({ scheduled: null });
+    },
+  };
+  const notificationPermission: NotificationPermission = { request: async () => permission };
+  return { reminders, notificationPermission, calls };
+}
+
 type TestDependencyOptions = {
   packs?: readonly unknown[];
   storedSettings?: Record<string, string>;
   now?: string;
   registries?: AppDependencies['registries'];
   files?: DataFilePort;
+  reminders?: ReturnType<typeof createMemoryReminders>;
 };
 
 /**
@@ -42,6 +59,7 @@ export async function createTestDependencies(options: TestDependencyOptions = {}
     clock,
     generateId: createIdGenerator({ now: () => clock.now().getTime(), random: () => 0.5 }),
     files: options.files ?? createMemoryFiles().files,
+    ...(options.reminders ?? createMemoryReminders()),
     storage: { prepare: () => migrateDatabase(db, migrations) },
     registries: options.registries ?? { exerciseTypes: exerciseTypeRegistry, tests: testRegistry },
     repositories: {
