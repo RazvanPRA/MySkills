@@ -1,11 +1,9 @@
 import { useCallback, useMemo } from 'react';
 import { View } from 'react-native';
 import type { ExerciseRendererProps } from '@/features/content';
-import { resolveText } from '@/shared/domain';
-import { useLanguage, useStrings } from '@/shared/i18n';
+import { useLocalizedTexts, useStrings } from '@/shared/i18n';
 import { useThemedStyles } from '@/shared/theme';
-import { AppText, buildOptionItems, OptionList } from '@/shared/ui';
-import { seededPermutation } from '@/shared/utils/seededRandom';
+import { AppText, OptionList, useOrderedOptionItems } from '@/shared/ui';
 import type { MultipleChoiceAnswer, MultipleChoicePayload } from '../../model/schemas';
 import { togglePick } from '../../services/evaluateMultipleChoice.service';
 import { createStyles } from './MultipleChoiceRenderer.styles';
@@ -16,25 +14,17 @@ type Props = ExerciseRendererProps<MultipleChoicePayload, MultipleChoiceAnswer>;
 export default function MultipleChoiceRenderer(props: Props) {
   const { exercise, answer, onAnswerChange, revealed } = props;
   const styles = useThemedStyles(createStyles);
-  const language = useLanguage();
   const { exercise: strings } = useStrings();
   const { options, correctIndices } = exercise.payload;
+  const texts = useLocalizedTexts(options);
   const picked = useMemo(() => answer?.indices ?? [], [answer]);
-  const order = useMemo(
-    () => seededPermutation(exercise.id, options.length),
-    [exercise.id, options.length],
-  );
-  const items = useMemo(
-    () =>
-      buildOptionItems({
-        texts: options.map(option => resolveText(option, language).text),
-        picked: new Set(picked),
-        correct: new Set(correctIndices),
-        revealed,
-        order,
-      }),
-    [options, correctIndices, picked, revealed, language, order],
-  );
+  const items = useOrderedOptionItems({
+    orderKey: exercise.id,
+    texts,
+    picked,
+    correct: correctIndices,
+    revealed,
+  });
   const handlePress = useCallback(
     (id: string) => onAnswerChange({ indices: togglePick(picked, Number(id)) }),
     [onAnswerChange, picked],
