@@ -1,5 +1,6 @@
 // Public API of the UI primitives (senior-prep-design-system §4).
 // Primitives know nothing about features, the store, i18n or navigation.
+export * from './ActionRow';
 export * from './AppText';
 export * from './Button';
 export * from './Card';

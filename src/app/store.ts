@@ -1,4 +1,5 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { dailyTestsReducer } from '@/features/daily-tests';
 import { settingsReducer } from '@/features/settings';
 import { studyMapReducer } from '@/features/study-map';
 import type { AppDependencies } from './dependencyTypes';
@@ -7,6 +8,7 @@ import type { AppDependencies } from './dependencyTypes';
 const rootReducer = combineReducers({
   settings: settingsReducer,
   studyMap: studyMapReducer,
+  dailyTests: dailyTestsReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

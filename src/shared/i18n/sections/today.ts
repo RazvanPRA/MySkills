@@ -10,8 +10,8 @@ export const todayRo = {
   start: 'Începe',
   continue: 'Continuă',
   score: (percent: number) => `Scor: ${percent}%`,
-  noTopics:
-    'Nu ai marcat încă niciun topic. Testul de cunoștințe folosește doar topicurile în lucru sau parcurse.',
+  empty:
+    'Nicio întrebare disponibilă azi. Testul folosește doar topicurile marcate în Studiu ca în lucru sau parcurse.',
   shortfall: (available: number, target: number) =>
     `Doar ${available} din ${target} întrebări disponibile azi. Marchează mai multe topicuri pentru un test complet.`,
   markTopics: 'Marchează topicuri',
@@ -31,8 +31,8 @@ export const todayEn: typeof todayRo = {
   start: 'Start',
   continue: 'Continue',
   score: (percent: number) => `Score: ${percent}%`,
-  noTopics:
-    'You have not marked any topic yet. The knowledge test only uses topics in progress or studied.',
+  empty:
+    'No questions available today. The test only uses topics marked in Study as in progress or studied.',
   shortfall: (available: number, target: number) =>
     `Only ${available} of ${target} questions available today. Mark more topics for a full test.`,
   markTopics: 'Mark topics',
