@@ -10,7 +10,9 @@ import type { OptionRowProps } from './OptionRow.types';
 function OptionRowBase(props: OptionRowProps) {
   const { id, letter, label, state, checked, role, onPress, disabled = false, children } = props;
   const styles = useThemedStyles(createStyles);
-  const style = useInteractiveStyle([styles.idle, state !== 'idle' && styles[state]], disabled);
+  // A revealed verdict (correct / wrong) keeps full contrast; only neutral options are dimmed.
+  const dimmed = disabled && (state === 'idle' || state === 'selected');
+  const style = useInteractiveStyle([styles.idle, state !== 'idle' && styles[state]], dimmed);
   const handlePress = useCallback(() => onPress(id), [onPress, id]);
   const filled = state === 'correct' || state === 'wrong';
   return (

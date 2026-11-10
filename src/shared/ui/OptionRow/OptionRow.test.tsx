@@ -81,3 +81,12 @@ describe('OptionRow', () => {
     expect(screen.getByRole('radio', { name: 'B. useLayoutEffect' })).toBeOnTheScreen();
   });
 });
+
+describe('OptionRow after reveal', () => {
+  it('keeps a correct or wrong verdict at full opacity and dims only neutral options', async () => {
+    await renderWithTheme(<OptionRow {...base} state="correct" checked disabled />);
+    expect(screen.getByRole('radio')).not.toHaveStyle({ opacity: 0.45 });
+    await renderWithTheme(<OptionRow {...base} state="idle" disabled />);
+    expect(screen.getByRole('radio')).toHaveStyle({ opacity: 0.45 });
+  });
+});

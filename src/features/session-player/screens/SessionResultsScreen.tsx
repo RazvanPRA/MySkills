@@ -20,13 +20,13 @@ export default function SessionResultsScreen({
   const results = useSessionResults(sessionId);
   if (!results) {
     return (
-      <ScreenContainer>
+      <ScreenContainer bottomInset>
         <AppText tone="muted">{player.loading}</AppText>
       </ScreenContainer>
     );
   }
   return (
-    <ScreenContainer>
+    <ScreenContainer bottomInset>
       <ResultsSummary summary={results.summary} />
       <ReviewList rows={results.rows} onOpenTopic={onOpenTopic} />
       <ActionRow>

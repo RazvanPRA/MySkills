@@ -105,3 +105,14 @@ describe('MarkdownText', () => {
     expect(screen.getByText('docs')).toHaveStyle({ color: lightColors.accent });
   });
 });
+
+describe('MarkdownText inline sizes', () => {
+  it('keeps bold, inline code and links at the paragraph size', async () => {
+    await renderWithTheme(
+      <MarkdownText content="Text **gras**, `cod` și [link](https://x.dev)." variant="small" />,
+    );
+    for (const text of ['gras', 'cod', 'link']) {
+      expect(screen.getByText(text)).toHaveStyle({ fontSize: typography.small.fontSize });
+    }
+  });
+});

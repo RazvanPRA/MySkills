@@ -1,15 +1,18 @@
 import { AppText } from '../AppText';
 import type { MarkdownStyles } from './MarkdownText.styles';
+import type { MarkdownVariant } from './MarkdownText.types';
 import type { InlineSpan } from './parseMarkdown';
 
 type MarkdownInlineProps = {
   spans: InlineSpan[];
   styles: MarkdownStyles;
+  /** The parent's variant: a nested AppText would otherwise reset to `body`. */
+  variant: MarkdownVariant;
   onLinkPress?: (url: string) => void;
 };
 
-/** Inline spans, rendered as nested text inside the parent AppText (inherits its variant). */
-export function MarkdownInline({ spans, styles, onLinkPress }: MarkdownInlineProps) {
+/** Inline spans, rendered as nested text inside the parent AppText, at the parent's size. */
+export function MarkdownInline({ spans, styles, variant, onLinkPress }: MarkdownInlineProps) {
   return (
     <>
       {spans.map((span, index) => {
@@ -18,7 +21,7 @@ export function MarkdownInline({ spans, styles, onLinkPress }: MarkdownInlinePro
             return '\n';
           case 'code':
             return (
-              <AppText key={index} style={styles.inlineCode}>
+              <AppText key={index} variant={variant} style={styles.inlineCode}>
                 {span.text}
               </AppText>
             );
@@ -26,6 +29,7 @@ export function MarkdownInline({ spans, styles, onLinkPress }: MarkdownInlinePro
             return (
               <AppText
                 key={index}
+                variant={variant}
                 tone="accent"
                 bold
                 accessibilityRole={onLinkPress ? 'link' : undefined}
@@ -36,7 +40,7 @@ export function MarkdownInline({ spans, styles, onLinkPress }: MarkdownInlinePro
             );
           default:
             return span.bold ? (
-              <AppText key={index} bold>
+              <AppText key={index} variant={variant} bold>
                 {span.text}
               </AppText>
             ) : (

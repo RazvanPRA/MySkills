@@ -64,16 +64,28 @@ export function MarkdownBlockView({ block, context }: MarkdownBlockViewProps) {
           ))}
         </View>
       );
-    case 'heading':
+    case 'heading': {
+      const size = headingVariant(block.level, variant);
       return (
-        <AppText variant={headingVariant(block.level, variant)} bold accessibilityRole="header">
-          <MarkdownInline spans={block.spans} styles={styles} onLinkPress={onLinkPress} />
+        <AppText variant={size} bold accessibilityRole="header">
+          <MarkdownInline
+            spans={block.spans}
+            styles={styles}
+            variant={size}
+            onLinkPress={onLinkPress}
+          />
         </AppText>
       );
+    }
     default:
       return (
         <AppText variant={variant} bold={bold}>
-          <MarkdownInline spans={block.spans} styles={styles} onLinkPress={onLinkPress} />
+          <MarkdownInline
+            spans={block.spans}
+            styles={styles}
+            variant={variant}
+            onLinkPress={onLinkPress}
+          />
         </AppText>
       );
   }

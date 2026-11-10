@@ -24,14 +24,14 @@ export default function TopicScreen({ topicId, onBack }: TopicScreenProps) {
 
   if (!view) {
     return (
-      <ScreenContainer>
+      <ScreenContainer bottomInset>
         <ScreenHeader title={strings.notFound} />
         <Button label={strings.back} variant="secondary" onPress={onBack} />
       </ScreenContainer>
     );
   }
   return (
-    <ScreenContainer>
+    <ScreenContainer bottomInset>
       <ScreenHeader title={view.title} subtitle={view.subtitle} />
       {view.isFallback ? (
         <AppText variant="caption" tone="muted">

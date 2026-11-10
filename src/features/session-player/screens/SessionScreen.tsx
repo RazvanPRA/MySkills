@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef } from 'react';
 import type { ScrollViewInstance } from 'react-native';
 import { resolveText } from '@/shared/domain';
 import { useLanguage, useStrings } from '@/shared/i18n';
-import { AppText, Button, ScreenContainer } from '@/shared/ui';
+import { AppText, Button, Card, ScreenContainer } from '@/shared/ui';
 import { ExerciseView } from '../components/ExerciseView/ExerciseView';
 import { SessionFeedback } from '../components/SessionFeedback/SessionFeedback';
 import { SessionHeader } from '../components/SessionHeader/SessionHeader';
@@ -50,7 +50,7 @@ export default function SessionScreen({
 
   if (player.status === 'missing') {
     return (
-      <ScreenContainer>
+      <ScreenContainer bottomInset>
         <AppText tone="muted">{strings.player.notFound}</AppText>
         <Button label={strings.player.back} variant="secondary" onPress={onLeave} />
       </ScreenContainer>
@@ -58,7 +58,7 @@ export default function SessionScreen({
   }
   if (!exercise || !definition) {
     return (
-      <ScreenContainer>
+      <ScreenContainer bottomInset>
         <AppText tone="muted">{strings.player.loading}</AppText>
       </ScreenContainer>
     );
@@ -66,25 +66,28 @@ export default function SessionScreen({
   const total = player.exerciseIds.length;
   const revealed = player.step === 'revealed';
   return (
-    <ScreenContainer ref={scrollRef}>
-      <SessionHeader
-        testTitle={player.testTitle ? resolveText(player.testTitle, language).text : ''}
-        levelLabel={strings.levels[exercise.level]}
-        position={strings.player.position(player.index + 1, total)}
-        progress={player.attempts.length / total}
-        progressLabel={strings.player.progress}
-      />
-      <ExerciseView
-        exercise={exercise}
-        definition={definition}
-        answer={player.draft}
-        onAnswerChange={changeAnswer}
-        revealed={revealed}
-        result={result}
-      />
-      {revealed ? (
-        <SessionFeedback exercise={exercise} result={result} onOpenTopic={onOpenTopic} />
-      ) : null}
+    <ScreenContainer ref={scrollRef} bottomInset>
+      {/* The exercise card (design system §6.1): header → question → answer → feedback. */}
+      <Card>
+        <SessionHeader
+          testTitle={player.testTitle ? resolveText(player.testTitle, language).text : ''}
+          levelLabel={strings.levels[exercise.level]}
+          position={strings.player.position(player.index + 1, total)}
+          progress={player.attempts.length / total}
+          progressLabel={strings.player.progress}
+        />
+        <ExerciseView
+          exercise={exercise}
+          definition={definition}
+          answer={player.draft}
+          onAnswerChange={changeAnswer}
+          revealed={revealed}
+          result={result}
+        />
+        {revealed ? (
+          <SessionFeedback exercise={exercise} result={result} onOpenTopic={onOpenTopic} />
+        ) : null}
+      </Card>
       {player.saveFailed ? <AppText tone="danger">{strings.player.saveError}</AppText> : null}
       <SessionNavigation
         action={primary.action}

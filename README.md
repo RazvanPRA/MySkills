@@ -32,6 +32,8 @@ On Windows, `powershell -ExecutionPolicy Bypass -File .claude\scripts\run-androi
 
 The debug build is installed as **Senior Prep Dev** (`com.razvanprajanu.seniorprep.dev`), next to the release build **Senior Prep** (`com.razvanprajanu.seniorprep`).
 
+On Android 17+, the debug build asks for access to devices on the local network (`ACCESS_LOCAL_NETWORK`, requested by React Native's debug manifest) so it can reach Metro. Allow it; if you declined, run `adb shell pm grant com.razvanprajanu.seniorprep.dev android.permission.ACCESS_LOCAL_NETWORK`. The release build does not request it.
+
 ## Scripts
 
 | Script                         | What it does                                                                                                                                                                                                     |
