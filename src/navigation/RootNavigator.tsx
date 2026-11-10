@@ -4,6 +4,8 @@ import { useMemo } from 'react';
 import { useTheme } from '@/shared/theme';
 import { linking } from './linking';
 import { toNavigationTheme } from './navigationTheme';
+import { TopicRoute } from './stackScreens';
+import { SuspenseLayout } from './SuspenseLayout';
 import { TabNavigator } from './TabNavigator';
 import type { RootStackParamList } from './types';
 
@@ -16,8 +18,9 @@ export function RootNavigator() {
   const navigationTheme = useMemo(() => toNavigationTheme(theme), [theme]);
   return (
     <NavigationContainer theme={navigationTheme} linking={linking}>
-      <Stack.Navigator screenOptions={STACK_OPTIONS}>
+      <Stack.Navigator screenOptions={STACK_OPTIONS} screenLayout={SuspenseLayout}>
         <Stack.Screen name="Tabs" component={TabNavigator} />
+        <Stack.Screen name="Topic" component={TopicRoute} />
       </Stack.Navigator>
     </NavigationContainer>
   );

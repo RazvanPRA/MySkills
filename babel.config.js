@@ -14,6 +14,10 @@ module.exports = {
     // Drizzle migrations import .sql files; inline them as strings in the bundle.
     ['inline-import', { extensions: ['.sql'] }],
   ],
+  env: {
+    // Jest runs CommonJS: lazy screens and renderers use import(), which Metro bundles natively.
+    test: { plugins: ['@babel/plugin-transform-dynamic-import'] },
+  },
   overrides: [
     {
       // marked composes regexes with named groups; see babel/preserveNamedCaptureGroups.js.

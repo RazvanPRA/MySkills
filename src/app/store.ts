@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { settingsReducer } from '@/features/settings';
+import { studyMapReducer } from '@/features/study-map';
 import type { AppDependencies } from './dependencyTypes';
 
 // One slice per feature, registered here.
 const rootReducer = combineReducers({
   settings: settingsReducer,
+  studyMap: studyMapReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

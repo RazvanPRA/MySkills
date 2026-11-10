@@ -5,6 +5,7 @@ import {
 import { useMemo } from 'react';
 import { useStrings } from '@/shared/i18n';
 import { type Theme, useTheme } from '@/shared/theme';
+import { SuspenseLayout } from './SuspenseLayout';
 import { ProgressTab, SettingsTab, StudyTab, TodayTab } from './tabScreens';
 import type { TabParamList } from './types';
 
@@ -37,7 +38,7 @@ export function TabNavigator() {
   const { tabs } = useStrings();
   const screenOptions = useMemo(() => tabScreenOptions(theme), [theme]);
   return (
-    <Tab.Navigator screenOptions={screenOptions}>
+    <Tab.Navigator screenOptions={screenOptions} screenLayout={SuspenseLayout}>
       <Tab.Screen name="Today" component={TodayTab} options={tabOptions(tabs.today)} />
       <Tab.Screen name="Study" component={StudyTab} options={tabOptions(tabs.study)} />
       <Tab.Screen name="Progress" component={ProgressTab} options={tabOptions(tabs.progress)} />

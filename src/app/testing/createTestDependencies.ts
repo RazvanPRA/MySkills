@@ -7,14 +7,19 @@ import { fixedClock } from '@/shared/utils/clock';
 import { createIdGenerator } from '@/shared/utils/idGenerator';
 import { createRepositories } from '../dependencies.shared';
 import type { AppDependencies } from '../dependencyTypes';
+import { exerciseTypeRegistry, testRegistry } from '../registries';
 
 type TestDependencyOptions = {
   packs?: readonly unknown[];
   storedSettings?: Record<string, string>;
   now?: string;
+  registries?: AppDependencies['registries'];
 };
 
-/** A full container over in-memory SQLite (better-sqlite3) and an in-memory key-value store. */
+/**
+ * A full container over in-memory SQLite (better-sqlite3) and an in-memory key-value store,
+ * with the app's real registries unless others are given.
+ */
 export async function createTestDependencies(options: TestDependencyOptions = {}) {
   const { db, sqlite } = await createTestDatabase({ migrate: false });
   const clock = fixedClock(options.now ?? '2026-11-10T08:00:00.000Z');
@@ -22,6 +27,7 @@ export async function createTestDependencies(options: TestDependencyOptions = {}
     clock,
     generateId: createIdGenerator({ now: () => clock.now().getTime(), random: () => 0.5 }),
     storage: { prepare: () => migrateDatabase(db, migrations) },
+    registries: options.registries ?? { exerciseTypes: exerciseTypeRegistry, tests: testRegistry },
     repositories: {
       ...createRepositories(db),
       content: createLocalContentRepository(options.packs ?? []),
