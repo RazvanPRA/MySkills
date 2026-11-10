@@ -22,3 +22,9 @@ export function addDays(day: string, amount: number): string {
 /** The first instant after `day` ends (local), as ISO. Cards due before it are due "today". */
 export const endOfLocalDayIso = (day: string): string =>
   parseLocalDate(addDays(day, 1)).toISOString();
+
+/** The Monday of the week containing `day` (weeks start on Monday, as in Romania). */
+export function startOfWeek(day: string): string {
+  const offset = (parseLocalDate(day).getDay() + 6) % 7;
+  return addDays(day, -offset);
+}
