@@ -61,14 +61,14 @@ describe('buildKnowledgeSession', () => {
   it('reports a shortfall when nothing is covered', () => {
     expect(buildKnowledgeSession(buildContext({ progress: [] }))).toEqual({
       exerciseIds: [],
-      shortfall: { target: 10, available: 0 },
+      shortfall: { target: 10, available: 0, remedy: 'mark_topics' },
     });
   });
 
   it('gives a shorter test with a shortfall when the pool is small', () => {
     const plan = buildKnowledgeSession(buildContext({ progress: covered(['react.t1.mid']) }));
     expect(plan.exerciseIds).toHaveLength(4);
-    expect(plan.shortfall).toEqual({ target: 10, available: 4 });
+    expect(plan.shortfall).toEqual({ target: 10, available: 4, remedy: 'mark_topics' });
   });
 
   it('starts with due reviews, most overdue first, at most 6', () => {

@@ -1,13 +1,18 @@
-import { screen } from '@testing-library/react-native';
+import { fireEvent, screen } from '@testing-library/react-native';
 import { darkColors, fontFamily, lightColors } from '@/shared/theme';
 import { renderWithTheme } from '@/shared/testing/renderWithTheme';
 import { CodeBlock } from './CodeBlock';
+import type { CodeLineSelection } from './CodeBlock.types';
 import { highlightCode } from './highlightCode';
 
 const roles = (code: string, language?: string) =>
   highlightCode(code, language).map(line => line.map(span => `${span.role}:${span.text}`));
 
 describe('highlightCode', () => {
+  it('expands tabs to 4 spaces (React Native draws them one space wide)', () => {
+    expect(roles('	x').flat().join('')).toBe('plain:    x');
+  });
+
   it('maps Prism tokens to the design system roles', () => {
     const [line] = highlightCode('const n = 42; // answer', 'ts');
     expect(line).toEqual(
@@ -85,5 +90,63 @@ describe('CodeBlock', () => {
     const scroller = screen.root?.children[0];
     expect(typeof scroller === 'object' && scroller?.props.horizontal).toBe(true);
     expect(scroller).toContainElement(screen.getByText('x'));
+  });
+});
+
+describe('CodeBlock with selectable lines', () => {
+  const code = 'const a = 1;\nconst b = a + 1;\nreturn b;';
+  const selection = (overrides: Partial<CodeLineSelection> = {}): CodeLineSelection => ({
+    states: [],
+    onSelectLine: jest.fn(),
+    lineLabel: (n, text) => `Linia ${n}: ${text}`,
+    ...overrides,
+  });
+
+  it('makes every line a button named by its number and code', async () => {
+    const onSelectLine = jest.fn();
+    await renderWithTheme(
+      <CodeBlock code={code} language="js" selection={selection({ onSelectLine })} />,
+    );
+    expect(screen.getAllByRole('button')).toHaveLength(3);
+    await fireEvent.press(screen.getByRole('button', { name: 'Linia 2: const b = a + 1;' }));
+    expect(onSelectLine).toHaveBeenCalledWith(2);
+  });
+
+  it('shows the picked line as selected, plain and bold', async () => {
+    await renderWithTheme(
+      <CodeBlock
+        code={code}
+        language="js"
+        selection={selection({ states: ['idle', 'selected'] })}
+      />,
+    );
+    const line = screen.getByRole('button', { name: /^Linia 2/ });
+    expect(line).toBeSelected();
+    expect(line).toHaveStyle({
+      borderColor: lightColors.selectedBorder,
+      backgroundColor: lightColors.selected,
+    });
+    expect(screen.getByRole('button', { name: /^Linia 1/ })).not.toBeSelected();
+  });
+
+  it('after reveal: verdict lines keep full contrast, every line is disabled', async () => {
+    await renderWithTheme(
+      <CodeBlock
+        code={code}
+        language="js"
+        selection={selection({ states: ['wrong', 'correct'], disabled: true })}
+      />,
+      'dark',
+    );
+    expect(screen.getByRole('button', { name: /^Linia 1/ })).toHaveStyle({
+      borderColor: darkColors.danger,
+      backgroundColor: darkColors.dangerSoft,
+    });
+    expect(screen.getByRole('button', { name: /^Linia 2/ })).toHaveStyle({
+      borderColor: darkColors.success,
+    });
+    expect(screen.getByRole('button', { name: /^Linia 2/ })).not.toHaveStyle({ opacity: 0.45 });
+    expect(screen.getByRole('button', { name: /^Linia 3/ })).toHaveStyle({ opacity: 0.45 });
+    screen.getAllByRole('button').forEach(line => expect(line).toBeDisabled());
   });
 });

@@ -9,5 +9,11 @@ export type TextFieldProps = {
   monospace?: boolean;
   /** Notes and longer answers. */
   multiline?: boolean;
-  disabled?: boolean;
+  /**
+   * `readOnly`: not editable, full contrast (an answer shown after reveal).
+   * `disabled`: not editable and dimmed (design system §5).
+   */
+  mode?: TextFieldMode;
 };
+
+export type TextFieldMode = 'editable' | 'readOnly' | 'disabled';

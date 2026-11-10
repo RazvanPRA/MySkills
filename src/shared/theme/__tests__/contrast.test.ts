@@ -35,6 +35,10 @@ const textPairs: Pair[] = [
   ['syntaxNumber', 'codeSurface'],
   ['syntaxComment', 'codeSurface'],
   ['syntaxFunction', 'codeSurface'],
+  // Marked code lines (find_bug): plain code text on the state fills.
+  ['codeText', 'selected'],
+  ['codeText', 'successSoft'],
+  ['codeText', 'dangerSoft'],
 ];
 
 // Borders and filled indicators that carry state (selected, correct, wrong).

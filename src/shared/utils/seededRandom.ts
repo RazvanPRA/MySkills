@@ -54,3 +54,13 @@ export function weightedOrder<T>(
   });
   return keyed.sort((a, b) => b.key - a.key || a.index - b.index).map(entry => entry.item);
 }
+
+/**
+ * A stable permutation of `0..length-1` for a key: the same key always gives the same order.
+ * Renderers use it to show options in an order that does not reveal the answer (authors tend
+ * to write the correct option first), while answers keep pointing at payload indices.
+ */
+export function seededPermutation(key: string, length: number): number[] {
+  const indices = Array.from({ length }, (_, index) => index);
+  return shuffle(indices, createSeededRandom(hashString(key)));
+}

@@ -14,8 +14,11 @@ import { sessionSeed } from '../services/sessionHelpers';
 import { type TestRegistry, testsWithSchedule } from '../services/testRegistry';
 import type { TodayCardState } from './slice';
 
-/** Brief §6.2: attempts of the last 14 days feed today's tests. */
-const RECENT_DAYS = 14;
+/**
+ * Attempts of the last 30 days feed today's tests: the logic test needs them for its 30-day
+ * no-repeat rule (brief §7.2); each test narrows the window further.
+ */
+const ATTEMPT_HISTORY_DAYS = 30;
 
 /** What this feature needs from the dependency container. */
 export type DailyTestsDependencies = {
@@ -58,6 +61,7 @@ async function prepareCard(
   return {
     kind: definition.kind,
     title: definition.title,
+    itemKind: definition.itemKind ?? 'question',
     session,
     shortfall: plan.shortfall ?? null,
     answered,
@@ -74,7 +78,7 @@ export const loadToday = createAsyncThunk<
   ThunkConfig
 >('dailyTests/loadToday', async ({ catalog }, { extra, getState }) => {
   const date = toLocalDate(extra.clock.now());
-  const since = parseLocalDate(addDays(date, -RECENT_DAYS)).toISOString();
+  const since = parseLocalDate(addDays(date, -ATTEMPT_HISTORY_DAYS)).toISOString();
   const { topicProgress, reviewCards, attempts } = extra.repositories;
   const [progress, cards, recentAttempts] = await Promise.all([
     topicProgress.getAll(),

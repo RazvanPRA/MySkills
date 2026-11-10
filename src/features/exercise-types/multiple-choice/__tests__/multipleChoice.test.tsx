@@ -106,21 +106,22 @@ describe('MultipleChoiceRenderer', () => {
   it('toggles picks through checkboxes', async () => {
     const onAnswerChange = jest.fn();
     await render({ answer: { indices: [1] }, onAnswerChange });
-    expect(screen.getByRole('checkbox', { name: 'B. Sigur' })).toBeChecked();
-    await fireEvent.press(screen.getByRole('checkbox', { name: 'A. Idempotent' }));
+    expect(screen.getByRole('checkbox', { name: /\. Sigur$/ })).toBeChecked();
+    await fireEvent.press(screen.getByRole('checkbox', { name: /\. Idempotent$/ }));
     expect(onAnswerChange).toHaveBeenLastCalledWith({ indices: [0, 1] });
-    await fireEvent.press(screen.getByRole('checkbox', { name: 'B. Sigur' }));
+    await fireEvent.press(screen.getByRole('checkbox', { name: /\. Sigur$/ }));
     expect(onAnswerChange).toHaveBeenLastCalledWith({ indices: [] });
   });
 
   it('after reveal shows every option’s own state', async () => {
     await render({ answer: { indices: [0, 3] }, revealed: true });
-    const option = (name: string) => screen.getByRole('checkbox', { name });
-    // A: picked + correct; B: correct but missed (still shown green); C: correct; D: wrong pick.
-    expect(option('A. Idempotent')).toHaveStyle({ borderColor: lightColors.success });
-    expect(option('B. Sigur')).toHaveStyle({ borderColor: lightColors.success });
-    expect(option('B. Sigur')).not.toBeChecked();
-    expect(option('C. Cacheabil')).toHaveStyle({ borderColor: lightColors.success });
-    expect(option('D. Are body')).toHaveStyle({ borderColor: lightColors.danger });
+    const option = (text: string) =>
+      screen.getByRole('checkbox', { name: new RegExp(`\\. ${text}$`) });
+    // Idempotent: picked + correct; Sigur: correct but missed (still green); Are body: wrong pick.
+    expect(option('Idempotent')).toHaveStyle({ borderColor: lightColors.success });
+    expect(option('Sigur')).toHaveStyle({ borderColor: lightColors.success });
+    expect(option('Sigur')).not.toBeChecked();
+    expect(option('Cacheabil')).toHaveStyle({ borderColor: lightColors.success });
+    expect(option('Are body')).toHaveStyle({ borderColor: lightColors.danger });
   });
 });

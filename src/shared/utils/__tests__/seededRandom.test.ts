@@ -1,4 +1,10 @@
-import { createSeededRandom, hashString, shuffle, weightedOrder } from '../seededRandom';
+import {
+  createSeededRandom,
+  hashString,
+  seededPermutation,
+  shuffle,
+  weightedOrder,
+} from '../seededRandom';
 
 const take = (random: () => number, count: number) => Array.from({ length: count }, random);
 
@@ -70,5 +76,25 @@ describe('weightedOrder', () => {
     );
     expect(result.slice(2)).toEqual(['z1', 'z2']);
     expect(result.slice(0, 2).sort()).toEqual(['a', 'b']);
+  });
+});
+
+describe('seededPermutation', () => {
+  it('is a permutation of 0..length-1, stable per key', () => {
+    const order = seededPermutation('sql.queries.junior.q1', 5);
+    expect([...order].sort()).toEqual([0, 1, 2, 3, 4]);
+    expect(seededPermutation('sql.queries.junior.q1', 5)).toEqual(order);
+  });
+
+  it('differs between keys, so correct answers do not share a position', () => {
+    const firsts = new Set(
+      Array.from({ length: 40 }, (_, index) => seededPermutation(`exercise.${index}`, 4)[0]),
+    );
+    expect(firsts.size).toBe(4);
+  });
+
+  it('handles empty and single-item lists', () => {
+    expect(seededPermutation('x', 0)).toEqual([]);
+    expect(seededPermutation('x', 1)).toEqual([0]);
   });
 });

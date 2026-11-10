@@ -14,6 +14,9 @@ export const todayRo = {
     'Nicio întrebare disponibilă azi. Testul folosește doar topicurile marcate în Studiu ca în lucru sau parcurse.',
   shortfall: (available: number, target: number) =>
     `Doar ${available} din ${target} întrebări disponibile azi. Marchează mai multe topicuri pentru un test complet.`,
+  emptyContent: 'Nicio problemă disponibilă azi pentru acest test.',
+  shortfallContent: (available: number, target: number) =>
+    `Doar ${available} din ${target} probleme disponibile azi.`,
   markTopics: 'Marchează topicuri',
   loading: 'Se pregătesc testele de azi…',
   error: 'Testele de azi nu au putut fi pregătite.',
@@ -35,6 +38,9 @@ export const todayEn: typeof todayRo = {
     'No questions available today. The test only uses topics marked in Study as in progress or studied.',
   shortfall: (available: number, target: number) =>
     `Only ${available} of ${target} questions available today. Mark more topics for a full test.`,
+  emptyContent: 'No problems available today for this test.',
+  shortfallContent: (available: number, target: number) =>
+    `Only ${available} of ${target} problems available today.`,
   markTopics: 'Mark topics',
   loading: "Preparing today's tests…",
   error: "Today's tests could not be prepared.",

@@ -31,9 +31,22 @@ describe('TextField', () => {
   });
 
   it('is not editable and exposes the disabled state when disabled', async () => {
-    await renderWithTheme(<TextField label="Output" value="" onChangeText={jest.fn()} disabled />);
+    await renderWithTheme(
+      <TextField label="Output" value="" onChangeText={jest.fn()} mode="disabled" />,
+    );
     const input = screen.getByLabelText('Output');
     expect(input).toBeDisabled();
     expect(input.props.editable).toBe(false);
+  });
+});
+
+describe('TextField read-only', () => {
+  it('is not editable but keeps full contrast', async () => {
+    await renderWithTheme(
+      <TextField label="Răspuns" value="8" onChangeText={jest.fn()} mode="readOnly" />,
+    );
+    const field = screen.getByLabelText('Răspuns');
+    expect(field).toBeDisabled();
+    expect(field).not.toHaveStyle({ opacity: 0.45 });
   });
 });

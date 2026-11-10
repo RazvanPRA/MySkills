@@ -7,6 +7,7 @@ import fullstackFrontend from './fullstack-frontend.json';
 import fullstackGo from './fullstack-go.json';
 import fullstackJava from './fullstack-java.json';
 import fullstackMobile from './fullstack-mobile.json';
+import logicCore from './logic-core.json';
 
 export const bundledPacks: readonly unknown[] = [
   fullstackBackendNode,
@@ -16,4 +17,5 @@ export const bundledPacks: readonly unknown[] = [
   fullstackGo,
   fullstackJava,
   fullstackMobile,
+  logicCore,
 ];

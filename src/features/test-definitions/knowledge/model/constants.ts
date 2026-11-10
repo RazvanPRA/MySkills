@@ -13,6 +13,9 @@ export const STRETCH_MIN_DIFFICULTY = 4;
 /** Variety: at most 3 exercises from one category (relaxed only if the pool is too small). */
 export const MAX_PER_CATEGORY = 3;
 
+/** Weak categories are judged on the last 14 days of attempts (brief §6.2). */
+export const ACCURACY_WINDOW_DAYS = 14;
+
 /** Accuracy assumed for a category without recent attempts. */
 export const NEUTRAL_ACCURACY = 0.5;
 /** Keeps strong categories possible (never weight 0). */

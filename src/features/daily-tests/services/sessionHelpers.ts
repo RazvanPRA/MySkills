@@ -1,4 +1,5 @@
 import type { ContentCatalog } from '@/features/content';
+import { addDays, parseLocalDate } from '@/shared/utils/localDate';
 import { hashString } from '@/shared/utils/seededRandom';
 import type { DailySession } from '../model/dailySession';
 
@@ -19,4 +20,13 @@ export function estimatedMinutes(exerciseIds: readonly string[], catalog: Conten
     0,
   );
   return Math.ceil(seconds / 60);
+}
+
+/** Pure: the attempts answered in the last `days` local days before `date` (and on `date`). */
+export function attemptsSince<T extends { answeredAt: string }>(
+  attempts: readonly T[],
+  { date, days }: { date: string; days: number },
+): T[] {
+  const since = parseLocalDate(addDays(date, -days)).toISOString();
+  return attempts.filter(attempt => attempt.answeredAt >= since);
 }

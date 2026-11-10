@@ -29,12 +29,12 @@ async function answerCurrent({ correctly }: { correctly: boolean }) {
     await press('button', 'Arată răspunsul');
     await press('radio', correctly ? 'Ușor' : 'Nu știam');
   } else if (screen.queryAllByRole('checkbox').length > 0) {
-    await press('checkbox', 'A. setState');
-    await press('checkbox', correctly ? 'B. Context schimbat' : 'C. O variabilă locală');
+    await press('checkbox', /\. setState$/);
+    await press('checkbox', correctly ? /\. Context schimbat$/ : /\. O variabilă locală$/);
     await press('button', 'Verifică');
     expect(screen.getByText(correctly ? 'Corect' : 'Parțial corect (1/2)')).toBeOnTheScreen();
   } else {
-    await press('radio', correctly ? /^A\./ : /^B\./);
+    await press('radio', correctly ? /\. "object"$/ : /\. "null"$/);
     await press('button', 'Verifică');
     expect(screen.getByText(correctly ? 'Corect' : 'Greșit')).toBeOnTheScreen();
   }

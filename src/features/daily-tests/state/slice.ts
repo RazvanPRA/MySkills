@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import type { LocalizedText } from '@/shared/domain';
 import type { DailySession } from '../model/dailySession';
-import type { SessionPlan } from '../model/testDefinition';
+import type { SessionPlan, TestItemKind } from '../model/testDefinition';
 import { loadToday } from './thunks';
 
 /** One card on Today: a daily test and its session for today (null when nothing to test). */
 export type TodayCardState = {
   kind: string;
   title: LocalizedText;
+  itemKind: TestItemKind;
   session: DailySession | null;
   shortfall: NonNullable<SessionPlan['shortfall']> | null;
   /** Exercises already answered in today's session. */

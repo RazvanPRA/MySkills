@@ -1,7 +1,8 @@
-import type { SessionPlan, TestBuildContext } from '@/features/daily-tests';
+import { attemptsSince, type SessionPlan, type TestBuildContext } from '@/features/daily-tests';
 import { endOfLocalDayIso } from '@/shared/utils/localDate';
 import { createSeededRandom, shuffle, weightedOrder } from '@/shared/utils/seededRandom';
 import {
+  ACCURACY_WINDOW_DAYS,
   knowledgeQuotas,
   MAX_PER_CATEGORY,
   STRETCH_LEVEL,
@@ -25,7 +26,11 @@ export function buildKnowledgeSession(context: TestBuildContext): SessionPlan {
   const random = createSeededRandom(context.seed);
   const pool = buildKnowledgePool(context);
   const cards = new Map(context.reviewCards.map(card => [card.exerciseId, card]));
-  const accuracy = categoryAccuracy(context.recentAttempts, context.catalog);
+  const lastTwoWeeks = attemptsSince(context.recentAttempts, {
+    date: context.date,
+    days: ACCURACY_WINDOW_DAYS,
+  });
+  const accuracy = categoryAccuracy(lastTwoWeeks, context.catalog);
 
   const due = dueExercises(pool, cards, endOfLocalDayIso(context.date));
   const fresh = weightedOrder(
@@ -50,6 +55,6 @@ export function buildKnowledgeSession(context: TestBuildContext): SessionPlan {
     item => item.id,
   );
   return exerciseIds.length < target
-    ? { exerciseIds, shortfall: { target, available: exerciseIds.length } }
+    ? { exerciseIds, shortfall: { target, available: exerciseIds.length, remedy: 'mark_topics' } }
     : { exerciseIds };
 }

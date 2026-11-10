@@ -71,3 +71,20 @@ describe('buildOptionItems', () => {
     expect(items[1]?.checked).toBe(true);
   });
 });
+
+describe('buildOptionItems display order', () => {
+  it('lists options in the given order, keeping the authored index as id', () => {
+    const items = buildOptionItems({
+      texts: ['a', 'b', 'c'],
+      picked: new Set([0]),
+      correct: new Set([2]),
+      revealed: true,
+      order: [2, 0, 1],
+    });
+    expect(items.map(item => [item.id, item.text, item.state])).toEqual([
+      ['2', 'c', 'correct'],
+      ['0', 'a', 'wrong'],
+      ['1', 'b', 'idle'],
+    ]);
+  });
+});
