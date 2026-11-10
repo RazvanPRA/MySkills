@@ -4,6 +4,9 @@ import type { UserSettings } from '@/features/settings';
 import type { ReviewCard } from '@/features/spaced-repetition';
 import type { TopicProgress } from '@/features/study-map';
 import type { LocalizedText } from '@/shared/domain';
+import type { TestScope } from './dailySession';
+
+export type { TestScope };
 
 export type TestSchedule = 'daily' | 'weekly' | 'on_demand';
 
@@ -11,9 +14,6 @@ export type TestSchedule = 'daily' | 'weekly' | 'on_demand';
 export type ShortfallRemedy = 'mark_topics';
 
 export type TestItemKind = 'question' | 'problem';
-
-/** Narrows an on-demand session ("Practice this topic only"). Ignored by daily tests. */
-export type TestScope = { topicIds?: readonly string[]; categoryIds?: readonly string[] };
 
 /** Everything a test needs to build a session. No clock, no randomness, no I/O. */
 export type TestBuildContext = {

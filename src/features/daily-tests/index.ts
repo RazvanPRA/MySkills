@@ -6,6 +6,7 @@ export {
   dailySessionSchema,
   sessionStatusSchema,
   sessionStatuses,
+  testScopeSchema,
   type DailySession,
   type SessionStatus,
 } from './model/dailySession';

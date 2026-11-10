@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import { index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 /*
@@ -44,9 +45,16 @@ export const dailySessions = sqliteTable(
     startedAt: text('started_at'),
     completedAt: text('completed_at'),
     score: real('score'),
+    /** JSON TestScope of an on-demand session ("practice this topic"); null for daily tests. */
+    scope: text('scope', { mode: 'json' }),
   },
-  // Same day + same test kind = the same session (reopening the app resumes it).
-  table => [uniqueIndex('daily_sessions_date_kind_uq').on(table.date, table.testKind)],
+  // A daily test: same day + same test kind = the same session (reopening the app resumes
+  // it). On-demand sessions have a scope and may repeat within a day.
+  table => [
+    uniqueIndex('daily_sessions_daily_uq')
+      .on(table.date, table.testKind)
+      .where(sql`${table.scope} is null`),
+  ],
 );
 
 export const attempts = sqliteTable(
