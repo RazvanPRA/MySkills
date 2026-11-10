@@ -733,6 +733,260 @@
           { "ro": "Fără abonări manuale în componente" }
         ]
       }
+    },
+    {
+      "id": "react.components.junior.q1",
+      "topicId": "react.components.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O listă de sarcini are câte un `<input>` necontrolat în fiecare rând. După ce adaugi o sarcină **la începutul** listei, textul tastat apare în rândul greșit. Care e cauza cea mai probabilă?\n\n~~~tsx\n{todos.map((todo, index) => (\n  <TodoRow key={index} todo={todo} />\n))}\n~~~"
+      },
+      "explanation": {
+        "ro": "`key` îi spune lui React ce element din randarea nouă corespunde cărui element din cea veche. Cu indexul drept cheie, după inserarea la început rândul nou primește cheia `0`, iar React îi dă starea (DOM-ul input-ului, state-ul intern) care aparținea fostului prim rând.\n\nFolosește un id stabil din date (`todo.id`). Indexul e acceptabil doar pentru liste statice, care nu se reordonează și nu au elemente inserate sau șterse. Bug-ul apare doar când rândurile au stare proprie, de aceea scapă ușor la testare."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`key={index}`: după inserare, React asociază starea fiecărui rând cu poziția, nu cu sarcina"
+          },
+          { "ro": "Lipsește `React.memo` pe `TodoRow`" },
+          { "ro": "`map` nu păstrează ordinea elementelor" },
+          { "ro": "Input-urile necontrolate nu pot fi folosite în liste" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.testing.junior.q1",
+      "topicId": "react.testing.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Vrei să apeși butonul „Trimite” într-un test cu React Testing Library. Ce interogare e recomandată?"
+      },
+      "explanation": {
+        "ro": "RTL recomandă interogările care seamănă cu felul în care utilizatorul (și un cititor de ecran) găsește elementul: rolul și numele accesibil. Testul verifică astfel și accesibilitatea: dacă butonul nu are nume, testul pică.\n\nClasele CSS sunt detalii de implementare care se schimbă la refactorizare. `getByTestId` e o soluție de rezervă, când nu există rol sau text potrivit. Apelarea directă a `onClick` ocolește randarea, deci testul poate trece chiar dacă butonul e dezactivat sau ascuns."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`screen.getByRole('button', { name: /trimite/i })`" },
+          { "ro": "`container.querySelector('.submit-btn')`" },
+          { "ro": "`screen.getByTestId('submit')`" },
+          { "ro": "`wrapper.find(SubmitButton).props().onClick()`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.components.mid.q1",
+      "topicId": "react.components.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "În consolă apare avertismentul „A component is changing an uncontrolled input to be controlled”. Care e cauza?\n\n~~~tsx\nfunction EmailField({ user }: { user?: User }) {\n  const [email, setEmail] = useState(user?.email);\n  return <input value={email} onChange={e => setEmail(e.target.value)} />;\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Pentru React, `value={undefined}` înseamnă „input necontrolat”. Când utilizatorul tastează, `email` devine string și input-ul trece în modul controlat, ceea ce React semnalează: o componentă trebuie să rămână în același mod toată viața ei.\n\nSoluția: inițializează cu un string, `useState(user?.email ?? '')`. Alege conștient: controlat când ai nevoie de valoare la fiecare tastă (validare live, formatare), necontrolat cu `defaultValue` și un ref sau `FormData` când citești valoarea doar la submit."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "La prima randare `email` e `undefined`, deci input-ul pornește necontrolat și devine controlat când primește un string"
+          },
+          { "ro": "`onChange` trebuie înlocuit cu `onInput`" },
+          { "ro": "Un input controlat nu poate avea state local" },
+          { "ro": "`useState` nu acceptă valori opționale" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.state.mid.q1",
+      "topicId": "react.state.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Care dintre datele de mai jos sunt **server state**, adică ar trebui ținute într-un cache de tip TanStack Query sau RTK Query, nu copiate manual într-un store de client?"
+      },
+      "explanation": {
+        "ro": "Server state are proprietarul în altă parte: poate fi schimbat de alții, se învechește și are nevoie de cache, revalidare, deduplicarea cererilor și stări de încărcare și eroare. Bibliotecile de server state rezolvă exact aceste probleme; copiat manual în Redux, devine o a doua sursă de adevăr care trebuie sincronizată de mână.\n\nStarea modalului și textul din căutare aparțin doar UI-ului: state local sau, dacă trebuie partajate, un store de client. Textul căutării poate sta și în URL, dacă vrei ca filtrul să supraviețuiască refresh-ului."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "Lista de produse primită de la API" },
+          { "ro": "Profilul utilizatorului autentificat, citit din API" },
+          { "ro": "Dacă modalul de confirmare e deschis" },
+          { "ro": "Textul tastat în câmpul de căutare" },
+          { "ro": "Numărul de notificări necitite, calculat pe server" }
+        ],
+        "correctIndices": [0, 1, 4]
+      }
+    },
+    {
+      "id": "react.nextjs.mid.q1",
+      "topicId": "react.nextjs.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Un blog Next.js (App Router) are mii de vizite pe oră, iar articolele se modifică de câteva ori pe zi, din CMS. Ce strategie de randare e cea mai potrivită pentru pagina unui articol?"
+      },
+      "explanation": {
+        "ro": "Conținutul e același pentru toți cititorii și se schimbă rar, deci pagina poate fi servită din cache, rapid și ieftin. ISR regenerează pagina în fundal după interval, iar `revalidatePath` sau `revalidateTag`, apelate dintr-un webhook al CMS-ului, o actualizează imediat după publicare.\n\nSSR la fiecare cerere încarcă inutil CMS-ul și crește TTFB-ul. Randarea doar pe client strică SEO-ul și LCP-ul. Redeploy-ul la fiecare corectură funcționează, dar e lent și cuplează publicarea de pipeline-ul de build."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Pagină statică cu revalidare (ISR): `revalidate` pe interval, plus revalidare la cerere când CMS-ul publică"
+          },
+          { "ro": "SSR complet dinamic, cu datele citite din CMS la fiecare cerere" },
+          { "ro": "Randare doar pe client, cu `useEffect` care citește articolul" },
+          { "ro": "Build static fără revalidare, cu redeploy la fiecare modificare" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.testing.mid.q1",
+      "topicId": "react.testing.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre testarea codului asincron cu React Testing Library, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "`findBy*` combină `getBy*` cu `waitFor` și e alegerea firească pentru elementele care apar după o cerere. `queryBy*` e singura familie care nu aruncă, deci se folosește pentru `expect(...).not.toBeInTheDocument()`.\n\nMSW e preferat față de mock-uirea lui `fetch` pentru că testul exercită clientul HTTP real (headere, parsare, erori), iar handler-ele se pot refolosi în Storybook și în dezvoltare.\n\n`waitFor` poate rula callback-ul de mai multe ori, deci acolo intră doar aserțiuni, niciodată efecte. Pauzele fixe fac testele lente și instabile."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          { "ro": "`findByText` așteaptă (implicit până la 1 s) ca elementul să apară" },
+          {
+            "ro": "`queryByText` returnează `null` în loc să arunce, deci e potrivit pentru a verifica absența unui element"
+          },
+          {
+            "ro": "MSW interceptează cererile la nivel de rețea, deci componenta folosește codul real de `fetch`"
+          },
+          {
+            "ro": "În `waitFor` e bine să pui și acțiunea, de exemplu `fireEvent.click`, ca să fie reîncercată"
+          },
+          { "ro": "Un `setTimeout` de 500 ms în test e o soluție robustă pentru datele asincrone" }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "react.components.senior.f1",
+      "topicId": "react.components.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Proiectezi componenta `Select` pentru design system-ul folosit de cinci echipe. Cum arăți API-ul ei și cum o faci să evolueze fără să le strici codul?"
+      },
+      "explanation": {
+        "ro": "Un design system e un produs intern cu clienți: echipele care îl folosesc. Interviul verifică dacă te gândești la ei, nu doar la cum arată componenta.\n\nSemnalul de alarmă la un API: props precum `isLarge`, `hasIcon`, `isCompact` care se combină în moduri netestate. Fiecare prop adăugat e o promisiune de compatibilitate pe termen lung."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Pornesc de la **compoziție**, nu de la o listă lungă de props boolean. Un API de tip compound component (`Select`, `Select.Trigger`, `Select.Option`, `Select.Group`) acoperă cazurile neprevăzute fără props noi, iar o variantă simplă (`options` + `value` + `onChange`) rămâne pentru cazul obișnuit.\n\nComponenta suportă ambele moduri: controlat (`value` / `onChange`) și necontrolat (`defaultValue`). Accesibilitatea e parte din contract: pattern-ul ARIA de listbox sau combobox, navigare din tastatură, focus vizibil, nume accesibil obligatoriu. Ideal pornesc de la o bibliotecă headless testată, nu reimplementez comportamentul.\n\nPentru evoluție: versionare semantică, deprecieri cu avertismente în dezvoltare și o perioadă de tranziție, codemods pentru schimbările mecanice, changelog și exemple în Storybook. Măsor adopția și citesc utilizările reale înainte să schimb API-ul."
+        },
+        "keyPoints": [
+          { "ro": "Compoziție (compound components) în loc de props boolean" },
+          { "ro": "Controlat și necontrolat, cu aceleași nume de props ca restul sistemului" },
+          { "ro": "Accesibilitate în contract: pattern ARIA, tastatură, focus" },
+          { "ro": "Semver, deprecieri cu avertismente, codemods" },
+          { "ro": "Decizii luate pe baza utilizărilor reale" }
+        ]
+      }
+    },
+    {
+      "id": "react.performance.senior.q1",
+      "topicId": "react.performance.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "O pagină filtrează o listă de 5 000 de rânduri la fiecare tastă din câmpul de căutare. Lighthouse raportează un INP slab: tastarea se simte blocată. Ce schimbare atacă direct problema?"
+      },
+      "explanation": {
+        "ro": "INP (Interaction to Next Paint) măsoară cât durează până când ecranul reflectă interacțiunea. Aici fiecare tastă așteaptă randarea a mii de rânduri. Cu `useDeferredValue(query)`, React randează întâi input-ul cu valoarea nouă, apoi lista cu valoarea amânată, într-o randare întreruptibilă care cedează când vine o tastă nouă.\n\nUn efect adaugă o randare în plus fără să reducă munca. `memo` pe input nu ajută, problema e lista. Pe termen lung, combină cu virtualizarea listei, ca să randezi doar rândurile vizibile, și cu memoizarea rândurilor."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Marchezi actualizarea listei ca non-urgentă cu `useDeferredValue` (sau `startTransition`), ca input-ul să răspundă imediat"
+          },
+          { "ro": "Muți filtrarea într-un `useEffect` care scrie rezultatul în state" },
+          { "ro": "Învelești câmpul de căutare în `React.memo`" },
+          { "ro": "Adaugi un `Suspense` în jurul listei" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "react.state.senior.f1",
+      "topicId": "react.state.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum alegi arhitectura de state pentru o aplicație React mare, cu zece echipe care lucrează pe feature-uri diferite?"
+      },
+      "explanation": {
+        "ro": "Greșeala tipică la scară: un store global unic, în care orice echipă citește și scrie orice. Rezultatul e cuplaj ascuns, re-randări greu de urmărit și refactorizări imposibile.\n\nUn răspuns senior pornește de la întrebări („cine deține datele? cât trăiesc? cine trebuie să le vadă?”) și abia apoi alege biblioteca."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "Împart state-ul după **proprietar și durata de viață**, nu după bibliotecă:\n\n- **Server state** într-un cache dedicat (TanStack Query sau RTK Query): revalidare, deduplicare, invalidare după mutații.\n- **State din URL** pentru tot ce trebuie partajat prin link sau păstrat la refresh: filtre, pagină, tab-ul activ.\n- **State local** în componentă, cât mai jos în arbore.\n- **Client state global** doar pentru ce e cu adevărat transversal (sesiune, preferințe), într-un store cu slice-uri deținute de un singur feature.\n\nGranițele între feature-uri: fiecare își expune selectorii și acțiunile publice; nimeni nu citește direct forma state-ului altuia. Selectorii sunt memoizați și aleg cea mai mică bucată necesară, ca să limiteze re-randările. Datele derivate se calculează în selectori, nu se stochează."
+        },
+        "keyPoints": [
+          { "ro": "Împărțire după proprietar: server, URL, local, global" },
+          { "ro": "Server state într-un cache, nu copiat în store" },
+          { "ro": "Slice-uri deținute de un feature, acces prin selectori publici" },
+          { "ro": "Selectori memoizați și granulari pentru costul re-randărilor" },
+          { "ro": "Date derivate calculate, nu stocate" }
+        ]
+      }
+    },
+    {
+      "id": "react.testing.senior.q1",
+      "topicId": "react.testing.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Echipa ta are o suită de teste care pică la aproape orice refactorizare, deși comportamentul nu se schimbă. Care tip de test e cel mai probabil vinovat?"
+      },
+      "explanation": {
+        "ro": "Un test fragil e cuplat de **cum** e scris codul, nu de **ce** face. Verificarea state-ului intern sau a apelurilor între funcții private pică la orice redenumire. Snapshot-urile mari se schimbă la orice modificare de markup și ajung să fie actualizate orbește, deci nu mai prind nimic.\n\nStrategia senior: teste care interacționează ca utilizatorul (rol, text, acțiuni), mai multe teste de integrare decât unit tests pe componente, câteva teste e2e pe fluxurile critice și eliminarea activă a testelor care au cost, dar nu prind bug-uri. Un test bun pică doar când comportamentul observabil se schimbă."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Teste care verifică state-ul intern, apelurile către hooks private sau snapshot-uri mari ale întregului arbore"
+          },
+          { "ro": "Teste care caută elementele după rol și verifică textul afișat" },
+          { "ro": "Teste e2e Playwright pe fluxurile critice" },
+          { "ro": "Teste de integrare care simulează rețeaua cu MSW" }
+        ],
+        "correctIndex": 0
+      }
     }
   ]
 }
