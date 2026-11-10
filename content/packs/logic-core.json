@@ -1396,6 +1396,42 @@
       }
     },
     {
+      "id": "logic.debugging.junior.q2",
+      "topicId": "logic.debugging.junior",
+      "level": "junior",
+      "difficulty": 1,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Funcția afișează toate numele, apoi aruncă `TypeError: Cannot read properties of undefined (reading 'name')`. Care linie e greșită?"
+      },
+      "explanation": {
+        "ro": "Indicii unui array merg de la 0 la `length - 1`. Condiția `i <= items.length` mai face un pas, iar `items[items.length]` e `undefined`; citirea lui `.name` aruncă eroarea.\n\nFix: `i < items.length`. Și mai bine, eviți indicii când nu ai nevoie de ei: `for (const item of items)` sau `items.forEach(...)`. Erorile off-by-one apar exact acolo unde scrii manual limitele."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "function printAll(items) {\n  for (let i = 0; i <= items.length; i++) {\n    console.log(items[i].name);\n  }\n}",
+        "language": "js",
+        "bugLines": [2]
+      }
+    },
+    {
+      "id": "logic.debugging.junior.q3",
+      "topicId": "logic.debugging.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 90,
+      "prompt": { "ro": "`index` ar trebui să fie 1, dar e `-1`. Care linie e greșită?" },
+      "explanation": {
+        "ro": "`indexOf` compară cu `===`, iar pentru obiecte asta înseamnă **aceeași referință**, nu același conținut. `selected` și `items[1]` arată la fel, dar sunt obiecte diferite.\n\nFix: compari după identitatea de business, `items.findIndex(item => item.id === selected.id)`. Bug-ul apare des după un fetch sau o deserializare: obiectul din formular și cel din listă vin din surse diferite, chiar dacă reprezintă aceeași entitate."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "const selected = { id: 3 };\nconst items = [{ id: 1 }, { id: 3 }];\nconst index = items.indexOf(selected);",
+        "language": "js",
+        "bugLines": [3]
+      }
+    },
+    {
       "id": "logic.debugging.mid.q1",
       "topicId": "logic.debugging.mid",
       "level": "mid",
@@ -1434,6 +1470,25 @@
       }
     },
     {
+      "id": "logic.debugging.mid.q3",
+      "topicId": "logic.debugging.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Contorul ar trebui să crească în fiecare secundă, dar rămâne la 1. Care linie e cauza?"
+      },
+      "explanation": {
+        "ro": "Efectul rulează o singură dată (dependențe `[]`), deci callback-ul din `setInterval` păstrează `count` din primul render, adică 0. La fiecare secundă calculează `0 + 1` și setează 1. Se numește **stale closure**.\n\nFix: forma funcțională, `setCount(c => c + 1)`, care primește mereu valoarea curentă. Adăugarea lui `count` în dependențe ar funcționa și ea, dar ar recrea intervalul la fiecare secundă. Regula `react-hooks/exhaustive-deps` din ESLint semnalează exact această problemă."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "function Timer() {\n  const [count, setCount] = useState(0);\n  useEffect(() => {\n    const id = setInterval(() => setCount(count + 1), 1000);\n    return () => clearInterval(id);\n  }, []);\n  return <p>{count}</p>;\n}",
+        "language": "jsx",
+        "bugLines": [4]
+      }
+    },
+    {
       "id": "logic.debugging.senior.q1",
       "topicId": "logic.debugging.senior",
       "level": "senior",
@@ -1450,6 +1505,44 @@
         "code": "function lowerBound(a: number[], x: number): number {\n  let lo = 0;\n  let hi = a.length;\n  while (lo < hi) {\n    const mid = Math.floor((lo + hi) / 2);\n    if (a[mid] < x) lo = mid;\n    else hi = mid;\n  }\n  return lo;\n}",
         "language": "ts",
         "bugLines": [6]
+      }
+    },
+    {
+      "id": "logic.debugging.senior.q2",
+      "topicId": "logic.debugging.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 150,
+      "prompt": {
+        "ro": "Când `fetchUser` eșuează, eroarea nu e logată și nu se întoarce `GUEST`: apelantul primește o promisiune respinsă. Care linie e cauza?"
+      },
+      "explanation": {
+        "ro": "`return fetchUser(id)` întoarce promisiunea **fără să o aștepte**. Blocul `try` se termină imediat, cu succes, iar respingerea apare mai târziu, în afara lui. `catch` nu are ce prinde.\n\nFix: `return await fetchUser(id)`. În interiorul unui `try/catch`, `await` e obligatoriu; în afara lui, `return promise` și `return await promise` se comportă aproape la fel. Regula ESLint `@typescript-eslint/return-await` (cu opțiunea `in-try-catch`) impune exact această convenție."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "async function loadUser(id) {\n  try {\n    return fetchUser(id);\n  } catch (error) {\n    log(error);\n    return GUEST;\n  }\n}",
+        "language": "js",
+        "bugLines": [3]
+      }
+    },
+    {
+      "id": "logic.debugging.senior.q3",
+      "topicId": "logic.debugging.senior",
+      "level": "senior",
+      "difficulty": 5,
+      "estimatedSeconds": 180,
+      "prompt": {
+        "ro": "Verificarea de acces trece în toate testele (id-uri mici), dar în producție refuză proprietarii reali. Care linie e greșită?"
+      },
+      "explanation": {
+        "ro": "`==` pe obiecte `Long` compară **referințe**, nu valori. Testele trec din cauza unui cache: `Long.valueOf` (folosit și la autoboxing) refolosește aceleași obiecte pentru valorile de la −128 la 127, deci pentru id-uri mici referințele coincid. Pentru 1042, cele două obiecte sunt diferite, iar comparația dă `false`.\n\nFix: `Objects.equals(ownerId, userId)`, care tratează și `null`, sau tipuri primitive `long` când valoarea nu poate lipsi.\n\nLecția de depanare: un bug care depinde de **mărimea** datelor (id-uri mici în teste, mari în producție) e un semnal să cauți un cache, o limită sau un overflow. Testele bune folosesc și valori „realiste”, nu doar 1, 2, 3."
+      },
+      "type": "find_bug",
+      "payload": {
+        "code": "boolean isOwner(Order order, User user) {\n    Long ownerId = order.getOwnerId();\n    Long userId = user.getId();\n    return ownerId == userId;\n}",
+        "language": "java",
+        "bugLines": [4]
       }
     }
   ]
