@@ -1,5 +1,8 @@
 import { createExerciseTypeRegistry } from '@/features/content';
 import { createTestRegistry } from '@/features/daily-tests';
+import { flashcardSelfGraded } from '@/features/exercise-types/flashcard-self-graded';
+import { multipleChoice } from '@/features/exercise-types/multiple-choice';
+import { singleChoice } from '@/features/exercise-types/single-choice';
 
 /*
  * The ONLY place where exercise types and test types are registered (brief §6, §11).
@@ -10,7 +13,9 @@ import { createTestRegistry } from '@/features/daily-tests';
  */
 
 export const exerciseTypeRegistry = createExerciseTypeRegistry();
-// Phase 2: single_choice, multiple_choice, flashcard_self_graded
+exerciseTypeRegistry.register(singleChoice);
+exerciseTypeRegistry.register(multipleChoice);
+exerciseTypeRegistry.register(flashcardSelfGraded);
 // Phase 3: code_output, find_bug, ordering
 
 export const testRegistry = createTestRegistry();

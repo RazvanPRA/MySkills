@@ -1,6 +1,7 @@
 import { fireEvent, screen } from '@testing-library/react-native';
 import { fontFamily } from '@/shared/theme';
 import { renderWithTheme } from '@/shared/testing/renderWithTheme';
+import { buildOptionItems } from './buildOptionItems';
 import { OptionList, optionLetter } from './OptionList';
 import type { OptionListItem } from './OptionList.types';
 
@@ -39,5 +40,34 @@ describe('OptionList', () => {
 
   it('letters up to F', () => {
     expect([0, 1, 5].map(optionLetter)).toEqual(['A', 'B', 'F']);
+  });
+});
+
+describe('buildOptionItems', () => {
+  const texts = ['a', 'b', 'c'];
+
+  it('shows only the pick before reveal', () => {
+    const items = buildOptionItems({
+      texts,
+      picked: new Set([1]),
+      correct: new Set([2]),
+      revealed: false,
+    });
+    expect(items.map(item => [item.id, item.state, item.checked])).toEqual([
+      ['0', 'idle', false],
+      ['1', 'selected', true],
+      ['2', 'idle', false],
+    ]);
+  });
+
+  it('after reveal: correct green, wrong pick red, untouched wrong neutral', () => {
+    const items = buildOptionItems({
+      texts,
+      picked: new Set([1]),
+      correct: new Set([2]),
+      revealed: true,
+    });
+    expect(items.map(item => item.state)).toEqual(['idle', 'wrong', 'correct']);
+    expect(items[1]?.checked).toBe(true);
   });
 });
