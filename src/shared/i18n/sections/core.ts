@@ -1,6 +1,6 @@
 import { pluralEn, pluralRo } from '../plural';
 
-/** App shell: tabs, placeholders, startup, shared counts. */
+/** App shell: tabs, screen titles, startup, shared counts. */
 export const coreRo = {
   tabs: {
     today: 'Azi',
@@ -13,9 +13,6 @@ export const coreRo = {
     study: { title: 'Studiu', subtitle: 'Harta categoriilor și a topicurilor.' },
     progress: { title: 'Progres', subtitle: 'Nivelul tău pe fiecare arie.' },
     settings: { title: 'Setări', subtitle: 'Limbă, notificări și date.' },
-  },
-  placeholder: {
-    availableInPhase: (phase: number) => `Disponibil în faza ${phase}.`,
   },
   bootstrap: {
     loadingTitle: 'Senior Prep',
@@ -53,9 +50,6 @@ export const coreEn: typeof coreRo = {
     study: { title: 'Study', subtitle: 'The map of categories and topics.' },
     progress: { title: 'Progress', subtitle: 'Your level in every area.' },
     settings: { title: 'Settings', subtitle: 'Language, notifications and data.' },
-  },
-  placeholder: {
-    availableInPhase: (phase: number) => `Available in phase ${phase}.`,
   },
   bootstrap: {
     loadingTitle: 'Senior Prep',

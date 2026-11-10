@@ -2,11 +2,11 @@ import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { TodayScreen } from '@/features/daily-tests';
 import { ProgressScreen, TodayStats } from '@/features/progress';
+import { SettingsScreen } from '@/features/settings';
 import { StudyMapScreen } from '@/features/study-map';
-import { PlaceholderScreen } from './PlaceholderScreen';
 
-// Thin screen components mounted by the tab navigator. Each placeholder is replaced by a
-// feature screen (imported from that feature's index.ts) in the phase noted here.
+// Thin screen components mounted by the tab navigator: they map navigation to the props of
+// feature screens (imported from each feature's index.ts) and compose features together.
 export function TodayTab() {
   const navigation = useNavigation();
   const startSession = useCallback(
@@ -50,4 +50,4 @@ export function ProgressTab() {
   return <ProgressScreen onOpenTopic={openTopic} onOpenSession={openSession} />;
 }
 
-export const SettingsTab = () => <PlaceholderScreen section="settings" phase={4} />;
+export const SettingsTab = () => <SettingsScreen />;

@@ -7,6 +7,7 @@ import { ExerciseView } from '../components/ExerciseView/ExerciseView';
 import { SessionFeedback } from '../components/SessionFeedback/SessionFeedback';
 import { SessionHeader } from '../components/SessionHeader/SessionHeader';
 import { SessionNavigation } from '../components/SessionNavigation/SessionNavigation';
+import { SessionTimer } from '../components/SessionTimer/SessionTimer';
 import { usePlayerActions } from '../hooks/usePlayerActions';
 import { usePlayerSession } from '../hooks/usePlayerSession';
 
@@ -75,6 +76,7 @@ export default function SessionScreen({
           position={strings.player.position(player.index + 1, total)}
           progress={player.attempts.length / total}
           progressLabel={strings.player.progress}
+          timer={<SessionTimer shownAt={player.shownAt} running={player.step === 'answering'} />}
         />
         <ExerciseView
           exercise={exercise}
