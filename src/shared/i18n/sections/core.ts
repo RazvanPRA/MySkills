@@ -36,6 +36,8 @@ export const coreRo = {
       pluralRo(n, { one: '{n} topic', few: '{n} topicuri', other: '{n} de topicuri' }),
     mistakes: (n: number) =>
       pluralRo(n, { one: '{n} greșeală', few: '{n} greșeli', other: '{n} de greșeli' }),
+    answers: (n: number) =>
+      pluralRo(n, { one: '{n} răspuns', few: '{n} răspunsuri', other: '{n} de răspunsuri' }),
   },
 };
 
@@ -69,5 +71,6 @@ export const coreEn: typeof coreRo = {
     days: (n: number) => pluralEn(n, '{n} day', '{n} days'),
     topics: (n: number) => pluralEn(n, '{n} topic', '{n} topics'),
     mistakes: (n: number) => pluralEn(n, '{n} mistake', '{n} mistakes'),
+    answers: (n: number) => pluralEn(n, '{n} answer', '{n} answers'),
   },
 };

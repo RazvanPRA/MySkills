@@ -1,4 +1,5 @@
 import { coreEn, coreRo } from './sections/core';
+import { progressEn, progressRo } from './sections/progress';
 import { sessionEn, sessionRo } from './sections/session';
 import { studyEn, studyRo } from './sections/study';
 import { todayEn, todayRo } from './sections/today';
@@ -8,11 +9,17 @@ import { todayEn, todayRo } from './sections/today';
  * that keep both languages side by side. `en` is typed as `Strings`, so a key missing in
  * either language fails compilation. Romanian uses comma-below ș/ț; a test enforces it.
  */
-const ro = { ...coreRo, ...studyRo, ...sessionRo, today: todayRo };
+const ro = { ...coreRo, ...studyRo, ...sessionRo, today: todayRo, progress: progressRo };
 
 export type Strings = typeof ro;
 
-const en: Strings = { ...coreEn, ...studyEn, ...sessionEn, today: todayEn };
+const en: Strings = {
+  ...coreEn,
+  ...studyEn,
+  ...sessionEn,
+  today: todayEn,
+  progress: progressEn,
+};
 
 export const languages = ['ro', 'en'] as const;
 export type Language = (typeof languages)[number];

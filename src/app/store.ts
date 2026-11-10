@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { dailyTestsReducer } from '@/features/daily-tests';
+import { progressReducer } from '@/features/progress';
 import { sessionPlayerReducer } from '@/features/session-player';
 import { settingsReducer } from '@/features/settings';
 import { studyMapReducer } from '@/features/study-map';
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
   studyMap: studyMapReducer,
   dailyTests: dailyTestsReducer,
   sessionPlayer: sessionPlayerReducer,
+  progress: progressReducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

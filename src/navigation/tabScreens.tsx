@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import { useCallback } from 'react';
 import { TodayScreen } from '@/features/daily-tests';
+import { TodayStats } from '@/features/progress';
 import { StudyMapScreen } from '@/features/study-map';
 import { PlaceholderScreen } from './PlaceholderScreen';
 
@@ -16,7 +17,15 @@ export function TodayTab() {
     () => navigation.navigate('Tabs', { screen: 'Study' }),
     [navigation],
   );
-  return <TodayScreen onStartSession={startSession} onMarkTopics={markTopics} />;
+  const openTopic = useCallback(
+    (topicId: string) => navigation.navigate('Topic', { topicId }),
+    [navigation],
+  );
+  return (
+    <TodayScreen onStartSession={startSession} onMarkTopics={markTopics}>
+      <TodayStats onOpenTopic={openTopic} />
+    </TodayScreen>
+  );
 }
 
 export function StudyTab() {

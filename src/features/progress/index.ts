@@ -1,4 +1,7 @@
 // Public API of the progress feature: mastery, estimated level, heatmap, streak (brief §8).
+// Components are lazy so the index loads without react-native.
+import { lazy } from 'react';
+
 export {
   MASTERY_PARAMS,
   MASTERY_WINDOW_DAYS,
@@ -14,3 +17,10 @@ export { completedDays, computeStreak, type Streak } from './services/computeStr
 export { accuracyByWeek, averageScore, type WeekAccuracy } from './services/accuracy.service';
 export { weakTopics, type WeakTopic } from './services/weakTopics.service';
 export { suggestTopic, type TopicSuggestion } from './services/suggestTopic.service';
+export { presentTodayStats } from './services/presentTodayStats';
+export { progressReducer, type ProgressState } from './state/slice';
+export { loadProgress, type ProgressDependencies } from './state/thunks';
+export { selectStreak, selectWeekAccuracy } from './state/selectors';
+export type { TodayStatsProps } from './components/TodayStats/TodayStats';
+
+export const TodayStats = lazy(() => import('./components/TodayStats/TodayStats'));

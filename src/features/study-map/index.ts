@@ -15,6 +15,7 @@ export { createLocalTopicProgressRepository } from './repository/LocalTopicProgr
 export { studyMapReducer, type StudyMapState } from './state/slice';
 export { loadTopicProgress, setTopicStatus, type StudyMapDependencies } from './state/thunks';
 export { selectTopicStatus, selectTopicProgressById } from './state/selectors';
+export { useEnsureTopicProgress } from './hooks/useEnsureTopicProgress';
 export type { StudyMapScreenProps } from './screens/StudyMapScreen';
 export type { TopicScreenProps } from './screens/TopicScreen';
 
