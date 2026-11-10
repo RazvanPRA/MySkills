@@ -5,14 +5,17 @@ import { AppText, MasteryCell } from '@/shared/ui';
 import type { MasteryRowModel } from '../../services/presentMasteryTable';
 import { createStyles } from './MasteryTable.styles';
 
-/** One category: name, a cell per level, then the estimated level as text. */
+/** One category: name with its estimated level as text, then a cell per level. */
 function MasteryTableRowBase({ row }: { row: MasteryRowModel }) {
   const styles = useThemedStyles(createStyles);
   return (
     <View style={styles.row}>
-      <AppText variant="small" style={styles.category}>
-        {row.title}
-      </AppText>
+      <View style={styles.category}>
+        <AppText variant="small">{row.title}</AppText>
+        <AppText variant="caption" bold accessibilityLabel={row.estimatedLabel}>
+          {row.estimatedText}
+        </AppText>
+      </View>
       {row.cells.map(cell => (
         <MasteryCell
           key={cell.level}
@@ -21,14 +24,6 @@ function MasteryTableRowBase({ row }: { row: MasteryRowModel }) {
           accessibilityLabel={cell.label}
         />
       ))}
-      <AppText
-        variant="small"
-        bold
-        style={styles.estimated}
-        accessibilityLabel={row.estimatedLabel}
-      >
-        {row.estimatedText}
-      </AppText>
     </View>
   );
 }

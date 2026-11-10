@@ -1,5 +1,5 @@
 import type { SessionFact } from '../model/facts';
-import { accuracyByWeek, averageScore } from '../services/accuracy.service';
+import { accuracyByWeek, averageScore, fromFirstAnsweredWeek } from '../services/accuracy.service';
 import { completedDays, computeStreak } from '../services/computeStreak.service';
 import { suggestTopic } from '../services/suggestTopic.service';
 import { weakTopics } from '../services/weakTopics.service';
@@ -167,5 +167,25 @@ describe('suggestTopic', () => {
       ...['a.junior', 'b.junior', 'c.mid', 'e.mid', 'd.senior'].map(t => `react.${t}`),
     );
     expect(next(all)).toBeNull();
+  });
+});
+
+describe('fromFirstAnsweredWeek', () => {
+  const week = (weekStart: string, count: number) => ({
+    weekStart,
+    count,
+    accuracy: count === 0 ? null : 50,
+  });
+
+  it('starts at the first week with answers and keeps later empty weeks', () => {
+    const weeks = [week('a', 0), week('b', 3), week('c', 0), week('d', 1)];
+    expect(fromFirstAnsweredWeek(weeks).map(w => w.weekStart)).toEqual(['b', 'c', 'd']);
+  });
+
+  it('keeps only the current week when nothing was answered', () => {
+    expect(fromFirstAnsweredWeek([week('a', 0), week('b', 0)]).map(w => w.weekStart)).toEqual([
+      'b',
+    ]);
+    expect(fromFirstAnsweredWeek([])).toEqual([]);
   });
 });

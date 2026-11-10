@@ -2,9 +2,11 @@ import { StyleSheet } from 'react-native';
 import type { Theme } from '@/shared/theme';
 import { MASTERY_CELL_WIDTH } from '@/shared/ui';
 
-/** Category names wrap inside this column; the table scrolls horizontally when needed. */
+/**
+ * Category name and estimated level wrap inside this column. With three level cells the table
+ * fits a 400 dp wide phone; narrower screens scroll horizontally.
+ */
 const CATEGORY_COLUMN_WIDTH = 132;
-const ESTIMATED_COLUMN_WIDTH = 96;
 
 export const createStyles = ({ color, space, radius }: Theme) =>
   StyleSheet.create({
@@ -22,8 +24,9 @@ export const createStyles = ({ color, space, radius }: Theme) =>
       borderTopWidth: 1,
       borderTopColor: color.border,
     },
+    // Rows stretch to the frame when the table is narrower than the screen.
+    content: { flexGrow: 1 },
     header: { backgroundColor: color.accentSoft, borderTopWidth: 0 },
-    category: { width: CATEGORY_COLUMN_WIDTH, paddingHorizontal: space.xs },
+    category: { width: CATEGORY_COLUMN_WIDTH, paddingHorizontal: space.xs, gap: space.xxs },
     level: { width: MASTERY_CELL_WIDTH, textAlign: 'center' },
-    estimated: { width: ESTIMATED_COLUMN_WIDTH, paddingHorizontal: space.xs },
   });

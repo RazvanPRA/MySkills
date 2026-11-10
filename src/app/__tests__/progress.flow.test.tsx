@@ -32,7 +32,8 @@ describe('Progress tab', () => {
     expect(
       await screen.findByLabelText('Săptămâna din 9 nov.: 50% · 2 răspunsuri', undefined, TIMEOUT),
     ).toBeOnTheScreen();
-    expect(screen.getByLabelText('Săptămâna din 2 nov.: Fără răspunsuri')).toBeOnTheScreen();
+    // Weeks before the first answer are not listed.
+    expect(screen.queryByLabelText(/Săptămâna din 2 nov./)).toBeNull();
     const weak = screen.getAllByRole('button', { name: /Stăpânire/ });
     expect(weak.map(row => row.props.accessibilityLabel)).toEqual([
       'debugging, Stăpânire 0% · Logică · Mid',

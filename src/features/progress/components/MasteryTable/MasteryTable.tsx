@@ -21,9 +21,6 @@ function MasteryTableHeader() {
           {levelNames[level]}
         </AppText>
       ))}
-      <AppText variant="label" style={styles.estimated}>
-        {progress.matrix.estimated}
-      </AppText>
     </View>
   );
 }
@@ -36,8 +33,8 @@ export function MasteryTable({ rows }: { rows: readonly MasteryRowModel[] }) {
   const styles = useThemedStyles(createStyles);
   return (
     <View style={styles.frame}>
-      <ScrollView horizontal>
-        <View>
+      <ScrollView horizontal contentContainerStyle={styles.content}>
+        <View style={styles.content}>
           <MasteryTableHeader />
           {rows.map(row => (
             <MasteryTableRow key={row.categoryId} row={row} />

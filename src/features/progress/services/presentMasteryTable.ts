@@ -62,7 +62,7 @@ export function presentMasteryTable(
       categoryId: row.categoryId,
       title,
       cells: row.cells.map(cell => cellModel(cell, title, context)),
-      estimatedText: estimated,
+      estimatedText: `${context.strings.progress.matrix.estimated}: ${estimated}`,
       estimatedLabel: context.strings.progress.matrix.estimatedLabel(title, estimated),
     };
   });

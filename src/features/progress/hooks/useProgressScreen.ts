@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useContentCatalog } from '@/features/content';
 import { useLanguage, useStrings } from '@/shared/i18n';
-import { accuracyByWeek } from '../services/accuracy.service';
+import { accuracyByWeek, fromFirstAnsweredWeek } from '../services/accuracy.service';
 import { buildHeatmap } from '../services/buildHeatmap.service';
 import { presentMasteryTable } from '../services/presentMasteryTable';
 import {
@@ -34,7 +34,7 @@ export function useProgressScreen() {
         : accuracyByWeek(logicAttempts(catalog, attempts), { today, weeks: LOGIC_WEEKS });
     return {
       table: presentMasteryTable(buildHeatmap(catalog, mastery), context),
-      weeks: presentWeeks(weeks, context),
+      weeks: presentWeeks(fromFirstAnsweredWeek(weeks), context),
       weak: presentWeakTopics(weakTopics(catalog, mastery), context),
       history: presentHistory(sessions, { ...context, testTitles }),
     };

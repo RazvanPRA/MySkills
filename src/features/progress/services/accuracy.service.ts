@@ -41,3 +41,9 @@ export function accuracyByWeek(
     return { weekStart, accuracy: averageScore(inWeek), count: inWeek.length };
   });
 }
+
+/** Drops the weeks before the first answer (a new user sees one week, not eight empty ones). */
+export function fromFirstAnsweredWeek(weeks: readonly WeekAccuracy[]): WeekAccuracy[] {
+  const first = weeks.findIndex(week => week.count > 0);
+  return weeks.slice(first === -1 ? Math.max(0, weeks.length - 1) : first);
+}

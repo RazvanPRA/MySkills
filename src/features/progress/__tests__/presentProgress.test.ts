@@ -32,7 +32,7 @@ describe('presentMasteryTable', () => {
       ['—', 'React, Senior: neînceput'],
     ]);
     expect(react).toMatchObject({
-      estimatedText: 'Junior',
+      estimatedText: 'Nivel estimat: Junior',
       estimatedLabel: 'React, nivel estimat: Junior',
     });
     expect(logic?.cells[1]).toEqual({
@@ -41,7 +41,7 @@ describe('presentMasteryTable', () => {
       text: '—',
       label: 'Logică, Mid: fără exerciții',
     });
-    expect(logic?.estimatedText).toBe('—');
+    expect(logic?.estimatedText).toBe('Nivel estimat: —');
   });
 
   it('says "below Junior" once something was practised', () => {
@@ -49,7 +49,7 @@ describe('presentMasteryTable', () => {
       buildHeatmap(catalog, new Map([['react.a.junior', 20]])),
       en,
     );
-    expect(react?.estimatedText).toBe('Below Junior');
+    expect(react?.estimatedText).toBe('Estimated level: Below Junior');
   });
 });
 
