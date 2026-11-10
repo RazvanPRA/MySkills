@@ -406,6 +406,268 @@
           { "ro": "Pinning (`synchronized` înainte de Java 24), ThreadLocal" }
         ]
       }
+    },
+    {
+      "id": "java-spring.language.junior.q1",
+      "topicId": "java-spring.language.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 45,
+      "prompt": {
+        "ro": "Ce afișează codul?\n\n~~~java\nString a = \"java\";\nString b = new String(\"java\");\nSystem.out.println(a == b);\nSystem.out.println(a.equals(b));\n~~~"
+      },
+      "explanation": {
+        "ro": "`==` compară **referințele** pentru obiecte. `new String(...)` creează explicit un obiect nou, diferit de literalul din string pool, deci `a == b` e `false`. `equals` compară conținutul, deci e `true`.\n\nPentru stringuri (și orice obiect cu valoare: `Integer`, `BigDecimal`, records) folosește mereu `equals`. Capcana e perfidă: două literale identice sunt de obicei același obiect din pool, deci `==` pare să funcționeze în teste și pică pe date venite din rețea sau din baza de date."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`false`, apoi `true`" },
+          { "ro": "`true`, apoi `true`" },
+          { "ro": "`false`, apoi `false`" },
+          { "ro": "`true`, apoi `false`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.concurrency.junior.q1",
+      "topicId": "java-spring.concurrency.junior",
+      "level": "junior",
+      "difficulty": 2,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Două thread-uri execută fiecare de 1 000 de ori `counter++` pe același câmp `int counter`. Ce valoare are `counter` la final?"
+      },
+      "explanation": {
+        "ro": "`counter++` înseamnă trei pași: citește, adună 1, scrie. Dacă ambele thread-uri citesc aceeași valoare înainte ca vreunul să scrie, o incrementare se pierde. Este un **race condition**, iar rezultatul variază de la o rulare la alta.\n\nSoluții: `AtomicInteger.incrementAndGet()` (o operație atomică, fără blocare) sau un bloc `synchronized`. Pentru contoare cu foarte multe scrieri concurente, `LongAdder` scalează mai bine. `ConcurrentModificationException` apare la modificarea unei colecții în timpul iterării, nu aici."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Cel mult 2 000; adesea mai puțin, pentru că `counter++` nu e o operație atomică"
+          },
+          { "ro": "Exact 2 000, întotdeauna" },
+          { "ro": "Exact 1 000, pentru că thread-urile se suprascriu complet" },
+          { "ro": "Programul aruncă `ConcurrentModificationException`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.concurrency.mid.q1",
+      "topicId": "java-spring.concurrency.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "`fetchUser` returnează `CompletableFuture<User>`, iar `fetchOrders` returnează `CompletableFuture<List<Order>>`. Cum obții un `CompletableFuture<List<Order>>`?\n\n~~~java\nCompletableFuture<User> user = fetchUser(id);\nvar orders = user.???(u -> fetchOrders(u.id()));\n~~~"
+      },
+      "explanation": {
+        "ro": "`thenApply` transformă valoarea, deci ar produce `CompletableFuture<CompletableFuture<List<Order>>>`: un future imbricat. `thenCompose` „aplatizează” rezultatul, la fel ca `flatMap` pentru streams sau `Optional`. `thenAccept` consumă valoarea și nu returnează nimic, iar `thenCombine` combină două future-uri independente.\n\nCapcana de producție: fără un executor explicit, variantele `*Async` rulează pe `ForkJoinPool.commonPool()`. Dacă acolo ajung apeluri blocante (JDBC, HTTP), pool-ul comun se blochează pentru toată aplicația. Dă un executor dedicat sau folosește virtual threads."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "`thenCompose`" },
+          { "ro": "`thenApply`" },
+          { "ro": "`thenAccept`" },
+          { "ro": "`thenCombine`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.spring-boot.mid.q1",
+      "topicId": "java-spring.spring-boot.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "Despre configurarea unei aplicații Spring Boot, care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Spring Boot citește configurarea din mai multe surse, în ordinea priorității: variabilele de mediu și argumentele din linia de comandă bat fișierele, iar fișierul profilului activ bate fișierul comun. Așa rulezi același artefact în toate mediile.\n\n`@ConfigurationProperties` dă tipuri, validare la pornire (aplicația nu pornește cu o configurare greșită) și autocomplete în IDE. `@Value` rămâne potrivit pentru o valoare izolată.\n\nAuto-configurările sunt condiționale: `@ConditionalOnMissingBean` face ca bean-ul tău să aibă prioritate. Raportul de condiții (`--debug`) arată de ce s-a aplicat sau nu fiecare auto-configurare."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`@ConfigurationProperties(prefix = \"payments\")` leagă un grup de proprietăți de un obiect tipizat, care poate fi validat cu `@Validated`"
+          },
+          {
+            "ro": "Variabila de mediu `SPRING_DATASOURCE_URL` suprascrie `spring.datasource.url` din `application.yml`"
+          },
+          {
+            "ro": "Cu profilul `prod` activ, valorile din `application-prod.yml` suprascriu valorile comune din `application.yml`"
+          },
+          {
+            "ro": "Auto-configurarea creează un `DataSource` chiar dacă ai definit deja propriul bean `DataSource`"
+          },
+          {
+            "ro": "`@Value` e varianta recomandată pentru grupuri mari de proprietăți legate între ele"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "java-spring.web.mid.q1",
+      "topicId": "java-spring.web.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei ca toate controllerele să răspundă la `OrderNotFoundException` cu status 404 și un corp de eroare uniform. Ce folosești?"
+      },
+      "explanation": {
+        "ro": "`@RestControllerAdvice` centralizează tratarea excepțiilor pentru toate controllerele: o singură regulă, un singur format. Controllerele rămân curate, iar serviciile aruncă excepții de domeniu fără să știe de HTTP.\n\n`ProblemDetail` implementează RFC 9457 (`application/problem+json`): `type`, `title`, `status`, `detail`, plus câmpuri proprii. Clienții primesc astfel un format standard pentru toate erorile.\n\nAi grijă la ce expui: mesajele interne și stack trace-urile nu trebuie să ajungă la client. Adaugă și un handler general, pentru excepțiile neprevăzute, care loghează detaliile și returnează un 500 neutru."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "O clasă `@RestControllerAdvice` cu o metodă `@ExceptionHandler(OrderNotFoundException.class)` care returnează un `ProblemDetail`"
+          },
+          { "ro": "Un `try/catch` în fiecare metodă de controller" },
+          { "ro": "Un filtru servlet care citește mesajul excepției" },
+          { "ro": "`@ResponseStatus(404)` pe fiecare metodă de controller" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.testing-security.mid.q1",
+      "topicId": "java-spring.testing-security.mid",
+      "level": "mid",
+      "difficulty": 3,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Vrei să testezi query-urile custom ale unui repository Spring Data JPA pe PostgreSQL, fără să pornești controllerele și serviciile. Ce folosești?"
+      },
+      "explanation": {
+        "ro": "`@DataJpaTest` e un **test slice**: pornește doar JPA, repository-urile și baza de date, iar fiecare test rulează într-o tranzacție anulată la final. E mult mai rapid decât `@SpringBootTest`.\n\nImplicit, slice-ul încearcă să înlocuiască baza de date cu una embedded. Ca să testezi pe PostgreSQL, folosește un container Testcontainers (`@ServiceConnection`) și dezactivează înlocuirea (`@AutoConfigureTestDatabase(replace = NONE)`).\n\nMock-uirea lui `EntityManager` nu testează nimic util: tocmai SQL-ul generat și maparea sunt ce vrei să verifici. `@WebMvcTest` e slice-ul pentru controllere."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "`@DataJpaTest` cu un container PostgreSQL din Testcontainers, fără înlocuirea bazei cu una embedded"
+          },
+          { "ro": "`@SpringBootTest` cu tot contextul aplicației" },
+          { "ro": "`@WebMvcTest` cu repository-ul mock-uit" },
+          { "ro": "Un unit test cu Mockito care mock-uiește `EntityManager`" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.language.senior.q1",
+      "topicId": "java-spring.language.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 60,
+      "prompt": {
+        "ro": "Adaugi `record Triangle(double a, double b, double c) implements Shape` și îl treci în `permits`. Ce se întâmplă cu metoda `area`?\n\n~~~java\nsealed interface Shape permits Circle, Square {}\nrecord Circle(double r) implements Shape {}\nrecord Square(double side) implements Shape {}\n\ndouble area(Shape s) {\n  return switch (s) {\n    case Circle c -> Math.PI * c.r() * c.r();\n    case Square q -> q.side() * q.side();\n  };\n}\n~~~"
+      },
+      "explanation": {
+        "ro": "Pentru un tip sealed, compilatorul cunoaște lista completă de subtipuri, deci un `switch` cu pattern matching fără `default` trebuie să fie **exhaustiv**. Un subtip nou face ca fiecare `switch` incomplet să nu se mai compileze: compilatorul îți arată exact locurile de actualizat.\n\nAcesta e argumentul pentru a evita `default` aici: un `default` ar ascunde cazul nou. Combinația sealed + records + pattern matching (Java 21) modelează date algebrice: o alternativă clară la ierarhiile cu metode abstracte sau la lanțuri de `instanceof`."
+      },
+      "type": "single_choice",
+      "payload": {
+        "options": [
+          { "ro": "Nu se mai compilează: `switch`-ul nu mai acoperă toate subtipurile" },
+          { "ro": "Se compilează și aruncă `MatchException` la runtime pentru un `Triangle`" },
+          { "ro": "Se compilează și returnează 0 pentru un `Triangle`" },
+          { "ro": "Se compilează doar dacă `Shape` nu e sealed" }
+        ],
+        "correctIndex": 0
+      }
+    },
+    {
+      "id": "java-spring.testing-security.senior.q1",
+      "topicId": "java-spring.testing-security.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 75,
+      "prompt": {
+        "ro": "API-ul tău Spring Boot e configurat ca **OAuth2 Resource Server** și primește JWT-uri emise de un identity provider. Care afirmații sunt corecte?"
+      },
+      "explanation": {
+        "ro": "Un resource server doar **verifică** token-uri; login-ul și redirect-urile sunt treaba clientului (aplicația web sau mobilă) și a IdP-ului.\n\nVerificarea completă: semnătura (cheile din JWKS, rotite automat), emitentul, expirarea și audiența. Spring Boot verifică implicit emitentul și expirarea, dar audiența trebuie configurată explicit. Fără ea, un token valid pentru alt serviciu al aceleiași organizații ar fi acceptat.\n\n`alg: none` e un atac clasic: un token nesemnat nu trebuie acceptat niciodată. Maparea claims → authorities se configurează cu un `JwtAuthenticationConverter`."
+      },
+      "type": "multiple_choice",
+      "payload": {
+        "options": [
+          {
+            "ro": "Semnătura se verifică cu cheile publice din JWKS-ul emitentului, descoperit din `issuer-uri`"
+          },
+          {
+            "ro": "Pe lângă `iss` și `exp`, verifici audiența (`aud`), ca un token emis pentru alt API să fie respins"
+          },
+          {
+            "ro": "Scope-urile și rolurile din claims devin authorities, folosite în reguli pe rute sau în `@PreAuthorize`"
+          },
+          { "ro": "Accepți și token-uri cu `alg: none`, pentru compatibilitate cu clienții vechi" },
+          {
+            "ro": "Resource server-ul gestionează login-ul utilizatorului și redirect-ul către IdP"
+          }
+        ],
+        "correctIndices": [0, 1, 2]
+      }
+    },
+    {
+      "id": "java-spring.web.senior.f1",
+      "topicId": "java-spring.web.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Serviciul tău apelează un API extern lent și uneori indisponibil. Cum construiești un client rezistent și cum alegi între Spring MVC, WebFlux și virtual threads?"
+      },
+      "explanation": {
+        "ro": "Eșecurile în cascadă apar când un serviciu lent ține ocupate thread-urile apelanților, care devin la rândul lor lenți. Fiecare mecanism de mai sus taie o cale de propagare.\n\nRetry-ul fără backoff și jitter poate transforma o problemă minoră a furnizorului într-un atac coordonat asupra lui."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Client rezistent** (de exemplu cu Resilience4j):\n\n- **Timeouts** pe conectare și pe citire, mereu. Fără ele, un singur API lent blochează toate thread-urile.\n- **Retry** doar pentru erori tranzitorii și operații idempotente, cu backoff exponențial și jitter, cu un număr maxim de încercări.\n- **Circuit breaker:** după prea multe eșecuri, nu mai trimite cereri o vreme și răspunde imediat cu un fallback (date din cache, răspuns degradat).\n- **Bulkhead:** limitezi apelurile concurente către acel API, ca să nu consume toate resursele.\n- Metrici pe fiecare: rata de erori, latența, starea circuitului.\n\n**Modelul de execuție:** Spring MVC cu virtual threads (Java 21, `spring.threads.virtual.enabled=true`) păstrează codul simplu și blocant și suportă multe cereri concurente care așteaptă I/O. WebFlux merită când ai deja un stack reactiv de la un capăt la altul sau ai nevoie de streaming și backpressure. Amestecat cu apeluri blocante, WebFlux pierde exact avantajul pentru care l-ai ales."
+        },
+        "keyPoints": [
+          { "ro": "Timeouts pe toate apelurile externe" },
+          { "ro": "Retry doar idempotent, cu backoff și jitter" },
+          { "ro": "Circuit breaker cu fallback" },
+          { "ro": "Bulkhead pentru izolarea resurselor" },
+          { "ro": "Virtual threads vs WebFlux: simplitate vs reactiv de la un capăt la altul" }
+        ]
+      }
+    },
+    {
+      "id": "java-spring.data.senior.f1",
+      "topicId": "java-spring.data.senior",
+      "level": "senior",
+      "difficulty": 4,
+      "estimatedSeconds": 120,
+      "prompt": {
+        "ro": "Cum optimizezi accesul la date cu Hibernate într-o aplicație cu trafic mare și când alegi JDBC simplu în locul lui?"
+      },
+      "explanation": {
+        "ro": "Hibernate e excelent pentru modelul de scriere al unui domeniu cu reguli. Pentru citiri complexe și volume mari, abstracția costă: SQL greu de controlat, entități încărcate inutil, memorie ocupată de persistence context.\n\nUn răspuns senior nu e „Hibernate e lent”, ci alege instrumentul potrivit pentru fiecare tip de acces."
+      },
+      "type": "flashcard_self_graded",
+      "payload": {
+        "answer": {
+          "ro": "**Optimizări Hibernate:**\n\n- Toate asocierile `LAZY`, iar datele necesare unui caz de utilizare se încarcă explicit: `JOIN FETCH`, `@EntityGraph` sau proiecții DTO. Activez logarea SQL în teste ca să prind N+1.\n- **Proiecții** (interfețe sau records) pentru citiri: nu încarci entități întregi și nu le mai urmărește persistence context-ul.\n- **Locking optimist** cu `@Version` pentru conflictele rare de scriere; pesimist (`SELECT ... FOR UPDATE`) doar unde conflictele sunt dese și scurte.\n- **Batching** pentru inserări multe (`hibernate.jdbc.batch_size`) și id-uri generate cu secvențe, nu cu `IDENTITY`, care dezactivează batching-ul.\n- **Cache de nivel 2** doar pentru date citite des și modificate rar (nomenclatoare), cu o strategie clară de invalidare.\n\n**JDBC simplu** (JdbcClient, jOOQ) când: rapoarte și interogări analitice complexe, operații bulk pe milioane de rânduri, funcții specifice PostgreSQL, sau când ORM-ul generează SQL pe care trebuie să-l combați constant. Le poți combina în aceeași aplicație."
+        },
+        "keyPoints": [
+          { "ro": "Asocieri lazy, fetch explicit per caz de utilizare" },
+          { "ro": "Proiecții DTO pentru citiri" },
+          { "ro": "Locking optimist cu `@Version`" },
+          { "ro": "Batching și secvențe în loc de IDENTITY" },
+          { "ro": "JDBC sau jOOQ pentru rapoarte și operații bulk" }
+        ]
+      }
     }
   ]
 }
