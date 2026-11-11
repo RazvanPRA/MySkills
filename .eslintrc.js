@@ -14,6 +14,9 @@ module.exports = {
   plugins: ['boundaries', 'import-x'],
   ignorePatterns: [
     'android/',
+    // Workspace packages lint themselves (server/.eslintrc.js).
+    'server/',
+    'packages/',
     'coverage/',
     'node_modules/',
     '**/*.generated.ts',

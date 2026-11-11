@@ -17,7 +17,9 @@
     "content:index": "tsx scripts/content-index.ts",
     "content:matrix": "tsx scripts/content-matrix.ts",
     "content:validate": "tsx scripts/content-validate.ts",
-    "content:stats": "tsx scripts/content-stats.ts"
+    "content:stats": "tsx scripts/content-stats.ts",
+    "server": "pnpm --filter @senior-prep/server",
+    "contracts:typecheck": "pnpm --filter @senior-prep/contracts typecheck"
   },
   "dependencies": {
     "@op-engineering/op-sqlite": "^19.0.5",
