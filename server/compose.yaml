@@ -1,0 +1,21 @@
+# Local PostgreSQL for development and end-to-end tests: pnpm --filter @senior-prep/server db:up
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_USER: senior_prep
+      POSTGRES_PASSWORD: senior_prep_dev
+      POSTGRES_DB: senior_prep
+    # 5433: leaves 5432 free for any PostgreSQL already installed on the machine.
+    ports:
+      - '5433:5432'
+    volumes:
+      - db-data:/var/lib/postgresql
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U senior_prep -d senior_prep']
+      interval: 2s
+      timeout: 3s
+      retries: 30
+
+volumes:
+  db-data:

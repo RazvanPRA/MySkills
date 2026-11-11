@@ -1,0 +1,40 @@
+// Server data. Changes need `pnpm prisma:migrate` (a new SQL migration, committed).
+
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id            String         @id @default(uuid()) @db.Uuid
+  /// Normalized (trimmed, lowercase) by the contract before it reaches the database.
+  email         String         @unique
+  passwordHash  String         @map("password_hash")
+  createdAt     DateTime       @default(now()) @map("created_at") @db.Timestamptz(3)
+  refreshTokens RefreshToken[]
+
+  @@map("users")
+}
+
+/// Rotating refresh tokens. Only a SHA-256 hash is stored; a leaked database cannot sign in.
+/// Every token belongs to a family (one sign-in); reusing a rotated token revokes the family.
+model RefreshToken {
+  id         String    @id @default(uuid()) @db.Uuid
+  userId     String    @map("user_id") @db.Uuid
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash  String    @unique @map("token_hash")
+  familyId   String    @map("family_id") @db.Uuid
+  expiresAt  DateTime  @map("expires_at") @db.Timestamptz(3)
+  /// Set when the token was used (rotated) or the family was revoked.
+  revokedAt  DateTime? @map("revoked_at") @db.Timestamptz(3)
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz(3)
+
+  @@index([userId])
+  @@index([familyId])
+  @@map("refresh_tokens")
+}
