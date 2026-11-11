@@ -33,3 +33,36 @@ jobs:
       - run: pnpm content:matrix --check
       - run: pnpm content:index --check
       - run: pnpm content:validate
+
+  server:
+    name: Server (lint, typecheck, unit, e2e on PostgreSQL)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:18-alpine
+        env:
+          POSTGRES_USER: senior_prep
+          POSTGRES_PASSWORD: senior_prep_ci
+          POSTGRES_DB: senior_prep
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd "pg_isready -U senior_prep -d senior_prep"
+          --health-interval 2s --health-timeout 3s --health-retries 30
+    env:
+      DATABASE_URL: postgresql://senior_prep:senior_prep_ci@localhost:5432/senior_prep
+      JWT_ACCESS_SECRET: ci-only-secret-ci-only-secret-ci-only-secret
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm contracts:typecheck
+      - run: pnpm server typecheck
+      - run: pnpm server lint
+      - run: pnpm server test --ci
+      - run: pnpm server prisma:deploy
+      - run: pnpm server test:e2e --ci
