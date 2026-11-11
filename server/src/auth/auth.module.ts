@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './jwt-auth.guard';
-import { MeController } from './me.controller';
-import { REFRESH_TOKENS_REPOSITORY, USERS_REPOSITORY } from './repositories/auth.repositories';
+import { AuthController } from './auth.controller.js';
+import { AuthService } from './auth.service.js';
+import { JwtAuthGuard } from './jwt-auth.guard.js';
+import { MeController } from './me.controller.js';
+import { REFRESH_TOKENS_REPOSITORY, USERS_REPOSITORY } from './repositories/auth.repositories.js';
 import {
   PrismaRefreshTokensRepository,
   PrismaUsersRepository,
-} from './repositories/prisma-auth.repositories';
-import { TokensService } from './tokens.service';
+} from './repositories/prisma-auth.repositories.js';
+import { TokensService } from './tokens.service.js';
 
 /** Accounts and tokens. Other modules protect routes with JwtAuthGuard + CurrentUserId. */
 @Module({

@@ -2,13 +2,13 @@ import { randomUUID } from 'node:crypto';
 import { Inject, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import type { TokenPair } from '@senior-prep/contracts';
-import { CLOCK, type Clock } from '../common/clock';
-import { type Env, ENV } from '../config/env';
+import { CLOCK, type Clock } from '../common/clock.js';
+import { type Env, ENV } from '../config/env.js';
 import {
   REFRESH_TOKENS_REPOSITORY,
   type RefreshTokensRepository,
-} from './repositories/auth.repositories';
-import { generateRefreshToken, hashToken, refreshExpiry } from './services/refresh-tokens';
+} from './repositories/auth.repositories.js';
+import { generateRefreshToken, hashToken, refreshExpiry } from './services/refresh-tokens.js';
 
 export type AccessClaims = { sub: string };
 

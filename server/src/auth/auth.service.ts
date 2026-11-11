@@ -1,17 +1,17 @@
 import { HttpStatus, Inject, Injectable } from '@nestjs/common';
 import type { Credentials, TokenPair } from '@senior-prep/contracts';
-import { ApiException, invalidCredentials, invalidRefreshToken } from '../common/api-exception';
-import { CLOCK, type Clock } from '../common/clock';
+import { ApiException, invalidCredentials, invalidRefreshToken } from '../common/api-exception.js';
+import { CLOCK, type Clock } from '../common/clock.js';
 import {
   EmailTakenError,
   REFRESH_TOKENS_REPOSITORY,
   type RefreshTokensRepository,
   USERS_REPOSITORY,
   type UsersRepository,
-} from './repositories/auth.repositories';
-import { dummyPasswordHash, hashPassword, verifyPassword } from './services/passwords';
-import { decideRefresh, hashToken } from './services/refresh-tokens';
-import { TokensService } from './tokens.service';
+} from './repositories/auth.repositories.js';
+import { dummyPasswordHash, hashPassword, verifyPassword } from './services/passwords.js';
+import { decideRefresh, hashToken } from './services/refresh-tokens.js';
+import { TokensService } from './tokens.service.js';
 
 @Injectable()
 export class AuthService {

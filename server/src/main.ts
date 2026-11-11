@@ -2,8 +2,8 @@ import 'reflect-metadata';
 import 'dotenv/config';
 import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { loadEnv } from './config/env';
+import { AppModule } from './app.module.js';
+import { loadEnv } from './config/env.js';
 
 async function bootstrap(): Promise<void> {
   const env = loadEnv();

@@ -1,5 +1,5 @@
 import { type DynamicModule, Global, Module } from '@nestjs/common';
-import { type Env, ENV } from './env';
+import { type Env, ENV } from './env.js';
 
 /** Provides the validated configuration everywhere (inject with `@Inject(ENV)`). */
 @Global()

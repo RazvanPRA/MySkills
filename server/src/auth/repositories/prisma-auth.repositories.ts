@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '../../generated/prisma/client';
-import { PrismaService } from '../../prisma/prisma.service';
+import { Prisma } from '../../generated/prisma/client.js';
+import { PrismaService } from '../../prisma/prisma.service.js';
 import {
   EmailTakenError,
   type RefreshTokensRepository,
   type UserRecord,
   type UsersRepository,
-} from './auth.repositories';
+} from './auth.repositories.js';
 
 /** PostgreSQL unique-constraint violation, as reported by Prisma. */
 const UNIQUE_VIOLATION = 'P2002';

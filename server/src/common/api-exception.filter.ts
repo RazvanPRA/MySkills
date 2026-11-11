@@ -10,7 +10,7 @@ import { ThrottlerException } from '@nestjs/throttler';
 import type { ApiError, ApiErrorCode } from '@senior-prep/contracts';
 import type { Response } from 'express';
 import { ZodError } from 'zod';
-import { ApiException } from './api-exception';
+import { ApiException } from './api-exception.js';
 
 const CODE_BY_STATUS: Partial<Record<number, ApiErrorCode>> = {
   [HttpStatus.BAD_REQUEST]: 'validation_failed',

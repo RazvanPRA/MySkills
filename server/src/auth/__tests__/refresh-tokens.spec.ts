@@ -4,7 +4,7 @@ import {
   hashToken,
   refreshExpiry,
   type StoredRefreshToken,
-} from '../services/refresh-tokens';
+} from '../services/refresh-tokens.js';
 
 const NOW = new Date('2026-11-11T10:00:00.000Z');
 

@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import type { INestApplication } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
-import { AppModule } from '../src/app.module';
-import { loadEnv } from '../src/config/env';
-import { PrismaService } from '../src/prisma/prisma.service';
+import { AppModule } from '../src/app.module.js';
+import { loadEnv } from '../src/config/env.js';
+import { PrismaService } from '../src/prisma/prisma.service.js';
 
 /** The real app (all modules, real PostgreSQL), with optional configuration overrides. */
 export async function createTestApp(overrides: Record<string, string> = {}) {

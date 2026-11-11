@@ -7,8 +7,8 @@ import {
   refreshRequestSchema,
   type TokenPair,
 } from '@senior-prep/contracts';
-import { ZodPipe } from '../common/zod.pipe';
-import { AuthService } from './auth.service';
+import { ZodPipe } from '../common/zod.pipe.js';
+import { AuthService } from './auth.service.js';
 
 /** Sign-up, sign-in and token rotation. Rate-limited per client against brute force. */
 @Controller('auth')

@@ -1,15 +1,15 @@
 import { JwtService } from '@nestjs/jwt';
-import type { Clock } from '../../common/clock';
-import { loadEnv } from '../../config/env';
-import { AuthService } from '../auth.service';
+import type { Clock } from '../../common/clock.js';
+import { loadEnv } from '../../config/env.js';
+import { AuthService } from '../auth.service.js';
 import {
   EmailTakenError,
   type RefreshTokensRepository,
   type UserRecord,
   type UsersRepository,
-} from '../repositories/auth.repositories';
-import type { StoredRefreshToken } from '../services/refresh-tokens';
-import { TokensService } from '../tokens.service';
+} from '../repositories/auth.repositories.js';
+import type { StoredRefreshToken } from '../services/refresh-tokens.js';
+import { TokensService } from '../tokens.service.js';
 
 const env = loadEnv({
   DATABASE_URL: 'postgresql://unused@localhost/unused',

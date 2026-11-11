@@ -1,8 +1,8 @@
 import { Controller, Get, HttpStatus, Inject, UseGuards } from '@nestjs/common';
 import type { Me } from '@senior-prep/contracts';
-import { ApiException } from '../common/api-exception';
-import { CurrentUserId, JwtAuthGuard } from './jwt-auth.guard';
-import { USERS_REPOSITORY, type UsersRepository } from './repositories/auth.repositories';
+import { ApiException } from '../common/api-exception.js';
+import { CurrentUserId, JwtAuthGuard } from './jwt-auth.guard.js';
+import { USERS_REPOSITORY, type UsersRepository } from './repositories/auth.repositories.js';
 
 /** The signed-in account. */
 @Controller('me')

@@ -1,10 +1,10 @@
 import { HttpStatus, NotFoundException } from '@nestjs/common';
 import { ThrottlerException } from '@nestjs/throttler';
 import { credentialsSchema } from '@senior-prep/contracts';
-import { loadEnv } from '../../config/env';
-import { ApiException } from '../api-exception';
-import { toApiError } from '../api-exception.filter';
-import { ZodPipe } from '../zod.pipe';
+import { loadEnv } from '../../config/env.js';
+import { ApiException } from '../api-exception.js';
+import { toApiError } from '../api-exception.filter.js';
+import { ZodPipe } from '../zod.pipe.js';
 
 describe('toApiError', () => {
   it('keeps the code of intentional API errors', () => {

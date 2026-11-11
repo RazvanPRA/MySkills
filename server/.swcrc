@@ -7,5 +7,5 @@
     "target": "es2023",
     "keepClassNames": true
   },
-  "module": { "type": "commonjs" }
+  "module": { "type": "es6" }
 }

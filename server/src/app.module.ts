@@ -1,13 +1,13 @@
 import { type DynamicModule, Global, Module } from '@nestjs/common';
 import { APP_FILTER } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { AuthModule } from './auth/auth.module';
-import { ApiExceptionFilter } from './common/api-exception.filter';
-import { CLOCK, type Clock, systemClock } from './common/clock';
-import { ConfigModule } from './config/config.module';
-import type { Env } from './config/env';
-import { HealthController } from './health/health.controller';
-import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module.js';
+import { ApiExceptionFilter } from './common/api-exception.filter.js';
+import { CLOCK, type Clock, systemClock } from './common/clock.js';
+import { ConfigModule } from './config/config.module.js';
+import type { Env } from './config/env.js';
+import { HealthController } from './health/health.controller.js';
+import { PrismaModule } from './prisma/prisma.module.js';
 
 const MINUTE_MS = 60_000;
 

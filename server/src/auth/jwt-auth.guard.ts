@@ -6,8 +6,8 @@ import {
   Injectable,
 } from '@nestjs/common';
 import type { Request } from 'express';
-import { ApiException } from '../common/api-exception';
-import { TokensService } from './tokens.service';
+import { ApiException } from '../common/api-exception.js';
+import { TokensService } from './tokens.service.js';
 
 type AuthenticatedRequest = Request & { userId?: string };
 

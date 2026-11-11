@@ -1,4 +1,4 @@
-import type { StoredRefreshToken } from '../services/refresh-tokens';
+import type { StoredRefreshToken } from '../services/refresh-tokens.js';
 
 export type UserRecord = { id: string; email: string; passwordHash: string; createdAt: Date };
 

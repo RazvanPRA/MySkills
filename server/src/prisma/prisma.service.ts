@@ -1,7 +1,7 @@
 import { Inject, Injectable, type OnModuleDestroy } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
-import { type Env, ENV } from '../config/env';
-import { PrismaClient } from '../generated/prisma/client';
+import { type Env, ENV } from '../config/env.js';
+import { PrismaClient } from '../generated/prisma/client.js';
 
 /** The Prisma client over node-postgres (Prisma 7 driver adapter). */
 @Injectable()

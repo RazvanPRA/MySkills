@@ -9,13 +9,7 @@ module.exports = {
   plugins: ['@typescript-eslint'],
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
   env: { node: true, jest: true, es2023: true },
-  ignorePatterns: [
-    'dist/',
-    'src/generated/',
-    '.eslintrc.js',
-    'jest.config.js',
-    'test/jest-e2e.config.js',
-  ],
+  ignorePatterns: ['dist/', 'src/generated/', '.eslintrc.cjs'],
   rules: {
     '@typescript-eslint/no-floating-promises': 'error',
     '@typescript-eslint/consistent-type-imports': ['error', { fixStyle: 'inline-type-imports' }],

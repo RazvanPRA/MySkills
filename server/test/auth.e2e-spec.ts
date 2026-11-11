@@ -1,8 +1,8 @@
 import type { INestApplication } from '@nestjs/common';
 import { apiErrorSchema, meSchema, tokenPairSchema } from '@senior-prep/contracts';
 import request from 'supertest';
-import type { PrismaService } from '../src/prisma/prisma.service';
-import { createTestApp, resetDatabase } from './app';
+import type { PrismaService } from '../src/prisma/prisma.service.js';
+import { createTestApp, resetDatabase } from './app.js';
 
 const credentials = { email: 'Ana@Example.com', password: 'correct horse battery' };
 
