@@ -35,7 +35,7 @@ jobs:
       - run: pnpm content:validate
 
   server:
-    name: Server (lint, typecheck, unit, e2e on PostgreSQL)
+    name: Server (lint, typecheck, unit, build, e2e on PostgreSQL)
     runs-on: ubuntu-latest
     timeout-minutes: 15
     services:
@@ -51,7 +51,8 @@ jobs:
           --health-interval 2s --health-timeout 3s --health-retries 30
     env:
       DATABASE_URL: postgresql://senior_prep:senior_prep_ci@localhost:5432/senior_prep
-      JWT_ACCESS_SECRET: ci-only-secret-ci-only-secret-ci-only-secret
+      # Not a secret: it only unlocks the throwaway CI server.
+      API_KEY: ci-only-api-key-ci-only-api-key-ci-only-key
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -63,6 +64,17 @@ jobs:
       - run: pnpm contracts:typecheck
       - run: pnpm server typecheck
       - run: pnpm server lint
-      - run: pnpm server test --ci
+      - run: pnpm server test
+      # Builds the contracts and the server the way production runs them (plain Node, ESM).
+      - run: pnpm server build
       - run: pnpm server prisma:deploy
-      - run: pnpm server test:e2e --ci
+      - name: Smoke-test the production build
+        run: |
+          node server/dist/main.js &
+          for attempt in $(seq 1 30); do
+            curl --fail --silent localhost:3000/health && exit 0
+            sleep 1
+          done
+          echo "The built server did not answer /health" >&2
+          exit 1
+      - run: pnpm server test:e2e
