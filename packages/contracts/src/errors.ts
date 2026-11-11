@@ -11,9 +11,6 @@ export type ApiError = z.infer<typeof apiErrorSchema>;
 
 export const apiErrorCodes = [
   'validation_failed',
-  'email_taken',
-  'invalid_credentials',
-  'invalid_refresh_token',
   'unauthorized',
   'rate_limited',
   'not_found',

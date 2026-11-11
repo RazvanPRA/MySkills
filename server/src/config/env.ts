@@ -2,22 +2,15 @@ import { z } from 'zod';
 
 /**
  * Server configuration, validated once at startup: a missing or weak secret stops the server
- * with a clear message instead of failing on the first request.
+ * with a clear message instead of failing on the first request. Secrets live in .env
+ * (gitignored); .env.example documents every variable.
  */
 export const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   PORT: z.coerce.number().int().positive().default(3000),
   DATABASE_URL: z.url(),
-  JWT_ACCESS_SECRET: z.string().min(32, 'JWT_ACCESS_SECRET needs at least 32 characters'),
-  /** Access tokens are short-lived: a stolen one is useful for minutes, not days. */
-  ACCESS_TOKEN_TTL_SECONDS: z.coerce
-    .number()
-    .int()
-    .positive()
-    .default(15 * 60),
-  REFRESH_TOKEN_TTL_DAYS: z.coerce.number().int().positive().default(30),
-  /** Sign-in attempts per minute and client (brute-force protection). */
-  AUTH_RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(10),
+  /** The only credential: the app sends it on every request (single-user server). */
+  API_KEY: z.string().min(32, 'API_KEY needs at least 32 characters'),
 });
 export type Env = z.infer<typeof envSchema>;
 

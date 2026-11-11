@@ -6,7 +6,6 @@ import {
   HttpStatus,
   Logger,
 } from '@nestjs/common';
-import { ThrottlerException } from '@nestjs/throttler';
 import type { ApiError, ApiErrorCode } from '@senior-prep/contracts';
 import type { Response } from 'express';
 import { ZodError } from 'zod';
@@ -27,9 +26,6 @@ export function toApiError(exception: unknown): ApiError {
   if (exception instanceof ZodError) {
     const message = exception.issues.map(i => `${i.path.join('.') || 'body'}: ${i.message}`);
     return { statusCode: 400, code: 'validation_failed', message: message.join('; ') };
-  }
-  if (exception instanceof ThrottlerException) {
-    return { statusCode: 429, code: 'rate_limited', message: 'Too many attempts, wait a minute' };
   }
   if (exception instanceof HttpException) {
     const statusCode = exception.getStatus();
