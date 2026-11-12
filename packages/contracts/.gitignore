@@ -1,0 +1,2 @@
+# Built by `pnpm --filter @senior-prep/contracts build` (the server's build runs it).
+dist/

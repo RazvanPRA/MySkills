@@ -5,3 +5,6 @@ pnpm-lock.yaml
 .claude/
 *.generated.ts
 src/db/migrations/
+# Build output and generated code (gitignored).
+dist/
+server/src/generated/

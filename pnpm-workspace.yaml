@@ -1,6 +1,15 @@
 nodeLinker: hoisted
 
+# The app is the root package; the server and shared contracts are workspace packages.
+packages:
+  - server
+  - packages/*
+
 # Dependencies allowed to run install scripts (pnpm blocks all others).
 allowBuilds:
   better-sqlite3: true
   esbuild: true
+  # Server: Prisma's schema engine, the SWC compiler.
+  '@prisma/engines': true
+  prisma: true
+  '@swc/core': true

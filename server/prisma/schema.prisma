@@ -1,0 +1,13 @@
+// Server data. Changes need `pnpm prisma:migrate` (a new SQL migration, committed).
+// No models yet: progress sync (5b) adds the first ones. Single-user server, so no accounts.
+
+generator client {
+  provider            = "prisma-client"
+  output              = "../src/generated/prisma"
+  moduleFormat        = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
