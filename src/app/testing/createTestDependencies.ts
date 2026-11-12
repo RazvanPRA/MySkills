@@ -1,19 +1,65 @@
 import { migrateDatabase } from '@/db';
+import type { DataFilePort } from '@/features/backup';
+import type { NotificationPermission, ReminderScheduler } from '@/features/notifications';
 import migrations from '@/db/migrations/migrations';
 import { createTestDatabase } from '@/db/testing/createTestDatabase';
 import { createLocalContentRepository } from '@/features/content';
-import { createLocalSettingsRepository, createMemoryKeyValueStore } from '@/features/settings';
+import {
+  createLocalSettingsRepository,
+  createMemoryKeyValueStore,
+  SETTINGS_STORAGE_KEY,
+} from '@/features/settings';
 import { fixedClock } from '@/shared/utils/clock';
 import { createIdGenerator } from '@/shared/utils/idGenerator';
 import { createRepositories } from '../dependencies.shared';
 import type { AppDependencies } from '../dependencyTypes';
 import { exerciseTypeRegistry, testRegistry } from '../registries';
 
+/** In-memory files: saves are recorded, `openText` returns the next queued text. */
+export function createMemoryFiles(opened: (string | null)[] = []) {
+  const saved: { fileName: string; text: string }[] = [];
+  const files: DataFilePort = {
+    saveText: async file => {
+      saved.push(file);
+      return true;
+    },
+    openText: async () => opened.shift() ?? null,
+  };
+  return { files, saved, opened };
+}
+
+/** Records the scheduled reminder (null when cancelled); permission as given. */
+export function createMemoryReminders(permission: 'granted' | 'denied' = 'granted') {
+  const calls: { scheduled: Parameters<ReminderScheduler['schedule']> | null }[] = [];
+  const reminders: ReminderScheduler = {
+    schedule: async (time, texts) => {
+      calls.push({ scheduled: [time, texts] });
+    },
+    cancel: async () => {
+      calls.push({ scheduled: null });
+    },
+  };
+  const notificationPermission: NotificationPermission = { request: async () => permission };
+  return { reminders, notificationPermission, calls };
+}
+
+/**
+ * Most flows start after onboarding: stored settings get `onboardingDone: true` unless they set
+ * it themselves (the onboarding flow test passes false).
+ */
+function withOnboardingDone(stored: Record<string, string> = {}): Record<string, string> {
+  const current = stored[SETTINGS_STORAGE_KEY];
+  const parsed = current ? (JSON.parse(current) as Record<string, unknown>) : {};
+  return { ...stored, [SETTINGS_STORAGE_KEY]: JSON.stringify({ onboardingDone: true, ...parsed }) };
+}
+
 type TestDependencyOptions = {
   packs?: readonly unknown[];
   storedSettings?: Record<string, string>;
   now?: string;
   registries?: AppDependencies['registries'];
+  files?: DataFilePort;
+  reminders?: ReturnType<typeof createMemoryReminders>;
 };
 
 /**
@@ -26,12 +72,16 @@ export async function createTestDependencies(options: TestDependencyOptions = {}
   const dependencies: AppDependencies = {
     clock,
     generateId: createIdGenerator({ now: () => clock.now().getTime(), random: () => 0.5 }),
+    files: options.files ?? createMemoryFiles().files,
+    ...(options.reminders ?? createMemoryReminders()),
     storage: { prepare: () => migrateDatabase(db, migrations) },
     registries: options.registries ?? { exerciseTypes: exerciseTypeRegistry, tests: testRegistry },
     repositories: {
       ...createRepositories(db),
       content: createLocalContentRepository(options.packs ?? []),
-      settings: createLocalSettingsRepository(createMemoryKeyValueStore(options.storedSettings)),
+      settings: createLocalSettingsRepository(
+        createMemoryKeyValueStore(withOnboardingDone(options.storedSettings)),
+      ),
     },
   };
   return { dependencies, sqlite };

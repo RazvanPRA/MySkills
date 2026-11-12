@@ -1,4 +1,5 @@
 import type { AppDatabase, InvalidRowHandler } from '@/db';
+import { createLocalUserDataRepository } from '@/features/backup';
 import { createLocalSessionRepository } from '@/features/daily-tests';
 import { createLocalAttemptRepository } from '@/features/session-player';
 import { createLocalReviewCardRepository } from '@/features/spaced-repetition';
@@ -17,5 +18,6 @@ export function createRepositories(db: AppDatabase) {
     reviewCards: createLocalReviewCardRepository(db, reportInvalidRow),
     sessions: createLocalSessionRepository(db, reportInvalidRow),
     attempts: createLocalAttemptRepository(db, reportInvalidRow),
+    userData: createLocalUserDataRepository(db),
   };
 }

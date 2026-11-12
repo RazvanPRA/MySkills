@@ -1,4 +1,4 @@
-import { addDays, endOfLocalDayIso, parseLocalDate, toLocalDate } from '../localDate';
+import { addDays, endOfLocalDayIso, parseLocalDate, startOfWeek, toLocalDate } from '../localDate';
 
 describe('localDate', () => {
   it('formats the local calendar day, not the UTC one', () => {
@@ -30,5 +30,16 @@ describe('localDate', () => {
 
   it('ends a day at the next local midnight', () => {
     expect(endOfLocalDayIso('2026-11-10')).toBe(new Date(2026, 10, 11).toISOString());
+  });
+});
+
+describe('startOfWeek', () => {
+  it.each([
+    ['2026-11-09', '2026-11-09'], // Monday
+    ['2026-11-10', '2026-11-09'], // Tuesday
+    ['2026-11-15', '2026-11-09'], // Sunday belongs to the week that started on Monday
+    ['2027-01-01', '2026-12-28'], // across the year boundary
+  ])('startOfWeek(%s) = %s', (day, expected) => {
+    expect(startOfWeek(day)).toBe(expected);
   });
 });

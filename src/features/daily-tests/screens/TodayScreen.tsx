@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react';
 import { formatLongDate, useLanguage, useStrings } from '@/shared/i18n';
 import { AppText, Button, Card, ScreenContainer, ScreenHeader } from '@/shared/ui';
 import { TestCard } from '../components/TestCard/TestCard';
@@ -6,10 +7,12 @@ import { useToday } from '../hooks/useToday';
 export type TodayScreenProps = {
   onStartSession: (sessionId: string) => void;
   onMarkTopics: () => void;
+  /** Composed below the cards by the app (streak, accuracy, suggested topic). */
+  children?: ReactNode;
 };
 
 /** Today (design system §6.3): one card per daily test. A new daily test appears by itself. */
-export default function TodayScreen({ onStartSession, onMarkTopics }: TodayScreenProps) {
+export default function TodayScreen({ onStartSession, onMarkTopics, children }: TodayScreenProps) {
   const { today: strings } = useStrings();
   const language = useLanguage();
   const { status, date, cards, reload } = useToday();
@@ -35,6 +38,7 @@ export default function TodayScreen({ onStartSession, onMarkTopics }: TodayScree
           markTopicsLabel={strings.markTopics}
         />
       ))}
+      {children}
     </ScreenContainer>
   );
 }

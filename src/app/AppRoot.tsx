@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { StatusBar } from 'react-native';
 import { ContentProvider, ExerciseTypesProvider } from '@/features/content';
-import { RootNavigator } from '@/navigation';
+import { AppRestartProvider, RootNavigator } from '@/navigation';
 import { useTheme } from '@/shared/theme';
 import { BootstrapGate } from './bootstrap/BootstrapGate';
 import type { AppDependencies } from './dependencyTypes';
@@ -15,8 +15,21 @@ function ThemedStatusBar() {
 
 type AppRootProps = { dependencies: AppDependencies };
 
-/** The whole app for a given dependency container (device or test). */
+/**
+ * The whole app for a given dependency container (device or test). Restarting (after a data
+ * import or reset) remounts the app with a fresh store, as if it were opened again.
+ */
 export function AppRoot({ dependencies }: AppRootProps) {
+  const [generation, setGeneration] = useState(0);
+  const restart = useCallback(() => setGeneration(value => value + 1), []);
+  return (
+    <AppRestartProvider value={restart}>
+      <AppInstance key={generation} dependencies={dependencies} />
+    </AppRestartProvider>
+  );
+}
+
+function AppInstance({ dependencies }: AppRootProps) {
   const { exerciseTypes } = dependencies.registries;
   // Created once per app instance (lazy initial state), never re-created on re-render.
   const [store] = useState(() => createStore(dependencies));

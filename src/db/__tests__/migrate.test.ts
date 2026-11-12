@@ -1,6 +1,7 @@
 import { createDatabase } from '../database';
 import { migrateDatabase, toMigrationMeta, type MigrationBundle } from '../migrate';
 import migrations from '../migrations/migrations';
+import Database from 'better-sqlite3';
 import { betterSqliteExecutor, createTestDatabase } from '../testing/createTestDatabase';
 
 const tableNames = (sqlite: { prepare: (sql: string) => { all: () => unknown[] } }) =>
@@ -68,5 +69,40 @@ describe('migrateDatabase', () => {
         )
         .run();
     expect(insert).toThrow(/FOREIGN KEY/);
+  });
+});
+
+describe('migration 0001 (session scope)', () => {
+  it('keeps existing sessions and attempts, and still allows one daily session per day', async () => {
+    // A database created by the first app version: only migration 0000 applied.
+    const sqlite = new Database(':memory:');
+    sqlite.pragma('foreign_keys = ON');
+    const db = createDatabase(betterSqliteExecutor(sqlite));
+    const first = { ...migrations, journal: { entries: migrations.journal.entries.slice(0, 1) } };
+    await migrateDatabase(db, first);
+    sqlite
+      .prepare(
+        "insert into daily_sessions (id, date, test_kind, exercise_ids, status, score) values ('s1', '2026-11-09', 'logic', '[\"a\"]', 'completed', 0.8)",
+      )
+      .run();
+    sqlite
+      .prepare(
+        "insert into attempts (id, session_id, exercise_id, answer, result, duration_ms, answered_at) values ('a1', 's1', 'a', '1', '{}', 1, 'x')",
+      )
+      .run();
+
+    await migrateDatabase(db, migrations);
+
+    expect(sqlite.prepare('select id, scope, score from daily_sessions').all()).toEqual([
+      { id: 's1', scope: null, score: 0.8 },
+    ]);
+    expect(sqlite.prepare('select count(*) as n from attempts').get()).toEqual({ n: 1 });
+    const duplicateDaily = () =>
+      sqlite
+        .prepare(
+          "insert into daily_sessions (id, date, test_kind, exercise_ids, status) values ('s2', '2026-11-09', 'logic', '[]', 'pending')",
+        )
+        .run();
+    expect(duplicateDaily).toThrow(/UNIQUE/);
   });
 });

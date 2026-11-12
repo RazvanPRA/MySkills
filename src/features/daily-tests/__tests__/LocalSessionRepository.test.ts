@@ -62,3 +62,44 @@ describe('LocalSessionRepository', () => {
     expect(ids).toEqual(['a', 'c', 'b']);
   });
 });
+
+describe('LocalSessionRepository on-demand sessions', () => {
+  const practice = (id: string, extra: Partial<DailySession> = {}) =>
+    session({ id, testKind: 'practice', scope: { topicIds: ['react.hooks'] }, ...extra });
+
+  it('round-trips the scope and keeps daily lookups free of on-demand sessions', async () => {
+    const repo = await setup();
+    await repo.save(practice('p1'));
+    expect(await repo.getById('p1')).toEqual(practice('p1'));
+    expect(await repo.findByDateAndKind('2026-11-10', 'practice')).toBeNull();
+  });
+
+  it('allows several on-demand sessions of a kind per day, but one daily session', async () => {
+    const repo = await setup();
+    await repo.save(practice('p1', { status: 'completed' }));
+    await repo.save(practice('p2'));
+    expect((await repo.listBetween('2026-11-10', '2026-11-10')).map(s => s.id)).toEqual([
+      'p1',
+      'p2',
+    ]);
+    await repo.save(session({ id: 'd1' }));
+    // Drizzle wraps the SQLite error; the original is the cause.
+    await expect(repo.save(session({ id: 'd2' }))).rejects.toMatchObject({
+      cause: expect.objectContaining({ message: expect.stringMatching(/UNIQUE/) }),
+    });
+  });
+
+  it('finds the unfinished session with the same scope to resume it', async () => {
+    const repo = await setup();
+    await repo.save(practice('done', { status: 'completed' }));
+    expect(await repo.findOpenByScope(query())).toBeNull();
+    await repo.save(practice('open', { status: 'in_progress' }));
+    await repo.save(practice('other', { scope: { topicIds: ['go.channels'] } }));
+    expect((await repo.findOpenByScope(query()))?.id).toBe('open');
+    expect(await repo.findOpenByScope({ ...query(), date: '2026-11-11' })).toBeNull();
+
+    function query() {
+      return { date: '2026-11-10', testKind: 'practice', scope: { topicIds: ['react.hooks'] } };
+    }
+  });
+});

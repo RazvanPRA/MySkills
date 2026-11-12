@@ -31,6 +31,8 @@ module.exports = {
       { type: 'test-definition', pattern: 'src/features/test-definitions/*', capture: ['name'] },
       { type: 'feature', pattern: 'src/features/*', capture: ['name'] },
       { type: 'db', pattern: 'src/db' },
+      // TurboModule specs (codegen); only the app's dependency container uses them.
+      { type: 'native', pattern: 'src/native' },
       { type: 'shared', pattern: 'src/shared/*', capture: ['name'] },
     ],
   },
@@ -42,7 +44,8 @@ module.exports = {
         default: 'disallow',
         policies: [
           // Layers: dependencies only point downward (architecture §3).
-          allowLayer(['app'], ['app', 'navigation', ...FEATURE_ELEMENTS, 'db', 'shared']),
+          allowLayer(['app'], ['app', 'navigation', ...FEATURE_ELEMENTS, 'db', 'native', 'shared']),
+          allowLayer(['native'], ['native']),
           allowLayer(['navigation'], ['navigation', ...FEATURE_ELEMENTS, 'shared']),
           allowLayer(FEATURE_ELEMENTS, [...FEATURE_ELEMENTS, 'db', 'shared']),
           allowLayer(['db'], ['db', 'shared']),

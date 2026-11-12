@@ -8,6 +8,7 @@ export type TabParamList = {
 };
 
 export type RootStackParamList = {
+  Onboarding: undefined;
   Tabs: NavigatorScreenParams<TabParamList>;
   Topic: { topicId: string };
   Session: { sessionId: string };

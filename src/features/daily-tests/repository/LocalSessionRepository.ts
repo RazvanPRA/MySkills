@@ -1,4 +1,4 @@
-import { and, asc, between, eq } from 'drizzle-orm';
+import { and, asc, between, desc, eq, isNull, ne } from 'drizzle-orm';
 import { type AppDatabase, type InvalidRowHandler, parseRows, tables } from '@/db';
 import { type DailySession, dailySessionSchema } from '../model/dailySession';
 import type { SessionRepository } from './SessionRepository';
@@ -10,6 +10,7 @@ const toRow = (session: DailySession) => ({
   startedAt: session.startedAt ?? null,
   completedAt: session.completedAt ?? null,
   score: session.score ?? null,
+  scope: session.scope ?? null,
 });
 
 export function createLocalSessionRepository(
@@ -26,7 +27,29 @@ export function createLocalSessionRepository(
         await db
           .select()
           .from(dailySessions)
-          .where(and(eq(dailySessions.date, date), eq(dailySessions.testKind, testKind))),
+          .where(
+            and(
+              eq(dailySessions.date, date),
+              eq(dailySessions.testKind, testKind),
+              isNull(dailySessions.scope),
+            ),
+          ),
+      ),
+    findOpenByScope: async ({ date, testKind, scope }) =>
+      first(
+        await db
+          .select()
+          .from(dailySessions)
+          .where(
+            and(
+              eq(dailySessions.date, date),
+              eq(dailySessions.testKind, testKind),
+              eq(dailySessions.scope, scope),
+              ne(dailySessions.status, 'completed'),
+            ),
+          )
+          .orderBy(desc(dailySessions.startedAt), desc(dailySessions.id))
+          .limit(1),
       ),
     getById: async id =>
       first(await db.select().from(dailySessions).where(eq(dailySessions.id, id))),

@@ -8,6 +8,11 @@ export const studyRo = {
     categories: 'Categorii',
     empty: 'Categoria nu are încă topicuri.',
     loadError: 'Progresul nu a putut fi încărcat.',
+    search: 'Caută un topic',
+    searchHelp: 'Caută în toate categoriile, după titlu sau etichete.',
+    levelFilter: 'Niveluri',
+    noMatches: 'Niciun topic nu se potrivește.',
+    noLevels: 'Alege cel puțin un nivel.',
   },
   topic: {
     summary: 'Ce trebuie să știi',
@@ -17,6 +22,12 @@ export const studyRo = {
     notFound: 'Topicul nu mai există în conținut.',
     back: 'Înapoi',
     openLink: (title: string) => `Deschide ${title}`,
+    notes: 'Notițele mele',
+    notesHelp: 'Se salvează automat.',
+    practice: 'Exersează topicul',
+    noExercises: 'Topicul nu are încă exerciții.',
+    practiceError: 'Exersarea nu a putut porni. Încearcă din nou.',
+    notMarkable: 'Acest topic nu se marchează: testul de logică își alege singur problemele.',
   },
 };
 
@@ -29,6 +40,11 @@ export const studyEn: typeof studyRo = {
     categories: 'Categories',
     empty: 'This category has no topics yet.',
     loadError: 'Your progress could not be loaded.',
+    search: 'Search for a topic',
+    searchHelp: 'Searches every category, by title or tags.',
+    levelFilter: 'Levels',
+    noMatches: 'No topic matches.',
+    noLevels: 'Pick at least one level.',
   },
   topic: {
     summary: 'What you should know',
@@ -38,5 +54,11 @@ export const studyEn: typeof studyRo = {
     notFound: 'This topic no longer exists in the content.',
     back: 'Back',
     openLink: (title: string) => `Open ${title}`,
+    notes: 'My notes',
+    notesHelp: 'Saved automatically.',
+    practice: 'Practise this topic',
+    noExercises: 'This topic has no exercises yet.',
+    practiceError: 'Practice could not start. Try again.',
+    notMarkable: 'This topic is not marked: the logic test picks its own problems.',
   },
 };

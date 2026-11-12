@@ -1,22 +1,22 @@
 import { useStrings } from '@/shared/i18n';
-import {
-  AppText,
-  Button,
-  Card,
-  MarkdownText,
-  ScreenContainer,
-  ScreenHeader,
-  SegmentedControl,
-} from '@/shared/ui';
+import { AppText, Button, Card, MarkdownText, ScreenContainer, ScreenHeader } from '@/shared/ui';
+import { TopicActions, type TopicPractice } from '../components/TopicActions/TopicActions';
+import { TopicNotes } from '../components/TopicNotes/TopicNotes';
 import { TopicResources } from '../components/TopicResources/TopicResources';
+import { TopicStatusCard } from '../components/TopicStatusCard/TopicStatusCard';
 import { useEnsureTopicProgress } from '../hooks/useEnsureTopicProgress';
 import { useOpenUrl } from '../hooks/useOpenUrl';
 import { useTopicDetail } from '../hooks/useTopicDetail';
 
-export type TopicScreenProps = { topicId: string; onBack: () => void };
+export type TopicScreenProps = {
+  topicId: string;
+  onBack: () => void;
+  /** "Exersează topicul" (brief §9.6); the app provides it. */
+  practice?: TopicPractice;
+};
 
-/** Topic detail (minimal): status, summary and resources. Phase 4 adds notes and practice. */
-export default function TopicScreen({ topicId, onBack }: TopicScreenProps) {
+/** Topic detail (design system §6.3): status, summary, resources, notes and practice. */
+export default function TopicScreen({ topicId, onBack, practice }: TopicScreenProps) {
   const { topic: strings, player } = useStrings();
   useEnsureTopicProgress();
   const { view, status, statusOptions, changeStatus } = useTopicDetail(topicId);
@@ -38,17 +38,12 @@ export default function TopicScreen({ topicId, onBack }: TopicScreenProps) {
           {player.onlyRomanian}
         </AppText>
       ) : null}
-      <Card>
-        <AppText variant="label" tone="muted">
-          {strings.status}
-        </AppText>
-        <SegmentedControl
-          options={statusOptions}
-          value={status}
-          onChange={changeStatus}
-          accessibilityLabel={strings.status}
-        />
-      </Card>
+      <TopicStatusCard
+        markable={view.markable}
+        status={status}
+        options={statusOptions}
+        onChange={changeStatus}
+      />
       <Card>
         <AppText variant="label" tone="muted" accessibilityRole="header">
           {strings.summary}
@@ -56,7 +51,13 @@ export default function TopicScreen({ topicId, onBack }: TopicScreenProps) {
         <MarkdownText content={view.summary} onLinkPress={openUrl} />
       </Card>
       <TopicResources resources={view.resources} title={strings.resources} onOpen={openUrl} />
-      <Button label={strings.back} variant="secondary" onPress={onBack} />
+      <TopicNotes topicId={topicId} />
+      <TopicActions
+        topicId={topicId}
+        exerciseCount={view.exerciseCount}
+        practice={practice}
+        onBack={onBack}
+      />
     </ScreenContainer>
   );
 }

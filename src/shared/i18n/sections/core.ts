@@ -1,6 +1,6 @@
 import { pluralEn, pluralRo } from '../plural';
 
-/** App shell: tabs, placeholders, startup, shared counts. */
+/** App shell: tabs, screen titles, startup, shared counts. */
 export const coreRo = {
   tabs: {
     today: 'Azi',
@@ -13,9 +13,6 @@ export const coreRo = {
     study: { title: 'Studiu', subtitle: 'Harta categoriilor și a topicurilor.' },
     progress: { title: 'Progres', subtitle: 'Nivelul tău pe fiecare arie.' },
     settings: { title: 'Setări', subtitle: 'Limbă, notificări și date.' },
-  },
-  placeholder: {
-    availableInPhase: (phase: number) => `Disponibil în faza ${phase}.`,
   },
   bootstrap: {
     loadingTitle: 'Senior Prep',
@@ -36,6 +33,9 @@ export const coreRo = {
       pluralRo(n, { one: '{n} topic', few: '{n} topicuri', other: '{n} de topicuri' }),
     mistakes: (n: number) =>
       pluralRo(n, { one: '{n} greșeală', few: '{n} greșeli', other: '{n} de greșeli' }),
+    answers: (n: number) =>
+      pluralRo(n, { one: '{n} răspuns', few: '{n} răspunsuri', other: '{n} de răspunsuri' }),
+    tests: (n: number) => pluralRo(n, { one: '{n} test', few: '{n} teste', other: '{n} de teste' }),
   },
 };
 
@@ -52,9 +52,6 @@ export const coreEn: typeof coreRo = {
     progress: { title: 'Progress', subtitle: 'Your level in every area.' },
     settings: { title: 'Settings', subtitle: 'Language, notifications and data.' },
   },
-  placeholder: {
-    availableInPhase: (phase: number) => `Available in phase ${phase}.`,
-  },
   bootstrap: {
     loadingTitle: 'Senior Prep',
     loadingBody: 'Preparing your data and content…',
@@ -69,5 +66,7 @@ export const coreEn: typeof coreRo = {
     days: (n: number) => pluralEn(n, '{n} day', '{n} days'),
     topics: (n: number) => pluralEn(n, '{n} topic', '{n} topics'),
     mistakes: (n: number) => pluralEn(n, '{n} mistake', '{n} mistakes'),
+    answers: (n: number) => pluralEn(n, '{n} answer', '{n} answers'),
+    tests: (n: number) => pluralEn(n, '{n} test', '{n} tests'),
   },
 };

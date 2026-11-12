@@ -13,10 +13,18 @@ export {
 export type { TopicProgressRepository } from './repository/TopicProgressRepository';
 export { createLocalTopicProgressRepository } from './repository/LocalTopicProgressRepository';
 export { studyMapReducer, type StudyMapState } from './state/slice';
-export { loadTopicProgress, setTopicStatus, type StudyMapDependencies } from './state/thunks';
+export {
+  loadTopicProgress,
+  markTopicsStudied,
+  setTopicNotes,
+  setTopicStatus,
+  type StudyMapDependencies,
+} from './state/thunks';
 export { selectTopicStatus, selectTopicProgressById } from './state/selectors';
+export { useEnsureTopicProgress } from './hooks/useEnsureTopicProgress';
 export type { StudyMapScreenProps } from './screens/StudyMapScreen';
 export type { TopicScreenProps } from './screens/TopicScreen';
+export type { TopicPractice } from './components/TopicActions/TopicActions';
 
 export const StudyMapScreen = lazy(() => import('./screens/StudyMapScreen'));
 export const TopicScreen = lazy(() => import('./screens/TopicScreen'));

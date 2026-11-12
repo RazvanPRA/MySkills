@@ -7,6 +7,8 @@ import { createLocalSettingsRepository } from '@/features/settings';
 import { systemClock } from '@/shared/utils/clock';
 import { createIdGenerator } from '@/shared/utils/idGenerator';
 import { createRepositories } from './dependencies.shared';
+import { createAndroidDataFiles } from './native/dataFiles';
+import { androidNotificationPermission, createAndroidReminders } from './native/dailyReminder';
 import type { AppDependencies } from './dependencyTypes';
 import { exerciseTypeRegistry, testRegistry } from './registries';
 
@@ -19,6 +21,9 @@ export function createDependencies(): AppDependencies {
   return {
     clock: systemClock,
     generateId: createIdGenerator({ now: () => systemClock.now().getTime(), random: Math.random }),
+    files: createAndroidDataFiles(),
+    reminders: createAndroidReminders(),
+    notificationPermission: androidNotificationPermission,
     storage: { prepare: () => migrateDatabase(db, migrations) },
     registries: { exerciseTypes: exerciseTypeRegistry, tests: testRegistry },
     repositories: {

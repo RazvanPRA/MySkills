@@ -206,6 +206,7 @@ describe('loadToday', () => {
     const sessionRepo: SessionRepository = {
       findByDateAndKind: async (date, kind) =>
         [...sessions.values()].find(s => s.date === date && s.testKind === kind) ?? null,
+      findOpenByScope: async () => null,
       getById: async id => sessions.get(id) ?? null,
       listBetween: async () => [],
       save: async session => {
